@@ -1,0 +1,37 @@
+﻿// Models/Permission.cs
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FormBuilder.API.Models
+{
+    [Table("PERMISSIONS")]
+    public class Permission
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("PermissionID")]
+        public int PermissionID { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        [Column("PermissionName")]
+        public string PermissionName { get; set; }
+
+        [MaxLength(255)]
+        [Column("Description")]
+        public string Description { get; set; }
+
+        [MaxLength(50)]
+        [Column("Category")]
+        public string Category { get; set; }
+
+        [Column("IsActive")]
+        public bool IsActive { get; set; } = true;
+
+        [Column("CreatedDate")]
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        // Navigation Properties
+        public virtual ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
+    }
+}

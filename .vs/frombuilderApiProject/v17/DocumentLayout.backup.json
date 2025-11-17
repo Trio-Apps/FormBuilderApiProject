@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|solutionrelative:formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.core\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|solutionrelative:formbuilder.core\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\frombuilderapiproject\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|solutionrelative:frombuilderapiproject\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|solutionrelative:frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\frombuilderapiproject\\frombuilderapiproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|solutionrelative:frombuilderapiproject\\frombuilderapiproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Class1.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Class1.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Class1.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T12:32:16.431Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AuthDbContext .cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Context\\AuthDbContext .cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Context\\AuthDbContext .cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Context\\AuthDbContext .cs",
+              "RelativeToolTip": "FormBuilder.core\\Context\\AuthDbContext .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T12:31:19.697Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Class1.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Class1.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Class1.cs",
+              "RelativeToolTip": "FormBuilder.core\\Class1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T12:30:36.499Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Properties\\launchSettings.json",
+              "RelativeToolTip": "frombuilderApiProject\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-17T12:27:28.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "frombuilderApiProject",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\frombuilderApiProject.csproj",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\frombuilderApiProject.csproj",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\frombuilderApiProject.csproj",
+              "RelativeToolTip": "frombuilderApiProject\\frombuilderApiProject.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-17T12:24:59.349Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Program.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Program.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Program.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAowBkAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-17T12:24:53.778Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
