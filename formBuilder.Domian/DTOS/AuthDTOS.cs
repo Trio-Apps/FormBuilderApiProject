@@ -3,31 +3,39 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.API.DTOs
 {
-    public class UserRegisterDto
+    // DTOs/UserRegisterDto.cs
+    using System.ComponentModel.DataAnnotations;
+    using System.Text.Json.Serialization;
+
+    namespace FormBuilder.API.DTOs
     {
-        [Required]
-        [MaxLength(50)]
-        public string Username { get; set; }
+        public class UserRegisterDto
+        {
+            [Required(ErrorMessage = "Username is required")]
+            [MaxLength(50, ErrorMessage = "Username cannot exceed 50 characters")]
+            [MinLength(3, ErrorMessage = "Username must be at least 3 characters")]
+            [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Username can only contain letters and digits")]
+            [JsonPropertyName("username")]
+            public string Username { get; set; } = string.Empty;
 
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+            [Required(ErrorMessage = "Email is required")]
+            [EmailAddress(ErrorMessage = "Invalid email format")]
+            [MaxLength(100, ErrorMessage = "Email cannot exceed 100 characters")]
+            [JsonPropertyName("email")]
+            public string Email { get; set; } = string.Empty;
 
-        [Required]
-        public string FirstName { get; set; }
-
-        [Required]
-        public string LastName { get; set; }
-
-        [Required]
-        [MinLength(6)]
-        public string Password { get; set; }
+            [Required(ErrorMessage = "Password is required")]
+            [MinLength(6, ErrorMessage = "Password must be at least 6 characters")]
+            [JsonPropertyName("password")]
+            public string Password { get; set; } = string.Empty;
+        }
     }
 
     public class UserLoginDto
     {
         [Required]
-        public string Username { get; set; }
+        [EmailAddress]
+        public string email { get; set; }
 
         [Required]
         public string Password { get; set; }

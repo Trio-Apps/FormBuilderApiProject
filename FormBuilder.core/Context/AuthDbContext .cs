@@ -24,7 +24,7 @@ namespace FormBuilder.API.Data
             // Configure User
             modelBuilder.Entity<User>(entity =>
             {
-                entity.HasKey(e => e.UserID);
+                entity.HasKey(e => e.Id);
                 entity.HasIndex(e => e.Username).IsUnique();
                 entity.HasIndex(e => e.Email).IsUnique();
 
@@ -39,8 +39,9 @@ namespace FormBuilder.API.Data
                 entity.Property(e => e.Email)
                     .HasMaxLength(100);
 
+                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.CreatedDate)
-                    .HasDefaultValueSql("GETUTCDATE()");
+                    .ValueGeneratedOnAdd(); // تم التعديل هنا
             });
 
             // Configure Role
@@ -73,8 +74,9 @@ namespace FormBuilder.API.Data
                 entity.Property(e => e.Category)
                     .HasMaxLength(50);
 
+                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.CreatedDate)
-                    .HasDefaultValueSql("GETUTCDATE()");
+                    .ValueGeneratedOnAdd(); // تم التعديل هنا
             });
 
             // Configure UserRole
@@ -96,8 +98,9 @@ namespace FormBuilder.API.Data
                       .HasForeignKey(ur => ur.RoleID)
                       .OnDelete(DeleteBehavior.Cascade);
 
+                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.StartDate)
-                      .HasDefaultValueSql("GETUTCDATE()");
+                    .ValueGeneratedOnAdd(); // تم التعديل هنا
             });
 
             // Configure RolePermission
@@ -119,8 +122,9 @@ namespace FormBuilder.API.Data
                       .HasForeignKey(rp => rp.PermissionID)
                       .OnDelete(DeleteBehavior.Cascade);
 
+                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.AssignedDate)
-                      .HasDefaultValueSql("GETUTCDATE()");
+                    .ValueGeneratedOnAdd(); // تم التعديل هنا
             });
         }
     }

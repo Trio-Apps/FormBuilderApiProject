@@ -1,16 +1,15 @@
 ﻿// Models/User.cs
+using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
     [Table("USERS")]
-    public class User
+    public class User : IdentityUser<int>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("UserID")]
-        public int UserID { get; set; }
+    
+
 
         [Required]
         [MaxLength(50)]
