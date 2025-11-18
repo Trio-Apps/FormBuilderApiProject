@@ -2229,23 +2229,23 @@
           }
         }
       },
-      "FormBuilder.core/1.0.0": {
+      "FormBuilder.Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
           "Microsoft.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11",
-          "formBuilder.Domian": "1.0.0"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11"
         },
         "compile": {
-          "bin/placeholder/FormBuilder.core.dll": {}
+          "bin/placeholder/FormBuilder.Application.dll": {}
         },
         "runtime": {
-          "bin/placeholder/FormBuilder.core.dll": {}
+          "bin/placeholder/FormBuilder.Application.dll": {}
         }
       },
-      "formBuilder.Domian/1.0.0": {
+      "FormBuilder.Domian/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
@@ -2253,22 +2253,22 @@
           "Microsoft.Extensions.Identity.Stores": "9.0.11"
         },
         "compile": {
-          "bin/placeholder/formBuilder.Domian.dll": {}
+          "bin/placeholder/FormBuilder.Domian.dll": {}
         },
         "runtime": {
-          "bin/placeholder/formBuilder.Domian.dll": {}
+          "bin/placeholder/FormBuilder.Domian.dll": {}
         }
       },
       "FormBuilder.Services/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
-          "FormBuilder.core": "1.0.0",
+          "FormBuilder.Application": "1.0.0",
+          "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity": "2.3.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
           "Microsoft.EntityFrameworkCore": "9.0.11",
-          "System.IdentityModel.Tokens.Jwt": "8.14.0",
-          "formBuilder.Domian": "1.0.0"
+          "System.IdentityModel.Tokens.Jwt": "8.14.0"
         },
         "compile": {
           "bin/placeholder/FormBuilder.Services.dll": {}
@@ -6089,15 +6089,15 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "FormBuilder.core/1.0.0": {
+    "FormBuilder.Application/1.0.0": {
       "type": "project",
-      "path": "../FormBuilder.core/FormBuilder.core.csproj",
-      "msbuildProject": "../FormBuilder.core/FormBuilder.core.csproj"
+      "path": "../FormBuilder.core/FormBuilder.Application.csproj",
+      "msbuildProject": "../FormBuilder.core/FormBuilder.Application.csproj"
     },
-    "formBuilder.Domian/1.0.0": {
+    "FormBuilder.Domian/1.0.0": {
       "type": "project",
-      "path": "../formBuilder.Domian/formBuilder.Domian.csproj",
-      "msbuildProject": "../formBuilder.Domian/formBuilder.Domian.csproj"
+      "path": "../formBuilder.Domian/FormBuilder.Domian.csproj",
+      "msbuildProject": "../formBuilder.Domian/FormBuilder.Domian.csproj"
     },
     "FormBuilder.Services/1.0.0": {
       "type": "project",
@@ -6107,8 +6107,8 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "FormBuilder.Application >= 1.0.0",
       "FormBuilder.Services >= 1.0.0",
-      "FormBuilder.core >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 9.0.11",
       "Microsoft.AspNetCore.OpenApi >= 9.0.11",
       "Microsoft.EntityFrameworkCore >= 9.0.11",
@@ -6124,9 +6124,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\frombuilderApiProject.csproj",
-      "projectName": "frombuilderApiProject",
-      "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\frombuilderApiProject.csproj",
+      "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\FormBuilder.ApiProject.csproj",
+      "projectName": "FormBuilder.ApiProject",
+      "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\FormBuilder.ApiProject.csproj",
       "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\obj\\",
       "projectStyle": "PackageReference",
@@ -6149,8 +6149,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj": {
-              "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj"
+            "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj": {
+              "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj"
             },
             "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj": {
               "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj"

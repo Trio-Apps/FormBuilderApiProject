@@ -8,12 +8,12 @@
     ".NETCoreApp,Version=v9.0": {
       "FormBuilder.Services/1.0.0": {
         "dependencies": {
-          "FormBuilder.core": "1.0.0",
+          "FormBuilder.Application": "1.0.0",
+          "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity": "2.3.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
           "Microsoft.EntityFrameworkCore": "9.0.11",
-          "System.IdentityModel.Tokens.Jwt": "8.14.0",
-          "formBuilder.Domian": "1.0.0"
+          "System.IdentityModel.Tokens.Jwt": "8.14.0"
         },
         "runtime": {
           "FormBuilder.Services.dll": {}
@@ -929,27 +929,27 @@
           }
         }
       },
-      "FormBuilder.core/1.0.0": {
+      "FormBuilder.Application/1.0.0": {
         "dependencies": {
+          "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
           "Microsoft.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11",
-          "formBuilder.Domian": "1.0.0"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11"
         },
         "runtime": {
-          "FormBuilder.core.dll": {
+          "FormBuilder.Application.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
       },
-      "formBuilder.Domian/1.0.0": {
+      "FormBuilder.Domian/1.0.0": {
         "dependencies": {
           "DocumentFormat.OpenXml": "3.3.0",
           "Microsoft.Extensions.Identity.Stores": "9.0.11"
         },
         "runtime": {
-          "formBuilder.Domian.dll": {
+          "FormBuilder.Domian.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1537,12 +1537,12 @@
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
-    "FormBuilder.core/1.0.0": {
+    "FormBuilder.Application/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "formBuilder.Domian/1.0.0": {
+    "FormBuilder.Domian/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

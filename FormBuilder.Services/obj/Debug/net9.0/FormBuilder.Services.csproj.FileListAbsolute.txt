@@ -1,10 +1,10 @@
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Services.deps.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Services.dll
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Services.pdb
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.core.dll
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\formBuilder.Domian.dll
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.core.pdb
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\formBuilder.Domian.pdb
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Application.dll
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Domian.dll
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Application.pdb
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Domian.pdb
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.csproj.AssemblyReference.cache
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.AssemblyInfoInputs.cache

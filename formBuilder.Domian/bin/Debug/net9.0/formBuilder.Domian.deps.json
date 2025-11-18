@@ -6,13 +6,13 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "formBuilder.Domian/1.0.0": {
+      "FormBuilder.Domian/1.0.0": {
         "dependencies": {
           "DocumentFormat.OpenXml": "3.3.0",
           "Microsoft.Extensions.Identity.Stores": "9.0.11"
         },
         "runtime": {
-          "formBuilder.Domian.dll": {}
+          "FormBuilder.Domian.dll": {}
         }
       },
       "DocumentFormat.OpenXml/3.3.0": {
@@ -167,7 +167,7 @@
     }
   },
   "libraries": {
-    "formBuilder.Domian/1.0.0": {
+    "FormBuilder.Domian/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

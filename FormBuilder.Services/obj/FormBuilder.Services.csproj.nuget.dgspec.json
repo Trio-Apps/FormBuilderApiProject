@@ -4,12 +4,12 @@
     "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj": {
+    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj",
-        "projectName": "FormBuilder.core",
-        "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj",
+        "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj",
+        "projectName": "FormBuilder.Application",
+        "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj",
         "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\obj\\",
         "projectStyle": "PackageReference",
@@ -32,8 +32,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj": {
-                "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj"
+              "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
+                "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj"
               }
             }
           }
@@ -99,12 +99,12 @@
         }
       }
     },
-    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj": {
+    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj",
-        "projectName": "formBuilder.Domian",
-        "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj",
+        "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+        "projectName": "FormBuilder.Domian",
+        "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
         "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\obj\\",
         "projectStyle": "PackageReference",
@@ -202,11 +202,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj": {
-                "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.core.csproj"
+              "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj": {
+                "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\FormBuilder.Application.csproj"
               },
-              "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj": {
-                "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj"
+              "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
+                "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj"
               }
             }
           }

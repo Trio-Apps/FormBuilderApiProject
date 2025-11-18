@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj": {}
+    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj": {
+    "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj",
-        "projectName": "formBuilder.Domian",
-        "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj",
+        "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+        "projectName": "FormBuilder.Domian",
+        "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
         "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\obj\\",
         "projectStyle": "PackageReference",

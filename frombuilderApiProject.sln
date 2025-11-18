@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frombuilderApiProject", "frombuilderApiProject\frombuilderApiProject.csproj", "{F8A12152-1D0A-457D-9CF9-7E9C9F816419}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.ApiProject", "frombuilderApiProject\FormBuilder.ApiProject.csproj", "{F8A12152-1D0A-457D-9CF9-7E9C9F816419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.core", "FormBuilder.core\FormBuilder.core.csproj", "{7415B448-6C76-4AF9-835B-9E0449452E94}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Application", "FormBuilder.core\FormBuilder.Application.csproj", "{7415B448-6C76-4AF9-835B-9E0449452E94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "formBuilder.Domian", "formBuilder.Domian\formBuilder.Domian.csproj", "{25FAA2DB-493C-4590-99BC-BE3BC51F6456}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Domian", "formBuilder.Domian\FormBuilder.Domian.csproj", "{25FAA2DB-493C-4590-99BC-BE3BC51F6456}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormBuilder.Services", "FormBuilder.Services\FormBuilder.Services.csproj", "{12C96A85-596C-4A20-9E2B-C9A183CE88BE}"
 EndProject

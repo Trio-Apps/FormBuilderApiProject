@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\formBuilder.Domian\formBuilder.Domian.csproj" />
+    <ProjectReference Include="..\formBuilder.Domian\FormBuilder.Domian.csproj" />
   </ItemGroup>
 
 </Project>

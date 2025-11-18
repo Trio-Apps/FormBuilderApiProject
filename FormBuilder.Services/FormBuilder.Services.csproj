@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FormBuilder.core\FormBuilder.core.csproj" />
-    <ProjectReference Include="..\formBuilder.Domian\formBuilder.Domian.csproj" />
+    <ProjectReference Include="..\FormBuilder.core\FormBuilder.Application.csproj" />
+    <ProjectReference Include="..\formBuilder.Domian\FormBuilder.Domian.csproj" />
   </ItemGroup>
 
 </Project>
