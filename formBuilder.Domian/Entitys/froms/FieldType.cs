@@ -5,27 +5,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
-    [Table("FIELD_TYPES")]
-    public class FieldType :BaseEntity
+
+
+
+    namespace FormBuilder.API.Models
     {
-    
-        [Required]
-        [MaxLength(50)]
-        [Column("TypeName")]
-        public string TypeName { get; set; } // Text, Number, Date, Dropdown, etc.
+        [Table("FIELD_TYPES")]
+        public class FieldType : BaseEntity
+        {
+            [Required]
+            [MaxLength(50)]
+            [Column("TypeName")]
+            public string TypeName { get; set; }
 
-        [MaxLength(50)]
-        [Column("DataType")]
-        public string DataType { get; set; } // string, int, decimal, bool, DateTime
+            [MaxLength(50)]
+            [Column("DataType")]
+            public string DataType { get; set; }
 
-        [Column("MaxLength")]
-        public int? MaxLength { get; set; }
+            [Column("MaxLength")]
+            public int? MaxLength { get; set; }
 
+            [Column("IsActive")]
+            public bool IsActive { get; set; } = true;
 
-        [Column("IsActive")]
-        public bool IsActive { get; set; } = true;
-
-        // Navigation Properties
-        public virtual ICollection<FormField> FormFields { get; set; } = new List<FormField>();
+            public virtual ICollection<FormField> FormFields { get; set; } = new List<FormField>();
+        }
     }
+
+
 }

@@ -1,35 +1,54 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using FormBuilder.API.Models;
+﻿using FormBuilder.API.Models;
+using FormBuilder.API.Models.FormBuilder.API.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Numerics;
-using System.Reflection;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
-
-
-namespace FormBuilder.core.Context
+public class AppDbContext : DbContext
 {
-    public class AppDbContext : DbContext
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
+    public DbSet<FormBuilders> FormBuilders { get; set; }
+    public DbSet<FORM_TABS> FormTabs { get; set; }
+    public DbSet<FormField> FormFields { get; set; }
+    public DbSet<FieldType> FieldTypes { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        // FormBuilder -> FormTabs relationship
+        modelBuilder.Entity<FORM_TABS>(entity =>
         {
-        }
-  
+            entity.HasOne(ft => ft.FormBuilder)
+                  .WithMany(fb => fb.FormTabs)
+                  .HasForeignKey(ft => ft.FormBuilderID)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
 
-        override protected void OnModelCreating(ModelBuilder modelBuilder)
+        // FormTab -> FormFields relationship
+        modelBuilder.Entity<FormField>(entity =>
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+           
 
-        }
+            entity.HasOne(ff => ff.FieldType)
+                  .WithMany(ft => ft.FormFields)
+                  .HasForeignKey(ff => ff.FieldTypeID)
+                  .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // Add unique constraints
+        modelBuilder.Entity<FormBuilders>(entity =>
+        {
+            entity.HasIndex(e => e.FormCode).IsUnique();
+        });
+
+        modelBuilder.Entity<FORM_TABS>(entity =>
+        {
+            entity.HasIndex(e => new { e.FormBuilderID, e.TabOrder }).IsUnique();
+        });
+
+        modelBuilder.Entity<FormField>(entity =>
+        {
+            entity.HasIndex(e => new { e.TabID, e.FieldOrder }).IsUnique();
+        });
+
+        base.OnModelCreating(modelBuilder);
     }
 }

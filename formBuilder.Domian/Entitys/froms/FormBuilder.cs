@@ -1,14 +1,14 @@
 ﻿// Models/FormBuilder.cs
 using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models.FormBuilder.API.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
-    [Table("FORM_BUILDER")]
-    public class FormBuilder :BaseEntity
+    [Table("FORM_BUILDERS")]
+    public class FormBuilders : BaseEntity
     {
-
         [Required]
         [MaxLength(255)]
         [Column("FormName")]
@@ -32,10 +32,7 @@ namespace FormBuilder.API.Models
         [Column("IsActive")]
         public bool IsActive { get; set; } = true;
 
-        // Navigation Properties
-        [ForeignKey("CreatedBy")]
-        public virtual User User { get; set; }
-
-        public virtual ICollection<FormTab> FormTabs { get; set; } = new List<FormTab>();
+        // Navigation properties
+        public virtual ICollection<FORM_TABS> FormTabs { get; set; } = new List<FORM_TABS>();
     }
 }

@@ -6,29 +6,33 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
-    [Table("FORM_TABS")]
-    public class FormTab :BaseEntity
+
+
+    namespace FormBuilder.API.Models
     {
-       
-        [Required]
-        [Column("FormBuilderID")]
-        public int FormBuilderID { get; set; }
+        [Table("FORM_TABS")]
+        public class FORM_TABS : BaseEntity
+        {
+            [Required]
+            [Column("FormBuilderID")]
+            public int FormBuilderID { get; set; }
 
-        [Required]
-        [MaxLength(255)]
-        [Column("TabName")]
-        public string TabName { get; set; }
+            [Required]
+            [MaxLength(255)]
+            [Column("TabName")]
+            public string TabName { get; set; }
 
-        [Column("TabOrder")]
-        public int TabOrder { get; set; } = 1;
+            [Column("TabOrder")]
+            public int TabOrder { get; set; } = 1;
 
-        [Column("IsActive")]
-        public bool IsActive { get; set; } = true;
+            [Column("IsActive")]
+            public bool IsActive { get; set; } = true;
 
-        // Navigation Properties
-        [ForeignKey("FormBuilderID")]
-        public virtual FormBuilder FormBuilder { get; set; }
+            [ForeignKey("FormBuilderID")]
+            public virtual FormBuilders FormBuilder { get; set; }
 
-        public virtual ICollection<FormField> FormFields { get; set; } = new List<FormField>();
+            public virtual ICollection<FormField> FormFields { get; set; } = new List<FormField>();
+        }
     }
+
 }
