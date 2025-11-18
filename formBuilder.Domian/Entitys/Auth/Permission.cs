@@ -8,7 +8,6 @@ namespace FormBuilder.API.Models
     public class Permission
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("PermissionID")]
         public int PermissionID { get; set; }
 
@@ -25,13 +24,10 @@ namespace FormBuilder.API.Models
         [Column("Category")]
         public string Category { get; set; }
 
-        [Column("IsActive")]
-        public bool IsActive { get; set; } = true;
-
         [Column("CreatedDate")]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        // Navigation Properties
+        // Navigation properties
         public virtual ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     }
 }

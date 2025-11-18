@@ -1,18 +1,16 @@
+// Program.cs
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
 using FormBuilder.API.Services;
 using FormBuilder.core.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 // Controllers & JSON options
 builder.Services.AddControllers()
@@ -20,27 +18,22 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
         options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-        options.JsonSerializerOptions.WriteIndented = true;
     });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // -------------------------
-// DbContexts
+// DbContexts „‰›’·… ·œ« «»Ì“ „‰›’·Ì‰
 // -------------------------
-// NOTE: Use the real assembly name for migrations or detect it dynamically:
-var authMigrationsAssembly = typeof(AuthDbContext).Assembly.GetName().Name;
-var appMigrationsAssembly = typeof(AppDbContext).Assembly.GetName().Name;
 
+// 1. AuthDbContext ··‹ Security ›ﬁÿ - Ì” Œœ„ AuthConnection
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("AuthConnection"),
-        sql => sql.MigrationsAssembly(authMigrationsAssembly)
+        builder.Configuration.GetConnectionString("AuthConnection")
     );
 
-    // ›ﬁÿ ›Ì »Ì∆… «· ÿÊÌ— ó ·«  ›⁄¯· sensitive logging ›Ì «·«‰ «Ã
     if (builder.Environment.IsDevelopment())
     {
         options.EnableSensitiveDataLogging();
@@ -48,25 +41,25 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     }
 });
 
+// 2. AppDbContext ··‹ Form Builder ›ﬁÿ - Ì” Œœ„ DefaultConnection
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        sql => sql.MigrationsAssembly(appMigrationsAssembly)
+        builder.Configuration.GetConnectionString("DefaultConnection")
     );
 
     if (builder.Environment.IsDevelopment())
     {
+        options.EnableSensitiveDataLogging();
         options.EnableDetailedErrors();
     }
 });
 
+
 // -------------------------
-// Identity („·«ÕŸ… „Â„… ÕÊ· «” Œœ«„ int ﬂ‹ key)
+// Identity Configuration - Ì” Œœ„ AuthDbContext ›ﬁÿ
 // -------------------------
-// ≈–« ﬂ‰   ” Œœ„ „› «Õ „‰ «·‰Ê⁄ int:  √ﬂœ √‰ User Ì—À IdentityUser<int>
-// Ê√‰ AuthDbContext Ì—À IdentityDbContext<User, IdentityRole<int>, int>
-builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
@@ -75,9 +68,36 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
     options.Password.RequiredLength = 6;
 
     options.User.RequireUniqueEmail = true;
+
+    options.SignIn.RequireConfirmedEmail = false;
 })
-    .AddEntityFrameworkStores<AuthDbContext>()
-    .AddDefaultTokenProviders();
+.AddEntityFrameworkStores<AuthDbContext>()
+.AddDefaultTokenProviders();
+
+// -------------------------
+// JWT Authentication
+// -------------------------
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    var jwtSettings = builder.Configuration.GetSection("Jwt");
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidateAudience = true,
+        ValidAudience = jwtSettings["Audience"],
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "your-super-long-secret-key-that-is-at-least-32-characters-long")),
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 // -------------------------
 // CORS
@@ -88,18 +108,18 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
 // -------------------------
 // App services / DI
 // -------------------------
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-
-// If you have UnitOfWork & repository pattern:
 builder.Services.AddScoped<IunitOfwork, UnitOfWork>();
+// Add Services
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
@@ -118,5 +138,27 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+// ›Ì ‰Â«Ì… Program.cs ﬁ»· app.Run();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var authContext = services.GetRequiredService<AuthDbContext>();
+        var appContext = services.GetRequiredService<AppDbContext>();
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+        await DataSeeder.SeedAsync(authContext, userManager, roleManager);
+
+        Console.WriteLine("Database seeding completed successfully!");
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the database");
+    }
+}
 
 app.Run();

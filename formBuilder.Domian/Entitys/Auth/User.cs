@@ -1,32 +1,18 @@
-﻿// Models/User.cs
+﻿// Models/AppUser.cs
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
-    [Table("USERS")]
-    public class User : IdentityUser<int>
+    [Table("appUsers")]
+    public class AppUser : IdentityUser
     {
-    
-
-
         [Required]
         [MaxLength(50)]
-        [Column("Username")]
-        public string Username { get; set; }
+        [Column("DisplayName")]
+        public string DisplayName { get; set; }
 
-        [Required]
-        [MaxLength(255)]
-        [Column("Password")]
-        public string Password { get; set; }
-
-        [EmailAddress]
-        [MaxLength(100)]
-        [Column("Email")]
-        public string Email { get; set; }
-
-        
         [Column("IsActive")]
         public bool IsActive { get; set; } = true;
 
@@ -36,7 +22,7 @@ namespace FormBuilder.API.Models
         [Column("LastLoginDate")]
         public DateTime? LastLoginDate { get; set; }
 
-        // Navigation Properties
+        // Navigation Properties for Custom Role System
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }

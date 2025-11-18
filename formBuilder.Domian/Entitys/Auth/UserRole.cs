@@ -8,13 +8,12 @@ namespace FormBuilder.API.Models
     public class UserRole
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("UserRoleID")]
         public int UserRoleID { get; set; }
 
         [Required]
         [Column("UserID")]
-        public int UserID { get; set; }
+        public string UserID { get; set; } // string to match IdentityUser Id
 
         [Required]
         [Column("RoleID")]
@@ -26,12 +25,9 @@ namespace FormBuilder.API.Models
         [Column("EndDate")]
         public DateTime? EndDate { get; set; }
 
-        [Column("IsActive")]
-        public bool IsActive { get; set; } = true;
-
-        // Navigation Properties
+        // Navigation properties
         [ForeignKey("UserID")]
-        public virtual User User { get; set; }
+        public virtual AppUser AppUser { get; set; }
 
         [ForeignKey("RoleID")]
         public virtual Role Role { get; set; }

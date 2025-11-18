@@ -1,52 +1,42 @@
-﻿// Data/ApplicationDbContext.cs
-using Microsoft.EntityFrameworkCore;
+﻿// Data/AuthDbContext.cs
 using FormBuilder.API.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace FormBuilder.API.Data
 {
-    public class AuthDbContext : DbContext
+    public class AuthDbContext : IdentityDbContext<AppUser>
     {
         public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
         }
 
-        // DbSets
-        public DbSet<User> USERS { get; set; }
-        public DbSet<Role> ROLES { get; set; }
-        public DbSet<Permission> PERMISSIONS { get; set; }
-        public DbSet<UserRole> USER_ROLES { get; set; }
-        public DbSet<RolePermission> ROLE_PERMISSIONS { get; set; }
+        // Custom authorization DbSets - Security فقط
+        public DbSet<Role> CustomRoles { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure User
-            modelBuilder.Entity<User>(entity =>
+            // Rename Identity tables
+            modelBuilder.Entity<AppUser>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                entity.HasIndex(e => e.Username).IsUnique();
-                entity.HasIndex(e => e.Email).IsUnique();
-
-                entity.Property(e => e.Username)
-                    .IsRequired()
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(255);
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(100);
-
-                // الطريقة الجديدة في EF Core 9
-                entity.Property(e => e.CreatedDate)
-                    .ValueGeneratedOnAdd(); // تم التعديل هنا
+                entity.ToTable("AppUsers");
             });
 
-            // Configure Role
+            modelBuilder.Entity<IdentityRole>(entity =>
+            {
+                entity.ToTable("AspNetRoles");
+            });
+
+            // Custom Role configuration
             modelBuilder.Entity<Role>(entity =>
             {
+                entity.ToTable("ROLES");
                 entity.HasKey(e => e.RoleID);
                 entity.HasIndex(e => e.RoleName).IsUnique();
 
@@ -56,11 +46,15 @@ namespace FormBuilder.API.Data
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasDefaultValueSql("GETUTCDATE()");
             });
 
-            // Configure Permission
+            // Permission configuration
             modelBuilder.Entity<Permission>(entity =>
             {
+                entity.ToTable("PERMISSIONS");
                 entity.HasKey(e => e.PermissionID);
                 entity.HasIndex(e => e.PermissionName).IsUnique();
 
@@ -74,21 +68,18 @@ namespace FormBuilder.API.Data
                 entity.Property(e => e.Category)
                     .HasMaxLength(50);
 
-                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.CreatedDate)
-                    .ValueGeneratedOnAdd(); // تم التعديل هنا
+                    .HasDefaultValueSql("GETUTCDATE()");
             });
 
-            // Configure UserRole
+            // UserRole configuration
             modelBuilder.Entity<UserRole>(entity =>
             {
+                entity.ToTable("USER_ROLES");
                 entity.HasKey(e => e.UserRoleID);
-
-                // Composite unique constraint
                 entity.HasIndex(e => new { e.UserID, e.RoleID }).IsUnique();
 
-                // Relationships
-                entity.HasOne(ur => ur.User)
+                entity.HasOne(ur => ur.AppUser)
                       .WithMany(u => u.UserRoles)
                       .HasForeignKey(ur => ur.UserID)
                       .OnDelete(DeleteBehavior.Cascade);
@@ -98,20 +89,17 @@ namespace FormBuilder.API.Data
                       .HasForeignKey(ur => ur.RoleID)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.StartDate)
-                    .ValueGeneratedOnAdd(); // تم التعديل هنا
+                    .HasDefaultValueSql("GETUTCDATE()");
             });
 
-            // Configure RolePermission
+            // RolePermission configuration
             modelBuilder.Entity<RolePermission>(entity =>
             {
+                entity.ToTable("ROLE_PERMISSIONS");
                 entity.HasKey(e => e.RolePermissionID);
-
-                // Composite unique constraint
                 entity.HasIndex(e => new { e.RoleID, e.PermissionID }).IsUnique();
 
-                // Relationships
                 entity.HasOne(rp => rp.Role)
                       .WithMany(r => r.RolePermissions)
                       .HasForeignKey(rp => rp.RoleID)
@@ -122,9 +110,8 @@ namespace FormBuilder.API.Data
                       .HasForeignKey(rp => rp.PermissionID)
                       .OnDelete(DeleteBehavior.Cascade);
 
-                // الطريقة الجديدة في EF Core 9
                 entity.Property(e => e.AssignedDate)
-                    .ValueGeneratedOnAdd(); // تم التعديل هنا
+                    .HasDefaultValueSql("GETUTCDATE()");
             });
         }
     }

@@ -5,6 +5,6 @@ namespace FormBuilder.API.Services
 {
     public interface ITokenService
     {
-        Task<string> CreateTokenAsync(User user);
+        Task<string> CreateTokenAsync(AppUser user);
     }
 }

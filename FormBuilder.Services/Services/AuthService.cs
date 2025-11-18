@@ -1,206 +1,161 @@
 ﻿// Services/AuthService.cs
-using FormBuilder.API.Data;
-using FormBuilder.API.DTOs;
-using FormBuilder.API.DTOs.FormBuilder.API.DTOs;
 using FormBuilder.API.Models;
+using FormBuilder.API.Services;
+using FormBuilder.core.DTOS.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace FormBuilder.API.Services
+public class AuthService : IAuthService
 {
-    public class AuthService : IAuthService
+    private readonly UserManager<AppUser> _userManager;
+    private readonly SignInManager<AppUser> _signInManager;
+    private readonly ITokenService _tokenService;
+    private readonly ILogger<AuthService> _logger;
+
+    public AuthService(
+        UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager,
+        ITokenService tokenService,
+        ILogger<AuthService> logger)
     {
-        private readonly AuthDbContext _context;
-        private readonly UserManager<User> _userManager;
-        private readonly ITokenService _tokenService; // أضف هذا
-        private readonly ILogger<AuthService> _logger;
+        _userManager = userManager;
+        _signInManager = signInManager;
+        _tokenService = tokenService;
+        _logger = logger;
+    }
 
-        public AuthService(
-            AuthDbContext context,
-            UserManager<User> userManager,
-            ITokenService tokenService, // أضف هذا
-            ILogger<AuthService> logger)
+    public async Task<AuthResult> LoginAsync(LoginDto loginDto)
+    {
+        try
         {
-            _context = context;
-            _userManager = userManager;
-            _tokenService = tokenService; // أضف هذا
-            _logger = logger;
-        }
+            // Input validation
+            if (string.IsNullOrEmpty(loginDto.Email) || string.IsNullOrEmpty(loginDto.Password))
+                return new AuthResult
+                {
+                    Success = false,
+                    ErrorMessage = "Email and password are required",
+                    StatusCode = 400
+                };
 
-        public async Task<SingleApiResponse> RegisterAsync(UserRegisterDto userRegister, string origin)
-        {
-            try
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user is null)
             {
-                _logger.LogInformation("Registration attempt for user: {Username}", userRegister.Username);
-
-                
-
-             
-
-                // Create new user
-                var user = new User
+                _logger.LogWarning($"Login failed for email: {loginDto.Email} - User not found");
+                return new AuthResult
                 {
-                    Username = userRegister.Username,
-                    Email = userRegister.Email,
-
-                    IsActive = true,
-                    CreatedDate = DateTime.UtcNow
+                    Success = false,
+                    ErrorMessage = "Invalid email or password",
+                    StatusCode = 401
                 };
-
-                // Use UserManager to create user with password
-                var result = await _userManager.CreateAsync(user, userRegister.Password);
-
-                if (!result.Succeeded)
-                {
-                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                    return SingleApiResponse.ErrorResult($"User creation failed: {errors}");
-                }
-
-                // Assign default role (User)
-                var userRole = await _context.ROLES
-                    .FirstOrDefaultAsync(r => r.RoleName == "User" && r.IsActive);
-
-                if (userRole != null)
-                {
-                    var userRoleEntity = new UserRole
-                    {
-                        UserID = user.Id,
-                        RoleID = userRole.RoleID,
-                        StartDate = DateTime.UtcNow,
-                        IsActive = true
-                    };
-                    await _context.USER_ROLES.AddAsync(userRoleEntity);
-                    await _context.SaveChangesAsync();
-                }
-
-                // Get user roles for token
-                var userWithRoles = await _context.USERS
-                    .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
-                    .FirstOrDefaultAsync(u => u.Id == user.Id);
-
-                var roles = userWithRoles?.UserRoles
-                    .Where(ur => ur.IsActive && ur.Role.IsActive)
-                    .Select(ur => ur.Role.RoleName)
-                    .ToList() ?? new List<string> { "User" };
-
-                // Generate JWT Token
-                var token = await _tokenService.CreateTokenAsync(user);
-
-                // Create UserInfoDto
-                var userInfo = new UserInfoDto
-                {
-                    UserId = user.Id,
-                    Username = user.Username,
-                    Email = user.Email,
-               
-                    Roles = roles
-                };
-
-                // Create AuthResponseDto
-                var authResponse = new AuthResponseDto
-                {
-                    Token = token,
-                    TokenExpiration = DateTime.UtcNow.AddHours(1), // أو الوقت الذي تحدده في الإعدادات
-                    User = userInfo
-                };
-
-                _logger.LogInformation("User registered successfully: {Username}", userRegister.Username);
-
-                return SingleApiResponse.SuccessResult(authResponse, "User registered successfully");
             }
-            catch (Exception ex)
+
+            // Check if user is active
+            if (!user.IsActive)
+                return new AuthResult
+                {
+                    Success = false,
+                    ErrorMessage = "Account is deactivated",
+                    StatusCode = 401
+                };
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded)
             {
-                _logger.LogError(ex, "Error during registration for user: {Username}", userRegister.Username);
-                return SingleApiResponse.ErrorResult("An error occurred during registration");
-            }
-        }
-
-        public async Task<SingleApiResponse> Login(UserLoginDto userLoginDto)
-        {
-            try
-            {
-                _logger.LogInformation("Login attempt for user: {Username}", userLoginDto.email);
-
-                // Find user by username or email
-                var user = await _userManager.FindByEmailAsync(userLoginDto.email)
-                          ?? await _userManager.FindByNameAsync(userLoginDto.email);
-
-                if (user == null)
+                _logger.LogWarning($"Login failed for user: {user.Email} - Invalid password");
+                return new AuthResult
                 {
-                    _logger.LogWarning("Login failed: User not found - {Username}", userLoginDto.email);
-                    return SingleApiResponse.UnauthorizedResult("Invalid credentials");
-                }
-
-                if (!user.IsActive)
-                {
-                    _logger.LogWarning("Login failed: User inactive - {email}", userLoginDto.email);
-                    return SingleApiResponse.UnauthorizedResult("Account is deactivated");
-                }
-
-                // Validate password using UserManager
-                if (!await _userManager.CheckPasswordAsync(user, userLoginDto.Password))
-                {
-                    _logger.LogWarning("Login failed: Invalid password for user - {email}", userLoginDto.email);
-                    return SingleApiResponse.UnauthorizedResult("Invalid credentials");
-                }
-
-                // Update last login
-                user.LastLoginDate = DateTime.UtcNow;
-                await _userManager.UpdateAsync(user);
-
-                // Get user roles
-                var userWithRoles = await _context.USERS
-                    .Include(u => u.UserRoles)
-                    .ThenInclude(ur => ur.Role)
-                    .FirstOrDefaultAsync(u => u.Id == user.Id);
-
-                var roles = userWithRoles?.UserRoles
-                    .Where(ur => ur.IsActive && ur.Role.IsActive)
-                    .Select(ur => ur.Role.RoleName)
-                    .ToList() ?? new List<string>();
-
-                // Generate JWT Token
-                var token = await _tokenService.CreateTokenAsync(user);
-
-                // Create UserInfoDto
-                var userInfo = new UserInfoDto
-                {
-                    UserId = user.Id,
-                    Username = user.Username,
-                    Email = user.Email,
-                
-                    Roles = roles
+                    Success = false,
+                    ErrorMessage = "Invalid email or password",
+                    StatusCode = 401
                 };
-
-                // Create AuthResponseDto
-                var authResponse = new AuthResponseDto
-                {
-                    Token = token,
-                    TokenExpiration = DateTime.UtcNow.AddHours(1), // أو الوقت الذي تحدده في الإعدادات
-                    User = userInfo
-                };
-
-                _logger.LogInformation("Login successful for user: {email}", userLoginDto.email);
-
-                return SingleApiResponse.SuccessResult(authResponse, "Login successful");
             }
-            catch (Exception ex)
+
+            // Update last login date
+            user.LastLoginDate = DateTime.UtcNow;
+            await _userManager.UpdateAsync(user);
+
+            var userDto = new UserDto()
             {
-                _logger.LogError(ex, "Error during login for user: {email}", userLoginDto.email);
-                return SingleApiResponse.ErrorResult("An error occurred during login");
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                Token = await _tokenService.CreateTokenAsync(user)
+            };
+
+            _logger.LogInformation($"User {user.Email} logged in successfully");
+
+            return new AuthResult
+            {
+                Success = true,
+                User = userDto,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during login process");
+            return new AuthResult
+            {
+                Success = false,
+                ErrorMessage = "An error occurred during login",
+                StatusCode = 500
+            };
+        }
+    }
+
+
+    public async Task<ApiResponse> ChangePasswordAsync(string userId, ChangePasswordDto changePasswordDto)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new ApiResponse(404, "User not found");
+
+            var result = await _userManager.ChangePasswordAsync(
+                user,
+                changePasswordDto.CurrentPassword,
+                changePasswordDto.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return new ApiResponse(400, errors);
             }
-        }
 
-        public Task<SingleApiResponse> RefreshTokenAsync(string refreshToken)
-        {
-            throw new NotImplementedException();
+            _logger.LogInformation($"Password changed successfully for user: {user.Email}");
+            return new ApiResponse(200, "Password changed successfully");
         }
-
-        public Task<SingleApiResponse> LogoutAsync(int userId)
+        catch (Exception ex)
         {
-            throw new NotImplementedException();
+            _logger.LogError(ex, "Error during password change");
+            return new ApiResponse(500, "An error occurred while changing password");
+        }
+    }
+
+
+    public async Task<ApiResponse> ResetPasswordAsync(string email)
+    {
+        try
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return new ApiResponse(404, "User not found");
+
+            // Generate reset token
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Here you would typically send the token via email
+            // For now, we'll just log it (in production, send email)
+            _logger.LogInformation($"Password reset token for {email}: {token}");
+
+            return new ApiResponse(200, "Password reset instructions sent to your email");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during password reset");
+            return new ApiResponse(500, "An error occurred while resetting password");
         }
     }
 }

@@ -8,7 +8,6 @@ namespace FormBuilder.API.Models
     public class Role
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("RoleID")]
         public int RoleID { get; set; }
 
@@ -24,7 +23,10 @@ namespace FormBuilder.API.Models
         [Column("IsActive")]
         public bool IsActive { get; set; } = true;
 
-        // Navigation Properties
+        [Column("CreatedDate")]
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        // Navigation properties
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
         public virtual ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     }

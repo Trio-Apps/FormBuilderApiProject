@@ -8,7 +8,6 @@ namespace FormBuilder.API.Models
     public class RolePermission
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Column("RolePermissionID")]
         public int RolePermissionID { get; set; }
 
@@ -20,13 +19,10 @@ namespace FormBuilder.API.Models
         [Column("PermissionID")]
         public int PermissionID { get; set; }
 
-        [Column("IsActive")]
-        public bool IsActive { get; set; } = true;
-
         [Column("AssignedDate")]
         public DateTime AssignedDate { get; set; } = DateTime.UtcNow;
 
-        // Navigation Properties
+        // Navigation properties
         [ForeignKey("RoleID")]
         public virtual Role Role { get; set; }
 

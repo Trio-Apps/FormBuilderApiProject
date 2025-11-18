@@ -1,11 +1,3 @@
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.csproj.AssemblyReference.cache
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.AssemblyInfoInputs.cache
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.AssemblyInfo.cs
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.csproj.CoreCompileInputs.cache
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.sourcelink.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\frombuilderApiProject.staticwebassets.endpoints.json
@@ -19,6 +11,7 @@ C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bi
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\DocumentFormat.OpenXml.dll
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\DocumentFormat.OpenXml.Framework.dll
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Humanizer.dll
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -163,7 +156,15 @@ C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bi
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.core.pdb
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Services.pdb
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\formBuilder.Domian.pdb
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.csproj.AssemblyReference.cache
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.AssemblyInfoInputs.cache
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.AssemblyInfo.cs
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.csproj.CoreCompileInputs.cache
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\frombuilderApiProject.sourcelink.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
