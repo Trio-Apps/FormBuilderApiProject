@@ -677,11 +677,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj",
-      "projectName": "formBuilder.Domian",
-      "projectPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\formBuilder.Domian.csproj",
+      "projectUniqueName": "D:\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+      "projectName": "FormBuilder.Domian",
+      "projectPath": "D:\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
       "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\obj\\",
+      "outputPath": "D:\\apiProject\\formBuilder.Domian\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
