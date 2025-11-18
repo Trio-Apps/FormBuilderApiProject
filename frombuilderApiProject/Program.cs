@@ -3,7 +3,9 @@ using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
 using FormBuilder.API.Services;
+using FormBuilder.Application.IServices;
 using FormBuilder.core.Repository;
+using FormBuilder.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -120,6 +122,10 @@ builder.Services.AddScoped<IunitOfwork, UnitOfWork>();
 // Add Services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
+//builder.Services.AddScoped<IUserService, UserService>(); //
 
 var app = builder.Build();
 
