@@ -3,24 +3,68 @@
   "WorkspaceRootPath": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\frombuilderapiproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\migrationdb\\20251118080807_InitAppDatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:FormBuilder.core\\migrationdb\\20251118080807_InitAppDatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.core\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|solutionrelative:formbuilder.core\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\frombuilderapiproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|solutionrelative:frombuilderapiproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\frombuilderApiProject.csproj|solutionrelative:frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\dtos\\authdtos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.core\\repository\\unitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|solutionrelative:formbuilder.core\\repository\\unitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.services\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.services\\iservices\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\iservices\\itokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.services\\iservices\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\iservices\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.core\\repository\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|solutionrelative:formbuilder.core\\repository\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\interfaces\\ibaserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\interfaces\\ibaserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\entitys\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\entitys\\froms\\formtab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\froms\\formtab.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\entitys\\froms\\formfield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\froms\\formfield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\entitys\\froms\\fieldtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\froms\\fieldtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\entitys\\froms\\formbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\froms\\formbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.domian\\entitys\\auth\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\formBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\auth\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|c:\\users\\trio apps 3\\source\\repos\\frombuilderapiproject\\formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.core.csproj|solutionrelative:formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +74,218 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Program.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Program.cs",
-              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Program.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADMAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T14:47:41.934Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\Iservices\\IAuthService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Iservices\\IAuthService.cs",
-              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\Iservices\\IAuthService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Iservices\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAA9AAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "20251118080807_InitAppDatabase.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\migrationdb\\20251118080807_InitAppDatabase.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\migrationdb\\20251118080807_InitAppDatabase.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\migrationdb\\20251118080807_InitAppDatabase.cs",
+              "RelativeToolTip": "FormBuilder.core\\migrationdb\\20251118080807_InitAppDatabase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T14:37:33.139Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AuthDTOS.cs",
-              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\DTOS\\AuthDTOS.cs",
-              "RelativeDocumentMoniker": "formBuilder.Domian\\DTOS\\AuthDTOS.cs",
-              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\DTOS\\AuthDTOS.cs",
-              "RelativeToolTip": "formBuilder.Domian\\DTOS\\AuthDTOS.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T14:35:49.489Z",
+              "WhenOpened": "2025-11-18T08:08:07.981Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\AuthService.cs",
-              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\Services\\AuthService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Services\\AuthService.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAUwHUAAAAIAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Program.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Program.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Program.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Program.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAIBJwDYAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T14:32:42.037Z",
+              "WhenOpened": "2025-11-18T07:52:25.12Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\AuthController.cs",
-              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAC8AAABUAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\appsettings.json",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\appsettings.json",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\frombuilderApiProject\\appsettings.json",
+              "RelativeToolTip": "frombuilderApiProject\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-18T07:44:23.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "unitOfwork .cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Repository\\unitOfwork .cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Repository\\unitOfwork .cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Repository\\unitOfwork .cs",
+              "RelativeToolTip": "FormBuilder.core\\Repository\\unitOfwork .cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAIwB8AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-17T14:26:54.12Z",
+              "WhenOpened": "2025-11-18T07:34:41.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ITokenService.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\Iservices\\ITokenService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Iservices\\ITokenService.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.Services\\Iservices\\ITokenService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Iservices\\ITokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:32:59.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\BaseEntity.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\BaseEntity.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:25:29.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FormTab.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FormTab.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\froms\\FormTab.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FormTab.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\froms\\FormTab.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:24:48.106Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FormField.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FormField.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\froms\\FormField.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FormField.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\froms\\FormField.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:24:44.978Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FormBuilder.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FormBuilder.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\froms\\FormBuilder.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FormBuilder.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\froms\\FormBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:24:41.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "FieldType.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FieldType.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\froms\\FieldType.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\froms\\FieldType.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\froms\\FieldType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:24:19.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Permission.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:24:06.744Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "IunitOfwork.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Interfaces\\IunitOfwork.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Interfaces\\IunitOfwork.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Interfaces\\IunitOfwork.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IunitOfwork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:23:36.083Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "AuthDbContext .cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Context\\AuthDbContext .cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Context\\AuthDbContext .cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Context\\AuthDbContext .cs",
+              "RelativeToolTip": "FormBuilder.core\\Context\\AuthDbContext .cs",
+              "ViewState": "AgIAADsAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:17:56.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Context\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Context\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Context\\AppDbContext.cs",
+              "RelativeToolTip": "FormBuilder.core\\Context\\AppDbContext.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAAABUAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:11:23.502Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BaseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Repository\\BaseRepository.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Repository\\BaseRepository.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\FormBuilder.core\\Repository\\BaseRepository.cs",
+              "RelativeToolTip": "FormBuilder.core\\Repository\\BaseRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwGIAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:08:58.673Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IBaseRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Interfaces\\IBaseRepository.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Interfaces\\IBaseRepository.cs",
+              "ToolTip": "C:\\Users\\Trio Apps 3\\source\\repos\\frombuilderApiProject\\formBuilder.Domian\\Interfaces\\IBaseRepository.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IBaseRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAIBJwAoAAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T07:06:53.518Z",
               "EditorCaption": ""
             }
           ]

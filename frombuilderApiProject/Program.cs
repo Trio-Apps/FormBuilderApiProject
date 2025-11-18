@@ -1,35 +1,72 @@
-// Program.cs
+using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
 using FormBuilder.API.Services;
+using FormBuilder.core.Context;
+using FormBuilder.core.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add logging
+// Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
-// »«ﬁÌ «·≈⁄œ«œ« ...
-builder.Services.AddControllers();
+// Controllers & JSON options
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// DbContext „⁄  ›«’Ì· √ﬂÀ—
+// -------------------------
+// DbContexts
+// -------------------------
+// NOTE: Use the real assembly name for migrations or detect it dynamically:
+var authMigrationsAssembly = typeof(AuthDbContext).Assembly.GetName().Name;
+var appMigrationsAssembly = typeof(AppDbContext).Assembly.GetName().Name;
+
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        b => b.MigrationsAssembly("frombuilderApiProject")
+        builder.Configuration.GetConnectionString("AuthConnection"),
+        sql => sql.MigrationsAssembly(authMigrationsAssembly)
     );
-    options.EnableSensitiveDataLogging(true); // ≈ŸÂ«— «·»Ì«‰«  «·Õ”«”… ›Ì «··ÊÃ
-    options.EnableDetailedErrors(true); //  ›«’Ì· √ﬂÀ— ··√Œÿ«¡
+
+    // ›ﬁÿ ›Ì »Ì∆… «· ÿÊÌ— ó ·«  ›⁄¯· sensitive logging ›Ì «·«‰ «Ã
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+        options.EnableDetailedErrors();
+    }
 });
 
-// Identity
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        sql => sql.MigrationsAssembly(appMigrationsAssembly)
+    );
+
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableDetailedErrors();
+    }
+});
+
+// -------------------------
+// Identity („·«ÕŸ… „Â„… ÕÊ· «” Œœ«„ int ﬂ‹ key)
+// -------------------------
+// ≈–« ﬂ‰   ” Œœ„ „› «Õ „‰ «·‰Ê⁄ int:  √ﬂœ √‰ User Ì—À IdentityUser<int>
+// Ê√‰ AuthDbContext Ì—À IdentityDbContext<User, IdentityRole<int>, int>
 builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 {
     options.Password.RequireDigit = true;
@@ -40,18 +77,12 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 
     options.User.RequireUniqueEmail = true;
 })
-.AddEntityFrameworkStores<AuthDbContext>()
-.AddDefaultTokenProviders();
-// Program.cs
-builder.Services.AddControllers()
-    .AddJsonOptions(options =>
-    {
-        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-        options.JsonSerializerOptions.WriteIndented = true;
-    });
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultTokenProviders();
 
+// -------------------------
 // CORS
+// -------------------------
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -62,12 +93,18 @@ builder.Services.AddCors(options =>
     });
 });
 
+// -------------------------
+// App services / DI
+// -------------------------
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+// If you have UnitOfWork & repository pattern:
+builder.Services.AddScoped<IunitOfwork, UnitOfWork>();
+
 var app = builder.Build();
 
-// ≈ŸÂ«— Ã„Ì⁄ «·√Œÿ«¡ ›Ì «· ÿÊÌ—
+// Dev-only middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -77,8 +114,10 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors();
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

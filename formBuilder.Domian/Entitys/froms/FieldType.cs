@@ -1,17 +1,14 @@
 ﻿// Models/FieldType.cs
+using formBuilder.Domian.Entitys;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
     [Table("FIELD_TYPES")]
-    public class FieldType
+    public class FieldType :BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("FieldTypeID")]
-        public int FieldTypeID { get; set; }
-
+    
         [Required]
         [MaxLength(50)]
         [Column("TypeName")]

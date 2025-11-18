@@ -1,17 +1,15 @@
 ﻿// Models/FormTab.cs
+using DocumentFormat.OpenXml.Wordprocessing;
+using formBuilder.Domian.Entitys;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
     [Table("FORM_TABS")]
-    public class FormTab
+    public class FormTab :BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("TabID")]
-        public int TabID { get; set; }
-
+       
         [Required]
         [Column("FormBuilderID")]
         public int FormBuilderID { get; set; }

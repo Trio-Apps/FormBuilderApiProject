@@ -1,16 +1,13 @@
 ﻿// Models/FormBuilder.cs
+using formBuilder.Domian.Entitys;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
     [Table("FORM_BUILDER")]
-    public class FormBuilder
+    public class FormBuilder :BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("FormBuilderID")]
-        public int FormBuilderID { get; set; }
 
         [Required]
         [MaxLength(255)]

@@ -1,17 +1,14 @@
 ﻿// Models/FormField.cs
+using formBuilder.Domian.Entitys;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
     [Table("FORM_FIELDS")]
-    public class FormField
+    public class FormField :BaseEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("FieldID")]
-        public int FieldID { get; set; }
-
+       
         [Required]
         [Column("TabID")]
         public int TabID { get; set; }
