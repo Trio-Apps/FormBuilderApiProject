@@ -158,4 +158,24 @@ public class AuthService : IAuthService
             return new ApiResponse(500, "An error occurred while resetting password");
         }
     }
+    public async Task<ApiResponse> LogoutAsync(string userId)
+    {
+        try
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return new ApiResponse(404, "User not found");
+
+            
+            await _signInManager.SignOutAsync();
+
+            _logger.LogInformation($"User {user.Email} logged out successfully");
+            return new ApiResponse(200, "Logged out successfully");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during logout process");
+            return new ApiResponse(500, "An error occurred during logout");
+        }
+    }
 }

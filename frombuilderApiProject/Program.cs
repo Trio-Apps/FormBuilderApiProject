@@ -1,4 +1,3 @@
-// Program.cs
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
@@ -10,11 +9,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Controllers & JSON options
+// --------------------------------------------------
+// Controllers + JSON
+// --------------------------------------------------
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
@@ -23,18 +25,43 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// -------------------------
-// DbContexts „‰›’·… ·œ« «»Ì“ „‰›’·Ì‰
-// -------------------------
+// --------------------------------------------------
+// Swagger + JWT Support
+// --------------------------------------------------
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Enter the Bearer token like: Bearer {your token}",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
 
-// 1. AuthDbContext ··‹ Security ›ﬁÿ - Ì” Œœ„ AuthConnection
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtBearerDefaults.AuthenticationScheme
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
+
+// --------------------------------------------------
+// DbContexts
+// --------------------------------------------------
 builder.Services.AddDbContext<AuthDbContext>(options =>
 {
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("AuthConnection")
-    );
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
 
     if (builder.Environment.IsDevelopment())
     {
@@ -43,12 +70,9 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     }
 });
 
-// 2. AppDbContext ··‹ Form Builder ›ﬁÿ - Ì” Œœ„ DefaultConnection
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DefaultConnection")
-    );
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
     if (builder.Environment.IsDevelopment())
     {
@@ -57,10 +81,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     }
 });
 
-
-// -------------------------
-// Identity Configuration - Ì” Œœ„ AuthDbContext ›ﬁÿ
-// -------------------------
+// --------------------------------------------------
+// Identity
+// --------------------------------------------------
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
@@ -70,15 +93,14 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequiredLength = 6;
 
     options.User.RequireUniqueEmail = true;
-
     options.SignIn.RequireConfirmedEmail = false;
 })
 .AddEntityFrameworkStores<AuthDbContext>()
 .AddDefaultTokenProviders();
 
-// -------------------------
+// --------------------------------------------------
 // JWT Authentication
-// -------------------------
+// --------------------------------------------------
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -95,15 +117,16 @@ builder.Services.AddAuthentication(options =>
         ValidAudience = jwtSettings["Audience"],
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "your-super-long-secret-key-that-is-at-least-32-characters-long")),
+            Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "your-super-long-secret-key-that-is-at-least-32-characters-long")
+        ),
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
     };
 });
 
-// -------------------------
+// --------------------------------------------------
 // CORS
-// -------------------------
+// --------------------------------------------------
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -115,21 +138,21 @@ builder.Services.AddCors(options =>
     });
 });
 
-// -------------------------
-// App services / DI
-// -------------------------
+// --------------------------------------------------
+// Dependency Injection (Services)
+// --------------------------------------------------
 builder.Services.AddScoped<IunitOfwork, UnitOfWork>();
-// Add Services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
-builder.Services.AddScoped<IUserRoleService, UserRoleService>();
-//builder.Services.AddScoped<IUserService, UserService>(); //
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
-// Dev-only middleware
+// --------------------------------------------------
+// Development Environment
+// --------------------------------------------------
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -139,12 +162,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors();
 app.UseHttpsRedirection();
-
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-// ›Ì ‰Â«Ì… Program.cs ﬁ»· app.Run();
+
+// --------------------------------------------------
+// Database Seeding
+// --------------------------------------------------
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;

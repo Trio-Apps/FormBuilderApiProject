@@ -1,5 +1,4 @@
-﻿// Models/Permission.cs
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
@@ -27,7 +26,7 @@ namespace FormBuilder.API.Models
         [Column("CreatedDate")]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 
-        // Navigation properties
+        // ✅ Navigation property - يجب أن تطابق الاستخدام في DbContext
         public virtual ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     }
 }

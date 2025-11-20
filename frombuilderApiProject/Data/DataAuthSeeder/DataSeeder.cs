@@ -1,112 +1,114 @@
-﻿// Data/DataSeeder.cs
-using FormBuilder.API.Data;
+﻿// DataSeeder.cs
 using FormBuilder.API.Models;
-using FormBuilder.API.Models.FormBuilder.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-public class DataSeeder
+namespace FormBuilder.API.Data
 {
-    public static async Task SeedAsync(AuthDbContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+    public static class DataSeeder
     {
-        await context.Database.MigrateAsync();
-
-        // إنشاء الأدوار الأساسية
-        await SeedRoles(roleManager);
-
-        // إنشاء المستخدمين
-        await SeedUsers(userManager);
-
-        // إنشاء الأدوار المخصصة والصلاحيات
-        await SeedCustomRolesAndPermissions(context);
-
-        // إنشاء بيانات تجريبية للفورم بيلدر
-    }
-
-    private static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
-    {
-        string[] roles = { "Admin", "User", "Manager" };
-
-        foreach (var roleName in roles)
+        public static async Task SeedAsync(AuthDbContext context,
+            UserManager<AppUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
-            if (!await roleManager.RoleExistsAsync(roleName))
+            Console.WriteLine("🔧 Starting database seeding...");
+
+            // تأكد من أن Database موجودة
+            await context.Database.EnsureCreatedAsync();
+
+            // 1. إنشاء الأدوار إذا لم تكن موجودة
+            string[] roles = { "Admin", "User" };
+
+            foreach (var role in roles)
             {
-                await roleManager.CreateAsync(new IdentityRole(roleName));
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    var result = await roleManager.CreateAsync(new IdentityRole(role));
+                    Console.WriteLine(result.Succeeded ?
+                        $"✅ Created role: {role}" :
+                        $"❌ Failed to create role: {role} - {string.Join(", ", result.Errors)}");
+                }
+                else
+                {
+                    Console.WriteLine($"✅ Role already exists: {role}");
+                }
             }
-        }
-    }
 
-    private static async Task SeedUsers(UserManager<AppUser> userManager)
-    {
-        // إنشاء مستخدم Admin
-        var adminUser = new AppUser
-        {
-            UserName = "admin@formbuilder.com",
-            Email = "admin@formbuilder.com",
-            DisplayName = "System Administrator",
-            IsActive = true,
-            EmailConfirmed = true
-        };
+            // 2. إنشاء مستخدم Admin إذا لم يكن موجوداً
+            var adminEmail = "admin@example.com";
+            var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
-        if (await userManager.FindByEmailAsync(adminUser.Email) == null)
-        {
-            var result = await userManager.CreateAsync(adminUser, "Admin123!");
-            if (result.Succeeded)
+            if (adminUser == null)
             {
-                await userManager.AddToRoleAsync(adminUser, "Admin");
+                adminUser = new AppUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    EmailConfirmed = true,
+                    DisplayName = "System Administrator"
+                };
+
+                var createResult = await userManager.CreateAsync(adminUser, "Admin123!");
+                if (createResult.Succeeded)
+                {
+                    Console.WriteLine($"✅ Created admin user: {adminEmail}");
+                }
+                else
+                {
+                    Console.WriteLine($"❌ Admin creation failed: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+                    return; // توقف إذا فشل إنشاء المستخدم
+                }
             }
-        }
-
-        // إنشاء مستخدم عادي
-        var normalUser = new AppUser
-        {
-            UserName = "user@formbuilder.com",
-            Email = "user@formbuilder.com",
-            DisplayName = "Regular User",
-            IsActive = true,
-            EmailConfirmed = true
-        };
-
-        if (await userManager.FindByEmailAsync(normalUser.Email) == null)
-        {
-            var result = await userManager.CreateAsync(normalUser, "User123!");
-            if (result.Succeeded)
+            else
             {
-                await userManager.AddToRoleAsync(normalUser, "User");
+                Console.WriteLine($"✅ Admin user already exists: {adminEmail}");
             }
+
+            // 3. ربط المستخدم بدور Admin (هذه هي الخطوة المهمة!)
+            if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+            {
+                var addToRoleResult = await userManager.AddToRoleAsync(adminUser, "Admin");
+                if (addToRoleResult.Succeeded)
+                {
+                    Console.WriteLine($"✅ Successfully added user '{adminEmail}' to 'Admin' role");
+                }
+                else
+                {
+                    Console.WriteLine($"❌ Failed to add user to Admin role: {string.Join(", ", addToRoleResult.Errors.Select(e => e.Description))}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"✅ User '{adminEmail}' is already in 'Admin' role");
+            }
+
+            // 4. إنشاء مستخدم عادي للاختبار
+            var userEmail = "user@example.com";
+            var normalUser = await userManager.FindByEmailAsync(userEmail);
+
+            if (normalUser == null)
+            {
+                normalUser = new AppUser
+                {
+                    UserName = userEmail,
+                    Email = userEmail,
+                    EmailConfirmed = true,
+                    DisplayName = "Regular User"
+                };
+
+                var createResult = await userManager.CreateAsync(normalUser, "User123!");
+                if (createResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(normalUser, "User");
+                    Console.WriteLine($"✅ Created normal user: {userEmail}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"✅ Normal user already exists: {userEmail}");
+            }
+
+            Console.WriteLine("🎉 Database seeding completed successfully!");
         }
     }
-
-    private static async Task SeedCustomRolesAndPermissions(AuthDbContext context)
-    {
-        if (!await context.CustomRoles.AnyAsync())
-        {
-            var roles = new List<Role>
-            {
-                new Role { RoleName = "FormCreator", Description = "Can create and manage forms", IsActive = true },
-                new Role { RoleName = "FormViewer", Description = "Can view forms only", IsActive = true },
-                new Role { RoleName = "DataEntry", Description = "Can fill form data", IsActive = true }
-            };
-
-            await context.CustomRoles.AddRangeAsync(roles);
-            await context.SaveChangesAsync();
-        }
-
-        if (!await context.Permissions.AnyAsync())
-        {
-            var permissions = new List<Permission>
-            {
-                new Permission { PermissionName = "Forms.Create", Description = "Create new forms", Category = "Forms" },
-                new Permission { PermissionName = "Forms.Edit", Description = "Edit existing forms", Category = "Forms" },
-                new Permission { PermissionName = "Forms.Delete", Description = "Delete forms", Category = "Forms" },
-                new Permission { PermissionName = "Forms.View", Description = "View forms", Category = "Forms" },
-                new Permission { PermissionName = "Data.Create", Description = "Create form data", Category = "Data" },
-                new Permission { PermissionName = "Data.View", Description = "View form data", Category = "Data" }
-            };
-
-            await context.Permissions.AddRangeAsync(permissions);
-            await context.SaveChangesAsync();
-        }
-    }
-
 }

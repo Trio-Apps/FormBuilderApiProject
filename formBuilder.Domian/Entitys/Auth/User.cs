@@ -1,12 +1,11 @@
-﻿// Models/AppUser.cs
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity; // ✅ هذا هو الصحيح
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FormBuilder.API.Models
 {
     [Table("appUsers")]
-    public class AppUser : IdentityUser
+    public class AppUser : IdentityUser // ✅ من Microsoft.AspNetCore.Identity
     {
         [Required]
         [MaxLength(50)]
@@ -21,8 +20,5 @@ namespace FormBuilder.API.Models
 
         [Column("LastLoginDate")]
         public DateTime? LastLoginDate { get; set; }
-
-        // Navigation Properties for Custom Role System
-        public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
     }
 }

@@ -53,6 +53,16 @@
   },
   {
     "ContainingType": "AuthController",
+    "Method": "Logout",
+    "RelativePath": "api/Auth/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AuthController",
     "Method": "ResetPassword",
     "RelativePath": "api/Auth/ResetPassword",
     "HttpMethod": "POST",
@@ -197,7 +207,7 @@
     ]
   },
   {
-    "ContainingType": "RolesController",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
     "Method": "GetAllRoles",
     "RelativePath": "api/Roles",
     "HttpMethod": "GET",
@@ -217,7 +227,7 @@
     ]
   },
   {
-    "ContainingType": "RolesController",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
     "Method": "CreateRole",
     "RelativePath": "api/Roles",
     "HttpMethod": "POST",
@@ -243,7 +253,7 @@
     ]
   },
   {
-    "ContainingType": "RolesController",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
     "Method": "GetRoleById",
     "RelativePath": "api/Roles/{id}",
     "HttpMethod": "GET",
@@ -252,7 +262,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -269,7 +279,7 @@
     ]
   },
   {
-    "ContainingType": "RolesController",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
     "Method": "UpdateRole",
     "RelativePath": "api/Roles/{id}",
     "HttpMethod": "PUT",
@@ -278,7 +288,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       },
       {
@@ -300,7 +310,7 @@
     ]
   },
   {
-    "ContainingType": "RolesController",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
     "Method": "DeleteRole",
     "RelativePath": "api/Roles/{id}",
     "HttpMethod": "DELETE",
@@ -309,14 +319,14 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RolesController",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
     "Method": "AssignPermissions",
     "RelativePath": "api/Roles/{id}/permissions",
     "HttpMethod": "POST",
@@ -325,7 +335,7 @@
     "Parameters": [
       {
         "Name": "id",
-        "Type": "System.Int32",
+        "Type": "System.String",
         "IsRequired": true
       },
       {
@@ -337,53 +347,42 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "RolesController",
-    "Method": "RemovePermissions",
-    "RelativePath": "api/Roles/{id}/permissions",
-    "HttpMethod": "DELETE",
+    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "Method": "GetRoleByName",
+    "RelativePath": "api/Roles/name/{name}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "permissionIds",
-        "Type": "System.Collections.Generic.List\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "Name": "name",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "UserRolesController",
-    "Method": "AssignRoleToUser",
-    "RelativePath": "api/UserRoles/assign",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
+    "ReturnTypes": [
       {
-        "Name": "assignRoleDto",
-        "Type": "FormBuilder.Application.DTOS.Auth.AssignRoleToUserDto",
-        "IsRequired": true
+        "Type": "FormBuilder.Application.DTOS.Auth.RoleDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
       }
-    ],
-    "ReturnTypes": []
+    ]
   },
   {
-    "ContainingType": "UserRolesController",
-    "Method": "GetUsersWithRoles",
-    "RelativePath": "api/UserRoles/users",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "GetAllUsers",
+    "RelativePath": "api/Users",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.UserWithRolesDto, FormBuilder.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.UsersDto, FormBuilder.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -394,22 +393,48 @@
     ]
   },
   {
-    "ContainingType": "UserRolesController",
-    "Method": "GetUserRoles",
-    "RelativePath": "api/UserRoles/users/{userId}/roles",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Users",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createUserDto",
+        "Type": "FormBuilder.Application.DTOS.Auth.CreateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.Application.DTOS.Auth.UsersDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "GetUserById",
+    "RelativePath": "api/Users/{id}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
+        "Name": "id",
         "Type": "System.String",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.RoleDto, FormBuilder.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.Application.DTOS.Auth.UsersDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -420,48 +445,80 @@
     ]
   },
   {
-    "ContainingType": "UserRolesController",
-    "Method": "RemoveRoleFromUser",
-    "RelativePath": "api/UserRoles/users/{userId}/roles/{roleId}",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Users/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateUserDto",
+        "Type": "FormBuilder.Application.DTOS.Auth.UpdateUserDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.Application.DTOS.Auth.UsersDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Users/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
+        "Name": "id",
         "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "roleId",
-        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "UserRolesController",
-    "Method": "UpdateUserRole",
-    "RelativePath": "api/UserRoles/users/{userId}/roles/{roleId}",
-    "HttpMethod": "PUT",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "ActivateUser",
+    "RelativePath": "api/Users/{id}/activate",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
+        "Name": "id",
         "Type": "System.String",
         "IsRequired": true
-      },
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "Method": "DeactivateUser",
+    "RelativePath": "api/Users/{id}/deactivate",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "roleId",
-        "Type": "System.Int32",
+        "Name": "id",
+        "Type": "System.String",
         "IsRequired": true
-      },
-      {
-        "Name": "endDate",
-        "Type": "System.Nullable\u00601[[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": []

@@ -1,6 +1,6 @@
-﻿// Models/RolePermission.cs
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace FormBuilder.API.Models
 {
@@ -13,7 +13,7 @@ namespace FormBuilder.API.Models
 
         [Required]
         [Column("RoleID")]
-        public int RoleID { get; set; }
+        public string RoleID { get; set; }
 
         [Required]
         [Column("PermissionID")]
@@ -22,11 +22,11 @@ namespace FormBuilder.API.Models
         [Column("AssignedDate")]
         public DateTime AssignedDate { get; set; } = DateTime.UtcNow;
 
-        // Navigation properties
+        // ✅ Navigation properties - يجب أن تكون هذه الأسماء مطابقة للاستخدام في DbContext
         [ForeignKey("RoleID")]
-        public virtual Role Role { get; set; }
+        public virtual IdentityRole Role { get; set; } // ✅ اسم: Role
 
         [ForeignKey("PermissionID")]
-        public virtual Permission Permission { get; set; }
+        public virtual Permission Permission { get; set; } // ✅ اسم: Permission
     }
 }

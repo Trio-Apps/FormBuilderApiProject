@@ -9,13 +9,7 @@ namespace FormBuilder.Application.DTOS.Auth
 {
     public class CreateRoleDto
     {
-        [Required]
-        [MaxLength(50)]
-        public string RoleName { get; set; }
-
-        [MaxLength(255)]
-        public string Description { get; set; }
-
-        public List<int> PermissionIds { get; set; } = new List<int>();
+        public string Name { get; set; }
     }
+
 }

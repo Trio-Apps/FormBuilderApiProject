@@ -1,40 +1,39 @@
-﻿using System;
+﻿using FormBuilder.API.Data;
+using FormBuilder.API.Models;
+using FormBuilder.Application.DTOS;
+using FormBuilder.Application.DTOS.Auth;
+using FormBuilder.Application.IServices;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FormBuilder.Services.Services
 {
-    using FormBuilder.API.Data;
-    using FormBuilder.API.Models;
-    using FormBuilder.Application.DTOS;
-    using FormBuilder.Application.DTOS.Auth;
-    using FormBuilder.Application.IServices;
-    // Services/RoleService.cs
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Logging;
-
     public class RoleService : IRoleService
     {
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly AuthDbContext _context;
         private readonly ILogger<RoleService> _logger;
 
-        public RoleService(AuthDbContext context, ILogger<RoleService> logger)
+        public RoleService(
+            RoleManager<IdentityRole> roleManager,
+            AuthDbContext context,
+            ILogger<RoleService> logger)
         {
+            _roleManager = roleManager;
             _context = context;
             _logger = logger;
         }
 
-        public async Task<ServiceResult<RoleDto>> GetRoleByIdAsync(int roleId)
+        public async Task<ServiceResult<RoleDto>> GetRoleByIdAsync(string roleId)
         {
             try
             {
-                var role = await _context.CustomRoles
-                    .Include(r => r.RolePermissions)
-                    .ThenInclude(rp => rp.Permission)
-                    .FirstOrDefaultAsync(r => r.RoleID == roleId);
-
+                var role = await _roleManager.FindByIdAsync(roleId);
                 if (role == null)
                 {
                     return new ServiceResult<RoleDto>
@@ -55,17 +54,38 @@ namespace FormBuilder.Services.Services
             }
         }
 
+        public async Task<ServiceResult<RoleDto>> GetRoleByNameAsync(string roleName)
+        {
+            try
+            {
+                var role = await _roleManager.FindByNameAsync(roleName);
+                if (role == null)
+                {
+                    return new ServiceResult<RoleDto>
+                    {
+                        Success = false,
+                        ErrorMessage = "Role not found",
+                        StatusCode = 404
+                    };
+                }
+
+                var roleDto = MapToRoleDto(role);
+                return new ServiceResult<RoleDto> { Success = true, Data = roleDto, StatusCode = 200 };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error getting role by name: {RoleName}", roleName);
+                return new ServiceResult<RoleDto> { Success = false, ErrorMessage = "An error occurred", StatusCode = 500 };
+            }
+        }
+
         public async Task<ServiceResult<List<RoleDto>>> GetAllRolesAsync()
         {
             try
             {
-                var roles = await _context.CustomRoles
-                    .Include(r => r.RolePermissions)
-                    .ThenInclude(rp => rp.Permission)
-                    .Where(r => r.IsActive)
-                    .ToListAsync();
-
+                var roles = await _roleManager.Roles.ToListAsync();
                 var roleDtos = roles.Select(MapToRoleDto).ToList();
+
                 return new ServiceResult<List<RoleDto>> { Success = true, Data = roleDtos, StatusCode = 200 };
             }
             catch (Exception ex)
@@ -79,59 +99,48 @@ namespace FormBuilder.Services.Services
         {
             try
             {
-                // Check if role name already exists
-                var existingRole = await _context.CustomRoles
-                    .FirstOrDefaultAsync(r => r.RoleName == createRoleDto.RoleName);
-
-                if (existingRole != null)
+                // Check if role already exists
+                if (await _roleManager.RoleExistsAsync(createRoleDto.Name))
                 {
                     return new ServiceResult<RoleDto>
                     {
                         Success = false,
-                        ErrorMessage = "Role with this name already exists",
+                        ErrorMessage = "Role already exists",
                         StatusCode = 400
                     };
                 }
 
-                // Create new role
-                var role = new Role
-                {
-                    RoleName = createRoleDto.RoleName,
-                    Description = createRoleDto.Description,
-                    IsActive = true,
-                    CreatedDate = DateTime.UtcNow
-                };
+                var role = new IdentityRole(createRoleDto.Name);
+                var result = await _roleManager.CreateAsync(role);
 
-                await _context.CustomRoles.AddAsync(role);
-                await _context.SaveChangesAsync();
-
-                // Assign permissions if any
-                if (createRoleDto.PermissionIds.Any())
+                if (!result.Succeeded)
                 {
-                    await AssignPermissionsToRoleAsync(role.RoleID, createRoleDto.PermissionIds);
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    return new ServiceResult<RoleDto>
+                    {
+                        Success = false,
+                        ErrorMessage = errors,
+                        StatusCode = 400
+                    };
                 }
 
                 var roleDto = MapToRoleDto(role);
-                _logger.LogInformation("Role created successfully: {RoleName}", role.RoleName);
+                _logger.LogInformation("Role created successfully: {RoleName}", role.Name);
 
                 return new ServiceResult<RoleDto> { Success = true, Data = roleDto, StatusCode = 201 };
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating role");
+                _logger.LogError(ex, "Error creating role: {RoleName}", createRoleDto.Name);
                 return new ServiceResult<RoleDto> { Success = false, ErrorMessage = "An error occurred", StatusCode = 500 };
             }
         }
 
-        public async Task<ServiceResult<RoleDto>> UpdateRoleAsync(int roleId, UpdateRoleDto updateRoleDto)
+        public async Task<ServiceResult<RoleDto>> UpdateRoleAsync(string roleId, UpdateRoleDto updateRoleDto)
         {
             try
             {
-                var role = await _context.CustomRoles
-                    .Include(r => r.RolePermissions)
-                    .ThenInclude(rp => rp.Permission)
-                    .FirstOrDefaultAsync(r => r.RoleID == roleId);
-
+                var role = await _roleManager.FindByIdAsync(roleId);
                 if (role == null)
                 {
                     return new ServiceResult<RoleDto>
@@ -142,47 +151,40 @@ namespace FormBuilder.Services.Services
                     };
                 }
 
-                // Update properties if provided
-                if (!string.IsNullOrEmpty(updateRoleDto.RoleName))
+                // Update role name if provided and different
+                if (!string.IsNullOrEmpty(updateRoleDto.Name) && role.Name != updateRoleDto.Name)
                 {
-                    // Check if new role name is taken by another role
-                    var existingRole = await _context.CustomRoles
-                        .FirstOrDefaultAsync(r => r.RoleName == updateRoleDto.RoleName && r.RoleID != roleId);
-
-                    if (existingRole != null)
+                    // Check if new name is taken
+                    if (await _roleManager.RoleExistsAsync(updateRoleDto.Name))
                     {
                         return new ServiceResult<RoleDto>
                         {
                             Success = false,
-                            ErrorMessage = "Role name is already taken",
+                            ErrorMessage = "Role name already exists",
                             StatusCode = 400
                         };
                     }
-                    role.RoleName = updateRoleDto.RoleName;
+
+                    role.Name = updateRoleDto.Name;
+                    role.NormalizedName = updateRoleDto.Name.ToUpper();
+
+                    var updateResult = await _roleManager.UpdateAsync(role);
+                    if (!updateResult.Succeeded)
+                    {
+                        var errors = string.Join(", ", updateResult.Errors.Select(e => e.Description));
+                        return new ServiceResult<RoleDto>
+                        {
+                            Success = false,
+                            ErrorMessage = errors,
+                            StatusCode = 400
+                        };
+                    }
                 }
 
-                if (!string.IsNullOrEmpty(updateRoleDto.Description))
-                    role.Description = updateRoleDto.Description;
+                var updatedRole = await _roleManager.FindByIdAsync(roleId);
+                var roleDto = MapToRoleDto(updatedRole);
 
-                if (updateRoleDto.IsActive.HasValue)
-                    role.IsActive = updateRoleDto.IsActive.Value;
-
-                // Update permissions if provided
-                if (updateRoleDto.PermissionIds != null && updateRoleDto.PermissionIds.Any())
-                {
-                    // Remove existing permissions
-                    var existingPermissions = _context.RolePermissions.Where(rp => rp.RoleID == roleId);
-                    _context.RolePermissions.RemoveRange(existingPermissions);
-
-                    // Add new permissions
-                    await AssignPermissionsToRoleAsync(roleId, updateRoleDto.PermissionIds);
-                }
-
-                await _context.SaveChangesAsync();
-
-                var roleDto = MapToRoleDto(role);
                 _logger.LogInformation("Role updated successfully: {RoleId}", roleId);
-
                 return new ServiceResult<RoleDto> { Success = true, Data = roleDto, StatusCode = 200 };
             }
             catch (Exception ex)
@@ -192,15 +194,11 @@ namespace FormBuilder.Services.Services
             }
         }
 
-        public async Task<ServiceResult<bool>> DeleteRoleAsync(int roleId)
+        public async Task<ServiceResult<bool>> DeleteRoleAsync(string roleId)
         {
             try
             {
-                var role = await _context.CustomRoles
-                    .Include(r => r.UserRoles)
-                    .Include(r => r.RolePermissions)
-                    .FirstOrDefaultAsync(r => r.RoleID == roleId);
-
+                var role = await _roleManager.FindByIdAsync(roleId);
                 if (role == null)
                 {
                     return new ServiceResult<bool>
@@ -212,7 +210,8 @@ namespace FormBuilder.Services.Services
                 }
 
                 // Check if role is assigned to any users
-                if (role.UserRoles.Any())
+                var usersInRole = await _context.UserRoles.AnyAsync(ur => ur.RoleId == roleId);
+                if (usersInRole)
                 {
                     return new ServiceResult<bool>
                     {
@@ -222,15 +221,20 @@ namespace FormBuilder.Services.Services
                     };
                 }
 
-                // Remove role permissions
-                _context.RolePermissions.RemoveRange(role.RolePermissions);
+                // Delete the role
+                var result = await _roleManager.DeleteAsync(role);
+                if (!result.Succeeded)
+                {
+                    var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                    return new ServiceResult<bool>
+                    {
+                        Success = false,
+                        ErrorMessage = errors,
+                        StatusCode = 400
+                    };
+                }
 
-                // Remove role
-                _context.CustomRoles.Remove(role);
-
-                await _context.SaveChangesAsync();
-
-                _logger.LogInformation("Role deleted successfully: {RoleId}", roleId);
+                _logger.LogInformation("Role deleted successfully: {RoleName}", role.Name);
                 return new ServiceResult<bool> { Success = true, Data = true, StatusCode = 200 };
             }
             catch (Exception ex)
@@ -240,20 +244,47 @@ namespace FormBuilder.Services.Services
             }
         }
 
-        public async Task<ServiceResult<bool>> AssignPermissionsToRoleAsync(int roleId, List<int> permissionIds)
+        public async Task<ServiceResult<bool>> AssignPermissionsToRoleAsync(string roleId, List<int> permissionIds)
         {
             try
             {
-                var role = await _context.CustomRoles.FindAsync(roleId);
+                var role = await _roleManager.FindByIdAsync(roleId);
                 if (role == null)
                 {
-                    return new ServiceResult<bool> { Success = false, ErrorMessage = "Role not found", StatusCode = 404 };
+                    return new ServiceResult<bool>
+                    {
+                        Success = false,
+                        ErrorMessage = "Role not found",
+                        StatusCode = 404
+                    };
                 }
 
+                // التحقق من وجود الصلاحيات
                 var permissions = await _context.Permissions
                     .Where(p => permissionIds.Contains(p.PermissionID))
                     .ToListAsync();
 
+                if (permissions.Count != permissionIds.Count)
+                {
+                    return new ServiceResult<bool>
+                    {
+                        Success = false,
+                        ErrorMessage = "Some permissions were not found",
+                        StatusCode = 400
+                    };
+                }
+
+                // إزالة الصلاحيات الحالية لنفس الـ Role (لتجنب التكرار)
+                var existingPermissions = await _context.RolePermissions
+                    .Where(rp => rp.RoleID == roleId && permissionIds.Contains(rp.PermissionID))
+                    .ToListAsync();
+
+                if (existingPermissions.Any())
+                {
+                    _context.RolePermissions.RemoveRange(existingPermissions);
+                }
+
+                // إضافة الصلاحيات الجديدة
                 var rolePermissions = permissions.Select(p => new RolePermission
                 {
                     RoleID = roleId,
@@ -264,45 +295,33 @@ namespace FormBuilder.Services.Services
                 await _context.RolePermissions.AddRangeAsync(rolePermissions);
                 await _context.SaveChangesAsync();
 
-                return new ServiceResult<bool> { Success = true, Data = true, StatusCode = 200 };
+                _logger.LogInformation("Permissions assigned successfully to role: {RoleName}", role.Name);
+                return new ServiceResult<bool>
+                {
+                    Success = true,
+                    Data = true,
+                    StatusCode = 200
+                };
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error assigning permissions to role: {RoleId}", roleId);
-                return new ServiceResult<bool> { Success = false, ErrorMessage = "An error occurred", StatusCode = 500 };
+                return new ServiceResult<bool>
+                {
+                    Success = false,
+                    ErrorMessage = "An error occurred while assigning permissions",
+                    StatusCode = 500
+                };
             }
         }
 
-        public async Task<ServiceResult<bool>> RemovePermissionsFromRoleAsync(int roleId, List<int> permissionIds)
-        {
-            try
-            {
-                var rolePermissions = await _context.RolePermissions
-                    .Where(rp => rp.RoleID == roleId && permissionIds.Contains(rp.PermissionID))
-                    .ToListAsync();
-
-                _context.RolePermissions.RemoveRange(rolePermissions);
-                await _context.SaveChangesAsync();
-
-                return new ServiceResult<bool> { Success = true, Data = true, StatusCode = 200 };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error removing permissions from role: {RoleId}", roleId);
-                return new ServiceResult<bool> { Success = false, ErrorMessage = "An error occurred", StatusCode = 500 };
-            }
-        }
-
-        private RoleDto MapToRoleDto(Role role)
+        // Helper Methods
+        private RoleDto MapToRoleDto(IdentityRole role)
         {
             return new RoleDto
             {
-                RoleID = role.RoleID,
-                RoleName = role.RoleName,
-                Description = role.Description,
-                IsActive = role.IsActive,
-                CreatedDate = role.CreatedDate,
-                Permissions = role.RolePermissions?.Select(rp => rp.Permission.PermissionName).ToList() ?? new List<string>()
+                Id = role.Id,
+                Name = role.Name
             };
         }
     }

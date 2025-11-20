@@ -180,15 +180,6 @@ C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\ob
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.pdb
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.genruntimeconfig.cache
 C:\Users\Trio Apps 3\source\repos\frombuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\ref\FormBuilder.ApiProject.dll
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.AssemblyReference.cache
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.GeneratedMSBuildEditorConfig.editorconfig
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfoInputs.cache
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfo.cs
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.CoreCompileInputs.cache
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cs
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cache
-D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.sourcelink.json
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.Development.json
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.json
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiProject.staticwebassets.endpoints.json
@@ -201,7 +192,11 @@ D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Azure.Core.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Azure.Identity.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\DocumentFormat.OpenXml.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\DocumentFormat.OpenXml.Framework.dll
+D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\EntityFramework.SqlServer.dll
+D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\EntityFramework.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Humanizer.dll
+D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNet.Identity.Core.dll
+D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
@@ -347,6 +342,15 @@ D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Services.dll
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Application.pdb
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Services.pdb
 D:\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Domian.pdb
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.AssemblyReference.cache
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfoInputs.cache
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfo.cs
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.CoreCompileInputs.cache
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cs
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cache
+D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.sourcelink.json
 D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\rjimswa.dswa.cache.json
 D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json

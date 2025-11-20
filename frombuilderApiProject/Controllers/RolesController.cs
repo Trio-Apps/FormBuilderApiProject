@@ -1,91 +1,109 @@
-﻿// Controllers/RolesController.cs
-using FormBuilder.API.Models;
+﻿using FormBuilder.API.Models;
 using FormBuilder.Application.DTOS.Auth;
 using FormBuilder.Application.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-[ApiController]
-[Route("api/[controller]")]
-[Authorize(Roles = "Admin")]
-public class RolesController : ControllerBase
+namespace FormBuilder.API.Controllers
 {
-    private readonly IRoleService _roleService;
-    private readonly ILogger<RolesController> _logger;
-
-    public RolesController(IRoleService roleService, ILogger<RolesController> logger)
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize]
+    public class RolesController : ControllerBase
     {
-        _roleService = roleService;
-        _logger = logger;
-    }
+        private readonly IRoleService _roleService;
+        private readonly ILogger<RolesController> _logger;
 
-    [HttpGet]
-    public async Task<ActionResult<List<RoleDto>>> GetAllRoles()
-    {
-        var result = await _roleService.GetAllRolesAsync();
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+        public RolesController(IRoleService roleService, ILogger<RolesController> logger)
+        {
+            _roleService = roleService;
+            _logger = logger;
+        }
 
-        return Ok(result.Data);
-    }
+        // GET: api/roles
+        [HttpGet]
+        public async Task<ActionResult<List<RoleDto>>> GetAllRoles()
+        {
+            var result = await _roleService.GetAllRolesAsync();
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<RoleDto>> GetRoleById(int id)
-    {
-        var result = await _roleService.GetRoleByIdAsync(id);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+            return Ok(result.Data);
+        }
 
-        return Ok(result.Data);
-    }
+        // GET: api/roles/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RoleDto>> GetRoleById(string id)
+        {
+            var result = await _roleService.GetRoleByIdAsync(id);
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
 
-    [HttpPost]
-    public async Task<ActionResult<RoleDto>> CreateRole(CreateRoleDto createRoleDto)
-    {
-        var result = await _roleService.CreateRoleAsync(createRoleDto);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+            return Ok(result.Data);
+        }
 
-        return StatusCode(201, result.Data);
-    }
+        // GET: api/roles/name/{name}
+        [HttpGet("name/{name}")]
+        public async Task<ActionResult<RoleDto>> GetRoleByName(string name)
+        {
+            var result = await _roleService.GetRoleByNameAsync(name);
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
 
-    [HttpPut("{id}")]
-    public async Task<ActionResult<RoleDto>> UpdateRole(int id, UpdateRoleDto updateRoleDto)
-    {
-        var result = await _roleService.UpdateRoleAsync(id, updateRoleDto);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+            return Ok(result.Data);
+        }
 
-        return Ok(result.Data);
-    }
+        // POST: api/roles
+        [HttpPost]
+        public async Task<ActionResult<RoleDto>> CreateRole(CreateRoleDto createRoleDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-    [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteRole(int id)
-    {
-        var result = await _roleService.DeleteRoleAsync(id);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+            var result = await _roleService.CreateRoleAsync(createRoleDto);
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
 
-        return Ok(new ApiResponse(200, "Role deleted successfully"));
-    }
+            return CreatedAtAction(nameof(GetRoleById), new { id = result.Data.Id }, result.Data);
+        }
 
-    [HttpPost("{id}/permissions")]
-    public async Task<ActionResult> AssignPermissions(int id, [FromBody] List<int> permissionIds)
-    {
-        var result = await _roleService.AssignPermissionsToRoleAsync(id, permissionIds);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+        // PUT: api/roles/{id}
+        [HttpPut("{id}")]
+        public async Task<ActionResult<RoleDto>> UpdateRole(string id, UpdateRoleDto updateRoleDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        return Ok(new ApiResponse(200, "Permissions assigned successfully"));
-    }
+            var result = await _roleService.UpdateRoleAsync(id, updateRoleDto);
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
 
-    [HttpDelete("{id}/permissions")]
-    public async Task<ActionResult> RemovePermissions(int id, [FromBody] List<int> permissionIds)
-    {
-        var result = await _roleService.RemovePermissionsFromRoleAsync(id, permissionIds);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
+            return Ok(result.Data);
+        }
 
-        return Ok(new ApiResponse(200, "Permissions removed successfully"));
+        // DELETE: api/roles/{id}
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteRole(string id)
+        {
+            var result = await _roleService.DeleteRoleAsync(id);
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
+
+            return NoContent();
+        }
+
+        // POST: api/roles/{id}/permissions
+        [HttpPost("{id}/permissions")]
+        public async Task<ActionResult> AssignPermissions(string id, [FromBody] List<int> permissionIds)
+        {
+            if (permissionIds == null || !permissionIds.Any())
+                return BadRequest("Permission IDs are required");
+
+            var result = await _roleService.AssignPermissionsToRoleAsync(id, permissionIds);
+            if (!result.Success)
+                return StatusCode(result.StatusCode, result.ErrorMessage);
+
+            return Ok(new { message = "Permissions assigned successfully" });
+        }
     }
 }

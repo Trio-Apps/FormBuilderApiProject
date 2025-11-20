@@ -1,5 +1,6 @@
 ﻿using FormBuilder.API.Models;
 using FormBuilder.API.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,31 +10,40 @@ using System.Text;
 public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
+    private readonly UserManager<AppUser> _userManager;
 
-    public TokenService(IConfiguration configuration)
+    public TokenService(IConfiguration configuration, UserManager<AppUser> userManager)
     {
         _configuration = configuration;
+        _userManager = userManager;
     }
 
-    public Task<string> CreateTokenAsync(AppUser user)
+    public async Task<string> CreateTokenAsync(AppUser user)
     {
-        // Set claims - استخدم user بدلاً من AppUser
         var authClaims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),  // user ID claim
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.GivenName, user.DisplayName),
             new Claim(ClaimTypes.Email, user.Email),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // unique token ID
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        var expirationMinutesStr = _configuration["Jwt:ExpiryInMinutes"];
-
-        if (!int.TryParse(expirationMinutesStr, out int expirationMinutes))
+        // ⛔ هنا الحل الصحيح: جلب الـ Roles من Identity
+        var roles = await _userManager.GetRolesAsync(user);
+        foreach (var role in roles)
         {
-            expirationMinutes = 60; // default value
+            authClaims.Add(new Claim(ClaimTypes.Role, role));
         }
+
+        var key = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
+        );
+
+        var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        int expirationMinutes =
+            int.TryParse(_configuration["Jwt:ExpiryInMinutes"], out int exp)
+                ? exp : 60;
 
         var token = new JwtSecurityToken(
             issuer: _configuration["Jwt:Issuer"],
@@ -43,6 +53,6 @@ public class TokenService : ITokenService
             signingCredentials: signingCredentials
         );
 
-        return Task.FromResult(new JwtSecurityTokenHandler().WriteToken(token));
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }
