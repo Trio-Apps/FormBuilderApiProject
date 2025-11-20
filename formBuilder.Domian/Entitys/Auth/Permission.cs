@@ -19,9 +19,7 @@ namespace FormBuilder.API.Models
         [Column("Description")]
         public string Description { get; set; }
 
-        [MaxLength(50)]
-        [Column("Category")]
-        public string Category { get; set; }
+        
 
         [Column("CreatedDate")]
         public DateTime CreatedDate { get; set; } = DateTime.UtcNow;

@@ -245,54 +245,6 @@
         }
       }
     },
-    "/api/Permissions/category/{category}": {
-      "get": {
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "category",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PermissionDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PermissionDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PermissionDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/Permissions/{id}": {
       "put": {
         "tags": [
@@ -920,14 +872,6 @@
           "message": {
             "type": "string",
             "nullable": true
-          },
-          "data": {
-            "nullable": true
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -963,11 +907,6 @@
           },
           "description": {
             "maxLength": 255,
-            "type": "string",
-            "nullable": true
-          },
-          "category": {
-            "maxLength": 50,
             "type": "string",
             "nullable": true
           }
@@ -1046,10 +985,6 @@
             "type": "string",
             "nullable": true
           },
-          "category": {
-            "type": "string",
-            "nullable": true
-          },
           "createdDate": {
             "type": "string",
             "format": "date-time"
@@ -1081,11 +1016,6 @@
           },
           "description": {
             "maxLength": 255,
-            "type": "string",
-            "nullable": true
-          },
-          "category": {
-            "maxLength": 50,
             "type": "string",
             "nullable": true
           }

@@ -1,5 +1,6 @@
 ﻿// Controllers/PermissionsController.cs
 using FormBuilder.API.Models;
+using FormBuilder.API.Models.FormBuilder.API.Models;
 using FormBuilder.Application.DTOS.Auth;
 using FormBuilder.Application.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -29,15 +30,7 @@ public class PermissionsController : ControllerBase
         return Ok(result.Data);
     }
 
-    [HttpGet("category/{category}")]
-    public async Task<ActionResult<List<PermissionDto>>> GetPermissionsByCategory(string category)
-    {
-        var result = await _permissionService.GetPermissionsByCategoryAsync(category);
-        if (!result.Success)
-            return StatusCode(result.StatusCode, new ApiResponse(result.StatusCode, result.ErrorMessage));
-
-        return Ok(result.Data);
-    }
+    
 
     [HttpPost]
     public async Task<ActionResult<PermissionDto>> CreatePermission(CreatePermissionDto createPermissionDto)

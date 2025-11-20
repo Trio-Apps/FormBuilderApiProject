@@ -1,6 +1,7 @@
 ﻿
 using FormBuilder.API.DTOs;
 using FormBuilder.API.Models;
+using FormBuilder.API.Models.FormBuilder.API.Models;
 using FormBuilder.core.DTOS.Auth;
 
 public interface IAuthService

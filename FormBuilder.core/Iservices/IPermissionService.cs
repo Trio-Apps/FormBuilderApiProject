@@ -12,7 +12,6 @@ namespace FormBuilder.Application.IServices
     {
         Task<ServiceResult<PermissionDto>> GetPermissionByIdAsync(int permissionId);
         Task<ServiceResult<List<PermissionDto>>> GetAllPermissionsAsync();
-        Task<ServiceResult<List<PermissionDto>>> GetPermissionsByCategoryAsync(string category);
         Task<ServiceResult<PermissionDto>> CreatePermissionAsync(CreatePermissionDto createPermissionDto);
         Task<ServiceResult<PermissionDto>> UpdatePermissionAsync(int permissionId, UpdatePermissionDto updatePermissionDto);
         Task<ServiceResult<bool>> DeletePermissionAsync(int permissionId);

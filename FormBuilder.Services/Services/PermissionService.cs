@@ -61,23 +61,6 @@ namespace FormBuilder.Services.Services
             }
         }
 
-        public async Task<ServiceResult<List<PermissionDto>>> GetPermissionsByCategoryAsync(string category)
-        {
-            try
-            {
-                var permissions = await _context.Permissions
-                    .Where(p => p.Category == category)
-                    .ToListAsync();
-
-                var permissionDtos = permissions.Select(MapToPermissionDto).ToList();
-                return new ServiceResult<List<PermissionDto>> { Success = true, Data = permissionDtos, StatusCode = 200 };
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error getting permissions by category: {Category}", category);
-                return new ServiceResult<List<PermissionDto>> { Success = false, ErrorMessage = "An error occurred", StatusCode = 500 };
-            }
-        }
 
         public async Task<ServiceResult<PermissionDto>> CreatePermissionAsync(CreatePermissionDto createPermissionDto)
         {
@@ -101,7 +84,7 @@ namespace FormBuilder.Services.Services
                 {
                     PermissionName = createPermissionDto.PermissionName,
                     Description = createPermissionDto.Description,
-                    Category = createPermissionDto.Category,
+                   
                     CreatedDate = DateTime.UtcNow
                 };
 
@@ -151,8 +134,6 @@ namespace FormBuilder.Services.Services
                 if (!string.IsNullOrEmpty(updatePermissionDto.Description))
                     permission.Description = updatePermissionDto.Description;
 
-                if (!string.IsNullOrEmpty(updatePermissionDto.Category))
-                    permission.Category = updatePermissionDto.Category;
 
                 await _context.SaveChangesAsync();
 
@@ -212,7 +193,6 @@ namespace FormBuilder.Services.Services
                 PermissionID = permission.PermissionID,
                 PermissionName = permission.PermissionName,
                 Description = permission.Description,
-                Category = permission.Category,
                 CreatedDate = permission.CreatedDate
             };
         }

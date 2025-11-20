@@ -15,7 +15,5 @@ namespace FormBuilder.Application.DTOS.Auth
         [MaxLength(255)]
         public string Description { get; set; }
 
-        [MaxLength(50)]
-        public string Category { get; set; }
     }
 }

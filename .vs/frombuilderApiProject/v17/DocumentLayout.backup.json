@@ -3,16 +3,63 @@
   "WorkspaceRootPath": "D:\\apiProject\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\controllers\\permissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\permissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\apiproject\\formbuilder.services\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\iservices\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\iservices\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\New folder\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\auth\\createpermissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\auth\\createpermissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\auth\\updatepermissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\auth\\updatepermissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\auth\\permissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\auth\\permissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\apiproject\\formbuilder.services\\services\\permissionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\permissionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\iservices\\ipermissionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\iservices\\ipermissionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|d:\\apiproject\\formbuilder.domian\\entitys\\auth\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\auth\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\data\\dataauthseeder\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\data\\dataauthseeder\\dataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\controllers\\permissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\permissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -67,18 +114,6 @@
       "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\iservices\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\response\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|d:\\apiproject\\formbuilder.domian\\entitys\\auth\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\auth\\permission.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\auth\\updatepermissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\auth\\updatepermissiondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\dtos\\auth\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\auth\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -99,28 +134,8 @@
       "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\dtos\\auth\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\apiproject\\formbuilder.services\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\iservices\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\iservices\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\apiproject\\frombuilderapiproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\context\\authdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|solutionrelative:formbuilder.core\\context\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\apiproject\\formbuilder.services\\services\\permissionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\permissionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7415B448-6C76-4AF9-835B-9E0449452E94}|FormBuilder.core\\FormBuilder.Application.csproj|d:\\apiproject\\formbuilder.core\\data\\migrations\\20251119110426_updatedatabase1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -150,124 +165,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Program.cs",
-              "RelativeDocumentMoniker": "FrombuilderApiProject\\Program.cs",
-              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Program.cs",
-              "RelativeToolTip": "FrombuilderApiProject\\Program.cs",
-              "ViewState": "AgIAABoAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T08:20:28.191Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\UserService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\UserService.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\UserService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Services\\UserService.cs",
-              "ViewState": "AgIAADsBAAAAAAAAAAAQwMEAAABfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T13:21:08.351Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\appsettings.json",
-              "RelativeDocumentMoniker": "FrombuilderApiProject\\appsettings.json",
-              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\appsettings.json",
-              "RelativeToolTip": "FrombuilderApiProject\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-20T09:57:34.472Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PermissionsController.cs",
-              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\PermissionsController.cs",
-              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\PermissionsController.cs",
-              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\PermissionsController.cs",
-              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\PermissionsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:35:03.998Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "CreateRoleDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:43:17.244Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "TokenService.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\TokenService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\TokenService.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\TokenService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Services\\TokenService.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAADwvzoAAAAAAAAAAAAAAA==",
+              "Title": "response.cs",
+              "DocumentMoniker": "D:\\New folder\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs",
+              "RelativeDocumentMoniker": "..\\New folder\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs",
+              "ToolTip": "D:\\New folder\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs",
+              "RelativeToolTip": "..\\New folder\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T10:34:59.837Z",
+              "WhenOpened": "2025-11-20T11:37:18.44Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "User.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\User.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Domian\\Entitys\\Auth\\User.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\User.cs",
-              "RelativeToolTip": "FormBuilder.Domian\\Entitys\\Auth\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T10:04:22.765Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "UpdateRoleDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:51:19.958Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "RoleDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:48:21.232Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 23,
               "Title": "IRoleService.cs",
               "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\IServices\\IRoleService.cs",
               "RelativeDocumentMoniker": "FormBuilder.core\\IServices\\IRoleService.cs",
@@ -279,7 +194,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 14,
               "Title": "DataSeeder.cs",
               "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Data\\DataAuthSeeder\\DataSeeder.cs",
               "RelativeDocumentMoniker": "FrombuilderApiProject\\Data\\DataAuthSeeder\\DataSeeder.cs",
@@ -287,229 +202,160 @@
               "RelativeToolTip": "FrombuilderApiProject\\Data\\DataAuthSeeder\\DataSeeder.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAkwC4AAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T10:44:34.386Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-19T10:44:34.386Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "UpdateUserDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "DocumentIndex": 12,
+              "Title": "Permission.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "RelativeToolTip": "FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T13:25:39.774Z"
+              "WhenOpened": "2025-11-19T10:04:11.924Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "RolesController.cs",
-              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\RolesController.cs",
-              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\RolesController.cs",
-              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\RolesController.cs",
-              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\RolesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:43:02.337Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "UserDetailDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:03:06.74Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RoleService.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\RoleService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\RoleService.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\RoleService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Services\\RoleService.cs",
-              "ViewState": "AgIAAOcAAAAAAAAAAAAswCYBAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T07:30:59.525Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "UserDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T12:51:40.553Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "FormBuilder.ApiProject.csproj",
-              "DocumentMoniker": "D:\\apiProject\\frombuilderApiProject\\FormBuilder.ApiProject.csproj",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\FormBuilder.ApiProject.csproj",
-              "ToolTip": "D:\\apiProject\\frombuilderApiProject\\FormBuilder.ApiProject.csproj",
-              "RelativeToolTip": "frombuilderApiProject\\FormBuilder.ApiProject.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-20T09:49:17.643Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "FormBuilder.Domian.csproj",
-              "DocumentMoniker": "D:\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
-              "RelativeDocumentMoniker": "formBuilder.Domian\\FormBuilder.Domian.csproj",
-              "ToolTip": "D:\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
-              "RelativeToolTip": "formBuilder.Domian\\FormBuilder.Domian.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-20T09:49:08.985Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
-              "Title": "CreateUserDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:03:07.908Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "UsersDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T13:24:32.43Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\IServices\\IUserService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\IServices\\IUserService.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\IServices\\IUserService.cs",
-              "RelativeToolTip": "FormBuilder.core\\IServices\\IUserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T13:30:56.39Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 5,
               "Title": "response.cs",
               "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs",
               "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Response\\response.cs",
               "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Response\\response.cs",
               "RelativeToolTip": "FormBuilder.core\\DTOS\\Response\\response.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAA0wAcAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T08:32:44.27Z"
+              "WhenOpened": "2025-11-20T08:32:44.27Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "UserSearchResultDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\IServices\\IAuthService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\IServices\\IAuthService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\IServices\\IAuthService.cs",
+              "RelativeToolTip": "FormBuilder.core\\IServices\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:21:18.15Z"
+              "WhenOpened": "2025-11-19T07:06:26.945Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\UsersController.cs",
-              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBkAAAA8AAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "PermissionDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\PermissionDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\PermissionDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\PermissionDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\PermissionDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T07:31:41.507Z"
+              "WhenOpened": "2025-11-20T11:31:53.073Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "UpdatePermissionDto.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
-              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "CreatePermissionDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreatePermissionDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\CreatePermissionDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreatePermissionDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\CreatePermissionDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T08:18:18.717Z"
+              "WhenOpened": "2025-11-20T11:32:12.712Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
-              "Title": "20251119115914_das.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
-              "RelativeToolTip": "FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\AuthService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\AuthService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\AuthService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\AuthService.cs",
+              "ViewState": "AgIAAGIAAAAAAAAAAAAWwGwAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T11:59:14.267Z"
+              "WhenOpened": "2025-11-19T07:02:20.846Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Context\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\Context\\AppDbContext.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Context\\AppDbContext.cs",
-              "RelativeToolTip": "FormBuilder.core\\Context\\AppDbContext.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\AuthController.cs",
+              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAADgvyIAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T11:06:16.857Z"
+              "WhenOpened": "2025-11-19T07:07:59.168Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "20251119110426_updatedatabase1.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
-              "RelativeToolTip": "FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "PermissionsController.cs",
+              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\PermissionsController.cs",
+              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\PermissionsController.cs",
+              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\PermissionsController.cs*",
+              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\PermissionsController.cs*",
+              "ViewState": "AgIAACcAAAAAAAAAAADgvzsAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T11:04:26.443Z"
+              "WhenOpened": "2025-11-19T12:35:03.998Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "20251119110204_updatedatabase.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
-              "RelativeToolTip": "FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 24,
+              "Title": "RoleDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\RoleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T11:02:04.765Z"
+              "WhenOpened": "2025-11-19T12:48:21.232Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 25,
+              "Title": "UpdateRoleDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UpdateRoleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T12:51:19.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\User.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Domian\\Entitys\\Auth\\User.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\User.cs",
+              "RelativeToolTip": "FormBuilder.Domian\\Entitys\\Auth\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T10:04:22.765Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Program.cs",
+              "RelativeDocumentMoniker": "FrombuilderApiProject\\Program.cs",
+              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Program.cs",
+              "RelativeToolTip": "FrombuilderApiProject\\Program.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T08:20:28.191Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "AuthDbContext .cs",
               "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Context\\AuthDbContext .cs",
               "RelativeDocumentMoniker": "FormBuilder.core\\Context\\AuthDbContext .cs",
@@ -521,63 +367,279 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Permission.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
-              "RelativeToolTip": "FormBuilder.Domian\\Entitys\\Auth\\Permission.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB8AAAABAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "UpdatePermissionDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UpdatePermissionDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T10:04:11.924Z"
+              "WhenOpened": "2025-11-20T08:18:18.717Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 10,
+              "Title": "IPermissionService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\IServices\\IPermissionService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\IServices\\IPermissionService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\IServices\\IPermissionService.cs",
+              "RelativeToolTip": "FormBuilder.core\\IServices\\IPermissionService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T11:27:16.288Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "PermissionService.cs",
               "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\PermissionService.cs",
               "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\PermissionService.cs",
               "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\PermissionService.cs",
               "RelativeToolTip": "FormBuilder.Services\\Services\\PermissionService.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAwwHgAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBEAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-19T07:42:29.858Z"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\TokenService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\TokenService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\TokenService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAADwvzoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T10:34:59.837Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 26,
-              "Title": "AuthController.cs",
-              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\AuthController.cs",
-              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\AuthController.cs",
-              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\AuthController.cs",
-              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\AuthController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADgAAAAEAAAAAAAAAA==",
+              "Title": "CreateRoleDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\CreateRoleDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T07:07:59.168Z"
+              "WhenOpened": "2025-11-19T12:43:17.244Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "IAuthService.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\IServices\\IAuthService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.core\\IServices\\IAuthService.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.core\\IServices\\IAuthService.cs",
-              "RelativeToolTip": "FormBuilder.core\\IServices\\IAuthService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T07:06:26.945Z"
+              "DocumentIndex": 15,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\appsettings.json",
+              "RelativeDocumentMoniker": "FrombuilderApiProject\\appsettings.json",
+              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\appsettings.json",
+              "RelativeToolTip": "FrombuilderApiProject\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-20T09:57:34.472Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "AuthService.cs",
-              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\AuthService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\AuthService.cs",
-              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\AuthService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Services\\AuthService.cs",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAkwKgAAAAMAAAAAAAAAA==",
+              "DocumentIndex": 20,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\UserService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\UserService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\UserService.cs",
+              "ViewState": "AgIAADsBAAAAAAAAAAAQwMEAAABfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-19T07:02:20.846Z"
+              "WhenOpened": "2025-11-19T13:21:08.351Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "UpdateUserDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UpdateUserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:25:39.774Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "RolesController.cs",
+              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\RolesController.cs",
+              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\RolesController.cs",
+              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\RolesController.cs",
+              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\RolesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T12:43:02.337Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "UserDetailDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UserDetailDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:03:06.74Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "RoleService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.Services\\Services\\RoleService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\RoleService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.Services\\Services\\RoleService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\RoleService.cs",
+              "ViewState": "AgIAAOcAAAAAAAAAAAAswCYBAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:30:59.525Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "UserDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T12:51:40.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "FormBuilder.ApiProject.csproj",
+              "DocumentMoniker": "D:\\apiProject\\frombuilderApiProject\\FormBuilder.ApiProject.csproj",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\FormBuilder.ApiProject.csproj",
+              "ToolTip": "D:\\apiProject\\frombuilderApiProject\\FormBuilder.ApiProject.csproj",
+              "RelativeToolTip": "frombuilderApiProject\\FormBuilder.ApiProject.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-20T09:49:17.643Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "FormBuilder.Domian.csproj",
+              "DocumentMoniker": "D:\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\FormBuilder.Domian.csproj",
+              "ToolTip": "D:\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+              "RelativeToolTip": "formBuilder.Domian\\FormBuilder.Domian.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-20T09:49:08.985Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "CreateUserDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\CreateUserDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:03:07.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "UsersDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UsersDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAUAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:24:32.43Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IUserService.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\IServices\\IUserService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\IServices\\IUserService.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\IServices\\IUserService.cs",
+              "RelativeToolTip": "FormBuilder.core\\IServices\\IUserService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:30:56.39Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "UserSearchResultDto.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
+              "RelativeToolTip": "FormBuilder.core\\DTOS\\Auth\\UserSearchResultDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:21:18.15Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "UsersController.cs",
+              "DocumentMoniker": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\UsersController.cs",
+              "RelativeDocumentMoniker": "FrombuilderApiProject\\Controllers\\UsersController.cs",
+              "ToolTip": "D:\\apiProject\\FrombuilderApiProject\\Controllers\\UsersController.cs",
+              "RelativeToolTip": "FrombuilderApiProject\\Controllers\\UsersController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwBkAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T07:31:41.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "20251119115914_das.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
+              "RelativeToolTip": "FormBuilder.core\\Data\\Migrations\\20251119115914_das.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T11:59:14.267Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Context\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Context\\AppDbContext.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Context\\AppDbContext.cs",
+              "RelativeToolTip": "FormBuilder.core\\Context\\AppDbContext.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T11:06:16.857Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "20251119110426_updatedatabase1.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
+              "RelativeToolTip": "FormBuilder.core\\Data\\Migrations\\20251119110426_updatedatabase1.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T11:04:26.443Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "20251119110204_updatedatabase.cs",
+              "DocumentMoniker": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
+              "RelativeDocumentMoniker": "FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
+              "ToolTip": "D:\\apiProject\\FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
+              "RelativeToolTip": "FormBuilder.core\\Data\\Migrations\\20251119110204_updatedatabase.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T11:02:04.765Z"
             }
           ]
         }

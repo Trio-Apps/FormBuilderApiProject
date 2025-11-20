@@ -1,42 +1,32 @@
 ﻿namespace FormBuilder.API.Models
 {
-    public class ApiResponse
+    // Models/ApiResponse.cs
+    namespace FormBuilder.API.Models
     {
-        public int StatusCode { get; set; }
-        public string ?Message { get; set; }
-        public object ?Data { get; set; }
-        public DateTime ?Timestamp { get; set; }
 
-        // Constructor بمعاملين
-        public ApiResponse(int statusCode, string message = null)
+        // Dtos/ApiResponse.cs
+        public class ApiResponse
         {
-            StatusCode = statusCode;
-            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
-            Timestamp = DateTime.UtcNow;
-        }
+            public int StatusCode { get; set; }
+            public string Message { get; set; }
 
-        // Constructor بثلاثة معاملات
-        public ApiResponse(int statusCode, string message, object data)
-        {
-            StatusCode = statusCode;
-            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
-            Data = data;
-            Timestamp = DateTime.UtcNow;
-        }
-
-        private static string GetDefaultMessageForStatusCode(int statusCode)
-        {
-            return statusCode switch
+            public ApiResponse(int statusCode, string message = null)
             {
-                200 => "Success",
-                201 => "Created",
-                400 => "Bad Request",
-                401 => "Unauthorized",
-                403 => "Forbidden",
-                404 => "Resource Not Found",
-                500 => "Internal Server Error",
-                _ => "Unknown Status"
-            };
+                StatusCode = statusCode;
+                Message = message ?? GetDefaultMessageForStatusCode(statusCode);
+            }
+
+            private string GetDefaultMessageForStatusCode(int statusCode)
+            {
+                return statusCode switch
+                {
+                    400 => "Bad Request",
+                    401 => "Unauthorized",
+                    404 => "Resource Not Found",
+                    500 => "Internal Server Error",
+                    _ => null
+                };
+            }
         }
     }
 }
