@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FormBuilder.core\FormBuilder.Application.csproj" />
+    <ProjectReference Include="..\FormBuilder.Core\FormBuilder.Core.csproj" />
     <ProjectReference Include="..\FormBuilder.Services\FormBuilder.Services.csproj" />
   </ItemGroup>
 

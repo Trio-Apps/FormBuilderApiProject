@@ -1,11 +1,14 @@
 ﻿// Services/AuthService.cs
+using FormBuilder.API.Data;
 using FormBuilder.API.Models;
 using FormBuilder.API.Models.FormBuilder.API.Models;
 using FormBuilder.API.Services;
 using FormBuilder.core.DTOS.Auth;
+using FormBuilder.Core.DTOS.Auth;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
+using System.Security.Claims;
 
 public class AuthService : IAuthService
 {
@@ -13,24 +16,26 @@ public class AuthService : IAuthService
     private readonly SignInManager<AppUser> _signInManager;
     private readonly ITokenService _tokenService;
     private readonly ILogger<AuthService> _logger;
+    private readonly AuthDbContext _context;
 
     public AuthService(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
         ITokenService tokenService,
-        ILogger<AuthService> logger)
+        ILogger<AuthService> logger,
+        AuthDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _tokenService = tokenService;
         _logger = logger;
+        _context = context;
     }
 
     public async Task<AuthResult> LoginAsync(LoginDto loginDto)
     {
         try
         {
-            // Input validation
             if (string.IsNullOrEmpty(loginDto.Email) || string.IsNullOrEmpty(loginDto.Password))
                 return new AuthResult
                 {
@@ -51,7 +56,6 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Check if user is active
             if (!user.IsActive)
                 return new AuthResult
                 {
@@ -73,15 +77,29 @@ public class AuthService : IAuthService
                 };
             }
 
-            // Update last login date
             user.LastLoginDate = DateTime.UtcNow;
             await _userManager.UpdateAsync(user);
+
+            var (token, jwtId) = await _tokenService.CreateTokenWithIdAsync(user);
+            var refreshToken = _tokenService.GenerateRefreshToken();
+
+            var refreshTokenModel = new RefreshToken
+            {
+                UserId = user.Id,
+                Token = refreshToken,
+                JwtId = jwtId,
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            };
+
+            _context.RefreshTokens.Add(refreshTokenModel);
+            await _context.SaveChangesAsync();
 
             var userDto = new UserDto()
             {
                 DisplayName = user.DisplayName,
                 Email = user.Email,
-                Token = await _tokenService.CreateTokenAsync(user)
+                Token = token,
+                RefreshToken = refreshToken
             };
 
             _logger.LogInformation($"User {user.Email} logged in successfully");
@@ -105,6 +123,105 @@ public class AuthService : IAuthService
         }
     }
 
+    public async Task<AuthResult> RefreshTokenAsync(RefreshTokenRequest request)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(request.AccessToken) || string.IsNullOrEmpty(request.RefreshToken))
+            {
+                return new AuthResult
+                {
+                    Success = false,
+                    ErrorMessage = "Token and refresh token are required",
+                    StatusCode = 400
+                };
+            }
+
+            var principal = _tokenService.GetPrincipalFromExpiredToken(request.AccessToken);
+            if (principal == null)
+            {
+                return new AuthResult
+                {
+                    Success = false,
+                    ErrorMessage = "Invalid access token",
+                    StatusCode = 401
+                };
+            }
+
+            var userId = principal.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return new AuthResult
+                {
+                    Success = false,
+                    ErrorMessage = "Invalid token claims",
+                    StatusCode = 401
+                };
+            }
+
+            var storedRefreshToken = await _context.RefreshTokens
+                .Include(rt => rt.User)
+                .FirstOrDefaultAsync(rt =>
+                    rt.Token == request.RefreshToken &&
+                    rt.UserId == userId &&
+                    !rt.IsUsed &&
+                    !rt.IsRevoked &&
+                    rt.ExpiresAt > DateTime.UtcNow);
+
+            if (storedRefreshToken == null)
+            {
+                return new AuthResult
+                {
+                    Success = false,
+                    ErrorMessage = "Invalid or expired refresh token",
+                    StatusCode = 401
+                };
+            }
+
+            storedRefreshToken.IsUsed = true;
+
+            var (newToken, newJwtId) = await _tokenService.CreateTokenWithIdAsync(storedRefreshToken.User);
+            var newRefreshToken = _tokenService.GenerateRefreshToken();
+
+            var newRefreshTokenModel = new RefreshToken
+            {
+                UserId = storedRefreshToken.UserId,
+                Token = newRefreshToken,
+                JwtId = newJwtId,
+                ExpiresAt = DateTime.UtcNow.AddDays(7)
+            };
+
+            _context.RefreshTokens.Add(newRefreshTokenModel);
+            await _context.SaveChangesAsync();
+
+            var userDto = new UserDto
+            {
+                DisplayName = storedRefreshToken.User.DisplayName,
+                Email = storedRefreshToken.User.Email,
+                Token = newToken,
+                RefreshToken = newRefreshToken
+            };
+
+            _logger.LogInformation($"Token refreshed successfully for user: {storedRefreshToken.User.Email}");
+
+            return new AuthResult
+            {
+                Success = true,
+                User = userDto,
+                StatusCode = 200
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during token refresh");
+            return new AuthResult
+            {
+                Success = false,
+                ErrorMessage = "An error occurred while refreshing token",
+                StatusCode = 500
+            };
+        }
+    }
 
     public async Task<ApiResponse> ChangePasswordAsync(string userId, ChangePasswordDto changePasswordDto)
     {
@@ -125,6 +242,8 @@ public class AuthService : IAuthService
                 return new ApiResponse(400, errors);
             }
 
+            await RevokeAllUserRefreshTokens(userId);
+
             _logger.LogInformation($"Password changed successfully for user: {user.Email}");
             return new ApiResponse(200, "Password changed successfully");
         }
@@ -135,7 +254,6 @@ public class AuthService : IAuthService
         }
     }
 
-
     public async Task<ApiResponse> ResetPasswordAsync(string email)
     {
         try
@@ -144,11 +262,8 @@ public class AuthService : IAuthService
             if (user == null)
                 return new ApiResponse(404, "User not found");
 
-            // Generate reset token
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-            // Here you would typically send the token via email
-            // For now, we'll just log it (in production, send email)
             _logger.LogInformation($"Password reset token for {email}: {token}");
 
             return new ApiResponse(200, "Password reset instructions sent to your email");
@@ -159,6 +274,7 @@ public class AuthService : IAuthService
             return new ApiResponse(500, "An error occurred while resetting password");
         }
     }
+
     public async Task<ApiResponse> LogoutAsync(string userId)
     {
         try
@@ -167,7 +283,7 @@ public class AuthService : IAuthService
             if (user == null)
                 return new ApiResponse(404, "User not found");
 
-            
+            await RevokeAllUserRefreshTokens(userId);
             await _signInManager.SignOutAsync();
 
             _logger.LogInformation($"User {user.Email} logged out successfully");
@@ -178,5 +294,42 @@ public class AuthService : IAuthService
             _logger.LogError(ex, "Error during logout process");
             return new ApiResponse(500, "An error occurred during logout");
         }
+    }
+
+    public async Task<ApiResponse> RevokeTokenAsync(string refreshToken)
+    {
+        try
+        {
+            var token = await _context.RefreshTokens
+                .FirstOrDefaultAsync(rt => rt.Token == refreshToken && !rt.IsRevoked);
+
+            if (token != null)
+            {
+                token.IsRevoked = true;
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"Refresh token revoked for user: {token.UserId}");
+            }
+
+            return new ApiResponse(200, "Token revoked successfully");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error during token revocation");
+            return new ApiResponse(500, "An error occurred while revoking token");
+        }
+    }
+
+    private async Task RevokeAllUserRefreshTokens(string userId)
+    {
+        var userTokens = await _context.RefreshTokens
+            .Where(rt => rt.UserId == userId && !rt.IsUsed && !rt.IsRevoked)
+            .ToListAsync();
+
+        foreach (var token in userTokens)
+        {
+            token.IsRevoked = true;
+        }
+
+        await _context.SaveChangesAsync();
     }
 }

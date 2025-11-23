@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FormBuilder.core\FormBuilder.Application.csproj" />
+    <ProjectReference Include="..\FormBuilder.Core\FormBuilder.Core.csproj" />
     <ProjectReference Include="..\formBuilder.Domian\FormBuilder.Domian.csproj" />
   </ItemGroup>
 

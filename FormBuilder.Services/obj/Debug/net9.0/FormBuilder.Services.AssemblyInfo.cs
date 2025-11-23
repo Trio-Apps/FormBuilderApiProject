@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FormBuilder.Services")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+37ead0d8fe83d2de0ecfb0531de40352c19585df")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ce27bc020f30aa14be671f3ca598f1cecb22038")]
 [assembly: System.Reflection.AssemblyProductAttribute("FormBuilder.Services")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FormBuilder.Services")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

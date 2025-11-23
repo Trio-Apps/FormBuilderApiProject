@@ -2,11 +2,16 @@
   {
     "ContainingType": "AuthController",
     "Method": "ChangePassword",
-    "RelativePath": "api/Auth/ChangePassword",
+    "RelativePath": "api/Auth/change-password",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
       {
         "Name": "changePasswordDto",
         "Type": "FormBuilder.core.DTOS.Auth.ChangePasswordDto",
@@ -28,7 +33,7 @@
   {
     "ContainingType": "AuthController",
     "Method": "Login",
-    "RelativePath": "api/Auth/Login",
+    "RelativePath": "api/Auth/login",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -41,7 +46,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.core.DTOS.Auth.UserDto",
+        "Type": "FormBuilder.core.DTOS.Auth.AuthResult",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -58,19 +63,87 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuthController",
+    "Method": "RefreshToken",
+    "RelativePath": "api/Auth/refresh-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Core.DTOS.Auth.RefreshTokenRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.core.DTOS.Auth.AuthResult",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "AuthController",
     "Method": "ResetPassword",
-    "RelativePath": "api/Auth/ResetPassword",
+    "RelativePath": "api/Auth/reset-password",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "email",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "AuthController",
+    "Method": "RevokeToken",
+    "RelativePath": "api/Auth/revoke-token",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "refreshToken",
         "Type": "System.String",
         "IsRequired": true
       }
@@ -97,7 +170,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.PermissionDto, FormBuilder.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.PermissionDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -190,7 +263,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.RoleDto, FormBuilder.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.RoleDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -356,7 +429,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.UsersDto, FormBuilder.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Application.DTOS.Auth.UsersDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

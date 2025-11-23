@@ -1498,20 +1498,20 @@
           }
         }
       },
-      "FormBuilder.Application/1.0.0": {
+      "FormBuilder.Core/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
           "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11",
+          "Microsoft.Extensions.Identity.Core": "9.0.11"
         },
         "compile": {
-          "bin/placeholder/FormBuilder.Application.dll": {}
+          "bin/placeholder/FormBuilder.Core.dll": {}
         },
         "runtime": {
-          "bin/placeholder/FormBuilder.Application.dll": {}
+          "bin/placeholder/FormBuilder.Core.dll": {}
         }
       },
       "FormBuilder.Domian/1.0.0": {
@@ -3649,10 +3649,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "FormBuilder.Application/1.0.0": {
+    "FormBuilder.Core/1.0.0": {
       "type": "project",
-      "path": "../FormBuilder.core/FormBuilder.Application.csproj",
-      "msbuildProject": "../FormBuilder.core/FormBuilder.Application.csproj"
+      "path": "../FormBuilder.Core/FormBuilder.Core.csproj",
+      "msbuildProject": "../FormBuilder.Core/FormBuilder.Core.csproj"
     },
     "FormBuilder.Domian/1.0.0": {
       "type": "project",
@@ -3662,7 +3662,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "FormBuilder.Application >= 1.0.0",
+      "FormBuilder.Core >= 1.0.0",
       "FormBuilder.Domian >= 1.0.0",
       "Microsoft.AspNetCore.Identity >= 2.3.1",
       "Microsoft.EntityFrameworkCore >= 9.0.11",
@@ -3676,11 +3676,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
+      "projectUniqueName": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
       "projectName": "FormBuilder.Services",
-      "projectPath": "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
+      "projectPath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
       "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\FormBuilder.Services\\obj\\",
+      "outputPath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -3701,11 +3701,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\FormBuilder.core\\FormBuilder.Application.csproj": {
-              "projectPath": "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\FormBuilder.core\\FormBuilder.Application.csproj"
+            "D:\\FormBuilderApiProject\\FormBuilder.Core\\FormBuilder.Core.csproj": {
+              "projectPath": "D:\\FormBuilderApiProject\\FormBuilder.Core\\FormBuilder.Core.csproj"
             },
-            "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
-              "projectPath": "C:\\Users\\Trio Apps 3\\Videos\\apiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj"
+            "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
+              "projectPath": "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj"
             }
           }
         }

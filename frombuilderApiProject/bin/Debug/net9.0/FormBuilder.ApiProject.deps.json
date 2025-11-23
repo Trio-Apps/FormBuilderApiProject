@@ -8,7 +8,7 @@
     ".NETCoreApp,Version=v9.0": {
       "FormBuilder.ApiProject/1.0.0": {
         "dependencies": {
-          "FormBuilder.Application": "1.0.0",
+          "FormBuilder.Core": "1.0.0",
           "FormBuilder.Services": "1.0.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.11",
           "Microsoft.AspNetCore.OpenApi": "9.0.11",
@@ -1270,15 +1270,15 @@
           }
         }
       },
-      "FormBuilder.Application/1.0.0": {
+      "FormBuilder.Core/1.0.0": {
         "dependencies": {
           "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore": "9.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.11",
+          "Microsoft.Extensions.Identity.Core": "9.0.11"
         },
         "runtime": {
-          "FormBuilder.Application.dll": {
+          "FormBuilder.Core.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1298,7 +1298,7 @@
       },
       "FormBuilder.Services/1.0.0": {
         "dependencies": {
-          "FormBuilder.Application": "1.0.0",
+          "FormBuilder.Core": "1.0.0",
           "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity": "2.3.1",
           "Microsoft.EntityFrameworkCore": "9.0.11",
@@ -2110,7 +2110,7 @@
       "path": "system.windows.extensions/6.0.0",
       "hashPath": "system.windows.extensions.6.0.0.nupkg.sha512"
     },
-    "FormBuilder.Application/1.0.0": {
+    "FormBuilder.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
