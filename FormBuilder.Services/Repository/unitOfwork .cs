@@ -1,5 +1,6 @@
 ﻿using formBuilder.Domian.Entitys;
 using formBuilder.Domian.Interfaces;
+using FormBuilder.API.Data;
 
 namespace FormBuilder.core.Repository
 {
@@ -7,9 +8,9 @@ namespace FormBuilder.core.Repository
     {
         private readonly Dictionary<Type, object> _repositories;
 
-        public AppDbContext AppDbContext { get; }
+        public FormBuilderDbContext AppDbContext { get; }
 
-        public UnitOfWork(AppDbContext appDbContext)
+        public UnitOfWork(FormBuilderDbContext appDbContext)
         {
             _repositories = new Dictionary<Type, object>();
             AppDbContext = appDbContext;

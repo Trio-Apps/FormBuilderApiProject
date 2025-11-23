@@ -362,6 +362,14 @@ D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\refint\FormBuilder.ApiProje
 D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.pdb
 D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.genruntimeconfig.cache
 D:\apiProject\frombuilderApiProject\obj\Debug\net9.0\ref\FormBuilder.ApiProject.dll
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.AssemblyReference.cache
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfoInputs.cache
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfo.cs
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.CoreCompileInputs.cache
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.sourcelink.json
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.json
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiProject.staticwebassets.endpoints.json
@@ -520,15 +528,6 @@ C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\Fo
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Application.pdb
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Services.pdb
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Domian.pdb
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.AssemblyReference.cache
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfoInputs.cache
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfo.cs
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.CoreCompileInputs.cache
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.sourcelink.json
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json

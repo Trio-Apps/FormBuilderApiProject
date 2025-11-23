@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FormBuilder.Domian.Entitys.froms
+{
+
+    [Table("FIELD_DATA_SOURCES")]
+    public class FIELD_DATA_SOURCES
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [ForeignKey("FORM_FIELDS")]
+        public int FieldId { get; set; }
+        public virtual FORM_FIELDS FORM_FIELDS { get; set; }
+
+        [Required, StringLength(50)]
+        public string SourceType { get; set; }
+
+        [StringLength(500)]
+        public string ApiUrl { get; set; }
+
+        [StringLength(10)]
+        public string HttpMethod { get; set; }
+
+        public string RequestBodyJson { get; set; }
+        public string ValuePath { get; set; }
+        public string TextPath { get; set; }
+        public bool IsActive { get; set; }
+    }
+}

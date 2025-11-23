@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace FormBuilder.core
 {
     using formBuilder.Domian.Interfaces;
+    using FormBuilder.API.Data;
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
 
@@ -93,8 +94,8 @@ namespace FormBuilder.core
     }
 
     // Convenience aliases for backward compatibility
-    public class BaseRepository<T> : BaseRepository<T, AppDbContext> where T : class
+    public class BaseRepository<T> : BaseRepository<T, FormBuilderDbContext> where T : class
     {
-        public BaseRepository(AppDbContext db) : base(db) { }
+        public BaseRepository(FormBuilderDbContext db) : base(db) { }
     }
 }

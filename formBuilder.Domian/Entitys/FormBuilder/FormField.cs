@@ -1,0 +1,56 @@
+﻿using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FromBuilder;
+using FormBuilder.Domian.Entitys.froms;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("FORM_FIELDS")]
+public class FORM_FIELDS
+{
+    [Key]
+    public int Id { get; set; }
+
+    [ForeignKey("FORM_TABS")]
+    public int TabId { get; set; }
+    public virtual FORM_TABS FORM_TABS { get; set; }
+
+    [ForeignKey("FIELD_TYPES")]
+    public int FieldTypeId { get; set; }
+    public virtual FIELD_TYPES FIELD_TYPES { get; set; }
+
+    [Required, StringLength(200)]
+    public string FieldName { get; set; }
+
+    [Required, StringLength(100)]
+    public string FieldCode { get; set; }
+
+    public int FieldOrder { get; set; }
+    public string Placeholder { get; set; }
+    public string HintText { get; set; }
+    public bool IsMandatory { get; set; }
+    public bool IsEditable { get; set; }
+    public bool IsVisible { get; set; }
+    public string DefaultValueJson { get; set; }
+    public string DataType { get; set; }
+    public int? MaxLength { get; set; }
+    public decimal? MinValue { get; set; }
+    public decimal? MaxValue { get; set; }
+    public string RegexPattern { get; set; }
+    public string ValidationMessage { get; set; }
+    public string VisibilityRuleJson { get; set; }
+    public string ReadOnlyRuleJson { get; set; }
+    public DateTime CreatedDate { get; set; }
+
+    [ForeignKey("AppUser")]
+    public string CreatedByUserId { get; set; }
+    public virtual AppUser CreatedByUser { get; set; }
+
+    public bool IsActive { get; set; }
+
+    public virtual ICollection<FIELD_OPTIONS> FIELD_OPTIONS { get; set; }
+    public virtual ICollection<FIELD_DATA_SOURCES> FIELD_DATA_SOURCES { get; set; }
+    public virtual ICollection<FORM_SUBMISSION_VALUES> FORM_SUBMISSION_VALUES { get; set; }
+    public virtual ICollection<FORM_SUBMISSION_ATTACHMENTS> FORM_SUBMISSION_ATTACHMENTS { get; set; }
+    public virtual ICollection<SAP_FIELD_MAPPINGS> SAP_FIELD_MAPPINGS { get; set; }
+    public virtual ICollection<FORMULA_VARIABLES> FORMULA_VARIABLES { get; set; }
+}

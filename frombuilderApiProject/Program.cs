@@ -70,7 +70,7 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     }
 });
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 
@@ -177,7 +177,7 @@ using (var scope = app.Services.CreateScope())
     try
     {
         var authContext = services.GetRequiredService<AuthDbContext>();
-        var appContext = services.GetRequiredService<AppDbContext>();
+        var appContext = services.GetRequiredService<FormBuilderDbContext>();
         var userManager = services.GetRequiredService<UserManager<AppUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
