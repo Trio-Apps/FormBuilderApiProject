@@ -17,7 +17,25 @@ namespace FormBuilder.API.Data
             await context.Database.EnsureCreatedAsync();
 
             // 1. إنشاء الأدوار إذا لم تكن موجودة
-            string[] roles = { "Admin", "User" };
+            await SeedRolesAsync(roleManager);
+
+            // 2. إنشاء المستخدمين وإضافة الأدوار لهم
+            await SeedUsersAsync(userManager);
+
+            // 3. إنشاء الصلاحيات
+            await SeedPermissionsAsync(context);
+
+            // 4. ربط الأدوار بالصلاحيات
+            await SeedRolePermissionsAsync(context, roleManager);
+
+            Console.WriteLine("🎉 Database seeding completed successfully!");
+        }
+
+        private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
+        {
+            Console.WriteLine("📋 Seeding roles...");
+
+            string[] roles = { "Admin", "User", "Manager" };
 
             foreach (var role in roles)
             {
@@ -33,82 +51,178 @@ namespace FormBuilder.API.Data
                     Console.WriteLine($"✅ Role already exists: {role}");
                 }
             }
+        }
 
-            // 2. إنشاء مستخدم Admin إذا لم يكن موجوداً
-            var adminEmail = "admin@example.com";
-            var adminUser = await userManager.FindByEmailAsync(adminEmail);
+        private static async Task SeedUsersAsync(UserManager<AppUser> userManager)
+        {
+            Console.WriteLine("👥 Seeding users...");
 
-            if (adminUser == null)
+            var users = new[]
             {
-                adminUser = new AppUser
-                {
-                    UserName = adminEmail,
-                    Email = adminEmail,
-                    EmailConfirmed = true,
-                    DisplayName = "System Administrator"
-                };
+                new { Email = "admin@example.com", Password = "Admin123!", DisplayName = "System Administrator", Roles = new[] { "Admin" } },
+                new { Email = "manager@example.com", Password = "Manager123!", DisplayName = "Project Manager", Roles = new[] { "Manager" } },
+                new { Email = "user1@example.com", Password = "User123!", DisplayName = "Regular User 1", Roles = new[] { "User" } },
+                new { Email = "user2@example.com", Password = "User123!", DisplayName = "Regular User 2", Roles = new[] { "User" } }
+            };
 
-                var createResult = await userManager.CreateAsync(adminUser, "Admin123!");
-                if (createResult.Succeeded)
+            foreach (var userInfo in users)
+            {
+                var user = await userManager.FindByEmailAsync(userInfo.Email);
+
+                if (user == null)
                 {
-                    Console.WriteLine($"✅ Created admin user: {adminEmail}");
+                    user = new AppUser
+                    {
+                        UserName = userInfo.Email,
+                        Email = userInfo.Email,
+                        EmailConfirmed = true,
+                        DisplayName = userInfo.DisplayName,
+                        IsActive = true,
+                        CreatedDate = DateTime.UtcNow
+                    };
+
+                    var createResult = await userManager.CreateAsync(user, userInfo.Password);
+                    if (createResult.Succeeded)
+                    {
+                        Console.WriteLine($"✅ Created user: {userInfo.Email}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"❌ User creation failed: {userInfo.Email} - {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
+                        continue;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"❌ Admin creation failed: {string.Join(", ", createResult.Errors.Select(e => e.Description))}");
-                    return; // توقف إذا فشل إنشاء المستخدم
+                    Console.WriteLine($"✅ User already exists: {userInfo.Email}");
+                }
+
+                // إضافة الأدوار للمستخدم
+                foreach (var role in userInfo.Roles)
+                {
+                    if (!await userManager.IsInRoleAsync(user, role))
+                    {
+                        var addToRoleResult = await userManager.AddToRoleAsync(user, role);
+                        if (addToRoleResult.Succeeded)
+                        {
+                            Console.WriteLine($"✅ Added user '{userInfo.Email}' to role '{role}'");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"❌ Failed to add user to role: {userInfo.Email} -> {role} - {string.Join(", ", addToRoleResult.Errors.Select(e => e.Description))}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"✅ User '{userInfo.Email}' is already in role '{role}'");
+                    }
                 }
             }
-            else
-            {
-                Console.WriteLine($"✅ Admin user already exists: {adminEmail}");
-            }
+        }
 
-            // 3. ربط المستخدم بدور Admin (هذه هي الخطوة المهمة!)
-            if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+        private static async Task SeedPermissionsAsync(AuthDbContext context)
+        {
+            Console.WriteLine("🔐 Seeding permissions...");
+
+            var permissions = new[]
             {
-                var addToRoleResult = await userManager.AddToRoleAsync(adminUser, "Admin");
-                if (addToRoleResult.Succeeded)
+                new Permission { PermissionName = "Users.View", Description = "View users list" },
+                new Permission { PermissionName = "Users.Create", Description = "Create new users" },
+                new Permission { PermissionName = "Users.Edit", Description = "Edit existing users" },
+                new Permission { PermissionName = "Users.Delete", Description = "Delete users" },
+                new Permission { PermissionName = "Roles.View", Description = "View roles list" },
+                new Permission { PermissionName = "Roles.Create", Description = "Create new roles" },
+                new Permission { PermissionName = "Roles.Edit", Description = "Edit existing roles" },
+                new Permission { PermissionName = "Roles.Delete", Description = "Delete roles" },
+                new Permission { PermissionName = "Permissions.View", Description = "View permissions" },
+                new Permission { PermissionName = "Permissions.Assign", Description = "Assign permissions to roles" },
+                new Permission { PermissionName = "Forms.View", Description = "View forms" },
+                new Permission { PermissionName = "Forms.Create", Description = "Create forms" },
+                new Permission { PermissionName = "Forms.Edit", Description = "Edit forms" },
+                new Permission { PermissionName = "Forms.Delete", Description = "Delete forms" },
+                new Permission { PermissionName = "Reports.View", Description = "View reports" },
+                new Permission { PermissionName = "Reports.Generate", Description = "Generate reports" }
+            };
+
+            foreach (var permission in permissions)
+            {
+                var existingPermission = await context.Permissions
+                    .FirstOrDefaultAsync(p => p.PermissionName == permission.PermissionName);
+
+                if (existingPermission == null)
                 {
-                    Console.WriteLine($"✅ Successfully added user '{adminEmail}' to 'Admin' role");
+                    permission.CreatedDate = DateTime.UtcNow;
+                    context.Permissions.Add(permission);
+                    Console.WriteLine($"✅ Created permission: {permission.PermissionName}");
                 }
                 else
                 {
-                    Console.WriteLine($"❌ Failed to add user to Admin role: {string.Join(", ", addToRoleResult.Errors.Select(e => e.Description))}");
+                    Console.WriteLine($"✅ Permission already exists: {permission.PermissionName}");
                 }
             }
-            else
+
+            await context.SaveChangesAsync();
+        }
+
+        private static async Task SeedRolePermissionsAsync(AuthDbContext context, RoleManager<IdentityRole> roleManager)
+        {
+            Console.WriteLine("🔗 Seeding role permissions...");
+
+            // الحصول على جميع الأدوار والصلاحيات
+            var roles = await roleManager.Roles.ToListAsync();
+            var permissions = await context.Permissions.ToListAsync();
+
+            var rolePermissions = new List<RolePermission>();
+
+            foreach (var role in roles)
             {
-                Console.WriteLine($"✅ User '{adminEmail}' is already in 'Admin' role");
-            }
+                var permissionsToAdd = GetPermissionsForRole(role.Name, permissions);
 
-            // 4. إنشاء مستخدم عادي للاختبار
-            var userEmail = "user@example.com";
-            var normalUser = await userManager.FindByEmailAsync(userEmail);
-
-            if (normalUser == null)
-            {
-                normalUser = new AppUser
+                foreach (var permission in permissionsToAdd)
                 {
-                    UserName = userEmail,
-                    Email = userEmail,
-                    EmailConfirmed = true,
-                    DisplayName = "Regular User"
-                };
+                    var existingRolePermission = await context.RolePermissions
+                        .FirstOrDefaultAsync(rp => rp.RoleID == role.Id && rp.PermissionID == permission.PermissionID);
 
-                var createResult = await userManager.CreateAsync(normalUser, "User123!");
-                if (createResult.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(normalUser, "User");
-                    Console.WriteLine($"✅ Created normal user: {userEmail}");
+                    if (existingRolePermission == null)
+                    {
+                        var rolePermission = new RolePermission
+                        {
+                            RoleID = role.Id,
+                            PermissionID = permission.PermissionID,
+                            AssignedDate = DateTime.UtcNow
+                        };
+                        rolePermissions.Add(rolePermission);
+                        Console.WriteLine($"✅ Added permission '{permission.PermissionName}' to role '{role.Name}'");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"✅ Role permission already exists: {role.Name} -> {permission.PermissionName}");
+                    }
                 }
             }
-            else
-            {
-                Console.WriteLine($"✅ Normal user already exists: {userEmail}");
-            }
 
-            Console.WriteLine("🎉 Database seeding completed successfully!");
+            if (rolePermissions.Any())
+            {
+                await context.RolePermissions.AddRangeAsync(rolePermissions);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private static List<Permission> GetPermissionsForRole(string roleName, List<Permission> allPermissions)
+        {
+            return roleName switch
+            {
+                "Admin" => allPermissions, // Admin لديه جميع الصلاحيات
+                "Manager" => allPermissions.Where(p =>
+                    p.PermissionName.StartsWith("Forms.") ||
+                    p.PermissionName.StartsWith("Reports.") ||
+                    p.PermissionName == "Users.View").ToList(),
+                "User" => allPermissions.Where(p =>
+                    p.PermissionName == "Forms.View" ||
+                    p.PermissionName == "Forms.Create" ||
+                    p.PermissionName == "Reports.View").ToList(),
+                _ => new List<Permission>()
+            };
         }
     }
 }
