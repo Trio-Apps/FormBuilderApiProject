@@ -2,17 +2,26 @@
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace FormBuilder.API.Data
 {
-    public class FormBuilderDbContext : DbContext
+    public class FormBuilderDbContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
         public FormBuilderDbContext(DbContextOptions<FormBuilderDbContext> options) : base(options) { }
 
         // ----------------------
-        // DbSets
+        // Identity & Auth Tables
+        // ----------------------
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
+
+        // ----------------------
+        // Form Builder Tables
         // ----------------------
         public DbSet<FORM_BUILDER> FORM_BUILDER { get; set; }
         public DbSet<FORM_TABS> FORM_TABS { get; set; }
@@ -56,6 +65,41 @@ namespace FormBuilder.API.Data
             base.OnModelCreating(modelBuilder);
 
             // ----------------------
+            // Identity Table Names
+            // ----------------------
+            modelBuilder.Entity<AppUser>().ToTable("appUsers");
+            modelBuilder.Entity<IdentityRole>().ToTable("AspNetRoles");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("AspNetUserClaims");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRoles");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims");
+
+            modelBuilder.Entity<Permission>().ToTable("PERMISSIONS");
+            modelBuilder.Entity<RolePermission>().ToTable("ROLE_PERMISSIONS");
+
+            // ----------------------
+            // Auth Relationships
+            // ----------------------
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(rp => rp.Role)
+                .WithMany()
+                .HasForeignKey(rp => rp.RoleID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RolePermission>()
+                .HasOne(rp => rp.Permission)
+                .WithMany(p => p.RolePermissions)
+                .HasForeignKey(rp => rp.PermissionID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(rt => rt.User)
+                .WithMany()
+                .HasForeignKey(rt => rt.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // ----------------------
             // FIX: FK to AppUser to avoid multiple cascade paths
             // ----------------------
             foreach (var fk in modelBuilder.Model.GetEntityTypes()
@@ -63,10 +107,9 @@ namespace FormBuilder.API.Data
                 .Where(fk => fk.PrincipalEntityType.Name.Contains("AspNetUsers")
                           || fk.PrincipalEntityType.Name.Contains("AppUser")))
             {
-                fk.DeleteBehavior = DeleteBehavior.Restrict; // prevents cascade delete errors
+                fk.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            // ----------------------
             // FORM_BUILDER relationships
             // ----------------------
             modelBuilder.Entity<FORM_BUILDER>()
@@ -259,12 +302,16 @@ namespace FormBuilder.API.Data
             modelBuilder.Entity<APPROVAL_STAGES>().Property(a => a.MaxAmount).HasPrecision(18, 4);
             modelBuilder.Entity<FORM_SUBMISSION_GRID_CELLS>().Property(f => f.ValueNumber).HasPrecision(18, 4);
 
+
             // ----------------------
             // INDEXES
             // ----------------------
             modelBuilder.Entity<FORM_BUILDER>().HasIndex(fb => fb.FormCode).IsUnique();
             modelBuilder.Entity<FORM_SUBMISSIONS>().HasIndex(fs => fs.DocumentNumber).IsUnique();
             modelBuilder.Entity<DOCUMENT_TYPES>().HasIndex(dt => dt.Code).IsUnique();
+            modelBuilder.Entity<PROJECTS>().HasIndex(p => p.Code).IsUnique();
+            modelBuilder.Entity<DOCUMENT_SERIES>().HasIndex(ds => ds.SeriesCode).IsUnique();
+            modelBuilder.Entity<RefreshToken>().HasIndex(rt => rt.Token).IsUnique();
         }
     }
 }

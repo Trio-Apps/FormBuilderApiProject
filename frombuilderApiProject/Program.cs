@@ -57,19 +57,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 // --------------------------------------------------
-// DbContexts
+// DbContexts - NOW ONLY ONE
 // --------------------------------------------------
-builder.Services.AddDbContext<AuthDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
-
-    if (builder.Environment.IsDevelopment())
-    {
-        options.EnableSensitiveDataLogging();
-        options.EnableDetailedErrors();
-    }
-});
-
 builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -82,7 +71,7 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 });
 
 // --------------------------------------------------
-// Identity
+// Identity - NOW USING SINGLE CONTEXT
 // --------------------------------------------------
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
@@ -95,7 +84,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = false;
 })
-.AddEntityFrameworkStores<AuthDbContext>()
+.AddEntityFrameworkStores<FormBuilderDbContext>() // ? «” Œœ«„ «·‹ context «·ÃœÌœ
 .AddDefaultTokenProviders();
 
 // --------------------------------------------------
@@ -168,7 +157,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 // --------------------------------------------------
-// Database Seeding
+// Database Seeding - UPDATED
 // --------------------------------------------------
 using (var scope = app.Services.CreateScope())
 {
@@ -176,12 +165,12 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        var authContext = services.GetRequiredService<AuthDbContext>();
-        var appContext = services.GetRequiredService<FormBuilderDbContext>();
+        // ? «·¬‰ ‰” Œœ„ context Ê«Õœ ›ﬁÿ
+        var context = services.GetRequiredService<FormBuilderDbContext>();
         var userManager = services.GetRequiredService<UserManager<AppUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-        await DataSeeder.SeedAsync(authContext, userManager, roleManager);
+        await DataSeeder.SeedAsync(context, userManager, roleManager);
 
         Console.WriteLine("Database seeding completed successfully!");
     }

@@ -16,12 +16,12 @@ namespace FormBuilder.Services.Services
     public class RoleService : IRoleService
     {
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AuthDbContext _context;
+        private readonly FormBuilderDbContext _context;
         private readonly ILogger<RoleService> _logger;
 
         public RoleService(
             RoleManager<IdentityRole> roleManager,
-            AuthDbContext context,
+            FormBuilderDbContext context,
             ILogger<RoleService> logger)
         {
             _roleManager = roleManager;

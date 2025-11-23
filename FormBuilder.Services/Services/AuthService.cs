@@ -16,14 +16,14 @@ public class AuthService : IAuthService
     private readonly SignInManager<AppUser> _signInManager;
     private readonly ITokenService _tokenService;
     private readonly ILogger<AuthService> _logger;
-    private readonly AuthDbContext _context;
+    private readonly FormBuilderDbContext _context;
 
     public AuthService(
         UserManager<AppUser> userManager,
         SignInManager<AppUser> signInManager,
         ITokenService tokenService,
         ILogger<AuthService> logger,
-        AuthDbContext context)
+        FormBuilderDbContext context)
     {
         _userManager = userManager;
         _signInManager = signInManager;

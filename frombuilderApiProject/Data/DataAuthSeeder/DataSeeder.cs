@@ -1,66 +1,117 @@
-﻿// DataSeeder.cs مبسط
+﻿using FormBuilder.API.Data;
 using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FormBuilder;
+using FormBuilder.Domian.Entitys.FromBuilder;
+using FormBuilder.Domian.Entitys.froms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace FormBuilder.API.Data
+public static class DataSeeder
 {
-    public static class DataSeeder
+    public static async Task SeedAsync(FormBuilderDbContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
     {
-        public static async Task SeedAsync(AuthDbContext context,
-            UserManager<AppUser> userManager,
-            RoleManager<IdentityRole> roleManager)
+        await context.Database.EnsureCreatedAsync();
+
+        // ----------------------
+        // 1. SEED ROLES
+        // ----------------------
+        if (!await roleManager.Roles.AnyAsync())
         {
-            Console.WriteLine("🔧 Starting database seeding...");
-
-            // تطبيق الـ Migrations
-            await context.Database.MigrateAsync();
-
-            // 1. إنشاء الأدوار
-            await SeedRolesAsync(roleManager);
-
-            // 2. إنشاء المستخدمين
-            await SeedUsersAsync(userManager);
-
-            Console.WriteLine("🎉 Database seeding completed successfully!");
-        }
-
-        private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
-        {
-            string[] roles = { "Admin", "User", "Manager" };
+            var roles = new[]
+            {
+                new IdentityRole { Name = "SuperAdmin", NormalizedName = "SUPERADMIN" },
+                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Name = "User", NormalizedName = "USER" },
+                new IdentityRole { Name = "Manager", NormalizedName = "MANAGER" },
+                new IdentityRole { Name = "Approver", NormalizedName = "APPROVER" }
+            };
 
             foreach (var role in roles)
             {
-                if (!await roleManager.RoleExistsAsync(role))
-                {
-                    await roleManager.CreateAsync(new IdentityRole(role));
-                    Console.WriteLine($"✅ Created role: {role}");
-                }
+                await roleManager.CreateAsync(role);
             }
         }
 
-        private static async Task SeedUsersAsync(UserManager<AppUser> userManager)
+        // ----------------------
+        // 2. SEED PERMISSIONS
+        // ----------------------
+        if (!await context.Permissions.AnyAsync())
         {
-            var adminUser = await userManager.FindByEmailAsync("admin@formbuilder.com");
-
-            if (adminUser == null)
+            var permissions = new[]
             {
-                var user = new AppUser
-                {
-                    UserName = "admin@formbuilder.com",
-                    Email = "admin@formbuilder.com",
-                    DisplayName = "System Administrator",
-                    IsActive = true,
-                    EmailConfirmed = true
-                };
+                new Permission { PermissionName = "Forms.Create", Description = "Create forms" },
+                new Permission { PermissionName = "Forms.View", Description = "View forms" },
+                new Permission { PermissionName = "Forms.Edit", Description = "Edit forms" },
+                new Permission { PermissionName = "Forms.Delete", Description = "Delete forms" },
+                new Permission { PermissionName = "Submissions.Create", Description = "Create submissions" },
+                new Permission { PermissionName = "Submissions.View", Description = "View submissions" },
+                new Permission { PermissionName  = "Submissions.Approve", Description = "Approve submissions" },
+                new Permission {    PermissionName = "Submissions.Delete", Description = "Delete submissions" },
+                new Permission { PermissionName = "Users.Manage", Description = "Manage users" },
+                new Permission { PermissionName = "Roles.Manage", Description = "Manage roles" },
+                new Permission { PermissionName = "Settings.Manage", Description = "Manage settings" }
+            };
 
-                var result = await userManager.CreateAsync(user, "Admin123!");
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user, "Admin");
-                    Console.WriteLine("✅ Created admin user: admin@formbuilder.com");
-                }
+            await context.Permissions.AddRangeAsync(permissions);
+            await context.SaveChangesAsync();
+        }
+
+        // ----------------------
+        // 3. SEED SUPER ADMIN USER
+        // ----------------------
+        if (!await userManager.Users.AnyAsync(u => u.UserName == "admin"))
+        {
+            var superAdmin = new AppUser
+            {
+                UserName = "admin",
+                Email = "admin@zmbuildstr.com",
+                EmailConfirmed = true,
+               
+                DisplayName = "System Administrator",
+                PhoneNumber = "01234567890",
+                IsActive = true,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            var result = await userManager.CreateAsync(superAdmin, "Admin123!");
+            if (result.Succeeded)
+            {
+                await userManager.AddToRolesAsync(superAdmin, new[] { "SuperAdmin", "Admin", "User" });
             }
         }
+
+     
+ 
+     
+        if (!await context.ALERT_RULES.AnyAsync())
+        {
+            var emailTemplate = await context.EMAIL_TEMPLATES.FirstAsync();
+            var alertRules = new[]
+            {
+                new ALERT_RULES {
+                    RuleName = "New Submission Alert",
+                    TriggerType = "OnSubmissionCreate",
+                    EmailTemplateId = emailTemplate.Id,
+                    IsActive = true
+                }
+            };
+
+            await context.ALERT_RULES.AddRangeAsync(alertRules);
+            await context.SaveChangesAsync();
+        }
+
+        Console.WriteLine("✅ Database seeding completed successfully!");
+        Console.WriteLine("📊 Seeded Data Summary:");
+        Console.WriteLine($"   - Roles: {await roleManager.Roles.CountAsync()}");
+        Console.WriteLine($"   - Users: {await userManager.Users.CountAsync()}");
+        Console.WriteLine($"   - Permissions: {await context.Permissions.CountAsync()}");
+        Console.WriteLine($"   - Role Permissions: {await context.RolePermissions.CountAsync()}");
+        Console.WriteLine($"   - Field Types: {await context.FIELD_TYPES.CountAsync()}");
+        Console.WriteLine($"   - Document Types: {await context.DOCUMENT_TYPES.CountAsync()}");
+        Console.WriteLine($"   - Projects: {await context.PROJECTS.CountAsync()}");
+        Console.WriteLine($"   - Form Builders: {await context.FORM_BUILDER.CountAsync()}");
+        Console.WriteLine($"   - Approval Workflows: {await context.APPROVAL_WORKFLOWS.CountAsync()}");
+        Console.WriteLine($"   - Email Templates: {await context.EMAIL_TEMPLATES.CountAsync()}");
+        Console.WriteLine($"   - Attachment Types: {await context.ATTACHMENT_TYPES.CountAsync()}");
     }
 }

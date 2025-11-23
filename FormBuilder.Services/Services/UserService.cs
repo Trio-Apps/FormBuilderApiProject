@@ -17,13 +17,13 @@ namespace FormBuilder.Services.Services
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AuthDbContext _context;
+        private readonly FormBuilderDbContext _context;
         private readonly ILogger<UserService> _logger;
 
         public UserService(
             UserManager<AppUser> userManager,
             RoleManager<IdentityRole> roleManager,
-            AuthDbContext context,
+            FormBuilderDbContext context,
             ILogger<UserService> logger)
         {
             _userManager = userManager;

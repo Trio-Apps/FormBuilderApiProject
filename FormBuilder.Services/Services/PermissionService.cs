@@ -17,10 +17,10 @@ namespace FormBuilder.Services.Services
 
     public class PermissionService : IPermissionService
     {
-        private readonly AuthDbContext _context;
+        private readonly FormBuilderDbContext _context;
         private readonly ILogger<PermissionService> _logger;
 
-        public PermissionService(AuthDbContext context, ILogger<PermissionService> logger)
+        public PermissionService(FormBuilderDbContext context, ILogger<PermissionService> logger)
         {
             _context = context;
             _logger = logger;
