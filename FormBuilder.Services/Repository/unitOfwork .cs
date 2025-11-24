@@ -1,11 +1,11 @@
 ﻿using formBuilder.Domian.Entitys;
 using formBuilder.Domian.Interfaces;
-using FormBuilder.API.Data; // المسار المفترض لـ DbContext
+using FormBuilder.API.Data;
 using FormBuilder.core;
+using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.Domian.Interfaces;
-
-using FormBuilder.Infrastructure.Repository; // المسار الصحيح لتطبيق FormFieldRepository
+using FormBuilder.Infrastructure.Repository;
 using FormBuilder.Services.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,20 +17,20 @@ namespace FormBuilder.core.Repository
     {
         private readonly Dictionary<Type, object> _repositories;
 
-        // الحقول الداعمة (Backing fields)
-        private IFormBuilderRepository? _formBuilderRepository;
-        private IFormTabRepository? _formTabRepository;
-        //private IFormFieldRepository? _formFieldRepository; // 🆕 جديد: الحقل الداعم للحقول
+        // الحقول الداعمة (Backing fields) - تصحيح الأسماء
+        private IFormBuilderRepository _formBuilderRepository;
+        private IFormTabRepository _formTabRepository;
+        private IFormFieldRepository _formFieldRepository; // ✅ إضافة FormFieldRepository
 
         public FormBuilderDbContext AppDbContext { get; }
 
         public UnitOfWork(FormBuilderDbContext appDbContext)
         {
             _repositories = new Dictionary<Type, object>();
-            AppDbContext = appDbContext;
+            AppDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
         }
 
-        // --- Core UoW Methods (CompleteAsyn, DisposeAsync, Repositary<T>...) ---
+        // --- Core UoW Methods ---
 
         public async Task<int> CompleteAsyn()
         {
@@ -47,12 +47,11 @@ namespace FormBuilder.core.Repository
             var type = typeof(T);
             if (!_repositories.ContainsKey(type))
             {
-                var repo = new BaseRepository<T, FormBuilderDbContext>(AppDbContext);
+                var repo = new BaseRepository<T>(AppDbContext);
                 _repositories.Add(type, repo);
             }
             return (IBaseRepository<T>)_repositories[type];
         }
-
 
         // --- Specific Repository Exposure ---
 
@@ -60,10 +59,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                if (_formBuilderRepository == null)
-                {
-                    _formBuilderRepository = new FormBuilderRepository(AppDbContext);
-                }
+                _formBuilderRepository ??= new FormBuilderRepository(AppDbContext);
                 return _formBuilderRepository;
             }
         }
@@ -72,29 +68,18 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                if (_formTabRepository == null)
-                {
-                    _formTabRepository = new FormTabRepository(AppDbContext);
-                }
+                _formTabRepository ??= new FormTabRepository(AppDbContext);
                 return _formTabRepository;
             }
         }
 
-        /// <summary>
-        /// 🆕 جديد: يوفر الوصول لعمليات FormField الخاصة.
-        /// </summary>
-        //public IFormFieldRepository FormFieldRepository
-        //{
-        //    get
-        //    {
-        //        // التهيئة الكسولة (Lazy initialization)
-        //        if (_formFieldRepository == null)
-        //        {
-        //            // يجب أن يكون اسم الفئة FormFieldRepository
-        //            _formFieldRepository = new FormFieldRepository(AppDbContext);
-        //        }
-        //        return _formFieldRepository;
-        //    }
-        //}
+        public IFormFieldRepository FormFieldRepository
+        {
+            get
+            {
+                _formFieldRepository ??= new FormFieldRepository(AppDbContext);
+                return _formFieldRepository;
+            }
+        }
     }
 }

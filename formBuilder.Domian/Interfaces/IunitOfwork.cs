@@ -1,4 +1,5 @@
 ﻿using formBuilder.Domian.Entitys;
+using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace formBuilder.Domian.Interfaces
         IFormTabRepository FormTabRepository { get; }
 
         // 🆕 جديد: خاصية المستودع الخاص بالحقول
-        //IFormFieldRepository FormFieldRepository { get; }
+        //IFormFieldRepository IFormBuilderRepository { get; }
+        IFormFieldRepository FormFieldRepository { get; } // ✅ التصحيح هنا
     }
 }

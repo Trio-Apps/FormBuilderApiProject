@@ -1,4 +1,5 @@
-﻿using System;
+﻿using formBuilder.Domian.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,10 +10,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.froms
 {
     [Table("FIELD_OPTIONS")]
-    public class FIELD_OPTIONS
+    public class FIELD_OPTIONS :BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("FORM_FIELDS")]
         public int FieldId { get; set; }

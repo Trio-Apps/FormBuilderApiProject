@@ -5,6 +5,7 @@ using FormBuilder.API.Services;
 using FormBuilder.Application.IServices;
 using FormBuilder.core.Repository;
 using FormBuilder.Core.IServices.FormBuilder.FormBuilder.Services.Services;
+using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Infrastructure.Repository;
 using FormBuilder.Services.Repository;
@@ -145,6 +146,8 @@ builder.Services.AddScoped<IFormBuilderRepository, FormBuilderRepository>();
 
 builder.Services.AddScoped<IFormTabRepository, FormTabRepository>();
 builder.Services.AddScoped<IFormTabService, FormTabService>();
+builder.Services.AddScoped<IFormFieldService, FormFieldService>();
+builder.Services.AddScoped<IFormFieldRepository, FormFieldRepository>();
 
 var app = builder.Build();
 

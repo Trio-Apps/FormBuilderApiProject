@@ -1,14 +1,14 @@
 ﻿
+using formBuilder.Domian.Entitys;
 using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("FIELD_TYPES")]
-public class FIELD_TYPES
+public class FIELD_TYPES :BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
+    
 
     [Required, StringLength(100)]
     public string TypeName { get; set; }
