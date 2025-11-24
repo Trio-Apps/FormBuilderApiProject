@@ -1,4 +1,5 @@
-﻿using FormBuilder.Domian.Entitys.FromBuilder;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
 
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +10,9 @@ namespace FormBuilder.API.Models
     
 
     [Table("FORM_BUILDER")]
-    public class FORM_BUILDER
+    public class FORM_BUILDER :BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [Required, StringLength(200)]
         public string FormName { get; set; }

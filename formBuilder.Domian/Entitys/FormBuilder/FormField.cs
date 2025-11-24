@@ -1,14 +1,14 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("FORM_FIELDS")]
-public class FORM_FIELDS
+public class FORM_FIELDS :BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
+    
 
     [ForeignKey("FORM_TABS")]
     public int TabId { get; set; }

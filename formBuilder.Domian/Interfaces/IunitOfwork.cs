@@ -1,4 +1,5 @@
 ﻿using formBuilder.Domian.Entitys;
+using FormBuilder.Domian.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,15 @@ namespace formBuilder.Domian.Interfaces
 {
     public interface IunitOfwork : IAsyncDisposable
     {
-        IBaseRepository<T> Repositary<T>() where T : BaseEntity;
+        // ... (العمليات الأساسية) ...
         Task<int> CompleteAsyn();
+        IBaseRepository<T> Repositary<T>() where T : BaseEntity;
 
+        // ... (المستودعات المحددة) ...
+        IFormBuilderRepository FormBuilderRepository { get; }
+        IFormTabRepository FormTabRepository { get; }
+
+        // 🆕 جديد: خاصية المستودع الخاص بالحقول
+        //IFormFieldRepository FormFieldRepository { get; }
     }
 }

@@ -80,6 +80,24 @@ namespace FormBuilder.core
             return await query.AnyAsync();
         }
 
+        public Task<T> GetByIdAsync(int id, bool asNoTracking = false)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<T> GetByIdAsync(int id, bool asNoTracking = false, params Expression<Func<T, object>>[] includes)
+        {
+            var entity = await _entity.FindAsync(id);
+
+            // إذا تم إيجاد الكيان وطلب عدم التتبع، يتم فصله عن السياق.
+            if (entity != null && asNoTracking)
+            {
+                _db.Entry(entity).State = EntityState.Detached;
+            }
+
+            return entity;
+        }
+      
         #endregion
     }
 

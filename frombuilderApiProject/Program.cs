@@ -4,6 +4,12 @@ using FormBuilder.API.Models;
 using FormBuilder.API.Services;
 using FormBuilder.Application.IServices;
 using FormBuilder.core.Repository;
+using FormBuilder.Core.IServices.FormBuilder.FormBuilder.Services.Services;
+using FormBuilder.Core.IServices.FormBuilder.Services.Services;
+using FormBuilder.Domian.Interfaces;
+using FormBuilder.Infrastructure.Repository;
+using FormBuilder.Services.FormBuilder.Services;
+using FormBuilder.Services.Repository;
 using FormBuilder.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -136,6 +142,11 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IFormBuilderService, FormBuilderService>();
+builder.Services.AddScoped<IFormBuilderRepository, FormBuilderRepository>();
+
+builder.Services.AddScoped<IFormTabRepository, FormTabRepository>();
+builder.Services.AddScoped<IFormTabService, FormTabService>();
 
 var app = builder.Build();
 

@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using formBuilder.Domian.Interfaces;
+using global::FormBuilder.API.Models;
+
+namespace FormBuilder.Domian.Interfaces
+{
+   
+        public interface IFormBuilderRepository : IBaseRepository<FORM_BUILDER>
+        {
+            // يمكنك إضافة أي عمليات خاصة بالـ FormBuilder هنا
+            Task<bool> IsFormCodeExistsAsync(string formCode, int? excludeId = null);
+        }
+    }
+
+
