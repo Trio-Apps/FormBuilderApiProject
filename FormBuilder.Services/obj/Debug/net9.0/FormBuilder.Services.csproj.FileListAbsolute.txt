@@ -52,6 +52,12 @@ C:\Users\Trio Apps 3\Videos\apiProject\FormBuilder.Services\obj\Debug\net9.0\For
 C:\Users\Trio Apps 3\Videos\apiProject\FormBuilder.Services\obj\Debug\net9.0\refint\FormBuilder.Services.dll
 C:\Users\Trio Apps 3\Videos\apiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.pdb
 C:\Users\Trio Apps 3\Videos\apiProject\FormBuilder.Services\obj\Debug\net9.0\ref\FormBuilder.Services.dll
+D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.csproj.AssemblyReference.cache
+D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.AssemblyInfoInputs.cache
+D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.AssemblyInfo.cs
+D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.csproj.CoreCompileInputs.cache
+D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.sourcelink.json
 D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Services.deps.json
 D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Services.dll
 D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Services.pdb
@@ -59,12 +65,6 @@ D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Core.
 D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Domian.dll
 D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Core.pdb
 D:\FormBuilderApiProject\FormBuilder.Services\bin\Debug\net9.0\FormBuilder.Domian.pdb
-D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.csproj.AssemblyReference.cache
-D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.GeneratedMSBuildEditorConfig.editorconfig
-D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.AssemblyInfoInputs.cache
-D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.AssemblyInfo.cs
-D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.csproj.CoreCompileInputs.cache
-D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.sourcelink.json
 D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuil.F4353CB9.Up2Date
 D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\FormBuilder.Services.dll
 D:\FormBuilderApiProject\FormBuilder.Services\obj\Debug\net9.0\refint\FormBuilder.Services.dll

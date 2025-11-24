@@ -1,58 +1,62 @@
 ﻿namespace FormBuilder.Core.DTOS.FormTabs
 {
     using System.ComponentModel.DataAnnotations;
+    using System;
 
-    /// <summary>
-    /// DTO لإنشاء تبويب جديد (HTTP POST).
-    /// </summary>
-    public class CreateFormTabDto
+    namespace FormBuilder.Core.DTOS.FormTabs
     {
-        [Required(ErrorMessage = "FormBuilder ID is required.")]
-        public int FormBuilderId { get; set; }
-
-        [Required]
-        [StringLength(200)]
-        public string TabName { get; set; }
-
-        [StringLength(100)]
-        public string TabCode { get; set; }
-
-        [Required]
-        public int TabOrder { get; set; } // يستخدم لترتيب التبويبات داخل النموذج
+        public class FormTabDto
+        {
+            public int Id { get; set; }
+            public int FormBuilderId { get; set; }
+            public string TabName { get; set; }
+            public string TabCode { get; set; }
+            public int TabOrder { get; set; }
+            public bool IsActive { get; set; }
+            public string CreatedByUserId { get; set; }
+            public DateTime CreatedDate { get; set; }
+         
+        }
     }
 
-    /// <summary>
-    /// DTO لتحديث تبويب موجود (HTTP PUT).
-    /// </summary>
-    public class UpdateFormTabDto
+namespace FormBuilder.Core.DTOS.FormTabs
     {
-        [Required]
-        [StringLength(200)]
-        public string TabName { get; set; }
+        public class UpdateFormTabDto
+        {
+      
 
-        [StringLength(100)]
-        public string TabCode { get; set; }
+            [Required]
+            [StringLength(100)]
+            public string TabName { get; set; }
 
-        [Required]
-        public int TabOrder { get; set; }
+            [Required]
+            [StringLength(50)]
+            public string TabCode { get; set; }
 
-        public bool IsActive { get; set; }
+            public int TabOrder { get; set; }
+
+            public bool IsActive { get; set; }
+        }
     }
 
-    /// <summary>
-    /// DTO لقراءة البيانات وعرضها في الاستجابة (HTTP GET).
-    /// </summary>
-    public class FormTabDto
+namespace FormBuilder.Core.DTOS.FormTabs
     {
-        public int Id { get; set; }
-        public int FormBuilderId { get; set; }
-        public string TabName { get; set; }
-        public string TabCode { get; set; }
-        public int TabOrder { get; set; }
-        public bool IsActive { get; set; }
+        public class CreateFormTabDto
+        {
+            [Required]
+            public int FormBuilderId { get; set; }
 
-        // حقول التدقيق (Audit Fields)
-        public string CreatedByUserId { get; set; }
-        public DateTime CreatedDate { get; set; }
+            [Required]
+            [StringLength(100)]
+            public string TabName { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            public string TabCode { get; set; }
+
+            public int TabOrder { get; set; } = 0;
+
+            public bool IsActive { get; set; } = true;
+        }
     }
 }

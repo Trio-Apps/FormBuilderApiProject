@@ -32,12 +32,10 @@ namespace formBuilder.Domian.Interfaces
         /// <summary>
         /// 🆕 جديد: يجلب كياناً باستخدام المعرّف الرئيسي (ID).
         /// </summary>
-        Task<T> GetByIdAsync(int id, bool asNoTracking = false);
 
         /// <summary>
         /// 🆕 جديد: يجلب كياناً باستخدام المعرّف ويتيح تضمين علاقات (Includes).
         /// </summary>
-        Task<T> GetByIdAsync(int id, bool asNoTracking = false, params Expression<Func<T, object>>[] includes);
 
         Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, bool asNoTracking = false, params Expression<Func<T, object>>[] includes);
         #endregion

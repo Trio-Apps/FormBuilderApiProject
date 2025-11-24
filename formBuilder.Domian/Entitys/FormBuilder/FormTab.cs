@@ -20,8 +20,13 @@ public class FORM_TABS :BaseEntity
     public string TabCode { get; set; }
 
     public int TabOrder { get; set; }
-    public bool IsActive { get; set; }
 
     public virtual ICollection<FORM_FIELDS> FORM_FIELDS { get; set; }
     public virtual ICollection<FORM_GRIDS> FORM_GRIDS { get; set; }
+    // constructor
+    public FORM_TABS()
+    {
+        FORM_FIELDS = new HashSet<FORM_FIELDS>();
+        FORM_GRIDS = new HashSet<FORM_GRIDS>();
+    }
 }

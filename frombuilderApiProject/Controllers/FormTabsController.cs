@@ -1,6 +1,6 @@
-﻿using FormBuilder.Domian.Entitys.froms; // كيان FORM_TABS
-using FormBuilder.Core.DTOS.FormTabs; // DTOs لتبادل البيانات
-using FormBuilder.Core.IServices.FormBuilder.Services.Services; // واجهة الخدمة IFormTabService
+﻿using FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +11,8 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.API.Controllers
 {
-    // نقطة الوصول (Route) ووحدة التحكم الأساسية
-    [Route("api/FormTabs")]
+    [Route("api/[controller]")]
     [ApiController]
-    // تأمين الوحدة: يتطلب دور "Admin"
     [Authorize(Roles = "Admin")]
     public class FormTabsController : ControllerBase
     {
@@ -22,13 +20,14 @@ namespace FormBuilder.API.Controllers
 
         public FormTabsController(IFormTabService formTabService)
         {
-            _formTabService = formTabService;
+            _formTabService = formTabService ?? throw new ArgumentNullException(nameof(formTabService));
         }
 
         // --- Manual Mapping Helper ---
         private FormTabDto MapToDto(FORM_TABS entity)
         {
             if (entity == null) return null;
+
             return new FormTabDto
             {
                 Id = entity.id,
@@ -38,7 +37,21 @@ namespace FormBuilder.API.Controllers
                 TabOrder = entity.TabOrder,
                 IsActive = entity.IsActive,
                 CreatedByUserId = entity.CreatedByUserId,
-                CreatedDate = entity.CreatedDate
+                CreatedDate = entity.CreatedDate,
+            };
+        }
+
+        private FORM_TABS MapToEntity(CreateFormTabDto dto, string currentUserId)
+        {
+            return new FORM_TABS
+            {
+                FormBuilderId = dto.FormBuilderId,
+                TabName = dto.TabName,
+                TabCode = dto.TabCode,
+                TabOrder = dto.TabOrder,
+                IsActive = dto.IsActive,
+                CreatedByUserId = currentUserId,
+                CreatedDate = DateTime.UtcNow
             };
         }
 
@@ -46,29 +59,88 @@ namespace FormBuilder.API.Controllers
         // --- 1. GET Operations (Read) ---
         // ----------------------------------------------------------------------
 
-        // GET: api/FormTabs/5 (للحصول على تبويب واحد)
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<FormTabDto>), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetAllTabs()
+        {
+            try
+            {
+                var tabs = await _formTabService.GetAllTabsAsync();
+                var tabsDto = tabs.Select(t => MapToDto(t)).ToList();
+                return Ok(tabsDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+  
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(FormTabDto), 200)]
         [ProducesResponseType(404)]
-        // 🟢 تم إكمال التنفيذ
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetTabById(int id)
         {
-            var tab = await _formTabService.GetTabByIdAsync(id, asNoTracking: true);
-            if (tab == null)
+            try
             {
-                return NotFound();
+                var tab = await _formTabService.GetTabByIdAsync(id, asNoTracking: true);
+                if (tab == null)
+                {
+                    return NotFound($"Tab with ID {id} not found.");
+                }
+                return Ok(MapToDto(tab));
             }
-            return Ok(MapToDto(tab));
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
-        // GET: api/FormTabs/form/1 (للحصول على كل التبويبات لنموذج معين)
         [HttpGet("form/{formBuilderId}")]
         [ProducesResponseType(typeof(IEnumerable<FormTabDto>), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetTabsByFormId(int formBuilderId)
         {
-            var tabs = await _formTabService.GetTabsByFormIdAsync(formBuilderId);
-            var tabsDto = tabs.Select(t => MapToDto(t)).ToList();
-            return Ok(tabsDto);
+            try
+            {
+                var tabs = await _formTabService.GetTabsByFormIdAsync(formBuilderId);
+                if (tabs == null || !tabs.Any())
+                {
+                    return NotFound($"No tabs found for form with ID {formBuilderId}.");
+                }
+
+                var tabsDto = tabs.Select(t => MapToDto(t)).ToList();
+                return Ok(tabsDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id}/with-details")]
+        [ProducesResponseType(typeof(FormTabDto), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> GetTabWithDetails(int id)
+        {
+            try
+            {
+                var tab = await _formTabService.GetTabWithDetailsAsync(id, asNoTracking: true);
+                if (tab == null)
+                {
+                    return NotFound($"Tab with ID {id} not found.");
+                }
+                return Ok(MapToDto(tab));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // ----------------------------------------------------------------------
@@ -79,11 +151,15 @@ namespace FormBuilder.API.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(409)]
         [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> CreateTab([FromBody] CreateFormTabDto createDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (string.IsNullOrEmpty(currentUserId)) return Unauthorized("User ID not found in claims.");
+            if (string.IsNullOrEmpty(currentUserId))
+                return Unauthorized("User ID not found in claims.");
 
             try
             {
@@ -93,99 +169,212 @@ namespace FormBuilder.API.Controllers
                     TabName = createDto.TabName,
                     TabCode = createDto.TabCode,
                     TabOrder = createDto.TabOrder,
-                    IsActive = true,
-                    CreatedDate = DateTime.UtcNow,
-                    CreatedByUserId = currentUserId
+                    IsActive = createDto.IsActive,
+                    CreatedByUserId = currentUserId,
+                    CreatedDate = DateTime.UtcNow
                 };
 
                 var createdTab = await _formTabService.CreateTabAsync(tabEntity);
-                return CreatedAtAction(nameof(GetTabById), new { id = createdTab.id }, MapToDto(createdTab));
+                var createdTabDto = MapToDto(createdTab);
+
+                return CreatedAtAction(nameof(GetTabById), new { id = createdTabDto.Id }, createdTabDto);
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException ex) when (ex.Message.Contains("does not exist") || ex.Message.Contains("already in use"))
             {
-                // يتم التقاط استثناءات التحقق من المفتاح الخارجي أو تكرار الكود
-                if (ex.Message.Contains("does not exist") || ex.Message.Contains("already in use"))
-                {
-                    return Conflict(ex.Message);
-                }
-                return BadRequest(ex.Message);
+                return Conflict(ex.Message);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"Error creating tab: {ex.Message}");
             }
         }
 
         // ----------------------------------------------------------------------
         // --- 3. PUT Operation (Update) ---
         // ----------------------------------------------------------------------
-        // PUT: api/FormTabs/5 (تحديث)
         [HttpPut("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(409)]
-        // 🟢 تم إكمال التنفيذ
+        [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateTab(int id, [FromBody] UpdateFormTabDto updateDto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            // جلب الكيان للتأكد من وجوده وتحديثه
-            var existingTab = await _formTabService.GetTabByIdAsync(id);
-            if (existingTab == null)
-            {
-                return NotFound();
-            }
-
+            
             try
             {
-                // تحديث الخصائص من الـ DTO إلى الكيان الموجود
+                var existingTab = await _formTabService.GetTabByIdAsync(id);
+                if (existingTab == null)
+                {
+                    return NotFound($"Tab with ID {id} not found.");
+                }
+
+                // Update properties
                 existingTab.TabName = updateDto.TabName;
                 existingTab.TabCode = updateDto.TabCode;
                 existingTab.TabOrder = updateDto.TabOrder;
                 existingTab.IsActive = updateDto.IsActive;
+                existingTab.UpdatedDate = DateTime.UtcNow;
 
                 var isUpdated = await _formTabService.UpdateTabAsync(existingTab);
 
-                if (isUpdated)
+                if (!isUpdated)
                 {
-                    return NoContent(); // HTTP 204
+                    return BadRequest("Failed to update the tab.");
                 }
-                else
-                {
-                    return BadRequest("Failed to update the tab due to an unknown service error.");
-                }
+
+                return NoContent();
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException ex) when (ex.Message.Contains("already in use"))
             {
-                // لمعالجة أخطاء تكرار الكود (Conflict 409)
                 return Conflict(ex.Message);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest($"Error updating tab: {ex.Message}");
             }
         }
 
         // ----------------------------------------------------------------------
         // --- 4. DELETE Operation ---
         // ----------------------------------------------------------------------
-        // DELETE: api/FormTabs/5 (حذف)
         [HttpDelete("{id}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        // 🟢 تم إكمال التنفيذ
+        [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteTab(int id)
         {
-            var isDeleted = await _formTabService.DeleteTabAsync(id);
-
-            if (!isDeleted)
+            try
             {
-                // إذا لم يتم العثور على السجل للحذف
-                return NotFound();
-            }
+                var isDeleted = await _formTabService.DeleteTabAsync(id);
 
-            return NoContent(); // HTTP 204
+                if (!isDeleted)
+                {
+                    return NotFound($"Tab with ID {id} not found.");
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error deleting tab: {ex.Message}");
+            }
+        }
+
+
+
+        [HttpGet("check-code/{tabCode}")]
+        [ProducesResponseType(typeof(object), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> CheckTabCodeUnique(string tabCode, [FromQuery] int? ignoreId = null)
+        {
+            try
+            {
+                var isUnique = await _formTabService.IsTabCodeUniqueAsync(tabCode, ignoreId);
+                return Ok(new
+                {
+                    tabCode,
+                    isUnique,
+                    message = isUnique ? "Tab code is available" : "Tab code is already in use"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id}/exists")]
+        [ProducesResponseType(typeof(object), 200)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> TabExists(int id)
+        {
+            try
+            {
+                var exists = await _formTabService.TabExistsAsync(id);
+                return Ok(new
+                {
+                    id,
+                    exists,
+                    message = exists ? "Tab exists" : "Tab does not exist"
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpPost("bulk")]
+        [ProducesResponseType(typeof(object), 201)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> CreateTabsBulk([FromBody] List<CreateFormTabDto> createDtos)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(currentUserId))
+                return Unauthorized("User ID not found in claims.");
+
+            try
+            {
+                var results = new List<object>();
+                var createdTabs = new List<FORM_TABS>();
+
+                foreach (var createDto in createDtos)
+                {
+                    try
+                    {
+                        var tabEntity = new FORM_TABS
+                        {
+                            FormBuilderId = createDto.FormBuilderId,
+                            TabName = createDto.TabName,
+                            TabCode = createDto.TabCode,
+                            TabOrder = createDto.TabOrder,
+                            IsActive = createDto.IsActive,
+                            CreatedByUserId = currentUserId,
+                            CreatedDate = DateTime.UtcNow
+                        };
+
+                        var createdTab = await _formTabService.CreateTabAsync(tabEntity);
+                        createdTabs.Add(createdTab);
+
+                        results.Add(new
+                        {
+                            success = true,
+                            tabCode = createDto.TabCode,
+                            message = "Created successfully"
+                        });
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        results.Add(new
+                        {
+                            success = false,
+                            tabCode = createDto.TabCode,
+                            message = ex.Message
+                        });
+                    }
+                }
+
+                return Ok(new
+                {
+                    total = createDtos.Count,
+                    successful = createdTabs.Count,
+                    failed = createDtos.Count - createdTabs.Count,
+                    results
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error in bulk operation: {ex.Message}");
+            }
         }
     }
 }
