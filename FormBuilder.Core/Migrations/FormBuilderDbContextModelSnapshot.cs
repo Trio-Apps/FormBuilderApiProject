@@ -68,7 +68,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -352,7 +351,6 @@ namespace FormBuilder.Core.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
@@ -1558,7 +1556,6 @@ namespace FormBuilder.Core.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("CreatedByUserId")
-                        .IsRequired()
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 

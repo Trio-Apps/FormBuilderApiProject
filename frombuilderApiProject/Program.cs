@@ -148,6 +148,10 @@ builder.Services.AddScoped<IFormTabRepository, FormTabRepository>();
 builder.Services.AddScoped<IFormTabService, FormTabService>();
 builder.Services.AddScoped<IFormFieldService, FormFieldService>();
 builder.Services.AddScoped<IFormFieldRepository, FormFieldRepository>();
+builder.Services.AddScoped<IFieldTypesService, FieldTypesService>();
+builder.Services.AddScoped<IFieldTypesRepository, FieldTypesRepository>();
+
+
 
 var app = builder.Build();
 

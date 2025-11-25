@@ -13,7 +13,7 @@ namespace formBuilder.Domian.Entitys
         // يمكنك إضافة حقول التدقيق المشتركة هنا
         // ✅ هذه يجب أن تكون الأسماء الصحيحة المطابقة لقاعدة البيانات
         [StringLength(450)]
-        public string CreatedByUserId { get; set; }
+        public string ?CreatedByUserId { get; set; }
 
         public DateTime CreatedDate { get; set; }
 

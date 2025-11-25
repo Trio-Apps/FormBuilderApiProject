@@ -5,16 +5,19 @@ using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
 
 public static class DataSeeder
 {
     public static async Task SeedAsync(FormBuilderDbContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
     {
+        // تأكد من إنشاء قاعدة البيانات
         await context.Database.EnsureCreatedAsync();
 
-        // ----------------------
-        // 1. SEED ROLES
-        // ----------------------
+        // ========================
+        // 1. Seed Roles
+        // ========================
         if (!await roleManager.Roles.AnyAsync())
         {
             var roles = new[]
@@ -32,9 +35,9 @@ public static class DataSeeder
             }
         }
 
-        // ----------------------
-        // 2. SEED PERMISSIONS
-        // ----------------------
+        // ========================
+        // 2. Seed Permissions
+        // ========================
         if (!await context.Permissions.AnyAsync())
         {
             var permissions = new[]
@@ -45,8 +48,8 @@ public static class DataSeeder
                 new Permission { PermissionName = "Forms.Delete", Description = "Delete forms" },
                 new Permission { PermissionName = "Submissions.Create", Description = "Create submissions" },
                 new Permission { PermissionName = "Submissions.View", Description = "View submissions" },
-                new Permission { PermissionName  = "Submissions.Approve", Description = "Approve submissions" },
-                new Permission {    PermissionName = "Submissions.Delete", Description = "Delete submissions" },
+                new Permission { PermissionName = "Submissions.Approve", Description = "Approve submissions" },
+                new Permission { PermissionName = "Submissions.Delete", Description = "Delete submissions" },
                 new Permission { PermissionName = "Users.Manage", Description = "Manage users" },
                 new Permission { PermissionName = "Roles.Manage", Description = "Manage roles" },
                 new Permission { PermissionName = "Settings.Manage", Description = "Manage settings" }
@@ -56,9 +59,9 @@ public static class DataSeeder
             await context.SaveChangesAsync();
         }
 
-        // ----------------------
-        // 3. SEED SUPER ADMIN USER
-        // ----------------------
+        // ========================
+        // 3. Seed SuperAdmin User
+        // ========================
         if (!await userManager.Users.AnyAsync(u => u.UserName == "admin"))
         {
             var superAdmin = new AppUser
@@ -66,7 +69,6 @@ public static class DataSeeder
                 UserName = "admin",
                 Email = "admin@zmbuildstr.com",
                 EmailConfirmed = true,
-               
                 DisplayName = "System Administrator",
                 PhoneNumber = "01234567890",
                 IsActive = true,
@@ -80,26 +82,35 @@ public static class DataSeeder
             }
         }
 
-     
- 
-     
+        // ========================
+    
+
+        // ========================
+        // 5. Seed ALERT_RULES
+        // ========================
         if (!await context.ALERT_RULES.AnyAsync())
         {
-            var emailTemplate = await context.EMAIL_TEMPLATES.FirstAsync();
-            var alertRules = new[]
+            var emailTemplate = await context.EMAIL_TEMPLATES.FirstOrDefaultAsync();
+            if (emailTemplate != null)
             {
-                new ALERT_RULES {
-                    RuleName = "New Submission Alert",
-                    TriggerType = "OnSubmissionCreate",
-                    EmailTemplateId = emailTemplate.Id,
-                    IsActive = true
-                }
-            };
-
-            await context.ALERT_RULES.AddRangeAsync(alertRules);
-            await context.SaveChangesAsync();
+                var alertRules = new[]
+                {
+                    new ALERT_RULES
+                    {
+                        RuleName = "New Submission Alert",
+                        TriggerType = "OnSubmissionCreate",
+                        EmailTemplateId = emailTemplate.Id,
+                        IsActive = true
+                    }
+                };
+                await context.ALERT_RULES.AddRangeAsync(alertRules);
+                await context.SaveChangesAsync();
+            }
         }
 
+        // ========================
+        // 6. Optional: Log Summary
+        // ========================
         Console.WriteLine("✅ Database seeding completed successfully!");
         Console.WriteLine("📊 Seeded Data Summary:");
         Console.WriteLine($"   - Roles: {await roleManager.Roles.CountAsync()}");

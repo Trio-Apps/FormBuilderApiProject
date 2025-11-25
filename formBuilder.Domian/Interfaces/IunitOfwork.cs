@@ -22,5 +22,7 @@ namespace formBuilder.Domian.Interfaces
         // 🆕 جديد: خاصية المستودع الخاص بالحقول
         //IFormFieldRepository IFormBuilderRepository { get; }
         IFormFieldRepository FormFieldRepository { get; } // ✅ التصحيح هنا
+        IFieldTypesRepository FieldTypesRepository { get; } // ✅ التصحيح هنا
+
     }
 }
