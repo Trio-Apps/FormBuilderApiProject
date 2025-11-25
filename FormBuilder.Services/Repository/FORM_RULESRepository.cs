@@ -1,0 +1,107 @@
+﻿using FormBuilder.API.Data;
+using FormBuilder.core;
+using FormBuilder.Domain.Interfaces;
+using FormBuilder.Domian.Entitys.froms;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace FormBuilder.Services.Repository
+{
+    public class FORM_RULESRepository : BaseRepository<FORM_RULES>, IFORM_RULESRepository
+    {
+        private readonly FormBuilderDbContext _context;
+
+        public FORM_RULESRepository(FormBuilderDbContext context) : base(context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public async Task<IEnumerable<FORM_RULES>> GetRulesByFormIdAsync(int formBuilderId)
+        {
+            return await _context.FORM_RULES
+                .Where(r => r.FormBuilderId == formBuilderId)
+                .OrderBy(r => r.RuleName)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<FORM_RULES>> GetActiveRulesByFormIdAsync(int formBuilderId)
+        {
+            return await _context.FORM_RULES
+                .Where(r => r.FormBuilderId == formBuilderId && r.IsActive)
+                .OrderBy(r => r.RuleName)
+                .ToListAsync();
+        }
+
+        public async Task<FORM_RULES> GetRuleByNameAsync(int formBuilderId, string ruleName)
+        {
+            return await _context.FORM_RULES
+                .FirstOrDefaultAsync(r => r.FormBuilderId == formBuilderId && r.RuleName == ruleName);
+        }
+
+        public async Task<bool> IsRuleNameUniqueAsync(int formBuilderId, string ruleName, int? ignoreId = null)
+        {
+            if (string.IsNullOrWhiteSpace(ruleName))
+                return false;
+
+            return !await _context.FORM_RULES
+                .AnyAsync(r => r.FormBuilderId == formBuilderId &&
+                              r.RuleName == ruleName.Trim() &&
+                              (!ignoreId.HasValue || r.id != ignoreId.Value));
+        }
+
+        public async Task<IEnumerable<FORM_RULES>> GetRulesWithFormDetailsAsync(int formBuilderId)
+        {
+            return await _context.FORM_RULES
+                .Where(r => r.FormBuilderId == formBuilderId)
+                .Include(r => r.FORM_BUILDER)
+                .OrderBy(r => r.RuleName)
+                .ToListAsync();
+        }
+
+        public async Task<bool> UpdateRulesStatusAsync(int formBuilderId, bool isActive)
+        {
+            var rules = await _context.FORM_RULES
+                .Where(r => r.FormBuilderId == formBuilderId)
+                .ToListAsync();
+
+            if (!rules.Any())
+                return false;
+
+            foreach (var rule in rules)
+            {
+                rule.IsActive = isActive;
+            }
+
+            _context.FORM_RULES.UpdateRange(rules);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        // Additional utility methods
+        public async Task<int> GetRulesCountByFormAsync(int formBuilderId)
+        {
+            return await _context.FORM_RULES
+                .CountAsync(r => r.FormBuilderId == formBuilderId);
+        }
+
+        public async Task<int> GetActiveRulesCountByFormAsync(int formBuilderId)
+        {
+            return await _context.FORM_RULES
+                .CountAsync(r => r.FormBuilderId == formBuilderId && r.IsActive);
+        }
+
+        public async Task<bool> DeleteRulesByFormIdAsync(int formBuilderId)
+        {
+            var rules = await _context.FORM_RULES
+                .Where(r => r.FormBuilderId == formBuilderId)
+                .ToListAsync();
+
+            if (!rules.Any())
+                return false;
+
+            _context.FORM_RULES.RemoveRange(rules);
+            return await _context.SaveChangesAsync() > 0;
+        }
+    }
+}

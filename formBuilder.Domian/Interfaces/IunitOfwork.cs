@@ -23,6 +23,7 @@ namespace formBuilder.Domian.Interfaces
         //IFormFieldRepository IFormBuilderRepository { get; }
         IFormFieldRepository FormFieldRepository { get; } // ✅ التصحيح هنا
         IFieldTypesRepository FieldTypesRepository { get; } // ✅ التصحيح هنا
+        IFORM_RULESRepository FORM_RULESRepository { get; }
 
     }
 }

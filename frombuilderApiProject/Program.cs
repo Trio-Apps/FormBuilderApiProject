@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
@@ -150,6 +151,9 @@ builder.Services.AddScoped<IFormFieldService, FormFieldService>();
 builder.Services.AddScoped<IFormFieldRepository, FormFieldRepository>();
 builder.Services.AddScoped<IFieldTypesService, FieldTypesService>();
 builder.Services.AddScoped<IFieldTypesRepository, FieldTypesRepository>();
+// Ýí Program.cs Ãæ Startup.cs
+builder.Services.AddScoped<IFORM_RULESRepository, FORM_RULESRepository>();
+builder.Services.AddScoped<IFORM_RULESService, FORM_RULESService>();
 
 
 

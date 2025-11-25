@@ -16,6 +16,8 @@ namespace FormBuilder.core.Repository
     public class UnitOfWork : IunitOfwork, IAsyncDisposable
     {
         private readonly Dictionary<Type, object> _repositories;
+        private IFORM_RULESRepository _formRulesRepository;
+
 
         // الحقول الداعمة (Backing fields) - تصحيح الأسماء
         private IFormBuilderRepository _formBuilderRepository;
@@ -56,6 +58,15 @@ namespace FormBuilder.core.Repository
         }
 
         // --- Specific Repository Exposure ---
+        // في UnitOfWork.cs - إضافة FORM_RULESRepository
+        public IFORM_RULESRepository FORM_RULESRepository
+        {
+            get
+            {
+                _formRulesRepository ??= new FORM_RULESRepository(AppDbContext);
+                return _formRulesRepository;
+            }
+        }
 
         public IFormBuilderRepository FormBuilderRepository
         {
