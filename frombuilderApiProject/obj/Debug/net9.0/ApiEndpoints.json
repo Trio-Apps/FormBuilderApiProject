@@ -20,7 +20,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -72,7 +72,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -124,7 +124,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -150,7 +150,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -161,7 +161,136 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "GetAllFieldOptions",
+    "RelativePath": "api/FieldOptions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "CreateFieldOption",
+    "RelativePath": "api/FieldOptions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createFieldOptionDto",
+        "Type": "FormBuilder.API.Models.CreateFieldOptionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "GetFieldOptionById",
+    "RelativePath": "api/FieldOptions/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "UpdateFieldOption",
+    "RelativePath": "api/FieldOptions/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateFieldOptionDto",
+        "Type": "FormBuilder.API.Models.UpdateFieldOptionDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "DeleteFieldOption",
+    "RelativePath": "api/FieldOptions/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetAll",
     "RelativePath": "api/FieldTypes",
     "HttpMethod": "GET",
@@ -181,7 +310,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "Create",
     "RelativePath": "api/FieldTypes",
     "HttpMethod": "POST",
@@ -196,7 +325,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -207,7 +336,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetById",
     "RelativePath": "api/FieldTypes/{id}",
     "HttpMethod": "GET",
@@ -233,7 +362,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "Update",
     "RelativePath": "api/FieldTypes/{id}",
     "HttpMethod": "PUT",
@@ -253,7 +382,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -264,7 +393,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "Delete",
     "RelativePath": "api/FieldTypes/{id}",
     "HttpMethod": "DELETE",
@@ -279,7 +408,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -290,7 +419,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "SoftDelete",
     "RelativePath": "api/FieldTypes/{id}/soft-delete",
     "HttpMethod": "PATCH",
@@ -305,7 +434,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.API.Models.FormBuilder.API.Models.ApiResponse",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -316,7 +445,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetActive",
     "RelativePath": "api/FieldTypes/active",
     "HttpMethod": "GET",
@@ -336,7 +465,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetAdvanced",
     "RelativePath": "api/FieldTypes/advanced",
     "HttpMethod": "GET",
@@ -356,7 +485,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetBasic",
     "RelativePath": "api/FieldTypes/basic",
     "HttpMethod": "GET",
@@ -376,7 +505,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetByTypeName",
     "RelativePath": "api/FieldTypes/by-name/{typeName}",
     "HttpMethod": "GET",
@@ -402,7 +531,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetForDropdown",
     "RelativePath": "api/FieldTypes/dropdown",
     "HttpMethod": "GET",
@@ -422,7 +551,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetWithMultiple",
     "RelativePath": "api/FieldTypes/with-multiple",
     "HttpMethod": "GET",
@@ -442,7 +571,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FieldTypesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
     "Method": "GetWithOptions",
     "RelativePath": "api/FieldTypes/with-options",
     "HttpMethod": "GET",
@@ -462,7 +591,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormBuilderController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "GetAllForms",
     "RelativePath": "api/FormBuilder",
     "HttpMethod": "GET",
@@ -482,7 +611,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormBuilderController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "CreateForm",
     "RelativePath": "api/FormBuilder",
     "HttpMethod": "POST",
@@ -526,7 +655,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormBuilderController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "GetFormById",
     "RelativePath": "api/FormBuilder/{id}",
     "HttpMethod": "GET",
@@ -561,7 +690,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormBuilderController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "UpdateForm",
     "RelativePath": "api/FormBuilder/{id}",
     "HttpMethod": "PUT",
@@ -615,7 +744,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormBuilderController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "DeleteForm",
     "RelativePath": "api/FormBuilder/{id}",
     "HttpMethod": "DELETE",
@@ -646,7 +775,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormBuilderController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "GetFormByCode",
     "RelativePath": "api/FormBuilder/code/{formCode}",
     "HttpMethod": "GET",
@@ -681,8 +810,8 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetAllFields",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetAllFormFields",
     "RelativePath": "api/FormFields",
     "HttpMethod": "GET",
     "IsController": true,
@@ -690,82 +819,45 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FormBuilder.Core.DTOS.FormFields.FormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "CreateField",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "CreateFormField",
     "RelativePath": "api/FormFields",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "createDto",
-        "Type": "FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto",
+        "Name": "createFormFieldDto",
+        "Type": "FormBuilder.API.Models.CreateFormFieldDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.Core.DTOS.FormFields.FormFieldDto",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 201
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 409
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 401
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
+        "StatusCode": 200
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetFieldById",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetFormFieldById",
     "RelativePath": "api/FormFields/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -779,33 +871,19 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "FormBuilder.Core.DTOS.FormFields.FormFieldDto",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "UpdateField",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "UpdateFormField",
     "RelativePath": "api/FormFields/{id}",
     "HttpMethod": "PUT",
     "IsController": true,
@@ -817,54 +895,26 @@
         "IsRequired": true
       },
       {
-        "Name": "updateDto",
-        "Type": "FormBuilder.Core.DTOS.FormFields.UpdateFormFieldDto",
+        "Name": "updateFormFieldDto",
+        "Type": "FormBuilder.API.Models.UpdateFormFieldDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 400
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 409
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
+        "StatusCode": 200
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "DeleteField",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "DeleteFormField",
     "RelativePath": "api/FormFields/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -878,30 +928,20 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
+        "StatusCode": 200
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "FieldExists",
-    "RelativePath": "api/FormFields/{id}/exists",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetFormFieldUsageCount",
+    "RelativePath": "api/FormFields/{id}/usage-count",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -914,100 +954,19 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Object",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "SoftDeleteField",
-    "RelativePath": "api/FormFields/{id}/soft",
-    "HttpMethod": "DELETE",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
-      }
-    ]
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetFieldWithDetails",
-    "RelativePath": "api/FormFields/{id}/with-details",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.Core.DTOS.FormFields.FormFieldDto",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
-      }
-    ]
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetActiveFields",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetActiveFormFields",
     "RelativePath": "api/FormFields/active",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1015,74 +974,20 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FormBuilder.Core.DTOS.FormFields.FormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "CreateFieldsBulk",
-    "RelativePath": "api/FormFields/bulk",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "createDtos",
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Object",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 201
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 401
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
-      }
-    ]
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "CheckFieldCodeUnique",
-    "RelativePath": "api/FormFields/check-code/{fieldCode}",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetFormFieldByCode",
+    "RelativePath": "api/FormFields/code/{fieldCode}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1091,74 +996,23 @@
         "Name": "fieldCode",
         "Type": "System.String",
         "IsRequired": true
-      },
-      {
-        "Name": "ignoreId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Object",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "CheckFieldNameUnique",
-    "RelativePath": "api/FormFields/check-name/{fieldName}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "fieldName",
-        "Type": "System.String",
-        "IsRequired": true
-      },
-      {
-        "Name": "ignoreId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "tabId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Object",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
-      }
-    ]
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetFieldsByFormId",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetFormFieldsByFormId",
     "RelativePath": "api/FormFields/form/{formBuilderId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1172,33 +1026,45 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FormBuilder.Core.DTOS.FormFields.FormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "SoftDeleteFormField",
+    "RelativePath": "api/FormFields/soft-delete/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
+        "StatusCode": 200
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetFieldsByTabId",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetFormFieldsByTabId",
     "RelativePath": "api/FormFields/tab/{tabId}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -1212,34 +1078,20 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FormBuilder.Core.DTOS.FormFields.FormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "GetFieldsCount",
-    "RelativePath": "api/FormFields/tab/{tabId}/count",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetEditableFields",
+    "RelativePath": "api/FormFields/tab/{tabId}/editable",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -1252,23 +1104,18 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Object",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
     "Method": "GetMandatoryFields",
     "RelativePath": "api/FormFields/tab/{tabId}/mandatory",
     "HttpMethod": "GET",
@@ -1283,32 +1130,18 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FormBuilder.Core.DTOS.FormFields.FormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
     "Method": "GetVisibleFields",
     "RelativePath": "api/FormFields/tab/{tabId}/visible",
     "HttpMethod": "GET",
@@ -1323,68 +1156,18 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[FormBuilder.Core.DTOS.FormFields.FormFieldDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "FormBuilder.API.Models.ApiResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
           "text/json"
         ],
         "StatusCode": 200
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 404
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
       }
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormFieldsController",
-    "Method": "UpdateFieldsOrder",
-    "RelativePath": "api/FormFields/update-orders",
-    "HttpMethod": "PUT",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "fieldOrders",
-        "Type": "System.Collections.Generic.Dictionary\u00602[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 204
-      },
-      {
-        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 400
-      },
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 500
-      }
-    ]
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "GetAllRules",
     "RelativePath": "api/FormRules",
     "HttpMethod": "GET",
@@ -1409,7 +1192,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "CreateRule",
     "RelativePath": "api/FormRules",
     "HttpMethod": "POST",
@@ -1458,7 +1241,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "GetRuleById",
     "RelativePath": "api/FormRules/{id}",
     "HttpMethod": "GET",
@@ -1498,7 +1281,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "UpdateRule",
     "RelativePath": "api/FormRules/{id}",
     "HttpMethod": "PUT",
@@ -1557,7 +1340,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "DeleteRule",
     "RelativePath": "api/FormRules/{id}",
     "HttpMethod": "DELETE",
@@ -1593,7 +1376,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "RuleExists",
     "RelativePath": "api/FormRules/{id}/exists",
     "HttpMethod": "GET",
@@ -1624,7 +1407,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "CreateRulesBulk",
     "RelativePath": "api/FormRules/bulk",
     "HttpMethod": "POST",
@@ -1664,7 +1447,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "CheckRuleNameUnique",
     "RelativePath": "api/FormRules/check-name/{ruleName}/form/{formBuilderId}",
     "HttpMethod": "GET",
@@ -1705,7 +1488,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "GetRulesByFormId",
     "RelativePath": "api/FormRules/form/{formBuilderId}",
     "HttpMethod": "GET",
@@ -1736,7 +1519,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "GetActiveRulesByFormId",
     "RelativePath": "api/FormRules/form/{formBuilderId}/active",
     "HttpMethod": "GET",
@@ -1767,7 +1550,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormRulesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormRulesController",
     "Method": "GetRulesStats",
     "RelativePath": "api/FormRules/stats",
     "HttpMethod": "GET",
@@ -1792,7 +1575,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "GetAllTabs",
     "RelativePath": "api/FormTabs",
     "HttpMethod": "GET",
@@ -1817,7 +1600,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "CreateTab",
     "RelativePath": "api/FormTabs",
     "HttpMethod": "POST",
@@ -1875,7 +1658,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "GetTabById",
     "RelativePath": "api/FormTabs/{id}",
     "HttpMethod": "GET",
@@ -1915,7 +1698,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "UpdateTab",
     "RelativePath": "api/FormTabs/{id}",
     "HttpMethod": "PUT",
@@ -1974,7 +1757,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "DeleteTab",
     "RelativePath": "api/FormTabs/{id}",
     "HttpMethod": "DELETE",
@@ -2010,7 +1793,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "TabExists",
     "RelativePath": "api/FormTabs/{id}/exists",
     "HttpMethod": "GET",
@@ -2041,7 +1824,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "GetTabWithDetails",
     "RelativePath": "api/FormTabs/{id}/with-details",
     "HttpMethod": "GET",
@@ -2081,7 +1864,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "CreateTabsBulk",
     "RelativePath": "api/FormTabs/bulk",
     "HttpMethod": "POST",
@@ -2130,7 +1913,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "CheckTabCodeUnique",
     "RelativePath": "api/FormTabs/check-code/{tabCode}",
     "HttpMethod": "GET",
@@ -2166,7 +1949,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.FormTabsController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormTabsController",
     "Method": "GetTabsByFormId",
     "RelativePath": "api/FormTabs/form/{formBuilderId}",
     "HttpMethod": "GET",
@@ -2299,7 +2082,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "GetAllRoles",
     "RelativePath": "api/Roles",
     "HttpMethod": "GET",
@@ -2319,7 +2102,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "CreateRole",
     "RelativePath": "api/Roles",
     "HttpMethod": "POST",
@@ -2345,7 +2128,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "GetRoleById",
     "RelativePath": "api/Roles/{id}",
     "HttpMethod": "GET",
@@ -2371,7 +2154,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "UpdateRole",
     "RelativePath": "api/Roles/{id}",
     "HttpMethod": "PUT",
@@ -2402,7 +2185,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "DeleteRole",
     "RelativePath": "api/Roles/{id}",
     "HttpMethod": "DELETE",
@@ -2418,7 +2201,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "AssignPermissions",
     "RelativePath": "api/Roles/{id}/permissions",
     "HttpMethod": "POST",
@@ -2439,7 +2222,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FormBuilder.API.Controllers.RolesController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.RolesController",
     "Method": "GetRoleByName",
     "RelativePath": "api/Roles/name/{name}",
     "HttpMethod": "GET",
@@ -2465,7 +2248,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "GetAllUsers",
     "RelativePath": "api/Users",
     "HttpMethod": "GET",
@@ -2485,7 +2268,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "CreateUser",
     "RelativePath": "api/Users",
     "HttpMethod": "POST",
@@ -2511,7 +2294,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "GetUserById",
     "RelativePath": "api/Users/{id}",
     "HttpMethod": "GET",
@@ -2537,7 +2320,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "UpdateUser",
     "RelativePath": "api/Users/{id}",
     "HttpMethod": "PUT",
@@ -2568,7 +2351,7 @@
     ]
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "DeleteUser",
     "RelativePath": "api/Users/{id}",
     "HttpMethod": "DELETE",
@@ -2584,7 +2367,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "ActivateUser",
     "RelativePath": "api/Users/{id}/activate",
     "HttpMethod": "PATCH",
@@ -2600,7 +2383,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FormBuilder.ApiProject.Controllers.UsersController",
+    "ContainingType": "FormBuilder.ApiProject.Controllers.Auth.UsersController",
     "Method": "DeactivateUser",
     "RelativePath": "api/Users/{id}/deactivate",
     "HttpMethod": "PATCH",

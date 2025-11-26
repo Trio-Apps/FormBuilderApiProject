@@ -46,7 +46,7 @@ namespace FormBuilder.core
             return ApplyIncludes(query, includes);
         }
         // return List
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes)
+        public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes)
         {
             var query = _entity.AsQueryable();
             if (filter != null) query = query.Where(filter);

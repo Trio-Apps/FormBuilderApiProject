@@ -5,6 +5,7 @@ using FormBuilder.core;
 using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.Domian.Interfaces;
+using FormBuilder.Infrastructure.Repositories;
 using FormBuilder.Infrastructure.Repository;
 using FormBuilder.Services.Repository;
 using System;
@@ -16,14 +17,14 @@ namespace FormBuilder.core.Repository
     public class UnitOfWork : IunitOfwork, IAsyncDisposable
     {
         private readonly Dictionary<Type, object> _repositories;
+
+        // Private repository fields
         private IFORM_RULESRepository _formRulesRepository;
-
-
-        // الحقول الداعمة (Backing fields) - تصحيح الأسماء
         private IFormBuilderRepository _formBuilderRepository;
         private IFormTabRepository _formTabRepository;
-        private IFormFieldRepository _formFieldRepository; // ✅ إضافة FormFieldRepository
-        private IFieldTypesRepository _FieldTypesRepository;
+        private IFormFieldRepository _formFieldRepository;
+        private IFieldTypesRepository _fieldTypesRepository;
+        private IFieldOptionsRepository _FieldOptionsRepository;
 
 
         public FormBuilderDbContext AppDbContext { get; }
@@ -57,8 +58,8 @@ namespace FormBuilder.core.Repository
             return (IBaseRepository<T>)_repositories[type];
         }
 
-        // --- Specific Repository Exposure ---
-        // في UnitOfWork.cs - إضافة FORM_RULESRepository
+        // --- Specific Repository Properties ---
+
         public IFORM_RULESRepository FORM_RULESRepository
         {
             get
@@ -94,12 +95,21 @@ namespace FormBuilder.core.Repository
                 return _formFieldRepository;
             }
         }
+
         public IFieldTypesRepository FieldTypesRepository
         {
             get
             {
-                _FieldTypesRepository ??= new FieldTypesRepository(AppDbContext);
-                return _FieldTypesRepository;
+                _fieldTypesRepository ??= new FieldTypesRepository(AppDbContext);
+                return _fieldTypesRepository;
+            }
+        }
+        public IFieldOptionsRepository FieldOptionsRepository
+        {
+            get
+            {
+                _FieldOptionsRepository ??= new FieldOptionsRepository(AppDbContext);
+                return _FieldOptionsRepository;
             }
         }
 

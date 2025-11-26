@@ -1,5 +1,4 @@
 ﻿using FormBuilder.API.Models;
-using FormBuilder.API.Models.FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Services.Services;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FormBuilder.API.Controllers
+namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]

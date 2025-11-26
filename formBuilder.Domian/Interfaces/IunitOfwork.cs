@@ -11,19 +11,19 @@ namespace formBuilder.Domian.Interfaces
 {
     public interface IunitOfwork : IAsyncDisposable
     {
-        // ... (العمليات الأساسية) ...
+        // Core UoW methods
         Task<int> CompleteAsyn();
         IBaseRepository<T> Repositary<T>() where T : BaseEntity;
 
-        // ... (المستودعات المحددة) ...
+        // Specific repositories
         IFormBuilderRepository FormBuilderRepository { get; }
         IFormTabRepository FormTabRepository { get; }
-
-        // 🆕 جديد: خاصية المستودع الخاص بالحقول
-        //IFormFieldRepository IFormBuilderRepository { get; }
-        IFormFieldRepository FormFieldRepository { get; } // ✅ التصحيح هنا
-        IFieldTypesRepository FieldTypesRepository { get; } // ✅ التصحيح هنا
+        IFormFieldRepository FormFieldRepository { get; }
+        IFieldTypesRepository FieldTypesRepository { get; }
         IFORM_RULESRepository FORM_RULESRepository { get; }
+        IFieldOptionsRepository FieldOptionsRepository { get; } 
 
+
+   
     }
 }

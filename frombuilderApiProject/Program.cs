@@ -5,9 +5,11 @@ using FormBuilder.API.Models;
 using FormBuilder.API.Services;
 using FormBuilder.Application.IServices;
 using FormBuilder.core.Repository;
+using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Core.IServices.FormBuilder.FormBuilder.Services.Services;
 using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Interfaces;
+using FormBuilder.Infrastructure.Repositories;
 using FormBuilder.Infrastructure.Repository;
 using FormBuilder.Services.Repository;
 using FormBuilder.Services.Services;
@@ -151,9 +153,12 @@ builder.Services.AddScoped<IFormFieldService, FormFieldService>();
 builder.Services.AddScoped<IFormFieldRepository, FormFieldRepository>();
 builder.Services.AddScoped<IFieldTypesService, FieldTypesService>();
 builder.Services.AddScoped<IFieldTypesRepository, FieldTypesRepository>();
-// Ýí Program.cs Ãæ Startup.cs
 builder.Services.AddScoped<IFORM_RULESRepository, FORM_RULESRepository>();
 builder.Services.AddScoped<IFORM_RULESService, FORM_RULESService>();
+builder.Services.AddScoped<IFieldOptionsRepository, FieldOptionsRepository>();
+
+
+builder.Services.AddScoped<IFieldOptionsService, FieldOptionsService>();
 
 
 

@@ -43,7 +43,7 @@ public class FORM_FIELDS :BaseEntity
 
     [ForeignKey("AppUser")]
     public string ? CreatedByUserId { get; set; }
-    public virtual AppUser CreatedByUser { get; set; }
+    public virtual AppUser ?CreatedByUser { get; set; }
 
     public bool IsActive { get; set; }
 

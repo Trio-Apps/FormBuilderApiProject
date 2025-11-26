@@ -1,6 +1,6 @@
 ﻿// Controllers/AuthController.cs
 
-using FormBuilder.API.Models.FormBuilder.API.Models;
+using FormBuilder.API.Models;
 using FormBuilder.core.DTOS.Auth;
 using FormBuilder.Core.DTOS.Auth;
 using Microsoft.AspNetCore.Mvc;

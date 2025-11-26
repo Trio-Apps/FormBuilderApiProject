@@ -1,32 +1,59 @@
 ﻿namespace FormBuilder.API.Models
 {
-    // Models/ApiResponse.cs
-    namespace FormBuilder.API.Models
+    public class ApiResponse<T>
     {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
 
-        // Dtos/ApiResponse.cs
-        public class ApiResponse
+        public ApiResponse(int statusCode, string message = null, T data = default)
         {
-            public int StatusCode { get; set; }
-            public string Message { get; set; }
+            StatusCode = statusCode;
+            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
+            Data = data;
+        }
 
-            public ApiResponse(int statusCode, string message = null)
+        private string GetDefaultMessageForStatusCode(int statusCode)
+        {
+            return statusCode switch
             {
-                StatusCode = statusCode;
-                Message = message ?? GetDefaultMessageForStatusCode(statusCode);
-            }
+                200 => "Success",
+                201 => "Created",
+                400 => "Bad Request",
+                401 => "Unauthorized",
+                404 => "Resource Not Found",
+                500 => "Internal Server Error",
+                _ => null
+            };
+        }
+    }
 
-            private string GetDefaultMessageForStatusCode(int statusCode)
+    // Non-generic version for compatibility
+    public class ApiResponse
+    {
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+        public object ? Data { get; set; }
+
+        public ApiResponse(int statusCode, string message = null, object data = null)
+        {
+            StatusCode = statusCode;
+            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
+            Data = data ??null;
+        }
+
+        private string GetDefaultMessageForStatusCode(int statusCode)
+        {
+            return statusCode switch
             {
-                return statusCode switch
-                {
-                    400 => "Bad Request",
-                    401 => "Unauthorized",
-                    404 => "Resource Not Found",
-                    500 => "Internal Server Error",
-                    _ => null
-                };
-            }
+                200 => "Success",
+                201 => "Created",
+                400 => "Bad Request",
+                401 => "Unauthorized",
+                404 => "Resource Not Found",
+                500 => "Internal Server Error",
+                _ => null
+            };
         }
     }
 }

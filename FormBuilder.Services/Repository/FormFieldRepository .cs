@@ -1,13 +1,16 @@
-﻿using FormBuilder.API.Data;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces;
+using FormBuilder.Domian.Entitys.froms;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace FormBuilder.Services.Repository
+namespace FormBuilder.Infrastructure.Repositories
 {
     public class FormFieldRepository : BaseRepository<FORM_FIELDS>, IFormFieldRepository
     {
@@ -15,51 +18,62 @@ namespace FormBuilder.Services.Repository
 
         public FormFieldRepository(FormBuilderDbContext context) : base(context)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context;
         }
 
+        // Field Code Validation
         public async Task<bool> IsFieldCodeUniqueAsync(string fieldCode, int? ignoreId = null)
         {
-            if (string.IsNullOrWhiteSpace(fieldCode))
-                return false;
+            var query = _context.FORM_FIELDS
+                .Where(f => f.FieldCode == fieldCode && f.IsActive);
 
-            return !await _context.FORM_FIELDS
-                .AnyAsync(f => f.FieldCode == fieldCode.Trim() &&
-                              (!ignoreId.HasValue || f.id != ignoreId.Value));
+            if (ignoreId.HasValue)
+            {
+                query = query.Where(f => f.id != ignoreId.Value);
+            }
+
+            return !await query.AnyAsync();
         }
 
         public async Task<bool> IsFieldNameUniqueAsync(string fieldName, int? ignoreId = null, int? tabId = null)
         {
-            if (string.IsNullOrWhiteSpace(fieldName))
-                return false;
+            var query = _context.FORM_FIELDS
+                .Where(f => f.FieldName == fieldName && f.IsActive);
 
-            var query = _context.FORM_FIELDS.AsQueryable();
+            if (ignoreId.HasValue)
+            {
+                query = query.Where(f => f.id != ignoreId.Value);
+            }
 
             if (tabId.HasValue)
+            {
                 query = query.Where(f => f.TabId == tabId.Value);
+            }
 
-            return !await query
-                .AnyAsync(f => f.FieldName == fieldName.Trim() &&
-                              (!ignoreId.HasValue || f.id != ignoreId.Value));
+            return !await query.AnyAsync();
         }
 
+        // Specialized Queries
         public async Task<IEnumerable<FORM_FIELDS>> GetFieldsByTabIdAsync(int tabId)
         {
             return await _context.FORM_FIELDS
-                .Where(f => f.TabId == tabId && f.IsActive)
+                .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_TYPES)
                 .Include(f => f.FIELD_OPTIONS)
+                .Include(f => f.FIELD_DATA_SOURCES)
+                .Where(f => f.TabId == tabId && f.IsActive)
                 .OrderBy(f => f.FieldOrder)
-                .ThenBy(f => f.FieldName)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_FIELDS>> GetFieldsByFormIdAsync(int formBuilderId)
         {
             return await _context.FORM_FIELDS
-                .Where(f => f.FORM_TABS.FormBuilderId == formBuilderId && f.IsActive)
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_TYPES)
+                .Include(f => f.FIELD_OPTIONS)
+                .Include(f => f.FIELD_DATA_SOURCES)
+                .Where(f => f.FORM_TABS.FormBuilderId == formBuilderId && f.IsActive)
                 .OrderBy(f => f.FORM_TABS.TabOrder)
                 .ThenBy(f => f.FieldOrder)
                 .ToListAsync();
@@ -68,8 +82,9 @@ namespace FormBuilder.Services.Repository
         public async Task<IEnumerable<FORM_FIELDS>> GetMandatoryFieldsAsync(int tabId)
         {
             return await _context.FORM_FIELDS
-                .Where(f => f.TabId == tabId && f.IsMandatory && f.IsActive)
+                .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_TYPES)
+                .Where(f => f.TabId == tabId && f.IsMandatory && f.IsActive)
                 .OrderBy(f => f.FieldOrder)
                 .ToListAsync();
         }
@@ -77,120 +92,80 @@ namespace FormBuilder.Services.Repository
         public async Task<IEnumerable<FORM_FIELDS>> GetVisibleFieldsAsync(int tabId)
         {
             return await _context.FORM_FIELDS
+                .Include(f => f.FORM_TABS)
+                .Include(f => f.FIELD_TYPES)
                 .Where(f => f.TabId == tabId && f.IsVisible && f.IsActive)
-                .Include(f => f.FIELD_TYPES)
-                .Include(f => f.FIELD_OPTIONS)
                 .OrderBy(f => f.FieldOrder)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<FORM_FIELDS>> GetFieldsByDataTypeAsync(string dataType)
+        // Get by ID with included entities
+        public async Task<FORM_FIELDS> GetByIdAsync(int id, params Expression<Func<FIELD_TYPES, object>>[] includes)
         {
-            return await _context.FORM_FIELDS
-                .Where(f => f.DataType == dataType && f.IsActive)
+            var query = _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
-                .Include(f => f.FIELD_TYPES)
-                .OrderBy(f => f.FieldName)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<FORM_FIELDS>> GetFieldsByFieldTypeAsync(int fieldTypeId)
-        {
-            return await _context.FORM_FIELDS
-                .Where(f => f.FieldTypeId == fieldTypeId && f.IsActive)
-                .Include(f => f.FORM_TABS)
-                .OrderBy(f => f.FieldName)
-                .ToListAsync();
-        }
-
-        public async Task<int> GetFieldsCountByTabAsync(int tabId)
-        {
-            return await _context.FORM_FIELDS
-                .CountAsync(f => f.TabId == tabId && f.IsActive);
-        }
-
-        public async Task<int> GetFieldsCountByFormAsync(int formBuilderId)
-        {
-            return await _context.FORM_FIELDS
-                .CountAsync(f => f.FORM_TABS.FormBuilderId == formBuilderId && f.IsActive);
-        }
-
-        public async Task<bool> UpdateFieldOrderAsync(int fieldId, int newOrder)
-        {
-            var field = await _context.FORM_FIELDS.FindAsync(fieldId);
-            if (field == null)
-                return false;
-
-            field.FieldOrder = newOrder;
-            field.UpdatedDate = DateTime.UtcNow;
-
-            _context.FORM_FIELDS.Update(field);
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> UpdateFieldsOrderAsync(Dictionary<int, int> fieldOrders)
-        {
-            using var transaction = await _context.Database.BeginTransactionAsync();
-
-            try
-            {
-                foreach (var (fieldId, newOrder) in fieldOrders)
-                {
-                    var field = await _context.FORM_FIELDS.FindAsync(fieldId);
-                    if (field != null)
-                    {
-                        field.FieldOrder = newOrder;
-                        field.UpdatedDate = DateTime.UtcNow;
-                        _context.FORM_FIELDS.Update(field);
-                    }
-                }
-
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
-                return true;
-            }
-            catch
-            {
-                await transaction.RollbackAsync();
-                throw;
-            }
-        }
-
-        public async Task<IEnumerable<FORM_FIELDS>> GetFieldsWithValidationRulesAsync(int tabId)
-        {
-            return await _context.FORM_FIELDS
-                .Where(f => f.TabId == tabId && f.IsActive &&
-                           (!string.IsNullOrEmpty(f.RegexPattern) ||
-                            !string.IsNullOrEmpty(f.ValidationMessage) ||
-                            f.MinValue.HasValue ||
-                            f.MaxValue.HasValue ||
-                            f.MaxLength.HasValue))
-                .Include(f => f.FIELD_TYPES)
-                .OrderBy(f => f.FieldOrder)
-                .ToListAsync();
-        }
-
-        // Additional specialized methods
-        public async Task<IEnumerable<FORM_FIELDS>> GetFieldsWithOptionsAsync(int tabId)
-        {
-            return await _context.FORM_FIELDS
-                .Where(f => f.TabId == tabId && f.IsActive)
                 .Include(f => f.FIELD_OPTIONS)
-                .Include(f => f.FIELD_TYPES)
-                .Where(f => f.FIELD_OPTIONS.Any())
-                .OrderBy(f => f.FieldOrder)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<FORM_FIELDS>> GetFieldsWithDataSourceAsync(int tabId)
-        {
-            return await _context.FORM_FIELDS
-                .Where(f => f.TabId == tabId && f.IsActive)
                 .Include(f => f.FIELD_DATA_SOURCES)
+                .Include(f => f.CreatedByUser)
+                .Where(f => f.id == id && f.IsActive);
+
+            // Apply includes for FIELD_TYPES
+            if (includes != null && includes.Length > 0)
+            {
+                query = query.Include(f => f.FIELD_TYPES);
+                foreach (var include in includes)
+                {
+                    query = query.Include(f => f.FIELD_TYPES);
+                }
+            }
+            else
+            {
+                query = query.Include(f => f.FIELD_TYPES);
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        // Override the base GetByIdAsync to include related entities
+        public  async Task<FORM_FIELDS> GetByIdAsync(int id)
+        {
+            return await GetByIdAsync(id, null);
+        }
+        // Add this implementation
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.FORM_FIELDS.AnyAsync(x => x.id == id);
+        }
+
+        // Override the base GetAllAsync to include related entities and filtering
+        public override async Task<ICollection<FORM_FIELDS>> GetAllAsync(Expression<Func<FORM_FIELDS, bool>>? filter = null, params Expression<Func<FORM_FIELDS, object>>[] includes)
+        {
+            var query = _context.FORM_FIELDS
+                .Include(f => f.FORM_TABS)
+                .Include(f => f.FIELD_OPTIONS)
+                .Include(f => f.FIELD_DATA_SOURCES)
+                .Include(f => f.CreatedByUser)
                 .Include(f => f.FIELD_TYPES)
-                .Where(f => f.FIELD_DATA_SOURCES.Any())
+                .Where(f => f.IsActive)
                 .OrderBy(f => f.FieldOrder)
-                .ToListAsync();
+                .AsQueryable();
+
+            // Apply filter if provided
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Apply additional includes if provided
+            if (includes != null && includes.Length > 0)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return await query.ToListAsync();
         }
     }
 }

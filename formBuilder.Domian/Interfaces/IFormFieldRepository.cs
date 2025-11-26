@@ -15,18 +15,11 @@ namespace FormBuilder.Domain.Interfaces
         Task<IEnumerable<FORM_FIELDS>> GetFieldsByFormIdAsync(int formBuilderId);
         Task<IEnumerable<FORM_FIELDS>> GetMandatoryFieldsAsync(int tabId);
         Task<IEnumerable<FORM_FIELDS>> GetVisibleFieldsAsync(int tabId);
-        Task<IEnumerable<FORM_FIELDS>> GetFieldsByDataTypeAsync(string dataType);
-        Task<IEnumerable<FORM_FIELDS>> GetFieldsByFieldTypeAsync(int fieldTypeId);
+        Task<FORM_FIELDS> GetByIdAsync(int id, params System.Linq.Expressions.Expression<System.Func<FIELD_TYPES, object>>[] includes);
+        Task<bool> ExistsAsync(int id);
 
-        // Count Operations
-        Task<int> GetFieldsCountByTabAsync(int tabId);
-        Task<int> GetFieldsCountByFormAsync(int formBuilderId);
 
-        // Bulk Operations
-        Task<bool> UpdateFieldOrderAsync(int fieldId, int newOrder);
-        Task<bool> UpdateFieldsOrderAsync(Dictionary<int, int> fieldOrders);
 
-        // Validation Rules
-        Task<IEnumerable<FORM_FIELDS>> GetFieldsWithValidationRulesAsync(int tabId);
+
     }
 }

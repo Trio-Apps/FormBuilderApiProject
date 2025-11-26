@@ -4,7 +4,7 @@ using FormBuilder.Application.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FormBuilder.API.Controllers
+namespace FormBuilder.ApiProject.Controllers.Auth
 {
     [ApiController]
     [Route("api/[controller]")]
