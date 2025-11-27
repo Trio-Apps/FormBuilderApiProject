@@ -1,5 +1,5 @@
 ﻿using FormBuilder.API.Models;
-using FormBuilder.API.Models.DTOs;
+using FormBuilder.Core.DTOS.FormBuilder;
 using System.Threading.Tasks;
 
 namespace FormBuilder.Domain.Interfaces.Services

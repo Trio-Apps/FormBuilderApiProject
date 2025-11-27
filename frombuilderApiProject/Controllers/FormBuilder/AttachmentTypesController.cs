@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FormBuilder.API.Models.DTOs;
 using FormBuilder.Domain.Interfaces.Services;
+using FormBuilder.Core.DTOS.FormBuilder;
 
 namespace FormBuilder.API.Controllers
 {

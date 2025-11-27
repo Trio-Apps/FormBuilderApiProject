@@ -1,4 +1,4 @@
-﻿namespace FormBuilder.API.Models.DTOs
+﻿namespace FormBuilder.Core.DTOS.FormBuilder
 {
     public class AttachmentTypeDto
     {

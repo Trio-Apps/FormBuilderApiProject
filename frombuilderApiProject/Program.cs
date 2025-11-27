@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
@@ -38,10 +37,18 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 
 // --------------------------------------------------
-// Swagger + JWT Support
+// Swagger Configuration - FIXED
 // --------------------------------------------------
 builder.Services.AddSwaggerGen(options =>
 {
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "FormBuilder API",
+        Version = "v1",
+        Description = "FormBuilder API Documentation"
+    });
+
+    // JWT Security Definition
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -65,10 +72,34 @@ builder.Services.AddSwaggerGen(options =>
             Array.Empty<string>()
         }
     });
+
+    // Õ· „‘«ﬂ· «·‹ Schema
+    options.UseAllOfToExtendReferenceSchemas();
+    options.UseAllOfForInheritance();
+    options.UseOneOfForPolymorphism();
+
+    // Õ· „‘ﬂ·… «·‹ Schema IDs
+    options.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
+
+    // ≈÷«›… XML Documentation ≈–« ﬂ«‰ „ÊÃÊœ«
+    try
+    {
+        var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+        var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+        if (File.Exists(xmlPath))
+        {
+            options.IncludeXmlComments(xmlPath);
+        }
+    }
+    catch (Exception ex)
+    {
+        //  Ã«Â· «·Œÿ√ ≈–« ·„ ÌÊÃœ „·› XML
+        Console.WriteLine($"XML documentation file not found: {ex.Message}");
+    }
 });
 
 // --------------------------------------------------
-// DbContexts - NOW ONLY ONE
+// DbContext
 // --------------------------------------------------
 builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 {
@@ -82,7 +113,7 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 });
 
 // --------------------------------------------------
-// Identity - NOW USING SINGLE CONTEXT
+// Identity Configuration
 // --------------------------------------------------
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
@@ -95,7 +126,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
     options.SignIn.RequireConfirmedEmail = false;
 })
-.AddEntityFrameworkStores<FormBuilderDbContext>() // ? «” Œœ«„ «·‹ context «·ÃœÌœ
+.AddEntityFrameworkStores<FormBuilderDbContext>()
 .AddDefaultTokenProviders();
 
 // --------------------------------------------------
@@ -109,6 +140,8 @@ builder.Services.AddAuthentication(options =>
 .AddJwtBearer(options =>
 {
     var jwtSettings = builder.Configuration.GetSection("Jwt");
+    var key = jwtSettings["Key"] ?? throw new InvalidOperationException("JWT Key is not configured");
+
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -116,9 +149,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = jwtSettings["Audience"],
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "your-super-long-secret-key-that-is-at-least-32-characters-long")
-        ),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)),
         ValidateLifetime = true,
         ClockSkew = TimeSpan.Zero
     };
@@ -138,62 +169,77 @@ builder.Services.AddCors(options =>
 });
 
 // --------------------------------------------------
-// Dependency Injection (Services)
+// Dependency Injection (Services) - VERIFIED
 // --------------------------------------------------
-builder.Services.AddScoped<IunitOfwork, UnitOfWork>();
+// Auth Services
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+// Form Builder Services
 builder.Services.AddScoped<IFormBuilderService, FormBuilderService>();
 builder.Services.AddScoped<IFormBuilderRepository, FormBuilderRepository>();
-
-builder.Services.AddScoped<IFormTabRepository, FormTabRepository>();
 builder.Services.AddScoped<IFormTabService, FormTabService>();
+builder.Services.AddScoped<IFormTabRepository, FormTabRepository>();
 builder.Services.AddScoped<IFormFieldService, FormFieldService>();
 builder.Services.AddScoped<IFormFieldRepository, FormFieldRepository>();
 builder.Services.AddScoped<IFieldTypesService, FieldTypesService>();
 builder.Services.AddScoped<IFieldTypesRepository, FieldTypesRepository>();
-builder.Services.AddScoped<IFORM_RULESRepository, FORM_RULESRepository>();
 builder.Services.AddScoped<IFORM_RULESService, FORM_RULESService>();
-builder.Services.AddScoped<IFieldOptionsRepository, FieldOptionsRepository>();
-
-
+builder.Services.AddScoped<IFORM_RULESRepository, FORM_RULESRepository>();
 builder.Services.AddScoped<IFieldOptionsService, FieldOptionsService>();
-builder.Services.AddScoped<IFieldDataSourcesRepository, FieldDataSourcesRepository>();
+builder.Services.AddScoped<IFieldOptionsRepository, FieldOptionsRepository>();
 builder.Services.AddScoped<IFieldDataSourcesService, FieldDataSourcesService>();
+builder.Services.AddScoped<IFieldDataSourcesRepository, FieldDataSourcesRepository>();
 builder.Services.AddScoped<IFormSubmissionService, FormSubmissionService>();
 builder.Services.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
+
+// Document & Attachment Services
 builder.Services.AddScoped<IAttachmentTypeService, AttachmentTypeService>();
 builder.Services.AddScoped<IAttachmentTypeRepository, AttachmentTypeRepository>();
 builder.Services.AddScoped<IFormAttachmentTypeService, FormAttachmentTypeService>();
 builder.Services.AddScoped<IFormAttachmentTypeRepository, FormAttachmentTypeRepository>();
+builder.Services.AddScoped<IDocumentTypeService, DocumentTypeService>();
+builder.Services.AddScoped<IDocumentTypeRepository, DocumentTypeRepository>();
 
-
-
+// Unit of Work -  √ﬂœ „‰ √‰ «·«”„ ’ÕÌÕ
+builder.Services.AddScoped<IunitOfwork, UnitOfWork>();
 
 var app = builder.Build();
 
 // --------------------------------------------------
-// Development Environment
+// Middleware Pipeline - FIXED ORDER
 // --------------------------------------------------
+
+// «·«” À‰«¡«  ›Ì «·»Ì∆… «· ÿÊÌ—Ì…
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
     app.UseDeveloperExceptionPage();
 }
 
-app.UseCors();
+// Swagger ›Ì Ã„Ì⁄ «·»Ì∆«  √Ê «· ÿÊÌ— ›ﬁÿ
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "FormBuilder API v1");
+    options.RoutePrefix = "swagger"; // «·Ê’Ê· ⁄»— /swagger
+});
+
+// «· — Ì» «·’ÕÌÕ ··‹ Middleware
 app.UseHttpsRedirection();
+app.UseCors();
+app.UseRouting(); // √÷› Â–« «·”ÿ—
+
+// «·„Â„: Authentication ﬁ»· Authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 // --------------------------------------------------
-// Database Seeding - UPDATED
+// Database Seeding
 // --------------------------------------------------
 using (var scope = app.Services.CreateScope())
 {
@@ -201,13 +247,12 @@ using (var scope = app.Services.CreateScope())
 
     try
     {
-        // ? «·¬‰ ‰” Œœ„ context Ê«Õœ ›ﬁÿ
         var context = services.GetRequiredService<FormBuilderDbContext>();
         var userManager = services.GetRequiredService<UserManager<AppUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
+        //  √ﬂœ „‰ ÊÃÊœ Â–Â «·œ«·…
         await DataSeeder.SeedAsync(context, userManager, roleManager);
-
         Console.WriteLine("Database seeding completed successfully!");
     }
     catch (Exception ex)

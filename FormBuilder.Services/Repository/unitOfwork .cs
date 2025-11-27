@@ -30,6 +30,7 @@ namespace FormBuilder.core.Repository
         private IFormSubmissionRepository _formSubmissionRepository; // Added
         private IAttachmentTypeRepository _attachmentTypeRepository;
         private IFormAttachmentTypeRepository _formAttachmentTypeRepository; // Added
+        private IDocumentTypeRepository _documentTypeRepository;
 
 
 
@@ -155,5 +156,15 @@ namespace FormBuilder.core.Repository
                 return _formAttachmentTypeRepository;
             }
         }
+
+        public IDocumentTypeRepository DocumentTypeRepository
+        {
+            get
+            {
+                _documentTypeRepository ??= new DocumentTypeRepository(AppDbContext);
+                return _documentTypeRepository;
+            }
+        }
+
     }
 }

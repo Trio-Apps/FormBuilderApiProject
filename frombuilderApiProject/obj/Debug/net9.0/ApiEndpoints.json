@@ -19,7 +19,7 @@
     "Parameters": [
       {
         "Name": "createDto",
-        "Type": "FormBuilder.API.Models.DTOs.CreateAttachmentTypeDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto",
         "IsRequired": true
       }
     ],
@@ -56,7 +56,7 @@
       },
       {
         "Name": "updateDto",
-        "Type": "FormBuilder.API.Models.DTOs.UpdateAttachmentTypeDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto",
         "IsRequired": true
       }
     ],
@@ -109,7 +109,7 @@
       },
       {
         "Name": "toggleDto",
-        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto",
         "IsRequired": true
       }
     ],
@@ -301,6 +301,158 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "GetAll",
+    "RelativePath": "api/DocumentTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "Create",
+    "RelativePath": "api/DocumentTypes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "FormBuilder.API.Models.DTOs.CreateDocumentTypeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "GetById",
+    "RelativePath": "api/DocumentTypes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "Update",
+    "RelativePath": "api/DocumentTypes/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "Delete",
+    "RelativePath": "api/DocumentTypes/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "ToggleActive",
+    "RelativePath": "api/DocumentTypes/{id}/toggle-active",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "toggleDto",
+        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "GetActive",
+    "RelativePath": "api/DocumentTypes/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "GetByCode",
+    "RelativePath": "api/DocumentTypes/code/{code}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "GetByParentMenuId",
+    "RelativePath": "api/DocumentTypes/parent-menu/{parentMenuId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "parentMenuId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
+    "Method": "GetRootMenuItems",
+    "RelativePath": "api/DocumentTypes/parent-menu/null",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
@@ -1135,48 +1287,6 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
-    "Method": "ToggleActive",
-    "RelativePath": "api/FormAttachmentTypes/{id}/toggle-active",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "toggleDto",
-        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
-    "Method": "ToggleMandatory",
-    "RelativePath": "api/FormAttachmentTypes/{id}/toggle-mandatory",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "toggleDto",
-        "Type": "FormBuilder.API.Models.DTOs.ToggleMandatoryDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
     "Method": "GetActive",
     "RelativePath": "api/FormAttachmentTypes/active",
     "HttpMethod": "GET",
@@ -1196,22 +1306,6 @@
       {
         "Name": "attachmentTypeId",
         "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
-    "Method": "CreateBulk",
-    "RelativePath": "api/FormAttachmentTypes/bulk",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "createDtos",
-        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],

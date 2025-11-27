@@ -1310,7 +1310,8 @@ namespace FormBuilder.Core.Migrations
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Code");
 
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(450)
@@ -1320,26 +1321,32 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("FormBuilderId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("FormBuilderId");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("IsActive");
 
                     b.Property<string>("MenuCaption")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("MenuCaption");
 
                     b.Property<int>("MenuOrder")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("MenuOrder");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("Name");
 
                     b.Property<int?>("ParentMenuId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ParentMenuId");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
@@ -1350,6 +1357,8 @@ namespace FormBuilder.Core.Migrations
                         .IsUnique();
 
                     b.HasIndex("FormBuilderId");
+
+                    b.HasIndex("ParentMenuId");
 
                     b.ToTable("DOCUMENT_TYPES");
                 });
@@ -2553,7 +2562,13 @@ namespace FormBuilder.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_TYPES", "ParentMenu")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentMenuId");
+
                     b.Navigation("FORM_BUILDER");
+
+                    b.Navigation("ParentMenu");
                 });
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.FORM_ATTACHMENT_TYPES", b =>
@@ -2899,6 +2914,8 @@ namespace FormBuilder.Core.Migrations
                     b.Navigation("APPROVAL_WORKFLOWS");
 
                     b.Navigation("CRYSTAL_LAYOUTS");
+
+                    b.Navigation("Children");
 
                     b.Navigation("DOCUMENT_SERIES");
 
