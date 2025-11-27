@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FormBuilder
 {
     [Table("DOCUMENT_APPROVAL_HISTORY")]
-    public class DOCUMENT_APPROVAL_HISTORY
+    public class DOCUMENT_APPROVAL_HISTORY : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+        
 
         [ForeignKey("FORM_SUBMISSIONS")]
         public int SubmissionId { get; set; }

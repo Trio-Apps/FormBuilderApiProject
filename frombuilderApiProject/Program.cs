@@ -2,17 +2,20 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
-using FormBuilder.API.Services;
-using FormBuilder.Application.IServices;
 using FormBuilder.core.Repository;
+using FormBuilder.Core.IServices.Auth;
 using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Core.IServices.FormBuilder.FormBuilder.Services.Services;
 using FormBuilder.Domain.Interfaces;
+using FormBuilder.Domain.Interfaces.Repositories;
+using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Infrastructure.Repositories;
 using FormBuilder.Infrastructure.Repository;
+using FormBuilder.Services;
 using FormBuilder.Services.Repository;
 using FormBuilder.Services.Services;
+using FormBuilder.Services.Services.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -128,10 +131,9 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowAnyMethod();
     });
 });
 
@@ -159,6 +161,12 @@ builder.Services.AddScoped<IFieldOptionsRepository, FieldOptionsRepository>();
 
 
 builder.Services.AddScoped<IFieldOptionsService, FieldOptionsService>();
+builder.Services.AddScoped<IFieldDataSourcesRepository, FieldDataSourcesRepository>();
+builder.Services.AddScoped<IFieldDataSourcesService, FieldDataSourcesService>();
+builder.Services.AddScoped<IFormSubmissionService, FormSubmissionService>();
+builder.Services.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
+builder.Services.AddScoped<IAttachmentTypeService, AttachmentTypeService>();
+builder.Services.AddScoped<IAttachmentTypeRepository, AttachmentTypeRepository>();
 
 
 

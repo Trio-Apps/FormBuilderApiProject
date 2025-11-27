@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,8 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FormBuilder
 {
     [Table("APPROVAL_STAGE_ASSIGNEES")]
-    public class APPROVAL_STAGE_ASSIGNEES
+    public class APPROVAL_STAGE_ASSIGNEES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
 
         [ForeignKey("APPROVAL_STAGES")]
         public int StageId { get; set; }

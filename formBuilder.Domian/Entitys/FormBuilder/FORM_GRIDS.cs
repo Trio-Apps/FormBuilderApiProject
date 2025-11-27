@@ -1,15 +1,14 @@
 ﻿
+using formBuilder.Domian.Entitys;
 using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("FORM_GRIDS")]
-public class FORM_GRIDS
+public class FORM_GRIDS : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
-
+ 
     [ForeignKey("FORM_BUILDER")]
     public int FormBuilderId { get; set; }
     public virtual FORM_BUILDER FORM_BUILDER { get; set; }

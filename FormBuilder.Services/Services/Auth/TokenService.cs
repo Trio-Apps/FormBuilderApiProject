@@ -1,6 +1,6 @@
 ﻿// Services/TokenService.cs
 using FormBuilder.API.Models;
-using FormBuilder.API.Services;
+using FormBuilder.Core.IServices.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

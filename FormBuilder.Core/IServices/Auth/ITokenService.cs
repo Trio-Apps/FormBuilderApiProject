@@ -2,7 +2,7 @@
 using FormBuilder.API.Models;
 using System.Security.Claims;
 
-namespace FormBuilder.API.Services
+namespace FormBuilder.Core.IServices.Auth
 {
     public interface ITokenService
     {

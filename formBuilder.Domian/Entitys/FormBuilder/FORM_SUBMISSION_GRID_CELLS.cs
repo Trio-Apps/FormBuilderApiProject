@@ -1,4 +1,5 @@
-﻿using System;
+﻿using formBuilder.Domian.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,10 +10,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FormBuilder
 {
     [Table("FORM_SUBMISSION_GRID_CELLS")]
-    public class FORM_SUBMISSION_GRID_CELLS
+    public class FORM_SUBMISSION_GRID_CELLS : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("FORM_SUBMISSION_GRID_ROWS")]
         public int RowId { get; set; }

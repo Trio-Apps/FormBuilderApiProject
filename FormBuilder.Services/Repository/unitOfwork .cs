@@ -3,6 +3,7 @@ using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces;
+using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Infrastructure.Repositories;
@@ -25,6 +26,9 @@ namespace FormBuilder.core.Repository
         private IFormFieldRepository _formFieldRepository;
         private IFieldTypesRepository _fieldTypesRepository;
         private IFieldOptionsRepository _FieldOptionsRepository;
+        private IFieldDataSourcesRepository _fieldDataSourcesRepository;
+        private IFormSubmissionRepository _formSubmissionRepository; // Added
+        private IAttachmentTypeRepository _attachmentTypeRepository;
 
 
         public FormBuilderDbContext AppDbContext { get; }
@@ -104,6 +108,7 @@ namespace FormBuilder.core.Repository
                 return _fieldTypesRepository;
             }
         }
+
         public IFieldOptionsRepository FieldOptionsRepository
         {
             get
@@ -113,5 +118,32 @@ namespace FormBuilder.core.Repository
             }
         }
 
+        public IFieldDataSourcesRepository FieldDataSourcesRepository
+        {
+            get
+            {
+                _fieldDataSourcesRepository ??= new FieldDataSourcesRepository(AppDbContext);
+                return _fieldDataSourcesRepository;
+            }
+        }
+
+        // Added FormSubmissionRepository property
+        public IFormSubmissionRepository FormSubmissionRepository
+        {
+            get
+            {
+                _formSubmissionRepository ??= new FormSubmissionRepository(AppDbContext);
+                return _formSubmissionRepository;
+            }
+        }
+
+        public IAttachmentTypeRepository AttachmentTypeRepository
+        {
+            get
+            {
+                _attachmentTypeRepository ??= new AttachmentTypeRepository(AppDbContext);
+                return _attachmentTypeRepository;
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 using FormBuilder.API.Models;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Application.DTOS.Auth;
-using FormBuilder.Application.IServices;
+using FormBuilder.Core.IServices.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FormBuilder.Services.Services
+namespace FormBuilder.Services.Services.Auth
 {
     public class RoleService : IRoleService
     {

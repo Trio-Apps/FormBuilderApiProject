@@ -1,0 +1,24 @@
+﻿using FormBuilder.API.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace FormBuilder.Core.IServices.FormBuilder
+{
+    public interface IFieldDataSourcesService
+    {
+        // Add this method
+        Task<ApiResponse> GetAllAsync();
+
+        // Existing methods
+        Task<ApiResponse> GetByFieldIdAsync(int fieldId);
+        Task<ApiResponse> GetActiveByFieldIdAsync(int fieldId);
+        Task<ApiResponse> GetByIdAsync(int id);
+        Task<ApiResponse> CreateAsync(CreateFieldDataSourceDto createDto);
+        Task<ApiResponse> CreateBulkAsync(List<CreateFieldDataSourceDto> createDtos);
+        Task<ApiResponse> UpdateAsync(int id, UpdateFieldDataSourceDto updateDto);
+        Task<ApiResponse> DeleteAsync(int id);
+        Task<ApiResponse> SoftDeleteAsync(int id);
+        Task<ApiResponse> GetByFieldIdAndTypeAsync(int fieldId, string sourceType);
+        Task<ApiResponse> GetDataSourcesCountAsync(int fieldId);
+    }
+}

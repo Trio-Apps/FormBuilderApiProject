@@ -1,7 +1,7 @@
 ﻿// Controllers/PermissionsController.cs
 using FormBuilder.API.Models;
 using FormBuilder.Application.DTOS.Auth;
-using FormBuilder.Application.IServices;
+using FormBuilder.Core.IServices.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using formBuilder.Domian.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +11,9 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 {
 
     [Table("CRYSTAL_LAYOUTS")]
-    public class CRYSTAL_LAYOUTS
+    public class CRYSTAL_LAYOUTS : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("DOCUMENT_TYPES")]
         public int DocumentTypeId { get; set; }

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FormBuilder.Services.Services
+namespace FormBuilder.Services.Services.Auth
 {
-    using global::FormBuilder.API.Data;
-    using global::FormBuilder.API.Models;
-    using global::FormBuilder.Application.DTOS;
-    using global::FormBuilder.Application.DTOS.Auth;
-    using global::FormBuilder.Application.IServices;
+    using FormBuilder.Core.IServices.Auth;
+    using FormBuilder.API.Data;
+    using FormBuilder.API.Models;
+    using FormBuilder.Application.DTOS;
+    using FormBuilder.Application.DTOS.Auth;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
 

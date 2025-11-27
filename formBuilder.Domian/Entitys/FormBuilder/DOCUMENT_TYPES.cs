@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,9 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 
 
     [Table("DOCUMENT_TYPES")]
-    public class DOCUMENT_TYPES
+    public class DOCUMENT_TYPES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+        
 
         [Required, StringLength(200)]
         public string Name { get; set; }

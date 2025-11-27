@@ -1,13 +1,13 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.froms;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("FORMULAS")]
-public class FORMULAS
+public class FORMULAS : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
+   
 
     [ForeignKey("FormBuilderId")]
     public virtual FORM_BUILDER FORM_BUILDER { get; set; }

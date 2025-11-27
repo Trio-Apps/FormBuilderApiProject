@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FormBuilder.Application.IServices
+namespace FormBuilder.Core.IServices.Auth
 {
     public interface IPermissionService
     {

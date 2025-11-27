@@ -1,5 +1,6 @@
 ﻿using formBuilder.Domian.Entitys;
 using FormBuilder.Domain.Interfaces;
+using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,10 @@ namespace formBuilder.Domian.Interfaces
         IFormFieldRepository FormFieldRepository { get; }
         IFieldTypesRepository FieldTypesRepository { get; }
         IFORM_RULESRepository FORM_RULESRepository { get; }
-        IFieldOptionsRepository FieldOptionsRepository { get; } 
+        IFieldOptionsRepository FieldOptionsRepository { get; }
+        IFieldDataSourcesRepository FieldDataSourcesRepository { get; }
+        IFormSubmissionRepository FormSubmissionRepository { get; } // Added
+        IAttachmentTypeRepository AttachmentTypeRepository { get; }
 
-
-   
     }
 }

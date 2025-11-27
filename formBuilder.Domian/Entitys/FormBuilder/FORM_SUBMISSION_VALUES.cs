@@ -1,4 +1,5 @@
-﻿using System;
+﻿using formBuilder.Domian.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +11,9 @@ namespace FormBuilder.Domian.Entitys.froms
 {
 
     [Table("FORM_SUBMISSION_VALUES")]
-    public class FORM_SUBMISSION_VALUES
+    public class FORM_SUBMISSION_VALUES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("FORM_SUBMISSIONS")]
         public int SubmissionId { get; set; }

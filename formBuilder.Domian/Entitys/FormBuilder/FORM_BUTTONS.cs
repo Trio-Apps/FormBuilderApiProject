@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FromBuilder
 {
     [Table("FORM_BUTTONS")]
-    public class FORM_BUTTONS
+    public class FORM_BUTTONS : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+      
 
         [ForeignKey("FORM_BUILDER")]
         public int FormBuilderId { get; set; }

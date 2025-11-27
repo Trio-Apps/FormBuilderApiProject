@@ -1,4 +1,5 @@
-﻿using System;
+﻿using formBuilder.Domian.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,10 +11,9 @@ namespace FormBuilder.Domian.Entitys.froms
 {
 
     [Table("FIELD_DATA_SOURCES")]
-    public class FIELD_DATA_SOURCES
+    public class FIELD_DATA_SOURCES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("FORM_FIELDS")]
         public int FieldId { get; set; }

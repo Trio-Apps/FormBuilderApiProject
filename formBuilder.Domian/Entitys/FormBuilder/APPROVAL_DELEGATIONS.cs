@@ -1,12 +1,12 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 [Table("APPROVAL_DELEGATIONS")]
-public class APPROVAL_DELEGATIONS
+public class APPROVAL_DELEGATIONS : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
+  
 
     public string FromUserId { get; set; }
     [ForeignKey("FromUserId")]

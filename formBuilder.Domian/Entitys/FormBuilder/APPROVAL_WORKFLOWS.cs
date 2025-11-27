@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FromBuilder
 {
     [Table("APPROVAL_WORKFLOWS")]
-    public class APPROVAL_WORKFLOWS
+    public class APPROVAL_WORKFLOWS : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("DOCUMENT_TYPES")]
         public int DocumentTypeId { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using formBuilder.Domian.Entitys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,10 +10,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FromBuilder
 {
     [Table("DOCUMENT_SERIES")]
-    public class DOCUMENT_SERIES
+    public class DOCUMENT_SERIES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("DOCUMENT_TYPES")]
         public int DocumentTypeId { get; set; }

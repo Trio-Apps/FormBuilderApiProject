@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,8 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FromBuilder
 {
     [Table("ATTACHMENT_TYPES")]
-    public class ATTACHMENT_TYPES
+    public class ATTACHMENT_TYPES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
 
         [Required, StringLength(200)]
         public string Name { get; set; }

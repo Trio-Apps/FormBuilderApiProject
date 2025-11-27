@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,10 +11,9 @@ using System.Threading.Tasks;
 namespace FormBuilder.Domian.Entitys.FormBuilder
 {
     [Table("FORM_SUBMISSION_GRID_ROWS")]
-    public class FORM_SUBMISSION_GRID_ROWS
+    public class FORM_SUBMISSION_GRID_ROWS : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("FORM_SUBMISSIONS")]
         public int SubmissionId { get; set; }

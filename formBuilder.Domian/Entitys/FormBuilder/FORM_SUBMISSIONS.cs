@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
+using formBuilder.Domian.Entitys;
 using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domian.Entitys.FromBuilder;
@@ -8,10 +9,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 
 [Table("FORM_SUBMISSIONS")]
-public class FORM_SUBMISSIONS
+public class FORM_SUBMISSIONS : BaseEntity
 {
-    [Key]
-    public int Id { get; set; }
+
+
 
     [ForeignKey("FORM_BUILDER")]
     public int FormBuilderId { get; set; }

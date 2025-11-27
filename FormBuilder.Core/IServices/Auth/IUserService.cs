@@ -4,7 +4,7 @@ using FormBuilder.core.DTOS.Auth;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace FormBuilder.Application.IServices
+namespace FormBuilder.Core.IServices.Auth
 {
     public interface IUserService
     {

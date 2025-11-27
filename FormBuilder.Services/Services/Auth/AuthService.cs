@@ -1,9 +1,9 @@
 ﻿// Services/AuthService.cs
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
-using FormBuilder.API.Services;
 using FormBuilder.core.DTOS.Auth;
 using FormBuilder.Core.DTOS.Auth;
+using FormBuilder.Core.IServices.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

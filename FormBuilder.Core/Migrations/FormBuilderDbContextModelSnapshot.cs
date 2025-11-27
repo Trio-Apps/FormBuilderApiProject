@@ -24,11 +24,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("APPROVAL_DELEGATIONS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
@@ -47,7 +54,10 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FromUserId");
 
@@ -103,16 +113,23 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FORMULAS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ExpressionText")
                         .IsRequired()
@@ -132,7 +149,10 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int?>("ResultFieldId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FormBuilderId");
 
@@ -245,11 +265,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FORM_GRIDS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
@@ -273,7 +300,10 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int?>("TabId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FormBuilderId");
 
@@ -284,11 +314,15 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FORM_SUBMISSIONS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -303,6 +337,9 @@ namespace FormBuilder.Core.Migrations
 
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("LastUpdatedDate")
                         .HasColumnType("datetime2");
@@ -322,10 +359,13 @@ namespace FormBuilder.Core.Migrations
                     b.Property<DateTime>("SubmittedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Version")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentNumber")
                         .IsUnique();
@@ -621,15 +661,22 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.ALERT_RULES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ConditionJson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -664,7 +711,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -677,11 +727,21 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.APPROVAL_STAGES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsFinalStage")
                         .HasColumnType("bit");
@@ -702,10 +762,13 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("StageOrder")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("WorkflowId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("WorkflowId");
 
@@ -714,11 +777,21 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.APPROVAL_STAGE_ASSIGNEES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("RoleId")
                         .IsRequired()
@@ -728,11 +801,14 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("StageId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("StageId");
 
@@ -743,11 +819,11 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.DOCUMENT_APPROVAL_HISTORY", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ActionByUserId")
                         .IsRequired()
@@ -765,13 +841,26 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("StageId")
                         .HasColumnType("int");
 
                     b.Property<int>("SubmissionId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("ActionByUserId");
 
@@ -784,15 +873,22 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.EMAIL_TEMPLATES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("BodyTemplateHtml")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -820,7 +916,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -831,11 +930,11 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.FORM_GRID_COLUMNS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ColumnCode")
                         .IsRequired()
@@ -849,6 +948,13 @@ namespace FormBuilder.Core.Migrations
 
                     b.Property<int>("ColumnOrder")
                         .HasColumnType("int");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("DataType")
                         .IsRequired()
@@ -873,11 +979,14 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int?>("MaxLength")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ValidationRuleJson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("FieldTypeId");
 
@@ -888,17 +997,30 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.FORM_SUBMISSION_GRID_CELLS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int>("ColumnId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("RowId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("ValueBool")
                         .HasColumnType("bit");
@@ -918,7 +1040,7 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("ColumnId");
 
@@ -929,11 +1051,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.FORM_SUBMISSION_GRID_ROWS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("GridId")
                         .HasColumnType("int");
@@ -947,7 +1076,10 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("SubmissionId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("GridId");
 
@@ -958,15 +1090,22 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.ADOBE_SIGNATURE_CONFIG", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ConfigJson")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -974,7 +1113,13 @@ namespace FormBuilder.Core.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -983,11 +1128,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.APPROVAL_WORKFLOWS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -1000,7 +1152,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -1009,16 +1164,23 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.ATTACHMENT_TYPES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1035,18 +1197,28 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.ToTable("ATTACHMENT_TYPES");
                 });
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.CRYSTAL_LAYOUTS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -1067,7 +1239,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -1076,11 +1251,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_SERIES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -1102,7 +1284,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -1116,16 +1301,23 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_TYPES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
@@ -1149,7 +1341,10 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int?>("ParentMenuId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("Code")
                         .IsUnique();
@@ -1161,14 +1356,21 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.FORM_ATTACHMENT_TYPES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int>("AttachmentTypeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
@@ -1179,7 +1381,10 @@ namespace FormBuilder.Core.Migrations
                     b.Property<bool>("IsMandatory")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("AttachmentTypeId");
 
@@ -1190,11 +1395,11 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.FORM_BUTTONS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ActionConfigJson")
                         .IsRequired()
@@ -1218,6 +1423,13 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("ButtonOrder")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
 
@@ -1232,7 +1444,10 @@ namespace FormBuilder.Core.Migrations
                     b.Property<bool>("IsVisibleDefault")
                         .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FormBuilderId");
 
@@ -1241,16 +1456,23 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.FORM_SUBMISSION_ATTACHMENTS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FieldId")
                         .HasColumnType("int");
@@ -1268,13 +1490,19 @@ namespace FormBuilder.Core.Migrations
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SubmissionId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UploadedDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("FieldId");
 
@@ -1285,11 +1513,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.FORM_VALIDATION_RULES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ErrorMessage")
                         .IsRequired()
@@ -1314,7 +1549,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FieldId");
 
@@ -1325,16 +1563,26 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.OUTLOOK_APPROVAL_CONFIG", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Enabled")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Mailbox")
@@ -1346,7 +1594,10 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -1355,16 +1606,23 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.PROJECTS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -1378,7 +1636,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("Code")
                         .IsUnique();
@@ -1388,11 +1649,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.SAP_FIELD_MAPPINGS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Direction")
                         .IsRequired()
@@ -1410,7 +1678,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("FormFieldId");
 
@@ -1419,11 +1690,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.SAP_OBJECT_MAPPINGS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DocumentTypeId")
                         .HasColumnType("int");
@@ -1439,7 +1717,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DocumentTypeId");
 
@@ -1448,11 +1729,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.SMTP_CONFIGS", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FromDisplayName")
                         .IsRequired()
@@ -1485,6 +1773,9 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("Port")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("UseSsl")
                         .HasColumnType("bit");
 
@@ -1493,23 +1784,30 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("SMTP_CONFIGS");
                 });
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FIELD_DATA_SOURCES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("ApiUrl")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FieldId")
                         .HasColumnType("int");
@@ -1535,11 +1833,14 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ValuePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("FieldId");
 
@@ -1595,24 +1896,37 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORMULA_VARIABLES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("FormulaId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SourceFieldId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("VariableName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("FormulaId");
 
@@ -1663,11 +1977,18 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORM_SUBMISSION_VALUES", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("FieldCode")
                         .IsRequired()
@@ -1677,8 +1998,14 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("FieldId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<int>("SubmissionId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool?>("ValueBool")
                         .HasColumnType("bit");
@@ -1698,7 +2025,7 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("FieldId");
 

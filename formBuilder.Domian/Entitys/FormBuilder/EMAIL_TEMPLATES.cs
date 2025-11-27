@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,9 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
 {
 
     [Table("EMAIL_TEMPLATES")]
-    public class EMAIL_TEMPLATES
+    public class EMAIL_TEMPLATES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+       
 
         [ForeignKey("DOCUMENT_TYPES")]
         public int DocumentTypeId { get; set; }

@@ -1,4 +1,5 @@
-﻿using FormBuilder.API.Models;
+﻿using formBuilder.Domian.Entitys;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,10 +12,9 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 {
 
     [Table("FORM_VALIDATION_RULES")]
-    public class FORM_VALIDATION_RULES
+    public class FORM_VALIDATION_RULES : BaseEntity
     {
-        [Key]
-        public int Id { get; set; }
+      
 
         [ForeignKey("FORM_BUILDER")]
         public int FormBuilderId { get; set; }
