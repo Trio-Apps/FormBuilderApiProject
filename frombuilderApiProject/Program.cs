@@ -167,6 +167,9 @@ builder.Services.AddScoped<IFormSubmissionService, FormSubmissionService>();
 builder.Services.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
 builder.Services.AddScoped<IAttachmentTypeService, AttachmentTypeService>();
 builder.Services.AddScoped<IAttachmentTypeRepository, AttachmentTypeRepository>();
+builder.Services.AddScoped<IFormAttachmentTypeService, FormAttachmentTypeService>();
+builder.Services.AddScoped<IFormAttachmentTypeRepository, FormAttachmentTypeRepository>();
+
 
 
 

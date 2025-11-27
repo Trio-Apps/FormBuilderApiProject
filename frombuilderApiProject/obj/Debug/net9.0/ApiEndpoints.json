@@ -1023,6 +1023,281 @@
     ]
   },
   {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetAll",
+    "RelativePath": "api/FormAttachmentTypes",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "Create",
+    "RelativePath": "api/FormAttachmentTypes",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetById",
+    "RelativePath": "api/FormAttachmentTypes/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "Update",
+    "RelativePath": "api/FormAttachmentTypes/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "Delete",
+    "RelativePath": "api/FormAttachmentTypes/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "Exists",
+    "RelativePath": "api/FormAttachmentTypes/{id}/exists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "IsActive",
+    "RelativePath": "api/FormAttachmentTypes/{id}/is-active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "ToggleActive",
+    "RelativePath": "api/FormAttachmentTypes/{id}/toggle-active",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "toggleDto",
+        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "ToggleMandatory",
+    "RelativePath": "api/FormAttachmentTypes/{id}/toggle-mandatory",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "toggleDto",
+        "Type": "FormBuilder.API.Models.DTOs.ToggleMandatoryDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetActive",
+    "RelativePath": "api/FormAttachmentTypes/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetByAttachmentTypeId",
+    "RelativePath": "api/FormAttachmentTypes/attachment-type/{attachmentTypeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "attachmentTypeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "CreateBulk",
+    "RelativePath": "api/FormAttachmentTypes/bulk",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDtos",
+        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetByFormBuilderId",
+    "RelativePath": "api/FormAttachmentTypes/form-builder/{formBuilderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "DeleteByFormBuilderId",
+    "RelativePath": "api/FormAttachmentTypes/form-builder/{formBuilderId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetActiveByFormBuilderId",
+    "RelativePath": "api/FormAttachmentTypes/form-builder/{formBuilderId}/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "HasMandatoryAttachments",
+    "RelativePath": "api/FormAttachmentTypes/form-builder/{formBuilderId}/has-mandatory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormAttachmentTypesController",
+    "Method": "GetMandatoryByFormBuilderId",
+    "RelativePath": "api/FormAttachmentTypes/form-builder/{formBuilderId}/mandatory",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderController",
     "Method": "GetAllForms",
     "RelativePath": "api/FormBuilder",

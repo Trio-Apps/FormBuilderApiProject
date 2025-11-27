@@ -26,6 +26,8 @@ namespace formBuilder.Domian.Interfaces
         IFieldDataSourcesRepository FieldDataSourcesRepository { get; }
         IFormSubmissionRepository FormSubmissionRepository { get; } // Added
         IAttachmentTypeRepository AttachmentTypeRepository { get; }
+        IFormAttachmentTypeRepository FormAttachmentTypeRepository { get; } // Added
+
 
     }
 }
