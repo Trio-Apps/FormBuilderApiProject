@@ -599,6 +599,376 @@
         }
       }
     },
+    "/api/DocumentSeries": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/{id}": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/code/{seriesCode}": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "seriesCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/document-type/{documentTypeId}": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "documentTypeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/project/{projectId}": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/active": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/default": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "documentTypeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/{id}/toggle-active": {
+      "patch": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/{id}/set-default": {
+      "patch": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/{id}/next-number": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/DocumentSeries/{id}/exists": {
+      "get": {
+        "tags": [
+          "DocumentSeries"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/DocumentTypes": {
       "get": {
         "tags": [
@@ -4481,6 +4851,173 @@
         }
       }
     },
+    "/api/FormSubmissionAttachments": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/{id}": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/submission/{submissionId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FormSubmissions": {
       "get": {
         "tags": [
@@ -4502,7 +5039,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormSubmissionDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
                   }
                 ]
               }
@@ -4511,7 +5048,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormSubmissionDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
                   }
                 ]
               }
@@ -4520,7 +5057,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormSubmissionDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
                   }
                 ]
               }
@@ -4577,7 +5114,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormSubmissionDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
                   }
                 ]
               }
@@ -4586,7 +5123,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormSubmissionDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
                   }
                 ]
               }
@@ -4595,7 +5132,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormSubmissionDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
                   }
                 ]
               }
@@ -4630,7 +5167,52 @@
         }
       }
     },
-    "/api/FormSubmissions/form-builder/{formBuilderId}": {
+    "/api/FormSubmissions/details/{id}": {
+      "get": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissions/document/{documentNumber}": {
+      "get": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "parameters": [
+          {
+            "name": "documentNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissions/form/{formBuilderId}": {
       "get": {
         "tags": [
           "FormSubmissions"
@@ -4638,6 +5220,29 @@
         "parameters": [
           {
             "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissions/document-type/{documentTypeId}": {
+      "get": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "parameters": [
+          {
+            "name": "documentTypeId",
             "in": "path",
             "required": true,
             "schema": {
@@ -4697,8 +5302,51 @@
         }
       }
     },
+    "/api/FormSubmissions/submit": {
+      "post": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/FormSubmissions/{id}/status": {
-      "put": {
+      "patch": {
         "tags": [
           "FormSubmissions"
         ],
@@ -4717,9 +5365,73 @@
           "content": {
             "application/json": {
               "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissions/{id}/exists": {
+      "get": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionValues": {
+      "get": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.FormSubmissionStatusDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
                   }
                 ]
               }
@@ -4728,7 +5440,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.FormSubmissionStatusDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
                   }
                 ]
               }
@@ -4737,7 +5449,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.FormSubmissionStatusDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
                   }
                 ]
               }
@@ -4751,10 +5463,42 @@
         }
       }
     },
-    "/api/FormSubmissions/filter": {
-      "post": {
+    "/api/FormSubmissionValues/{id}": {
+      "get": {
         "tags": [
-          "FormSubmissions"
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
         ],
         "requestBody": {
           "content": {
@@ -4762,7 +5506,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.FormSubmissionFilterDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
                   }
                 ]
               }
@@ -4771,7 +5515,7 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.FormSubmissionFilterDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
                   }
                 ]
               }
@@ -4780,13 +5524,260 @@
               "schema": {
                 "allOf": [
                   {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.FormSubmissionFilterDto"
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
                   }
                 ]
               }
             }
           }
         },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionValues/submission/{submissionId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionValues/field/{fieldId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionValues/submission/{submissionId}/field/{fieldId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionValues/bulk": {
+      "post": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionValues/{id}/exists": {
+      "get": {
+        "tags": [
+          "FormSubmissionValues"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -5928,6 +6919,296 @@
         }
       }
     },
+    "/api/Projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Projects/{id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Projects/code/{code}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Projects/active": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Projects/{id}/toggle-active": {
+      "patch": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Projects/{id}/exists": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Projects/code/{code}/exists": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "excludeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Roles": {
       "get": {
         "tags": [
@@ -6641,6 +7922,49 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.API.Models.ApiResponse`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.API.Models.CreateFieldDataSourceDto": {
         "required": [
           "fieldId",
@@ -6877,87 +8201,23 @@
         },
         "additionalProperties": false
       },
-      "FormBuilder.API.Models.DTOs.CreateFormSubmissionDto": {
+      "FormBuilder.API.Models.DTOs.CreateProjectDto": {
         "type": "object",
         "properties": {
-          "formBuilderId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "version": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "documentTypeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "seriesId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "documentNumber": {
+          "name": {
             "type": "string",
             "nullable": true
           },
-          "submittedByUserId": {
+          "code": {
             "type": "string",
             "nullable": true
           },
-          "submittedDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "status": {
+          "description": {
             "type": "string",
             "nullable": true
           },
-          "formData": {
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.API.Models.DTOs.FormSubmissionFilterDto": {
-        "type": "object",
-        "properties": {
-          "formBuilderId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "userId": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "type": "string",
-            "nullable": true
-          },
-          "fromDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "toDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "documentNumber": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.API.Models.DTOs.FormSubmissionStatusDto": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "nullable": true
+          "isActive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -7022,23 +8282,23 @@
         },
         "additionalProperties": false
       },
-      "FormBuilder.API.Models.DTOs.UpdateFormSubmissionDto": {
+      "FormBuilder.API.Models.DTOs.UpdateProjectDto": {
         "type": "object",
         "properties": {
-          "status": {
+          "name": {
             "type": "string",
             "nullable": true
           },
-          "documentNumber": {
+          "code": {
             "type": "string",
             "nullable": true
           },
-          "submittedDate": {
+          "description": {
             "type": "string",
-            "format": "date-time",
             "nullable": true
           },
-          "formData": {
+          "isActive": {
+            "type": "boolean",
             "nullable": true
           }
         },
@@ -7419,6 +8679,26 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto": {
+        "required": [
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto": {
         "type": "object",
         "properties": {
@@ -7444,6 +8724,40 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto": {
+        "required": [
+          "documentTypeId",
+          "projectId",
+          "seriesCode"
+        ],
+        "type": "object",
+        "properties": {
+          "documentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seriesCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "nextNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto": {
         "required": [
           "formCode",
@@ -7462,6 +8776,132 @@
             "type": "string"
           },
           "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto": {
+        "required": [
+          "contentType",
+          "fieldCode",
+          "fieldId",
+          "fileName",
+          "filePath",
+          "fileSize",
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "fileName": {
+            "maxLength": 260,
+            "minLength": 0,
+            "type": "string"
+          },
+          "filePath": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "fileSize": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int64"
+          },
+          "contentType": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto": {
+        "required": [
+          "documentTypeId",
+          "formBuilderId",
+          "seriesId",
+          "submittedByUserId"
+        ],
+        "type": "object",
+        "properties": {
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seriesId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submittedByUserId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto": {
+        "required": [
+          "fieldCode",
+          "fieldId",
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
             "type": "string",
             "nullable": true
           }
@@ -7513,6 +8953,82 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionDocumentNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "uploadedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fileSizeFormatted": {
+            "type": "string",
+            "nullable": true
+          },
+          "downloadUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto": {
+        "required": [
+          "submissionId",
+          "submittedByUserId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submittedByUserId": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto": {
         "type": "object",
         "properties": {
@@ -7549,6 +9065,41 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto": {
+        "type": "object",
+        "properties": {
+          "documentTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "seriesCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "nextNumber": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isDefault": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto": {
         "required": [
           "formCode",
@@ -7575,6 +9126,53 @@
           },
           "isActive": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto": {
+        "type": "object",
+        "properties": {
+          "documentNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "submittedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto": {
+        "type": "object",
+        "properties": {
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

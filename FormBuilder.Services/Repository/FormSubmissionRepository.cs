@@ -10,27 +10,70 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.Infrastructure.Repositories
 {
-    public class FormSubmissionRepository : BaseRepository<FORM_SUBMISSIONS>, IFormSubmissionRepository
+    public class FormSubmissionsRepository : BaseRepository<FORM_SUBMISSIONS>, IFormSubmissionsRepository
     {
-        public FormBuilderDbContext _context { get; }
+        private readonly FormBuilderDbContext _context;
 
-        public FormSubmissionRepository(FormBuilderDbContext context) : base(context)
+        public FormSubmissionsRepository(FormBuilderDbContext context) : base(context)
         {
             _context = context;
+        }
+
+        public async Task<FORM_SUBMISSIONS> GetByIdAsync(int id)
+        {
+            return await _context.FORM_SUBMISSIONS
+                .FirstOrDefaultAsync(fs => fs.id == id);
+        }
+
+        public async Task<FORM_SUBMISSIONS> GetByIdWithDetailsAsync(int id)
+        {
+            return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
+                .Include(fs => fs.SubmittedByUser)
+                .Include(fs => fs.FORM_SUBMISSION_VALUES)
+                .Include(fs => fs.FORM_SUBMISSION_ATTACHMENTS)
+                .Include(fs => fs.FORM_SUBMISSION_GRID_ROWS)
+                    .ThenInclude(gr => gr.FORM_SUBMISSION_GRID_CELLS)
+                .FirstOrDefaultAsync(fs => fs.id == id);
+        }
+
+        public async Task<FORM_SUBMISSIONS> GetByDocumentNumberAsync(string documentNumber)
+        {
+            return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
+                .FirstOrDefaultAsync(fs => fs.DocumentNumber == documentNumber);
         }
 
         public async Task<IEnumerable<FORM_SUBMISSIONS>> GetByFormBuilderIdAsync(int formBuilderId)
         {
             return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
                 .Where(fs => fs.FormBuilderId == formBuilderId)
                 .OrderByDescending(fs => fs.CreatedDate)
                 .ToListAsync();
         }
 
-        // إزالة الدالة المكررة وإبقاء واحدة فقط
+        public async Task<IEnumerable<FORM_SUBMISSIONS>> GetByDocumentTypeIdAsync(int documentTypeId)
+        {
+            return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_SERIES)
+                .Where(fs => fs.DocumentTypeId == documentTypeId)
+                .OrderByDescending(fs => fs.CreatedDate)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<FORM_SUBMISSIONS>> GetByUserIdAsync(string userId)
         {
             return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
                 .Where(fs => fs.SubmittedByUserId == userId)
                 .OrderByDescending(fs => fs.CreatedDate)
                 .ToListAsync();
@@ -39,33 +82,67 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<IEnumerable<FORM_SUBMISSIONS>> GetByStatusAsync(string status)
         {
             return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
                 .Where(fs => fs.Status == status)
                 .OrderByDescending(fs => fs.CreatedDate)
                 .ToListAsync();
         }
 
-        public async Task<bool> ExistsAsync(int id)
+        public async Task<IEnumerable<FORM_SUBMISSIONS>> GetByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
             return await _context.FORM_SUBMISSIONS
-                .AnyAsync(fs => fs.id == id);
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
+                .Where(fs => fs.CreatedDate >= startDate && fs.CreatedDate <= endDate)
+                .OrderByDescending(fs => fs.CreatedDate)
+                .ToListAsync();
         }
 
-        public async Task<int> GetSubmissionsCountAsync(int formBuilderId)
+        public async Task<bool> DocumentNumberExistsAsync(string documentNumber)
         {
             return await _context.FORM_SUBMISSIONS
-                .CountAsync(fs => fs.FormBuilderId == formBuilderId);
+                .AnyAsync(fs => fs.DocumentNumber == documentNumber);
         }
 
-        public async Task<FORM_SUBMISSIONS> GetByDocumentNumberAsync(string documentNumber)
+        public async Task<int> GetNextVersionAsync(int formBuilderId)
         {
-            return await _context.FORM_SUBMISSIONS
-                .FirstOrDefaultAsync(fs => fs.DocumentNumber == documentNumber);
+            var currentVersion = await _context.FORM_SUBMISSIONS
+                .Where(fs => fs.FormBuilderId == formBuilderId)
+                .MaxAsync(fs => (int?)fs.Version) ?? 0;
+
+            return currentVersion + 1;
         }
 
-        public async Task<FORM_SUBMISSIONS> GetByIdAsync(int id)
+        public async Task<IEnumerable<FORM_SUBMISSIONS>> GetSubmissionsWithDetailsAsync()
         {
             return await _context.FORM_SUBMISSIONS
-                .FirstOrDefaultAsync(fs => fs.id == id);
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
+                .Include(fs => fs.SubmittedByUser)
+                .OrderByDescending(fs => fs.CreatedDate)
+                .ToListAsync();
+        }
+
+        public async Task<bool> HasSubmissionsAsync(int formBuilderId)
+        {
+            return await _context.FORM_SUBMISSIONS
+                .AnyAsync(fs => fs.FormBuilderId == formBuilderId);
+        }
+
+        public async Task UpdateStatusAsync(int submissionId, string status)
+        {
+            var submission = await _context.FORM_SUBMISSIONS.FindAsync(submissionId);
+            if (submission != null)
+            {
+                submission.Status = status;
+                submission.LastUpdatedDate = DateTime.UtcNow;
+                _context.FORM_SUBMISSIONS.Update(submission);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

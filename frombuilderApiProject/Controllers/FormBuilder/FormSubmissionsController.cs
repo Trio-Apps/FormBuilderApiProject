@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using FormBuilder.API.Models.DTOs;
+﻿using FormBuilder.API.Models;
+using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FormBuilder.API.Controllers
 {
@@ -9,90 +10,117 @@ namespace FormBuilder.API.Controllers
     [Route("api/[controller]")]
     public class FormSubmissionsController : ControllerBase
     {
-        private readonly IFormSubmissionService _formSubmissionService;
+        private readonly IFormSubmissionsService _formSubmissionsService;
 
-        public FormSubmissionsController(IFormSubmissionService formSubmissionService)
+        public FormSubmissionsController(IFormSubmissionsService formSubmissionsService)
         {
-            _formSubmissionService = formSubmissionService;
+            _formSubmissionsService = formSubmissionsService;
         }
 
-        // GET: api/formsubmissions
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _formSubmissionService.GetAllAsync();
+            var result = await _formSubmissionsService.GetAllAsync();
             return StatusCode(result.StatusCode, result);
         }
 
-        // GET: api/formsubmissions/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _formSubmissionService.GetByIdAsync(id);
+            var result = await _formSubmissionsService.GetByIdAsync(id);
             return StatusCode(result.StatusCode, result);
         }
 
-        // GET: api/formsubmissions/form-builder/5
-        [HttpGet("form-builder/{formBuilderId}")]
+        [HttpGet("details/{id}")]
+        public async Task<IActionResult> GetByIdWithDetails(int id)
+        {
+            var result = await _formSubmissionsService.GetByIdWithDetailsAsync(id);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("document/{documentNumber}")]
+        public async Task<IActionResult> GetByDocumentNumber(string documentNumber)
+        {
+            var result = await _formSubmissionsService.GetByDocumentNumberAsync(documentNumber);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("form/{formBuilderId}")]
         public async Task<IActionResult> GetByFormBuilderId(int formBuilderId)
         {
-            var result = await _formSubmissionService.GetByFormBuilderIdAsync(formBuilderId);
+            var result = await _formSubmissionsService.GetByFormBuilderIdAsync(formBuilderId);
             return StatusCode(result.StatusCode, result);
         }
 
-        // GET: api/formsubmissions/user/user123
+        [HttpGet("document-type/{documentTypeId}")]
+        public async Task<IActionResult> GetByDocumentTypeId(int documentTypeId)
+        {
+            var result = await _formSubmissionsService.GetByDocumentTypeIdAsync(documentTypeId);
+            return StatusCode(result.StatusCode, result);
+        }
+
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetByUserId(string userId)
         {
-            var result = await _formSubmissionService.GetByUserIdAsync(userId);
+            var result = await _formSubmissionsService.GetByUserIdAsync(userId);
             return StatusCode(result.StatusCode, result);
         }
 
-        // GET: api/formsubmissions/status/draft
         [HttpGet("status/{status}")]
         public async Task<IActionResult> GetByStatus(string status)
         {
-            var result = await _formSubmissionService.GetByStatusAsync(status);
+            var result = await _formSubmissionsService.GetByStatusAsync(status);
             return StatusCode(result.StatusCode, result);
         }
 
-        // POST: api/formsubmissions
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateFormSubmissionDto createDto)
         {
-            var result = await _formSubmissionService.CreateAsync(createDto);
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            var result = await _formSubmissionsService.CreateAsync(createDto);
             return StatusCode(result.StatusCode, result);
         }
 
-        // PUT: api/formsubmissions/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateFormSubmissionDto updateDto)
         {
-            var result = await _formSubmissionService.UpdateAsync(id, updateDto);
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            var result = await _formSubmissionsService.UpdateAsync(id, updateDto);
             return StatusCode(result.StatusCode, result);
         }
 
-        // PUT: api/formsubmissions/5/status
-        [HttpPut("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(int id, [FromBody] FormSubmissionStatusDto statusDto)
-        {
-            var result = await _formSubmissionService.UpdateStatusAsync(id, statusDto);
-            return StatusCode(result.StatusCode, result);
-        }
-
-        // DELETE: api/formsubmissions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await _formSubmissionService.DeleteAsync(id);
+            var result = await _formSubmissionsService.DeleteAsync(id);
             return StatusCode(result.StatusCode, result);
         }
 
-        // POST: api/formsubmissions/filter
-        [HttpPost("filter")]
-        public async Task<IActionResult> Filter([FromBody] FormSubmissionFilterDto filterDto)
+        [HttpPost("submit")]
+        public async Task<IActionResult> Submit([FromBody] SubmitFormDto submitDto)
         {
-            var result = await _formSubmissionService.FilterSubmissionsAsync(filterDto);
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            var result = await _formSubmissionsService.SubmitAsync(submitDto);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateStatus(int id, [FromBody] string status)
+        {
+            var result = await _formSubmissionsService.UpdateStatusAsync(id, status);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("{id}/exists")]
+        public async Task<IActionResult> Exists(int id)
+        {
+            var result = await _formSubmissionsService.ExistsAsync(id);
             return StatusCode(result.StatusCode, result);
         }
     }

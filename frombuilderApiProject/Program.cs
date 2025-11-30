@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
@@ -193,8 +194,8 @@ builder.Services.AddScoped<IFieldOptionsService, FieldOptionsService>();
 builder.Services.AddScoped<IFieldOptionsRepository, FieldOptionsRepository>();
 builder.Services.AddScoped<IFieldDataSourcesService, FieldDataSourcesService>();
 builder.Services.AddScoped<IFieldDataSourcesRepository, FieldDataSourcesRepository>();
-builder.Services.AddScoped<IFormSubmissionService, FormSubmissionService>();
-builder.Services.AddScoped<IFormSubmissionRepository, FormSubmissionRepository>();
+builder.Services.AddScoped<IFormSubmissionsRepository, FormSubmissionsRepository>();
+builder.Services.AddScoped<IFormSubmissionsService, FormSubmissionsService>();
 
 // Document & Attachment Services
 builder.Services.AddScoped<IAttachmentTypeService, AttachmentTypeService>();
@@ -203,6 +204,17 @@ builder.Services.AddScoped<IFormAttachmentTypeService, FormAttachmentTypeService
 builder.Services.AddScoped<IFormAttachmentTypeRepository, FormAttachmentTypeRepository>();
 builder.Services.AddScoped<IDocumentTypeService, DocumentTypeService>();
 builder.Services.AddScoped<IDocumentTypeRepository, DocumentTypeRepository>();
+// Project Services
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+// ›Ì „·› Startup.cs √Ê Program.cs
+builder.Services.AddScoped<IDocumentSeriesRepository, DocumentSeriesRepository>();
+builder.Services.AddScoped<IDocumentSeriesService, DocumentSeriesService>();
+builder.Services.AddScoped<IFormSubmissionValuesRepository, FormSubmissionValuesRepository>();
+builder.Services.AddScoped<IFormSubmissionValuesService, FormSubmissionValuesService>();
+builder.Services.AddScoped<IFormSubmissionAttachmentsRepository, FormSubmissionAttachmentsRepository>();
+builder.Services.AddScoped<IFormSubmissionAttachmentsService, FormSubmissionAttachmentsService>();
+
 
 // Unit of Work -  √ﬂœ „‰ √‰ «·«”„ ’ÕÌÕ
 builder.Services.AddScoped<IunitOfwork, UnitOfWork>();

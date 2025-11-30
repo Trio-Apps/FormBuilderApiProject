@@ -27,12 +27,12 @@ namespace FormBuilder.core.Repository
         private IFieldTypesRepository _fieldTypesRepository;
         private IFieldOptionsRepository _FieldOptionsRepository;
         private IFieldDataSourcesRepository _fieldDataSourcesRepository;
-        private IFormSubmissionRepository _formSubmissionRepository; // Added
         private IAttachmentTypeRepository _attachmentTypeRepository;
-        private IFormAttachmentTypeRepository _formAttachmentTypeRepository; // Added
+        private IFormAttachmentTypeRepository _formAttachmentTypeRepository;
         private IDocumentTypeRepository _documentTypeRepository;
-
-
+        private IDocumentSeriesRepository _documentSeriesRepository;
+        private IProjectRepository _projectRepository;
+        private IFormSubmissionsRepository _formSubmissionsRepository; // تم التصحيح
 
         public FormBuilderDbContext AppDbContext { get; }
 
@@ -130,16 +130,6 @@ namespace FormBuilder.core.Repository
             }
         }
 
-        // Added FormSubmissionRepository property
-        public IFormSubmissionRepository FormSubmissionRepository
-        {
-            get
-            {
-                _formSubmissionRepository ??= new FormSubmissionRepository(AppDbContext);
-                return _formSubmissionRepository;
-            }
-        }
-
         public IAttachmentTypeRepository AttachmentTypeRepository
         {
             get
@@ -148,6 +138,7 @@ namespace FormBuilder.core.Repository
                 return _attachmentTypeRepository;
             }
         }
+
         public IFormAttachmentTypeRepository FormAttachmentTypeRepository
         {
             get
@@ -166,5 +157,37 @@ namespace FormBuilder.core.Repository
             }
         }
 
+        public IProjectRepository ProjectRepository
+        {
+            get
+            {
+                _projectRepository ??= new ProjectRepository(AppDbContext);
+                return _projectRepository;
+            }
+        }
+
+        public IDocumentSeriesRepository DocumentSeriesRepository
+        {
+            get
+            {
+                _documentSeriesRepository ??= new DocumentSeriesRepository(AppDbContext);
+                return _documentSeriesRepository;
+            }
+        }
+
+        public IFormSubmissionsRepository FormSubmissionsRepository // تم التصحيح
+        {
+            get
+            {
+                _formSubmissionsRepository ??= new FormSubmissionsRepository(AppDbContext);
+                return _formSubmissionsRepository;
+            }
+        }
+        private IFormSubmissionValuesRepository _formSubmissionValuesRepository;
+        public IFormSubmissionValuesRepository FormSubmissionValuesRepository =>
+            _formSubmissionValuesRepository ??= new FormSubmissionValuesRepository(AppDbContext);
+        private IFormSubmissionAttachmentsRepository _formSubmissionAttachmentsRepository;
+        public IFormSubmissionAttachmentsRepository FormSubmissionAttachmentsRepository =>
+            _formSubmissionAttachmentsRepository ??= new FormSubmissionAttachmentsRepository(AppDbContext);
     }
 }

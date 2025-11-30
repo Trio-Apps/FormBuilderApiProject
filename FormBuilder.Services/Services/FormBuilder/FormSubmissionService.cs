@@ -1,9 +1,9 @@
-﻿using formBuilder.Domian.Entitys;
-using formBuilder.Domian.Interfaces;
+﻿using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Models;
-using FormBuilder.API.Models.DTOs;
+using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Entitys.froms;
+using FormBuilder.Domian.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,44 +11,38 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.Services
 {
-    public class FormSubmissionService : IFormSubmissionService
+    public class FormSubmissionsService : IFormSubmissionsService
     {
         private readonly IunitOfwork _unitOfWork;
 
-        public FormSubmissionService(IunitOfwork unitOfWork)
+        public FormSubmissionsService(IunitOfwork unitOfWork)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        // ================================
-        // GET ALL FORM SUBMISSIONS
-        // ================================
         public async Task<ApiResponse> GetAllAsync()
         {
             try
             {
-                var submissions = await _unitOfWork.FormSubmissionRepository.GetAllAsync();
+                var submissions = await _unitOfWork.FormSubmissionsRepository.GetSubmissionsWithDetailsAsync();
                 var submissionDtos = submissions.Select(ToDto).ToList();
                 return new ApiResponse(200, "All form submissions retrieved successfully", submissionDtos);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(500, $"Error retrieving all form submissions: {ex.Message}");
+                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
             }
         }
 
-        // ================================
-        // GET BY ID
-        // ================================
         public async Task<ApiResponse> GetByIdAsync(int id)
         {
             try
             {
-                var submission = await _unitOfWork.FormSubmissionRepository.GetByIdAsync(id);
+                var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdWithDetailsAsync(id);
                 if (submission == null)
                     return new ApiResponse(404, "Form submission not found");
 
-                var submissionDto = ToDto(submission);
+                var submissionDto = ToDetailDto(submission);
                 return new ApiResponse(200, "Form submission retrieved successfully", submissionDto);
             }
             catch (Exception ex)
@@ -57,65 +51,28 @@ namespace FormBuilder.Services
             }
         }
 
-        // ================================
-        // GET BY FORM BUILDER ID
-        // ================================
-        public async Task<ApiResponse> GetByFormBuilderIdAsync(int formBuilderId)
+        public async Task<ApiResponse> GetByIdWithDetailsAsync(int id)
         {
             try
             {
-                var submissions = await _unitOfWork.FormSubmissionRepository.GetByFormBuilderIdAsync(formBuilderId);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
+                var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdWithDetailsAsync(id);
+                if (submission == null)
+                    return new ApiResponse(404, "Form submission not found");
+
+                var submissionDto = ToDetailDto(submission);
+                return new ApiResponse(200, "Form submission with details retrieved successfully", submissionDto);
             }
             catch (Exception ex)
             {
-                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
+                return new ApiResponse(500, $"Error retrieving form submission with details: {ex.Message}");
             }
         }
 
-        // ================================
-        // GET BY USER ID
-        // ================================
-        public async Task<ApiResponse> GetByUserIdAsync(string userId)
-        {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionRepository.GetByUserIdAsync(userId);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
-            }
-        }
-
-        // ================================
-        // GET BY STATUS
-        // ================================
-        public async Task<ApiResponse> GetByStatusAsync(string status)
-        {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionRepository.GetByStatusAsync(status);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
-            }
-        }
-
-        // ================================
-        // GET BY DOCUMENT NUMBER
-        // ================================
         public async Task<ApiResponse> GetByDocumentNumberAsync(string documentNumber)
         {
             try
             {
-                var submission = await _unitOfWork.FormSubmissionRepository.GetByDocumentNumberAsync(documentNumber);
+                var submission = await _unitOfWork.FormSubmissionsRepository.GetByDocumentNumberAsync(documentNumber);
                 if (submission == null)
                     return new ApiResponse(404, "Form submission not found");
 
@@ -128,9 +85,62 @@ namespace FormBuilder.Services
             }
         }
 
-        // ================================
-        // CREATE
-        // ================================
+        public async Task<ApiResponse> GetByFormBuilderIdAsync(int formBuilderId)
+        {
+            try
+            {
+                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByFormBuilderIdAsync(formBuilderId);
+                var submissionDtos = submissions.Select(ToDto).ToList();
+                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
+            }
+        }
+
+        public async Task<ApiResponse> GetByDocumentTypeIdAsync(int documentTypeId)
+        {
+            try
+            {
+                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByDocumentTypeIdAsync(documentTypeId);
+                var submissionDtos = submissions.Select(ToDto).ToList();
+                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
+            }
+        }
+
+        public async Task<ApiResponse> GetByUserIdAsync(string userId)
+        {
+            try
+            {
+                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByUserIdAsync(userId);
+                var submissionDtos = submissions.Select(ToDto).ToList();
+                return new ApiResponse(200, "User form submissions retrieved successfully", submissionDtos);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(500, $"Error retrieving user form submissions: {ex.Message}");
+            }
+        }
+
+        public async Task<ApiResponse> GetByStatusAsync(string status)
+        {
+            try
+            {
+                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByStatusAsync(status);
+                var submissionDtos = submissions.Select(ToDto).ToList();
+                return new ApiResponse(200, "Form submissions by status retrieved successfully", submissionDtos);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(500, $"Error retrieving form submissions by status: {ex.Message}");
+            }
+        }
+
         public async Task<ApiResponse> CreateAsync(CreateFormSubmissionDto createDto)
         {
             try
@@ -138,13 +148,34 @@ namespace FormBuilder.Services
                 if (createDto == null)
                     return new ApiResponse(400, "DTO is required");
 
-                // Validate if form builder exists
-                var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(x => x.id == createDto.FormBuilderId);
-                if (!formBuilderExists)
-                    return new ApiResponse(400, "Invalid form builder ID");
+                // Generate document number
+                var series = await _unitOfWork.DocumentSeriesRepository.GetByIdAsync(createDto.SeriesId);
+                if (series == null)
+                    return new ApiResponse(404, "Document series not found");
 
-                var entity = ToEntity(createDto);
-                _unitOfWork.FormSubmissionRepository.Add(entity);
+                var nextNumber = await _unitOfWork.DocumentSeriesRepository.GetNextNumberAsync(createDto.SeriesId);
+                var documentNumber = $"{series.SeriesCode}-{nextNumber:D6}";
+
+                // Get next version
+                var version = await _unitOfWork.FormSubmissionsRepository.GetNextVersionAsync(createDto.FormBuilderId);
+
+                var entity = new FORM_SUBMISSIONS
+                {
+                    FormBuilderId = createDto.FormBuilderId,
+                    DocumentTypeId = createDto.DocumentTypeId,
+                    SeriesId = createDto.SeriesId,
+                    DocumentNumber = documentNumber,
+                    SubmittedByUserId = createDto.SubmittedByUserId,
+                    Version = version,
+                    Status = createDto.Status,
+                    // Fixed: remove invalid cast from string to DateTime
+                    // Use current UTC time as initial submitted date (avoids casting and nullability issues)
+                    SubmittedDate = DateTime.UtcNow,
+                    CreatedDate = DateTime.UtcNow,
+                    LastUpdatedDate = DateTime.UtcNow
+                };
+
+                _unitOfWork.FormSubmissionsRepository.Add(entity);
                 await _unitOfWork.CompleteAsyn();
 
                 return new ApiResponse(200, "Form submission created successfully", ToDto(entity));
@@ -155,9 +186,6 @@ namespace FormBuilder.Services
             }
         }
 
-        // ================================
-        // UPDATE
-        // ================================
         public async Task<ApiResponse> UpdateAsync(int id, UpdateFormSubmissionDto updateDto)
         {
             try
@@ -165,12 +193,21 @@ namespace FormBuilder.Services
                 if (updateDto == null)
                     return new ApiResponse(400, "DTO is required");
 
-                var entity = await _unitOfWork.FormSubmissionRepository.GetByIdAsync(id);
+                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
                 if (entity == null)
                     return new ApiResponse(404, "Form submission not found");
 
+                if (!string.IsNullOrEmpty(updateDto.DocumentNumber) && updateDto.DocumentNumber != entity.DocumentNumber)
+                {
+                    var documentNumberExists = await _unitOfWork.FormSubmissionsRepository.DocumentNumberExistsAsync(updateDto.DocumentNumber);
+                    if (documentNumberExists)
+                        return new ApiResponse(400, "Document number already exists");
+                }
+
                 MapUpdate(updateDto, entity);
-                _unitOfWork.FormSubmissionRepository.Update(entity);
+                entity.LastUpdatedDate = DateTime.UtcNow;
+
+                _unitOfWork.FormSubmissionsRepository.Update(entity);
                 await _unitOfWork.CompleteAsyn();
 
                 return new ApiResponse(200, "Form submission updated successfully", ToDto(entity));
@@ -181,18 +218,15 @@ namespace FormBuilder.Services
             }
         }
 
-        // ================================
-        // DELETE
-        // ================================
         public async Task<ApiResponse> DeleteAsync(int id)
         {
             try
             {
-                var entity = await _unitOfWork.FormSubmissionRepository.GetByIdAsync(id);
+                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
                 if (entity == null)
                     return new ApiResponse(404, "Form submission not found");
 
-                _unitOfWork.FormSubmissionRepository.Delete(entity);
+                _unitOfWork.FormSubmissionsRepository.Delete(entity);
                 await _unitOfWork.CompleteAsyn();
 
                 return new ApiResponse(200, "Form submission deleted successfully");
@@ -203,33 +237,48 @@ namespace FormBuilder.Services
             }
         }
 
-        // ================================
-        // UPDATE STATUS
-        // ================================
-        public async Task<ApiResponse> UpdateStatusAsync(int id, FormSubmissionStatusDto statusDto)
+        public async Task<ApiResponse> SubmitAsync(SubmitFormDto submitDto)
         {
             try
             {
-                if (statusDto == null)
-                    return new ApiResponse(400, "Status DTO is required");
-
-                var entity = await _unitOfWork.FormSubmissionRepository.GetByIdAsync(id);
+                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(submitDto.SubmissionId);
                 if (entity == null)
                     return new ApiResponse(404, "Form submission not found");
 
-                entity.Status = statusDto.Status;
+                if (entity.Status == "Submitted")
+                    return new ApiResponse(400, "Form submission is already submitted");
+
+                entity.Status = "Submitted";
+                entity.SubmittedDate = DateTime.UtcNow;
+                entity.SubmittedByUserId = submitDto.SubmittedByUserId;
                 entity.LastUpdatedDate = DateTime.UtcNow;
 
-                // Set submitted date when status changes to "Submitted"
-                if (statusDto.Status == "Submitted" && entity.SubmittedDate == null)
-                {
-                    entity.SubmittedDate = DateTime.UtcNow;
-                }
-
-                _unitOfWork.FormSubmissionRepository.Update(entity);
+                _unitOfWork.FormSubmissionsRepository.Update(entity);
                 await _unitOfWork.CompleteAsyn();
 
-                return new ApiResponse(200, "Form submission status updated successfully", ToDto(entity));
+                return new ApiResponse(200, "Form submission submitted successfully", ToDto(entity));
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(500, $"Error submitting form submission: {ex.Message}");
+            }
+        }
+
+        public async Task<ApiResponse> UpdateStatusAsync(int id, string status)
+        {
+            try
+            {
+                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
+                if (entity == null)
+                    return new ApiResponse(404, "Form submission not found");
+
+                entity.Status = status;
+                entity.LastUpdatedDate = DateTime.UtcNow;
+
+                _unitOfWork.FormSubmissionsRepository.Update(entity);
+                await _unitOfWork.CompleteAsyn();
+
+                return new ApiResponse(200, $"Form submission status updated to {status} successfully", ToDto(entity));
             }
             catch (Exception ex)
             {
@@ -237,84 +286,16 @@ namespace FormBuilder.Services
             }
         }
 
-        // ================================
-        // GET SUBMISSIONS COUNT
-        // ================================
-        public async Task<ApiResponse> GetSubmissionsCountAsync(int formBuilderId)
-        {
-            try
-            {
-                var count = await _unitOfWork.FormSubmissionRepository.GetSubmissionsCountAsync(formBuilderId);
-                return new ApiResponse(200, "Form submissions count retrieved successfully", count);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions count: {ex.Message}");
-            }
-        }
-
-        // ================================
-        // EXISTS
-        // ================================
         public async Task<ApiResponse> ExistsAsync(int id)
         {
             try
             {
-                var exists = await _unitOfWork.FormSubmissionRepository.ExistsAsync(id);
+                var exists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.id == id);
                 return new ApiResponse(200, "Form submission existence checked successfully", exists);
             }
             catch (Exception ex)
             {
                 return new ApiResponse(500, $"Error checking form submission existence: {ex.Message}");
-            }
-        }
-
-        // ================================
-        // FILTER SUBMISSIONS
-        // ================================
-        public async Task<ApiResponse> FilterSubmissionsAsync(FormSubmissionFilterDto filterDto)
-        {
-            try
-            {
-                var allSubmissions = await _unitOfWork.FormSubmissionRepository.GetAllAsync();
-                var filteredSubmissions = allSubmissions.AsQueryable();
-
-                if (filterDto.FormBuilderId.HasValue)
-                {
-                    filteredSubmissions = filteredSubmissions.Where(s => s.FormBuilderId == filterDto.FormBuilderId.Value);
-                }
-
-                if (!string.IsNullOrEmpty(filterDto.UserId))
-                {
-                    filteredSubmissions = filteredSubmissions.Where(s => s.SubmittedByUserId == filterDto.UserId);
-                }
-
-                if (!string.IsNullOrEmpty(filterDto.Status))
-                {
-                    filteredSubmissions = filteredSubmissions.Where(s => s.Status == filterDto.Status);
-                }
-
-                if (!string.IsNullOrEmpty(filterDto.DocumentNumber))
-                {
-                    filteredSubmissions = filteredSubmissions.Where(s => s.DocumentNumber.Contains(filterDto.DocumentNumber));
-                }
-
-                if (filterDto.FromDate.HasValue)
-                {
-                    filteredSubmissions = filteredSubmissions.Where(s => s.CreatedDate >= filterDto.FromDate.Value);
-                }
-
-                if (filterDto.ToDate.HasValue)
-                {
-                    filteredSubmissions = filteredSubmissions.Where(s => s.CreatedDate <= filterDto.ToDate.Value);
-                }
-
-                var result = filteredSubmissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions filtered successfully", result);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error filtering form submissions: {ex.Message}");
             }
         }
 
@@ -329,11 +310,15 @@ namespace FormBuilder.Services
             {
                 Id = entity.id,
                 FormBuilderId = entity.FormBuilderId,
+                FormName = entity.FORM_BUILDER?.FormName,
                 Version = entity.Version,
                 DocumentTypeId = entity.DocumentTypeId,
+                DocumentTypeName = entity.DOCUMENT_TYPES?.Name,
                 SeriesId = entity.SeriesId,
+                SeriesCode = entity.DOCUMENT_SERIES?.SeriesCode,
                 DocumentNumber = entity.DocumentNumber,
                 SubmittedByUserId = entity.SubmittedByUserId,
+                SubmittedByUserName = entity.SubmittedByUser?.UserName,
                 SubmittedDate = entity.SubmittedDate,
                 Status = entity.Status,
                 CreatedDate = entity.CreatedDate,
@@ -341,35 +326,45 @@ namespace FormBuilder.Services
             };
         }
 
-        private FORM_SUBMISSIONS ToEntity(CreateFormSubmissionDto dto)
+        private FormSubmissionDetailDto ToDetailDto(FORM_SUBMISSIONS entity)
         {
-            return new FORM_SUBMISSIONS
+            if (entity == null) return null;
+
+            var dto = new FormSubmissionDetailDto
             {
-                FormBuilderId = dto.FormBuilderId,
-                Version = dto.Version,
-                DocumentTypeId = dto.DocumentTypeId,
-                SeriesId = dto.SeriesId,
-                DocumentNumber = dto.DocumentNumber,
-                SubmittedByUserId = dto.SubmittedByUserId,
-                SubmittedDate = dto.SubmittedDate.GetValueOrDefault(),
-                Status = dto.Status,
-                CreatedDate = DateTime.UtcNow,
-                LastUpdatedDate = DateTime.UtcNow
+                Id = entity.id,
+                FormBuilderId = entity.FormBuilderId,
+                FormName = entity.FORM_BUILDER?.FormName,
+                Version = entity.Version,
+                DocumentTypeId = entity.DocumentTypeId,
+                DocumentTypeName = entity.DOCUMENT_TYPES?.Name,
+                SeriesId = entity.SeriesId,
+                SeriesCode = entity.DOCUMENT_SERIES?.SeriesCode,
+                DocumentNumber = entity.DocumentNumber,
+                SubmittedByUserId = entity.SubmittedByUserId,
+                SubmittedByUserName = entity.SubmittedByUser?.UserName,
+                SubmittedDate = entity.SubmittedDate,
+                Status = entity.Status,
+                CreatedDate = entity.CreatedDate,
+                LastUpdatedDate = entity.LastUpdatedDate
             };
+
+            // Map field values, attachments, and grid data if needed
+            // This would require additional mapping methods
+
+            return dto;
         }
 
         private void MapUpdate(UpdateFormSubmissionDto dto, FORM_SUBMISSIONS entity)
         {
-            if (!string.IsNullOrEmpty(dto.Status))
-                entity.Status = dto.Status;
-
             if (!string.IsNullOrEmpty(dto.DocumentNumber))
                 entity.DocumentNumber = dto.DocumentNumber;
 
+            if (!string.IsNullOrEmpty(dto.Status))
+                entity.Status = dto.Status;
+
             if (dto.SubmittedDate.HasValue)
                 entity.SubmittedDate = dto.SubmittedDate.Value;
-
-            entity.LastUpdatedDate = DateTime.UtcNow;
         }
     }
 }

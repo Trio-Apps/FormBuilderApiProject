@@ -303,6 +303,233 @@
     ]
   },
   {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetAll",
+    "RelativePath": "api/DocumentSeries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "Create",
+    "RelativePath": "api/DocumentSeries",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetById",
+    "RelativePath": "api/DocumentSeries/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "Update",
+    "RelativePath": "api/DocumentSeries/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "Delete",
+    "RelativePath": "api/DocumentSeries/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "Exists",
+    "RelativePath": "api/DocumentSeries/{id}/exists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetNextNumber",
+    "RelativePath": "api/DocumentSeries/{id}/next-number",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "SetAsDefault",
+    "RelativePath": "api/DocumentSeries/{id}/set-default",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "ToggleActive",
+    "RelativePath": "api/DocumentSeries/{id}/toggle-active",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "isActive",
+        "Type": "System.Boolean",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetActive",
+    "RelativePath": "api/DocumentSeries/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetBySeriesCode",
+    "RelativePath": "api/DocumentSeries/code/{seriesCode}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "seriesCode",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetDefaultSeries",
+    "RelativePath": "api/DocumentSeries/default",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "documentTypeId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "projectId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetByDocumentTypeId",
+    "RelativePath": "api/DocumentSeries/document-type/{documentTypeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "documentTypeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.DocumentSeriesController",
+    "Method": "GetByProjectId",
+    "RelativePath": "api/DocumentSeries/project/{projectId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "projectId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
     "Method": "GetAll",
     "RelativePath": "api/DocumentTypes",
@@ -2376,6 +2603,104 @@
     ]
   },
   {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionAttachmentsController",
+    "Method": "GetAll",
+    "RelativePath": "api/FormSubmissionAttachments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse\u00601[[System.Collections.Generic.List\u00601[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionAttachmentsController",
+    "Method": "Create",
+    "RelativePath": "api/FormSubmissionAttachments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse\u00601[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionAttachmentsController",
+    "Method": "GetById",
+    "RelativePath": "api/FormSubmissionAttachments/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse\u00601[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionAttachmentsController",
+    "Method": "GetBySubmissionId",
+    "RelativePath": "api/FormSubmissionAttachments/submission/{submissionId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submissionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse\u00601[[System.Collections.Generic.List\u00601[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
     "Method": "GetAll",
     "RelativePath": "api/FormSubmissions",
@@ -2395,7 +2720,7 @@
     "Parameters": [
       {
         "Name": "createDto",
-        "Type": "FormBuilder.API.Models.DTOs.CreateFormSubmissionDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto",
         "IsRequired": true
       }
     ],
@@ -2432,7 +2757,7 @@
       },
       {
         "Name": "updateDto",
-        "Type": "FormBuilder.API.Models.DTOs.UpdateFormSubmissionDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto",
         "IsRequired": true
       }
     ],
@@ -2456,9 +2781,25 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
+    "Method": "Exists",
+    "RelativePath": "api/FormSubmissions/{id}/exists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
     "Method": "UpdateStatus",
     "RelativePath": "api/FormSubmissions/{id}/status",
-    "HttpMethod": "PUT",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -2468,8 +2809,8 @@
         "IsRequired": true
       },
       {
-        "Name": "statusDto",
-        "Type": "FormBuilder.API.Models.DTOs.FormSubmissionStatusDto",
+        "Name": "status",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -2477,15 +2818,47 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
-    "Method": "Filter",
-    "RelativePath": "api/FormSubmissions/filter",
-    "HttpMethod": "POST",
+    "Method": "GetByIdWithDetails",
+    "RelativePath": "api/FormSubmissions/details/{id}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "filterDto",
-        "Type": "FormBuilder.API.Models.DTOs.FormSubmissionFilterDto",
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
+    "Method": "GetByDocumentTypeId",
+    "RelativePath": "api/FormSubmissions/document-type/{documentTypeId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "documentTypeId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
+    "Method": "GetByDocumentNumber",
+    "RelativePath": "api/FormSubmissions/document/{documentNumber}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "documentNumber",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],
@@ -2494,7 +2867,7 @@
   {
     "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
     "Method": "GetByFormBuilderId",
-    "RelativePath": "api/FormSubmissions/form-builder/{formBuilderId}",
+    "RelativePath": "api/FormSubmissions/form/{formBuilderId}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -2525,6 +2898,22 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
+    "Method": "Submit",
+    "RelativePath": "api/FormSubmissions/submit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submitDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
     "Method": "GetByUserId",
     "RelativePath": "api/FormSubmissions/user/{userId}",
     "HttpMethod": "GET",
@@ -2534,6 +2923,212 @@
       {
         "Name": "userId",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "GetAll",
+    "RelativePath": "api/FormSubmissionValues",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "Create",
+    "RelativePath": "api/FormSubmissionValues",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "GetById",
+    "RelativePath": "api/FormSubmissionValues/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "Update",
+    "RelativePath": "api/FormSubmissionValues/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "Delete",
+    "RelativePath": "api/FormSubmissionValues/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "Exists",
+    "RelativePath": "api/FormSubmissionValues/{id}/exists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "CreateBulk",
+    "RelativePath": "api/FormSubmissionValues/bulk",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bulkDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "GetByFieldId",
+    "RelativePath": "api/FormSubmissionValues/field/{fieldId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "GetBySubmissionId",
+    "RelativePath": "api/FormSubmissionValues/submission/{submissionId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submissionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "DeleteBySubmissionId",
+    "RelativePath": "api/FormSubmissionValues/submission/{submissionId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submissionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "GetBySubmissionAndField",
+    "RelativePath": "api/FormSubmissionValues/submission/{submissionId}/field/{fieldId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submissionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionValuesController",
+    "Method": "UpdateByField",
+    "RelativePath": "api/FormSubmissionValues/submission/{submissionId}/field/{fieldId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "submissionId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto",
         "IsRequired": true
       }
     ],
@@ -3042,6 +3637,169 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "GetAll",
+    "RelativePath": "api/Projects",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "Create",
+    "RelativePath": "api/Projects",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDto",
+        "Type": "FormBuilder.API.Models.DTOs.CreateProjectDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "GetById",
+    "RelativePath": "api/Projects/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "Update",
+    "RelativePath": "api/Projects/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateDto",
+        "Type": "FormBuilder.API.Models.DTOs.UpdateProjectDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "Delete",
+    "RelativePath": "api/Projects/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "Exists",
+    "RelativePath": "api/Projects/{id}/exists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "ToggleActive",
+    "RelativePath": "api/Projects/{id}/toggle-active",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "toggleDto",
+        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "GetActive",
+    "RelativePath": "api/Projects/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "GetByCode",
+    "RelativePath": "api/Projects/code/{code}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
+    "Method": "CodeExists",
+    "RelativePath": "api/Projects/code/{code}/exists",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "code",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "excludeId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

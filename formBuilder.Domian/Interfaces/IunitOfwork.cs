@@ -24,10 +24,16 @@ namespace formBuilder.Domian.Interfaces
         IFORM_RULESRepository FORM_RULESRepository { get; }
         IFieldOptionsRepository FieldOptionsRepository { get; }
         IFieldDataSourcesRepository FieldDataSourcesRepository { get; }
-        IFormSubmissionRepository FormSubmissionRepository { get; } // Added
         IAttachmentTypeRepository AttachmentTypeRepository { get; }
         IFormAttachmentTypeRepository FormAttachmentTypeRepository { get; } // Added
         IDocumentTypeRepository DocumentTypeRepository { get; }
+        IProjectRepository ProjectRepository { get; }
+        IDocumentSeriesRepository DocumentSeriesRepository { get; }
+        IFormSubmissionsRepository FormSubmissionsRepository { get; } 
+        IFormSubmissionValuesRepository FormSubmissionValuesRepository { get; } 
+        IFormSubmissionAttachmentsRepository FormSubmissionAttachmentsRepository { get; } 
+
+
 
 
 
