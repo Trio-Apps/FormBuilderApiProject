@@ -172,7 +172,7 @@ namespace FormBuilder.Services
                     // Use current UTC time as initial submitted date (avoids casting and nullability issues)
                     SubmittedDate = DateTime.UtcNow,
                     CreatedDate = DateTime.UtcNow,
-                    LastUpdatedDate = DateTime.UtcNow
+                    UpdatedDate = DateTime.UtcNow
                 };
 
                 _unitOfWork.FormSubmissionsRepository.Add(entity);
@@ -205,7 +205,7 @@ namespace FormBuilder.Services
                 }
 
                 MapUpdate(updateDto, entity);
-                entity.LastUpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTime.UtcNow;
 
                 _unitOfWork.FormSubmissionsRepository.Update(entity);
                 await _unitOfWork.CompleteAsyn();
@@ -251,7 +251,7 @@ namespace FormBuilder.Services
                 entity.Status = "Submitted";
                 entity.SubmittedDate = DateTime.UtcNow;
                 entity.SubmittedByUserId = submitDto.SubmittedByUserId;
-                entity.LastUpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTime.UtcNow;
 
                 _unitOfWork.FormSubmissionsRepository.Update(entity);
                 await _unitOfWork.CompleteAsyn();
@@ -273,7 +273,7 @@ namespace FormBuilder.Services
                     return new ApiResponse(404, "Form submission not found");
 
                 entity.Status = status;
-                entity.LastUpdatedDate = DateTime.UtcNow;
+                entity.UpdatedDate = DateTime.UtcNow;
 
                 _unitOfWork.FormSubmissionsRepository.Update(entity);
                 await _unitOfWork.CompleteAsyn();
@@ -290,7 +290,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.id == id);
+                var exists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == id);
                 return new ApiResponse(200, "Form submission existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -308,7 +308,7 @@ namespace FormBuilder.Services
 
             return new FormSubmissionDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 FormBuilderId = entity.FormBuilderId,
                 FormName = entity.FORM_BUILDER?.FormName,
                 Version = entity.Version,
@@ -318,11 +318,9 @@ namespace FormBuilder.Services
                 SeriesCode = entity.DOCUMENT_SERIES?.SeriesCode,
                 DocumentNumber = entity.DocumentNumber,
                 SubmittedByUserId = entity.SubmittedByUserId,
-                SubmittedByUserName = entity.SubmittedByUser?.UserName,
                 SubmittedDate = entity.SubmittedDate,
                 Status = entity.Status,
                 CreatedDate = entity.CreatedDate,
-                LastUpdatedDate = entity.LastUpdatedDate
             };
         }
 
@@ -332,7 +330,7 @@ namespace FormBuilder.Services
 
             var dto = new FormSubmissionDetailDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 FormBuilderId = entity.FormBuilderId,
                 FormName = entity.FORM_BUILDER?.FormName,
                 Version = entity.Version,
@@ -342,11 +340,9 @@ namespace FormBuilder.Services
                 SeriesCode = entity.DOCUMENT_SERIES?.SeriesCode,
                 DocumentNumber = entity.DocumentNumber,
                 SubmittedByUserId = entity.SubmittedByUserId,
-                SubmittedByUserName = entity.SubmittedByUser?.UserName,
                 SubmittedDate = entity.SubmittedDate,
                 Status = entity.Status,
                 CreatedDate = entity.CreatedDate,
-                LastUpdatedDate = entity.LastUpdatedDate
             };
 
             // Map field values, attachments, and grid data if needed

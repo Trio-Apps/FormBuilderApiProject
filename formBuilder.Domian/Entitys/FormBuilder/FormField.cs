@@ -39,11 +39,6 @@ public class FORM_FIELDS :BaseEntity
     public string ValidationMessage { get; set; }
     public string VisibilityRuleJson { get; set; }
     public string ReadOnlyRuleJson { get; set; }
-    public DateTime CreatedDate { get; set; }
-
-    [ForeignKey("AppUser")]
-    public string ? CreatedByUserId { get; set; }
-    public virtual AppUser ?CreatedByUser { get; set; }
 
     public bool IsActive { get; set; }
 

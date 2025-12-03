@@ -214,6 +214,16 @@ builder.Services.AddScoped<IFormSubmissionValuesRepository, FormSubmissionValues
 builder.Services.AddScoped<IFormSubmissionValuesService, FormSubmissionValuesService>();
 builder.Services.AddScoped<IFormSubmissionAttachmentsRepository, FormSubmissionAttachmentsRepository>();
 builder.Services.AddScoped<IFormSubmissionAttachmentsService, FormSubmissionAttachmentsService>();
+builder.Services.AddScoped<IFormGridRepository, FormGridRepository>();
+builder.Services.AddScoped<IFormGridService, FormGridService>();
+builder.Services.AddScoped<IFormGridColumnRepository, FormGridColumnRepository>();
+builder.Services.AddScoped<IFormGridColumnService, FormGridColumnService>();
+builder.Services.AddScoped<IFormSubmissionGridRowRepository, FormSubmissionGridRowRepository>();
+builder.Services.AddScoped<IFormSubmissionGridRowService, FormSubmissionGridRowService>();
+builder.Services.AddScoped<IFormSubmissionGridCellRepository, FormSubmissionGridCellRepository>();
+builder.Services.AddScoped<IFormSubmissionGridCellService, FormSubmissionGridCellService>();
+builder.Services.AddScoped<IFormulasRepository, FormulasRepository>();
+builder.Services.AddScoped<IFormulaService, FormulaService>();
 
 
 // Unit of Work -  √ﬂœ „‰ √‰ «·«”„ ’ÕÌÕ

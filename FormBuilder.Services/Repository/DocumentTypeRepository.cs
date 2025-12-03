@@ -24,7 +24,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.DOCUMENT_TYPES
                 .Include(dt => dt.FORM_BUILDER)
                 .Include(dt => dt.ParentMenu)
-                .FirstOrDefaultAsync(dt => dt.id == id);
+                .FirstOrDefaultAsync(dt => dt.Id == id);
         }
 
         public async Task<DOCUMENT_TYPES> GetByCodeAsync(string code)
@@ -71,7 +71,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
             if (excludeId.HasValue)
             {
-                query = query.Where(dt => dt.id != excludeId.Value);
+                query = query.Where(dt => dt.Id != excludeId.Value);
             }
 
             return await query.AnyAsync();
@@ -80,7 +80,7 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsActiveAsync(int id)
         {
             return await _context.DOCUMENT_TYPES
-                .AnyAsync(dt => dt.id == id && dt.IsActive);
+                .AnyAsync(dt => dt.Id == id && dt.IsActive);
         }
 
         public async Task<IEnumerable<DOCUMENT_TYPES>> GetMenuItemsAsync()

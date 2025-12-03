@@ -200,7 +200,7 @@ public static class DataSeeder
             {
                 new FORM_TABS
                 {
-                    FormBuilderId = formBuilder.id,
+                    FormBuilderId = formBuilder.Id,
                     TabName = "Personal Information",
                     TabCode = "PERSONAL_INFO",
                     TabOrder = 1,
@@ -210,7 +210,7 @@ public static class DataSeeder
                 },
                 new FORM_TABS
                 {
-                    FormBuilderId = formBuilder.id,
+                    FormBuilderId = formBuilder.Id,
                     TabName = "Contact Information",
                     TabCode = "CONTACT_INFO",
                     TabOrder = 2,
@@ -329,7 +329,7 @@ public static class DataSeeder
                 {
                     new FIELD_OPTIONS
                     {
-                        FieldId = genderField.id,
+                        FieldId = genderField.Id,
                         OptionText = "Male",
                         OptionValue = "M",
                         OptionOrder = 1,
@@ -338,7 +338,7 @@ public static class DataSeeder
                     },
                     new FIELD_OPTIONS
                     {
-                        FieldId = genderField.id,
+                        FieldId = genderField.Id,
                         OptionText = "Female",
                         OptionValue = "F",
                         OptionOrder = 2,
@@ -347,7 +347,7 @@ public static class DataSeeder
                     },
                     new FIELD_OPTIONS
                     {
-                        FieldId = genderField.id,
+                        FieldId = genderField.Id,
                         OptionText = "Other",
                         OptionValue = "O",
                         OptionOrder = 3,

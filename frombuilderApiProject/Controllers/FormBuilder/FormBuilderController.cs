@@ -30,7 +30,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
             return new FormBuilderDto
             {
                 
-                Id = entity.id,
+                Id = entity.Id,
                 FormName = entity.FormName,
                 FormCode = entity.FormCode,
                 Description = entity.Description,
@@ -154,7 +154,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 existingForm.IsPublished = updateDto.IsPublished;
                 existingForm.IsActive = updateDto.IsActive;
                 // 🛑 FIX: Changed 'existingForm.id' (lowercase) to 'existingForm.Id' (PascalCase)
-                existingForm.id = id;
+                existingForm.Id = id;
 
                 await _formBuilderService.UpdateFormAsync(existingForm);
 

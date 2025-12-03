@@ -30,7 +30,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
             return new FormTabDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 FormBuilderId = entity.FormBuilderId,
                 TabName = entity.TabName,
                 TabCode = entity.TabCode,

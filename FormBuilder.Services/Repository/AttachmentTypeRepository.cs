@@ -39,7 +39,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
             if (excludeId.HasValue)
             {
-                query = query.Where(at => at.id != excludeId.Value);
+                query = query.Where(at => at.Id != excludeId.Value);
             }
 
             return await query.AnyAsync();
@@ -48,13 +48,13 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsActiveAsync(int id)
         {
             return await _context.ATTACHMENT_TYPES
-                .AnyAsync(at => at.id == id && at.IsActive);
+                .AnyAsync(at => at.Id == id && at.IsActive);
         }
 
         public Task<ATTACHMENT_TYPES> GetByIdAsync(int id)
         {
             return _context.ATTACHMENT_TYPES
-                .FirstOrDefaultAsync(at => at.id == id);
+                .FirstOrDefaultAsync(at => at.Id == id);
         }
     }
 }

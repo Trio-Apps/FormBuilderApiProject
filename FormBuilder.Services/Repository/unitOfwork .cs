@@ -33,8 +33,11 @@ namespace FormBuilder.core.Repository
         private IDocumentSeriesRepository _documentSeriesRepository;
         private IProjectRepository _projectRepository;
         private IFormSubmissionsRepository _formSubmissionsRepository; // تم التصحيح
-
+        private IFormGridColumnRepository _formGridColumnRepository;
         public FormBuilderDbContext AppDbContext { get; }
+        private IFormSubmissionGridRowRepository _formSubmissionGridRowRepository;
+        private IFormSubmissionGridCellRepository _formSubmissionGridCellRepository;
+        private IFormulasRepository _formulasRepository;
 
         public UnitOfWork(FormBuilderDbContext appDbContext)
         {
@@ -189,5 +192,57 @@ namespace FormBuilder.core.Repository
         private IFormSubmissionAttachmentsRepository _formSubmissionAttachmentsRepository;
         public IFormSubmissionAttachmentsRepository FormSubmissionAttachmentsRepository =>
             _formSubmissionAttachmentsRepository ??= new FormSubmissionAttachmentsRepository(AppDbContext);
+        // Add to UnitOfWork class
+        private IFormGridRepository _formGridRepository;
+
+        public IFormGridRepository FormGridRepository
+        {
+            get
+            {
+                _formGridRepository ??= new FormGridRepository(AppDbContext);
+                return _formGridRepository;
+            }
+        }
+
+        public IFormGridColumnRepository FormGridColumnRepository
+        {
+            get
+            {
+                _formGridColumnRepository ??= new FormGridColumnRepository(AppDbContext);
+                return _formGridColumnRepository;
+            }
+        }
+
+        public IFormSubmissionGridRowRepository FormSubmissionGridRowRepository
+        {
+            get
+            {
+                _formSubmissionGridRowRepository ??= new FormSubmissionGridRowRepository(AppDbContext);
+                return _formSubmissionGridRowRepository;
+            }
+        }
+        public IFormSubmissionGridCellRepository FormSubmissionGridCellRepository =>
+                _formSubmissionGridCellRepository ??= new FormSubmissionGridCellRepository(AppDbContext);
+        public IFormulasRepository FormulasRepository
+        {
+            get
+            {
+                _formulasRepository ??= new FormulasRepository(AppDbContext);
+                return _formulasRepository;
+            }
+        }
+        private IFormulaVariablesRepository _formulaVariablesRepository;
+        public IFormulaVariablesRepository FormulaVariablesRepository
+        {
+            get
+            {
+                if (_formulaVariablesRepository == null)
+                {
+                    _formulaVariablesRepository = new FormulaVariablesRepository(AppDbContext);
+                }
+                return _formulaVariablesRepository;
+            }
+        }
+
     }
 }

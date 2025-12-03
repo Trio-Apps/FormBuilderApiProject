@@ -1,5 +1,6 @@
 ﻿using FormBuilder.API.Models;
 using FormBuilder.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+
     public class FormFieldsController : ControllerBase
     {
         private readonly IFormFieldService _formFieldService;

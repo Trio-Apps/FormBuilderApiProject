@@ -23,7 +23,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.DOCUMENT_SERIES
                 .Include(ds => ds.DOCUMENT_TYPES)
                 .Include(ds => ds.PROJECTS)
-                .FirstOrDefaultAsync(ds => ds.id == id);
+                .FirstOrDefaultAsync(ds => ds.Id == id);
         }
 
         public async Task<DOCUMENT_SERIES> GetBySeriesCodeAsync(string seriesCode)
@@ -81,7 +81,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
             if (excludeId.HasValue)
             {
-                query = query.Where(ds => ds.id != excludeId.Value);
+                query = query.Where(ds => ds.Id != excludeId.Value);
             }
 
             return await query.AnyAsync();
@@ -90,13 +90,13 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsActiveAsync(int id)
         {
             return await _context.DOCUMENT_SERIES
-                .AnyAsync(ds => ds.id == id && ds.IsActive);
+                .AnyAsync(ds => ds.Id == id && ds.IsActive);
         }
 
         public async Task<int> GetNextNumberAsync(int seriesId)
         {
             var series = await _context.DOCUMENT_SERIES
-                .FirstOrDefaultAsync(ds => ds.id == seriesId);
+                .FirstOrDefaultAsync(ds => ds.Id == seriesId);
 
             if (series == null)
                 return -1;
@@ -114,7 +114,7 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsDefaultSeriesAsync(int documentTypeId, int projectId, int seriesId)
         {
             return await _context.DOCUMENT_SERIES
-                .AnyAsync(ds => ds.id == seriesId &&
+                .AnyAsync(ds => ds.Id == seriesId &&
                               ds.DocumentTypeId == documentTypeId &&
                               ds.ProjectId == projectId &&
                               ds.IsDefault);

@@ -23,9 +23,6 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         public int StageId { get; set; }
         public virtual APPROVAL_STAGES APPROVAL_STAGES { get; set; }
 
-        [ForeignKey("AppUser")]
-        public string ActionByUserId { get; set; }
-        public virtual AppUser ActionByUser { get; set; }
 
         public DateTime ActionDate { get; set; }
 

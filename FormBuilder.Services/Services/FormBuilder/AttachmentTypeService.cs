@@ -209,7 +209,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.AttachmentTypeRepository.AnyAsync(s=>s.id==id);
+                var exists = await _unitOfWork.AttachmentTypeRepository.AnyAsync(s=>s.Id==id);
                 return new ApiResponse(200, "Attachment type existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -227,7 +227,7 @@ namespace FormBuilder.Services
 
             return new AttachmentTypeDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 Name = entity.Name,
                 Code = entity.Code,
                 Description = entity.Description,

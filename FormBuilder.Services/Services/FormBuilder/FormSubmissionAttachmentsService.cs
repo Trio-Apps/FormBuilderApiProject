@@ -352,7 +352,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.FormSubmissionAttachmentsRepository.AnyAsync(a => a.id == id);
+                var exists = await _unitOfWork.FormSubmissionAttachmentsRepository.AnyAsync(a => a.Id == id);
                 return new ApiResponse<bool>(200, "Form submission attachment existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -370,7 +370,7 @@ namespace FormBuilder.Services
 
             return new FormSubmissionAttachmentDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 SubmissionId = entity.SubmissionId,
                 SubmissionDocumentNumber = entity.FORM_SUBMISSIONS?.DocumentNumber,
                 FieldId = entity.FieldId,
@@ -382,7 +382,7 @@ namespace FormBuilder.Services
                 ContentType = entity.ContentType,
                 UploadedDate = entity.UploadedDate,
                 FileSizeFormatted = FormatFileSize(entity.FileSize),
-                DownloadUrl = $"/api/attachments/download/{entity.id}"
+                DownloadUrl = $"/api/attachments/download/{entity.Id}"
             };
         }
 

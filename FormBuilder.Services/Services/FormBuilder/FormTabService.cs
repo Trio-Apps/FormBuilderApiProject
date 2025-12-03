@@ -25,7 +25,7 @@ namespace FormBuilder.Services.Services
 
             // 1. التحقق من وجود النموذج الأب (FormBuilder)
             var formBuilderExists = await _unitOfWork.Repositary<FORM_BUILDER>()
-                .SingleOrDefaultAsync(f => f.id == tabEntity.FormBuilderId, asNoTracking: true);
+                .SingleOrDefaultAsync(f => f.Id == tabEntity.FormBuilderId, asNoTracking: true);
 
             if (formBuilderExists == null)
             {
@@ -54,7 +54,7 @@ namespace FormBuilder.Services.Services
         public async Task<FORM_TABS?> GetTabByIdAsync(int id, bool asNoTracking = false)
         {
             return await _unitOfWork.Repositary<FORM_TABS>()
-                .SingleOrDefaultAsync(t => t.id == id, asNoTracking: asNoTracking);
+                .SingleOrDefaultAsync(t => t.Id == id, asNoTracking: asNoTracking);
         }
 
         public async Task<IEnumerable<FORM_TABS>> GetTabsByFormIdAsync(int formBuilderId)
@@ -69,14 +69,14 @@ namespace FormBuilder.Services.Services
                 throw new ArgumentNullException(nameof(tabEntity));
 
             // 1. التحقق من وجود التبويب
-            var existingTab = await GetTabByIdAsync(tabEntity.id);
+            var existingTab = await GetTabByIdAsync(tabEntity.Id);
             if (existingTab == null)
             {
-                throw new InvalidOperationException($"Tab with ID '{tabEntity.id}' does not exist.");
+                throw new InvalidOperationException($"Tab with ID '{tabEntity.Id}' does not exist.");
             }
 
             // 2. التحقق من تكرار TabCode (باستثناء التبويب الحالي)
-            if (!await IsTabCodeUniqueAsync(tabEntity.TabCode, tabEntity.id))
+            if (!await IsTabCodeUniqueAsync(tabEntity.TabCode, tabEntity.Id))
             {
                 throw new InvalidOperationException($"Tab code '{tabEntity.TabCode}' is already in use by another tab.");
             }
@@ -116,7 +116,7 @@ namespace FormBuilder.Services.Services
 
             var existingTab = await _unitOfWork.Repositary<FORM_TABS>()
                 .SingleOrDefaultAsync(t => t.TabCode == tabCode.Trim() &&
-                                         (!ignoreId.HasValue || t.id != ignoreId.Value));
+                                         (!ignoreId.HasValue || t.Id != ignoreId.Value));
 
             return existingTab == null;
         }
@@ -126,7 +126,7 @@ namespace FormBuilder.Services.Services
             // إذا كنت تريد تحميل العلاقات، يمكنك استخدام Includes
             var tabRepo = _unitOfWork.Repositary<FORM_TABS>();
             return await tabRepo.SingleOrDefaultAsync(
-                t => t.id == id,
+                t => t.Id == id,
                 asNoTracking: asNoTracking);
             // يمكنك إضافة includes هنا إذا needed
             // includes: t => t.FORM_FIELDS, t => t.FORM_GRIDS
@@ -147,7 +147,7 @@ namespace FormBuilder.Services.Services
         public async Task<bool> TabExistsAsync(int id)
         {
             return await _unitOfWork.Repositary<FORM_TABS>()
-                .AnyAsync(t => t.id == id);
+                .AnyAsync(t => t.Id == id);
         }
 
         // طرق إضافية مفيدة

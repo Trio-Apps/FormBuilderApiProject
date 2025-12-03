@@ -52,7 +52,7 @@ using System.Text;
                 // إذا تم توفير excludeId (لعمليات التحديث)، يتم استبعاد هذا المعرف من البحث
                 if (excludeId.HasValue)
                 {
-                    query = query.Where(t => t.id != excludeId.Value);
+                    query = query.Where(t => t.Id != excludeId.Value);
                 }
 
                 // التحقق مما إذا كان أي سجل يطابق الشروط موجوداً

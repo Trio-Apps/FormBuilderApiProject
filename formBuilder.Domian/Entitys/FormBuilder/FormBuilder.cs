@@ -25,12 +25,7 @@ namespace FormBuilder.API.Models
         public bool IsPublished { get; set; }
         public bool IsActive { get; set; }
 
-        [ForeignKey("AppUser")]
-        public string CreatedByUserId { get; set; }
-        public virtual AppUser CreatedByUser { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
+       
 
         public virtual ICollection<FORM_TABS> FORM_TABS { get; set; }
         public virtual ICollection<FORM_SUBMISSIONS> FORM_SUBMISSIONS { get; set; }

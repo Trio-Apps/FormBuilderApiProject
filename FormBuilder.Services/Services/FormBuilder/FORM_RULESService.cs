@@ -26,7 +26,7 @@ namespace FormBuilder.Services.Services
 
             // Validate form exists
             var formExists = await _unitOfWork.Repositary<FORM_BUILDER>()
-                .SingleOrDefaultAsync(f => f.id == ruleDto.FormBuilderId);
+                .SingleOrDefaultAsync(f => f.Id == ruleDto.FormBuilderId);
             if (formExists == null)
                 throw new InvalidOperationException($"Form with ID '{ruleDto.FormBuilderId}' does not exist.");
 
@@ -55,7 +55,7 @@ namespace FormBuilder.Services.Services
         public async Task<FORM_RULES> GetRuleByIdAsync(int id)
         {
             return await _unitOfWork.Repositary<FORM_RULES>()
-                .SingleOrDefaultAsync(r => r.id == id);
+                .SingleOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<IEnumerable<FormRuleDto>> GetAllRulesAsync()
@@ -70,7 +70,7 @@ namespace FormBuilder.Services.Services
             // 2. Update the Select to map the new fields from the included entity.
             return rules.Select(rule => new FormRuleDto
             {
-                Id = rule.id,
+                Id = rule.Id,
                 FormBuilderId = rule.FormBuilderId,
                 RuleName = rule.RuleName,
                 RuleJson = rule.RuleJson,
@@ -132,7 +132,7 @@ namespace FormBuilder.Services.Services
             var existingRule = await _unitOfWork.Repositary<FORM_RULES>()
                 .SingleOrDefaultAsync(r => r.FormBuilderId == formBuilderId &&
                                           r.RuleName == ruleName.Trim() &&
-                                          (!ignoreId.HasValue || r.id != ignoreId.Value));
+                                          (!ignoreId.HasValue || r.Id != ignoreId.Value));
 
             return existingRule == null;
         }
@@ -140,7 +140,7 @@ namespace FormBuilder.Services.Services
         public async Task<bool> RuleExistsAsync(int id)
         {
             return await _unitOfWork.Repositary<FORM_RULES>()
-                .AnyAsync(r => r.id == id);
+                .AnyAsync(r => r.Id == id);
         }
 
         // Private helper method

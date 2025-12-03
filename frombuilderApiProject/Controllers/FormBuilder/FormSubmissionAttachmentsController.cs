@@ -1,6 +1,7 @@
 ﻿using FormBuilder.API.Models;
 using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class FormSubmissionAttachmentsController : ControllerBase
     {
         private readonly IFormSubmissionAttachmentsService _formSubmissionAttachmentsService;

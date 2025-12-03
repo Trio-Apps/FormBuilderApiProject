@@ -22,7 +22,7 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<FORM_SUBMISSIONS> GetByIdAsync(int id)
         {
             return await _context.FORM_SUBMISSIONS
-                .FirstOrDefaultAsync(fs => fs.id == id);
+                .FirstOrDefaultAsync(fs => fs.Id == id);
         }
 
         public async Task<FORM_SUBMISSIONS> GetByIdWithDetailsAsync(int id)
@@ -31,12 +31,12 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(fs => fs.FORM_BUILDER)
                 .Include(fs => fs.DOCUMENT_TYPES)
                 .Include(fs => fs.DOCUMENT_SERIES)
-                .Include(fs => fs.SubmittedByUser)
+                .Include(fs => fs.CreatedByUserId)
                 .Include(fs => fs.FORM_SUBMISSION_VALUES)
                 .Include(fs => fs.FORM_SUBMISSION_ATTACHMENTS)
                 .Include(fs => fs.FORM_SUBMISSION_GRID_ROWS)
                     .ThenInclude(gr => gr.FORM_SUBMISSION_GRID_CELLS)
-                .FirstOrDefaultAsync(fs => fs.id == id);
+                .FirstOrDefaultAsync(fs => fs.Id == id);
         }
 
         public async Task<FORM_SUBMISSIONS> GetByDocumentNumberAsync(string documentNumber)
@@ -122,7 +122,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(fs => fs.FORM_BUILDER)
                 .Include(fs => fs.DOCUMENT_TYPES)
                 .Include(fs => fs.DOCUMENT_SERIES)
-                .Include(fs => fs.SubmittedByUser)
                 .OrderByDescending(fs => fs.CreatedDate)
                 .ToListAsync();
         }
@@ -139,7 +138,7 @@ namespace FormBuilder.Infrastructure.Repositories
             if (submission != null)
             {
                 submission.Status = status;
-                submission.LastUpdatedDate = DateTime.UtcNow;
+                submission.UpdatedDate = DateTime.UtcNow;
                 _context.FORM_SUBMISSIONS.Update(submission);
                 await _context.SaveChangesAsync();
             }

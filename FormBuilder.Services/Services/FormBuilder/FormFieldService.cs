@@ -204,7 +204,7 @@ namespace FormBuilder.Services.Services
             var list = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
             return list.Select(x => new FormFieldDropdownDto
             {
-                Id = x.id,
+                Id = x.Id,
                 FieldName = x.FieldName,
                 FieldCode = x.FieldCode
             });
@@ -234,7 +234,7 @@ namespace FormBuilder.Services.Services
         // ================================
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _unitOfWork.Repositary<FORM_FIELDS>().AnyAsync(x => x.id == id);
+            return await _unitOfWork.Repositary<FORM_FIELDS>().AnyAsync(x => x.Id == id);
         }
 
         public async Task<int> GetUsageCountAsync(int fieldId)
@@ -274,7 +274,7 @@ namespace FormBuilder.Services.Services
 
             return new FormFieldDto
             {
-                Id = e.id,
+                Id = e.Id,
                 TabId = e.TabId,
                 FieldTypeId = e.FieldTypeId,
                 FieldTypeName = e.FIELD_TYPES?.TypeName,
@@ -297,11 +297,10 @@ namespace FormBuilder.Services.Services
                 ReadOnlyRuleJson = e.ReadOnlyRuleJson,
                 CreatedDate = e.CreatedDate,
                 CreatedByUserId = e.CreatedByUserId,
-                CreatedByUserName = e.CreatedByUser?.UserName,
                 IsActive = e.IsActive,
                 Tab = e.FORM_TABS != null ? new FormTabDto
                 {
-                    Id = e.FORM_TABS.id,
+                    Id = e.FORM_TABS.Id,
                     TabName = e.FORM_TABS.TabName,
                     TabCode = e.FORM_TABS.TabCode,
                     TabOrder = e.FORM_TABS.TabOrder,
@@ -309,7 +308,7 @@ namespace FormBuilder.Services.Services
                 } : null,
                 FieldType = e.FIELD_TYPES != null ? new FieldTypeDto
                 {
-                    Id = e.FIELD_TYPES.id,
+                    Id = e.FIELD_TYPES.Id,
                     TypeName = e.FIELD_TYPES.TypeName,
                     AllowMultiple = e.FIELD_TYPES.AllowMultiple,
                     DataType = e.FIELD_TYPES.DataType,
@@ -317,7 +316,7 @@ namespace FormBuilder.Services.Services
                 } : null,
                 FieldOptions = e.FIELD_OPTIONS?.Where(fo => fo.IsActive).Select(fo => new FieldOptionDto
                 {
-                    Id = fo.id,
+                    Id = fo.Id,
                     FieldId = fo.FieldId,
                     OptionText = fo.OptionText,
                     OptionValue = fo.OptionValue,

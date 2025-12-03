@@ -288,7 +288,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.DocumentSeriesRepository.AnyAsync(s => s.id == id);
+                var exists = await _unitOfWork.DocumentSeriesRepository.AnyAsync(s => s.Id == id);
                 return new ApiResponse(200, "Document series existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -305,7 +305,7 @@ namespace FormBuilder.Services
             var existingDefaultSeries = await _unitOfWork.DocumentSeriesRepository
                 .GetDefaultSeriesAsync(documentTypeId, projectId);
 
-            if (existingDefaultSeries != null && existingDefaultSeries.id != excludeId)
+            if (existingDefaultSeries != null && existingDefaultSeries.Id != excludeId)
             {
                 existingDefaultSeries.IsDefault = false;
                 _unitOfWork.DocumentSeriesRepository.Update(existingDefaultSeries);
@@ -321,7 +321,7 @@ namespace FormBuilder.Services
 
             return new DocumentSeriesDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 DocumentTypeId = entity.DocumentTypeId,
                 DocumentTypeName = entity.DOCUMENT_TYPES?.Name,
                 ProjectId = entity.ProjectId,

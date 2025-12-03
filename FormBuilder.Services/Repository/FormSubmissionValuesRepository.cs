@@ -23,7 +23,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_SUBMISSION_VALUES
                 .Include(fsv => fsv.FORM_SUBMISSIONS)
                 .Include(fsv => fsv.FORM_FIELDS)
-                .FirstOrDefaultAsync(fsv => fsv.id == id);
+                .FirstOrDefaultAsync(fsv => fsv.Id == id);
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_VALUES>> GetBySubmissionIdAsync(int submissionId)

@@ -38,9 +38,8 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         [StringLength(450)]
         public string TargetRoleId { get; set; }
 
-        [ForeignKey("AppUser")]
+       
         public string TargetUserId { get; set; }
-        public virtual AppUser TargetUser { get; set; }
 
         public bool IsActive { get; set; }
     }

@@ -36,16 +36,17 @@ namespace FormBuilder.core
         public void Delete(T entity) => _entity.Remove(entity);
         public void DeleteRange(ICollection<T> entities) => _entity.RemoveRange(entities);
         #endregion
+
         #region GetAll Methods
-        // return Query
         public IQueryable<T> GetAll() => _entity;
+
         public IQueryable<T> GetAll(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
             var query = _entity.AsQueryable();
             if (filter != null) query = query.Where(filter);
             return ApplyIncludes(query, includes);
         }
-        // return List
+
         public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes)
         {
             var query = _entity.AsQueryable();
@@ -54,6 +55,7 @@ namespace FormBuilder.core
             return await query.ToListAsync();
         }
         #endregion
+
         #region Count Methods
         public async Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
         {
@@ -62,8 +64,10 @@ namespace FormBuilder.core
             return await query.CountAsync();
         }
         #endregion
+
         #region Single or Default
-        public async Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, bool asNoTracking = false, params Expression<Func<T, object>>[] includes)
+        // Remove the nullable return type
+        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, bool asNoTracking = false, params Expression<Func<T, object>>[] includes)
         {
             var query = _entity.AsQueryable();
             if (filter != null) query = query.Where(filter);
@@ -72,6 +76,7 @@ namespace FormBuilder.core
             return await query.FirstOrDefaultAsync();
         }
         #endregion
+
         #region Any Data
         public async Task<bool> AnyAsync(Expression<Func<T, bool>>? filter = null)
         {
@@ -79,18 +84,6 @@ namespace FormBuilder.core
             if (filter != null) query = query.Where(filter);
             return await query.AnyAsync();
         }
-
-        //public Task<T> GetByIdAsync(int id, bool asNoTracking = false)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public Task<T> GetByIdAsync(int id, bool asNoTracking = false, params Expression<Func<T, object>>[] includes)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-
         #endregion
     }
 

@@ -23,7 +23,7 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FIELD_DATA_SOURCES
                 .Where(fds => fds.FieldId == fieldId)
-                .OrderBy(fds => fds.id)
+                .OrderBy(fds => fds.Id)
                 .ToListAsync();
         }
 
@@ -31,7 +31,7 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FIELD_DATA_SOURCES
                 .Where(fds => fds.FieldId == fieldId && fds.IsActive)
-                .OrderBy(fds => fds.id)
+                .OrderBy(fds => fds.Id)
                 .ToListAsync();
         }
 

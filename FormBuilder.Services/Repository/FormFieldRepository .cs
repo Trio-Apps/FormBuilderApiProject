@@ -29,7 +29,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
             if (ignoreId.HasValue)
             {
-                query = query.Where(f => f.id != ignoreId.Value);
+                query = query.Where(f => f.Id != ignoreId.Value);
             }
 
             return !await query.AnyAsync();
@@ -42,7 +42,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
             if (ignoreId.HasValue)
             {
-                query = query.Where(f => f.id != ignoreId.Value);
+                query = query.Where(f => f.Id != ignoreId.Value);
             }
 
             if (tabId.HasValue)
@@ -106,8 +106,8 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
-                .Include(f => f.CreatedByUser)
-                .Where(f => f.id == id && f.IsActive);
+                .Include(f => f.CreatedByUserId)
+                .Where(f => f.Id == id && f.IsActive);
 
             // Apply includes for FIELD_TYPES
             if (includes != null && includes.Length > 0)
@@ -134,7 +134,7 @@ namespace FormBuilder.Infrastructure.Repositories
         // Add this implementation
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _context.FORM_FIELDS.AnyAsync(x => x.id == id);
+            return await _context.FORM_FIELDS.AnyAsync(x => x.Id == id);
         }
 
         // Override the base GetAllAsync to include related entities and filtering
@@ -144,7 +144,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
-                .Include(f => f.CreatedByUser)
+                .Include(f => f.CreatedByUserId)
                 .Include(f => f.FIELD_TYPES)
                 .Where(f => f.IsActive)
                 .OrderBy(f => f.FieldOrder)

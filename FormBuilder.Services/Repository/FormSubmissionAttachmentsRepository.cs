@@ -24,7 +24,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_SUBMISSION_ATTACHMENTS
                 .Include(fsa => fsa.FORM_SUBMISSIONS)
                 .Include(fsa => fsa.FORM_FIELDS)
-                .FirstOrDefaultAsync(fsa => fsa.id == id);
+                .FirstOrDefaultAsync(fsa => fsa.Id == id);
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_ATTACHMENTS>> GetBySubmissionIdAsync(int submissionId)

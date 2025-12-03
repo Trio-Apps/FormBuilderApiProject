@@ -264,7 +264,7 @@ namespace FormBuilder.Services.Services
 
             return new FieldOptionDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 FieldId = entity.FieldId,
                 OptionText = entity.OptionText ?? string.Empty,
                 OptionValue = entity.OptionValue ?? string.Empty,

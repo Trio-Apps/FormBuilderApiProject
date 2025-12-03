@@ -21,7 +21,7 @@ namespace FormBuilder.Services.Repository
         {
             return await _context.FORM_BUILDER
                 .AnyAsync(f => f.FormCode == formCode &&
-                               (!excludeId.HasValue || f.id != excludeId));
+                               (!excludeId.HasValue || f.Id != excludeId));
         }
     }
 }

@@ -99,7 +99,7 @@ namespace FormBuilder.Services
                 _unitOfWork.ProjectRepository.Add(entity);
                 await _unitOfWork.CompleteAsyn();
 
-                var createdEntity = await _unitOfWork.ProjectRepository.GetByIdAsync(entity.id);
+                var createdEntity = await _unitOfWork.ProjectRepository.GetByIdAsync(entity.Id);
                 return new ApiResponse(200, "Project created successfully", ToDto(createdEntity));
             }
             catch (Exception ex)
@@ -185,7 +185,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.ProjectRepository.AnyAsync(e => e.id == id);
+                var exists = await _unitOfWork.ProjectRepository.AnyAsync(e => e.Id == id);
                 return new ApiResponse(200, "Project existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -216,7 +216,7 @@ namespace FormBuilder.Services
 
             return new ProjectDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 Name = entity.Name,
                 Code = entity.Code,
                 Description = entity.Description,

@@ -102,7 +102,7 @@ namespace FormBuilder.Services.Services
                     return new ApiResponse(400, "DTO is required");
 
                 // Validate if field exists
-                var fieldExists = await _unitOfWork.Repositary<FORM_FIELDS>().AnyAsync(x => x.id == createDto.FieldId);
+                var fieldExists = await _unitOfWork.Repositary<FORM_FIELDS>().AnyAsync(x => x.Id == createDto.FieldId);
                 if (!fieldExists)
                     return new ApiResponse(400, "Invalid field ID");
 
@@ -257,7 +257,7 @@ namespace FormBuilder.Services.Services
 
             return new FieldDataSourceDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 FieldId = entity.FieldId,
                 SourceType = entity.SourceType,
                 ApiUrl = entity.ApiUrl,

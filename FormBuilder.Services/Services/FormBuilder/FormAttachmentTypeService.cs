@@ -132,11 +132,11 @@ namespace FormBuilder.Services
                 if (createDto == null)
                     return new ApiResponse(400, "DTO is required");
 
-                var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e=>e.id== createDto.FormBuilderId);
+                var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e=>e.Id== createDto.FormBuilderId);
                 if (!formBuilderExists)
                     return new ApiResponse(400, "Invalid form builder ID");
 
-                var attachmentTypeExists = await _unitOfWork.AttachmentTypeRepository.AnyAsync(e => e.id == createDto.AttachmentTypeId);
+                var attachmentTypeExists = await _unitOfWork.AttachmentTypeRepository.AnyAsync(e => e.Id == createDto.AttachmentTypeId);
                 if (!attachmentTypeExists)
                     return new ApiResponse(400, "Invalid attachment type ID");
 
@@ -149,7 +149,7 @@ namespace FormBuilder.Services
                 await _unitOfWork.CompleteAsyn();
 
                 // Get the created entity with includes
-                var createdEntity = await _unitOfWork.FormAttachmentTypeRepository.GetByIdAsync(entity.id);
+                var createdEntity = await _unitOfWork.FormAttachmentTypeRepository.GetByIdAsync(entity.Id);
                 return new ApiResponse(200, "Form attachment type created successfully", ToDto(createdEntity));
             }
             catch (Exception ex)
@@ -169,11 +169,11 @@ namespace FormBuilder.Services
 
                 foreach (var createDto in createDtos)
                 {
-                    var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.id == createDto.FormBuilderId);
+                    var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.Id == createDto.FormBuilderId);
                     if (!formBuilderExists)
                         return new ApiResponse(400, $"Invalid form builder ID: {createDto.FormBuilderId}");
 
-                    var attachmentTypeExists = await _unitOfWork.AttachmentTypeRepository.AnyAsync(e => e.id == createDto.AttachmentTypeId);
+                    var attachmentTypeExists = await _unitOfWork.AttachmentTypeRepository.AnyAsync(e => e.Id == createDto.AttachmentTypeId);
                     if (!attachmentTypeExists)
                         return new ApiResponse(400, $"Invalid attachment type ID: {createDto.AttachmentTypeId}");
 
@@ -194,7 +194,7 @@ namespace FormBuilder.Services
                 var resultDtos = new List<FormAttachmentTypeDto>();
                 foreach (var entity in entities)
                 {
-                    var createdEntity = await _unitOfWork.FormAttachmentTypeRepository.GetByIdAsync(entity.id);
+                    var createdEntity = await _unitOfWork.FormAttachmentTypeRepository.GetByIdAsync(entity.Id);
                     resultDtos.Add(ToDto(createdEntity));
                 }
 
@@ -310,7 +310,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.FormAttachmentTypeRepository.AnyAsync(e => e.id == id);
+                var exists = await _unitOfWork.FormAttachmentTypeRepository.AnyAsync(e => e.Id == id);
                 return new ApiResponse(200, "Form attachment type existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -354,7 +354,7 @@ namespace FormBuilder.Services
 
             return new FormAttachmentTypeDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 FormBuilderId = entity.FormBuilderId,
                 AttachmentTypeId = entity.AttachmentTypeId,
                 IsMandatory = entity.IsMandatory,

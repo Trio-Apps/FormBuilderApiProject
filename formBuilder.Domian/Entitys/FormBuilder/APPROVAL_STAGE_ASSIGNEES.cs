@@ -21,8 +21,6 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         [StringLength(450)]
         public string RoleId { get; set; }
 
-        [ForeignKey("AppUser")]
         public string UserId { get; set; }
-        public virtual AppUser User { get; set; }
     }
 }

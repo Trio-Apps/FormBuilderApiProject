@@ -4025,6 +4025,1248 @@
         }
       }
     },
+    "/api/FormGridColumns": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/{id}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/by-grid/{gridId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/active-by-grid/{gridId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/by-code/{columnCode}/{gridId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "columnCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/by-form-builder/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/by-field-type/{fieldTypeId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "fieldTypeId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/{id}/toggle-active": {
+      "patch": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/exists/{id}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/code-exists/{columnCode}/{gridId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "columnCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "excludeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGridColumns/next-order/{gridId}": {
+      "get": {
+        "tags": [
+          "FormGridColumns"
+        ],
+        "parameters": [
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormGrids"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/{id}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/by-form-builder/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/by-tab/{tabId}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "tabId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/active-by-form-builder/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/by-code/{gridCode}/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "gridCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/{id}/toggle-active": {
+      "patch": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/exists/{id}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/code-exists/{gridCode}/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "gridCode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "excludeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormGrids/next-order/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormGrids"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "tabId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FormRules": {
       "get": {
         "tags": [
@@ -5011,6 +6253,1258 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse`1[[System.Collections.Generic.List`1[[FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridCells": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridCells/{id}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridCells/row/{rowId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "parameters": [
+          {
+            "name": "rowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "parameters": [
+          {
+            "name": "rowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridCells/row/{rowId}/column/{columnId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridCells"
+        ],
+        "parameters": [
+          {
+            "name": "rowId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "columnId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/{id}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/grid/{gridId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/active": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/multiple": {
+      "post": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/{id}/toggle-active": {
+      "patch": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/exists/{id}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/row-index/{rowIndex}/exists": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "rowIndex",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/next-index": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/count": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/grid/{gridId}/count": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/form-builder/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/reorder": {
+      "post": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
                 }
               }
             }
@@ -6731,6 +9225,1206 @@
         }
       }
     },
+    "/api/Formulas/form-builder/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{id}": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/code/{code}/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{id}/toggle-active": {
+      "patch": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "boolean"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/active": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/inactive": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/with-details": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{id}/with-details": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/result-field/{resultFieldId}": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "resultFieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/without-result-field": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/search": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "term",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formBuilderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/validate-expression": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/validate-expression-with-details": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/check-code-exists": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "formBuilderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "excludeId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{id}/is-active": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/has-active": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{id}/referenced-field-codes": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/count": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{id}/expression": {
+      "patch": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "string"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/field-codes": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{formulaId}/variables": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formulaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{formulaId}/variables/count": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formulaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{formulaId}/has-variables": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formulaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/by-field/{fieldId}": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/statistics": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/batch-update-status": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{sourceFormulaId}/duplicate": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "sourceFormulaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{formulaId}/calculate": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formulaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/calculate-expression": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/calculate-advanced": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/calculate-safe": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/form-builder/{formBuilderId}/batch-calculate": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": { }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/preview-calculation": {
+      "post": {
+        "tags": [
+          "Formulas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
+                  }
+                ]
+              }
+            },
+            "text/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
+                  }
+                ]
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Formulas/{formulaId}/test-with-samples": {
+      "get": {
+        "tags": [
+          "Formulas"
+        ],
+        "parameters": [
+          {
+            "name": "formulaId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Permissions": {
       "get": {
         "tags": [
@@ -7905,6 +11599,327 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto": {
+        "type": "object",
+        "properties": {
+          "formulaIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.Controllers.CalculateAdvancedDto": {
+        "type": "object",
+        "properties": {
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldValues": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.Controllers.CalculateExpressionDto": {
+        "type": "object",
+        "properties": {
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldValues": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.CreateFormGridColumnDto": {
+        "type": "object",
+        "properties": {
+          "gridId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "columnName": {
+            "type": "string",
+            "nullable": true
+          },
+          "columnCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "columnOrder": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isMandatory": {
+            "type": "boolean"
+          },
+          "dataType": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "defaultValueJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "validationRuleJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.CreateFormGridDto": {
+        "type": "object",
+        "properties": {
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gridName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "tabId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gridOrder": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto": {
+        "required": [
+          "columnId",
+          "rowId"
+        ],
+        "type": "object",
+        "properties": {
+          "rowId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "columnId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto": {
+        "required": [
+          "gridId",
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rowIndex": {
+            "maximum": 2147483647,
+            "minimum": 0,
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.UpdateFormGridColumnDto": {
+        "type": "object",
+        "properties": {
+          "gridId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fieldTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "columnName": {
+            "type": "string",
+            "nullable": true
+          },
+          "columnCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "columnOrder": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isMandatory": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "dataType": {
+            "type": "string",
+            "nullable": true
+          },
+          "maxLength": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "defaultValueJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "validationRuleJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.UpdateFormGridDto": {
+        "type": "object",
+        "properties": {
+          "gridName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "tabId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gridOrder": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto": {
+        "type": "object",
+        "properties": {
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto": {
+        "type": "object",
+        "properties": {
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.API.Models.ApiResponse": {
         "type": "object",
         "properties": {
@@ -8908,6 +12923,69 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto": {
+        "required": [
+          "code",
+          "expressionText",
+          "formBuilderId",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          },
+          "code": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "expressionText": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "resultFieldId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto": {
+        "required": [
+          "newCode",
+          "newName",
+          "targetFormBuilderId"
+        ],
+        "type": "object",
+        "properties": {
+          "targetFormBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "newCode": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "newName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto": {
         "type": "object",
         "properties": {
@@ -9006,6 +13084,25 @@
           },
           "downloadUrl": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto": {
+        "type": "object",
+        "properties": {
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldValues": {
+            "type": "object",
+            "additionalProperties": { },
             "nullable": true
           }
         },
@@ -9173,6 +13270,55 @@
           "valueJson": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "resultFieldId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto": {
+        "required": [
+          "expressionText",
+          "formBuilderId"
+        ],
+        "type": "object",
+        "properties": {
+          "expressionText": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

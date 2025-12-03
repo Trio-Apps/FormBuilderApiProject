@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FormBuilder.API.Models.DTOs;
+using FormBuilder.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FormBuilder.API.Models.DTOs;
-using FormBuilder.Domain.Interfaces.Services;
 
 namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+
     public class FormAttachmentTypesController : ControllerBase
     {
         private readonly IFormAttachmentTypeService _formAttachmentTypeService;

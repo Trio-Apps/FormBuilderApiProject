@@ -48,7 +48,7 @@ namespace FormBuilder.Services.Repository
             return !await _context.FORM_RULES
                 .AnyAsync(r => r.FormBuilderId == formBuilderId &&
                               r.RuleName == ruleName.Trim() &&
-                              (!ignoreId.HasValue || r.id != ignoreId.Value));
+                              (!ignoreId.HasValue || r.Id != ignoreId.Value));
         }
 
         public async Task<IEnumerable<FORM_RULES>> GetRulesWithFormDetailsAsync(int formBuilderId)

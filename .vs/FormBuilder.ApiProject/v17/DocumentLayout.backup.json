@@ -283,8 +283,7 @@
               "ViewState": "AgIAAKoAAAAAAAAAAAAAwL0AAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T08:36:23.932Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -296,8 +295,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FormSubmissionAttachmentsService.cs",
               "ViewState": "AgIAAJkAAAAAAAAAAAAUwKEAAAB5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T10:12:08.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T10:12:08.777Z"
             },
             {
               "$type": "Document",
@@ -309,8 +307,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IFormSubmissionAttachmentsService.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAawA8AAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T10:10:52.449Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T10:10:52.449Z"
             },
             {
               "$type": "Document",
@@ -322,8 +319,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IunitOfwork.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAuwCAAAABQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:15:47.074Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:15:47.074Z"
             },
             {
               "$type": "Document",
@@ -335,8 +331,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\AttachmentTypesController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADwAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:24:24.263Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:24:24.263Z"
             },
             {
               "$type": "Document",
@@ -348,8 +343,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionAttachmentDto.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAD4vy8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T10:08:22.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T10:08:22.874Z"
             },
             {
               "$type": "Document",
@@ -357,9 +351,9 @@
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Program.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Program.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Program.cs*",
-              "RelativeToolTip": "frombuilderApiProject\\Program.cs*",
-              "ViewState": "AgIAAL4AAAAAAAAAAAAmwNcAAABiAAAAAAAAAA==",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Program.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Program.cs",
+              "ViewState": "AgIAALgAAAAAAAAAAAAmwNcAAABiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T09:20:37.202Z",
               "EditorCaption": ""
@@ -374,8 +368,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAowDIAAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T10:22:51.35Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T10:22:51.35Z"
             },
             {
               "$type": "Document",
@@ -387,8 +380,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IFormSubmissionAttachmentsRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T10:07:14.526Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T10:07:14.526Z"
             },
             {
               "$type": "Document",
@@ -400,8 +392,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\FormSubmissionAttachmentsRepository.cs",
               "ViewState": "AgIAAF0AAAAAAAAAAAAuwHMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T10:07:43.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T10:07:43.399Z"
             },
             {
               "$type": "Document",
@@ -413,8 +404,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionValueDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:30:43.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:30:43.301Z"
             },
             {
               "$type": "Document",
@@ -426,8 +416,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\FormSubmissionValuesRepository.cs",
               "ViewState": "AgIAAEgAAAAAAAAAAAAUwFwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:29:56.725Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:29:56.725Z"
             },
             {
               "$type": "Document",
@@ -439,8 +428,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionDto.cs",
               "ViewState": "AgIAAGEAAAAAAAAAAADgv2kAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:44:08.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:44:08.94Z"
             },
             {
               "$type": "Document",
@@ -452,8 +440,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IFormSubmissionValuesRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:29:14.288Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:29:14.288Z"
             },
             {
               "$type": "Document",
@@ -465,8 +452,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormFieldsController.cs",
               "ViewState": "AgIAABAAAAAAAAAAAADgvxgAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T08:29:00.81Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T08:29:00.81Z"
             },
             {
               "$type": "Document",
@@ -478,8 +464,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IFormSubmissionValuesService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:31:31.83Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:31:31.83Z"
             },
             {
               "$type": "Document",
@@ -491,8 +476,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FormSubmissionValuesService.cs",
               "ViewState": "AgIAAAoBAAAAAAAAAAAcwBgBAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:32:23.19Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:32:23.19Z"
             },
             {
               "$type": "Document",
@@ -504,8 +488,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
               "ViewState": "AgIAAIQAAAAAAAAAAAAuwJcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:38:28.722Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:38:28.722Z"
             },
             {
               "$type": "Document",
@@ -517,8 +500,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\FORM_SUBMISSION_VALUES.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAqwCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:25:07.833Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:25:07.833Z"
             },
             {
               "$type": "Document",
@@ -530,8 +512,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\FormBuilder.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T09:21:25.008Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T09:21:25.008Z"
             },
             {
               "$type": "Document",
@@ -543,8 +524,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\FormSubmissionRepository.cs",
               "ViewState": "AgIAAGsAAAAAAAAAAAAswJMAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:23:07.966Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:23:07.966Z"
             },
             {
               "$type": "Document",
@@ -556,8 +536,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IFormSubmissionService.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAQwBcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:30:39.248Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:30:39.248Z"
             },
             {
               "$type": "Document",
@@ -569,8 +548,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
               "ViewState": "AgIAAGgAAAAAAAAAAAAAwH4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:56:42.416Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:56:42.416Z"
             },
             {
               "$type": "Document",
@@ -582,8 +560,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FormSubmissionService.cs",
               "ViewState": "AgIAAJgAAAAAAAAAAAAWwLEAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:31:13.985Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:31:13.985Z"
             },
             {
               "$type": "Document",
@@ -595,8 +572,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IFormSubmissionRepository.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAxwBgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:23:38.231Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:23:38.231Z"
             },
             {
               "$type": "Document",
@@ -608,8 +584,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\FORM_SUBMISSIONS.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAAACsAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:19:41.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:19:41.794Z"
             },
             {
               "$type": "Document",
@@ -621,8 +596,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IDocumentSeriesRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:12:30.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:12:30.54Z"
             },
             {
               "$type": "Document",
@@ -634,8 +608,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\DocumentSeriesRepository.cs",
               "ViewState": "AgIAAGcAAAAAAAAAAAAAwHoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:14:10.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:14:10.377Z"
             },
             {
               "$type": "Document",
@@ -647,8 +620,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IDocumentSeriesService.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAwwBIAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:25:27.303Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:25:27.303Z"
             },
             {
               "$type": "Document",
@@ -660,8 +632,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\DocumentSeriesDto.cs",
               "ViewState": "AgIAACgAAAAAAAAAAAAowBUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:35:02.758Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:35:02.758Z"
             },
             {
               "$type": "Document",
@@ -673,8 +644,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\DocumentSeriesService.cs",
               "ViewState": "AgIAAEAAAAAAAAAAAAAkwHEBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:25:59.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:25:59.23Z"
             },
             {
               "$type": "Document",
@@ -686,8 +656,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentSeriesController.cs",
               "ViewState": "AgIAAIcAAAAAAAAAAAAmwKUAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T08:27:52.831Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T08:27:52.831Z"
             },
             {
               "$type": "Document",
@@ -699,8 +668,7 @@
               "RelativeToolTip": "FormBuilder.Core\\Migrations\\20251125082121_createbyuseridnull.Designer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-30T07:48:03.455Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-30T07:48:03.455Z"
             },
             {
               "$type": "Document",
@@ -712,8 +680,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\DOCUMENT_SERIES.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAUwCMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:07:56.757Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:07:56.757Z"
             },
             {
               "$type": "Document",
@@ -725,8 +692,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\AttachmentTypeService.cs",
               "ViewState": "AgIAAOoAAAAAAAAAAAAQwAwBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:14:17.689Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:14:17.689Z"
             },
             {
               "$type": "Document",
@@ -738,8 +704,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\IAttachmentTypeService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:13:33.852Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:13:33.852Z"
             },
             {
               "$type": "Document",
@@ -751,8 +716,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IFormAttachmentTypeService.cs",
               "ViewState": "AgIAAFwAAAAAAAAAAAAAwHIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:11:19.729Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:11:19.729Z"
             },
             {
               "$type": "Document",
@@ -764,8 +728,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\AttachmentTypeRepository.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAowDsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:12:38.125Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:12:38.125Z"
             },
             {
               "$type": "Document",
@@ -777,8 +740,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IDocumentTypeRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:01:39.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:01:39.904Z"
             },
             {
               "$type": "Document",
@@ -790,8 +752,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IProjectRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:48:34.004Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T13:48:34.004Z"
             },
             {
               "$type": "Document",
@@ -803,8 +764,7 @@
               "RelativeToolTip": "FormBuilder.Core\\Context\\FormBuilderDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:17:09.13Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:17:09.13Z"
             },
             {
               "$type": "Document",
@@ -816,8 +776,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\ProjectRepository.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAAwDsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:49:11.923Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T13:49:11.923Z"
             },
             {
               "$type": "Document",
@@ -829,8 +788,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IProjectService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:47:42.737Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T13:47:42.737Z"
             },
             {
               "$type": "Document",
@@ -842,8 +800,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\ATTACHMENT_TYPES.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAIwBgAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:07:26.118Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:07:26.118Z"
             },
             {
               "$type": "Document",
@@ -855,8 +812,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\ProjectService.cs",
               "ViewState": "AgIAAFMAAAAAAAAAAAAkwGoAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:49:43.359Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T13:49:43.359Z"
             },
             {
               "$type": "Document",
@@ -868,8 +824,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\APPROVAL_WORKFLOWS.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAIwBkAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:07:25.254Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:07:25.254Z"
             },
             {
               "$type": "Document",
@@ -881,8 +836,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IAttachmentTypeRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:12:03.857Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:12:03.857Z"
             },
             {
               "$type": "Document",
@@ -894,8 +848,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\ProjectDto.cs",
               "ViewState": "AgIAAAoAAAAAAAAAAAAcwBsAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:50:30.352Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T13:50:30.352Z"
             },
             {
               "$type": "Document",
@@ -907,8 +860,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\ProjectsController.cs",
               "ViewState": "AgIAABgAAAAAAAAAAAAgwGIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T13:56:45.033Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T13:56:45.033Z"
             },
             {
               "$type": "Document",
@@ -920,8 +872,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\DocumentTypeService.cs",
               "ViewState": "AgIAAOUAAAAAAAAAAAAkwPcAAABYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:09:18.197Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:09:18.197Z"
             },
             {
               "$type": "Document",
@@ -933,8 +884,7 @@
               "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IDocumentTypeService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:06:24.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:06:24.646Z"
             },
             {
               "$type": "Document",
@@ -946,8 +896,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\DOCUMENT_TYPES.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAAqwBkAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:07:28.99Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:07:28.99Z"
             },
             {
               "$type": "Document",
@@ -959,8 +908,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAQwBIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:17:19.243Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:17:19.243Z"
             },
             {
               "$type": "Document",
@@ -972,8 +920,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\DocumentTypeDto.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAowCwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:09:50.062Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:09:50.062Z"
             },
             {
               "$type": "Document",
@@ -985,8 +932,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\DocumentTypeRepository.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAUwBoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:02:23.153Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:02:23.153Z"
             },
             {
               "$type": "Document",
@@ -998,8 +944,7 @@
               "RelativeToolTip": "FormBuilder.Core\\Migrations\\20251127115813_edit DOCUMENT_TYPES .cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:58:14.374Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:58:14.374Z"
             },
             {
               "$type": "Document",
@@ -1011,8 +956,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\FormAttachmentTypeRepository.cs",
               "ViewState": "AgIAAB0AAAAAAAAAAAArwDQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:08:36.96Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:08:36.96Z"
             },
             {
               "$type": "Document",
@@ -1024,8 +968,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IFormAttachmentTypeRepository.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAIBJwBgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:08:02.035Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:08:02.035Z"
             },
             {
               "$type": "Document",
@@ -1037,8 +980,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FormAttachmentTypeDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:03:15.321Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:03:15.321Z"
             },
             {
               "$type": "Document",
@@ -1050,8 +992,7 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormAttachmentTypesController.cs",
               "ViewState": "AgIAAHUAAAAAAAAAAIA5wIQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:20:07.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:20:07.27Z"
             },
             {
               "$type": "Document",
@@ -1063,8 +1004,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FormAttachmentTypeService.cs",
               "ViewState": "AgIAAI4AAAAAAAAAAAAMwJ4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:12:03.891Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T11:12:03.891Z"
             },
             {
               "$type": "Document",
@@ -1076,8 +1016,7 @@
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\AttachmentTypeDto.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T09:15:02.216Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T09:15:02.216Z"
             },
             {
               "$type": "Document",
@@ -1089,8 +1028,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\FieldDataSourcesRepository.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAuwDgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:21:02.329Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:21:02.329Z"
             },
             {
               "$type": "Document",
@@ -1102,8 +1040,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IFieldDataSourcesRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:20:24.986Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:20:24.986Z"
             },
             {
               "$type": "Document",
@@ -1115,8 +1052,7 @@
               "RelativeToolTip": "formBuilder.Domian\\Interfaces\\IBaseRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T08:20:20.592Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T08:20:20.592Z"
             }
           ]
         }

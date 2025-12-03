@@ -56,7 +56,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
                 var ruleDto = new FormRuleDto
                 {
-                    Id = rule.id,
+                    Id = rule.Id,
                     FormBuilderId = rule.FormBuilderId,
                     RuleName = rule.RuleName,
                     RuleJson = rule.RuleJson,
@@ -90,7 +90,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
                 var createdRuleDto = new FormRuleDto
                 {
-                    Id = createdRule.id,
+                    Id = createdRule.Id,
                     FormBuilderId = createdRule.FormBuilderId,
                     RuleName = createdRule.RuleName,
                     RuleJson = createdRule.RuleJson,
@@ -250,7 +250,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                         var createdRule = await _formRulesService.CreateRuleAsync(createDto);
                         var ruleDto = new FormRuleDto
                         {
-                            Id = createdRule.id,
+                            Id = createdRule.Id,
                             FormBuilderId = createdRule.FormBuilderId,
                             RuleName = createdRule.RuleName,
                             RuleJson = createdRule.RuleJson,

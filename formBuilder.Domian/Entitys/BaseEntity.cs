@@ -9,7 +9,7 @@ namespace formBuilder.Domian.Entitys
 {
     public class BaseEntity
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         // يمكنك إضافة حقول التدقيق المشتركة هنا
         // ✅ هذه يجب أن تكون الأسماء الصحيحة المطابقة لقاعدة البيانات
         [StringLength(450)]

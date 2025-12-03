@@ -55,7 +55,7 @@ namespace FormBuilder.Services.Repository
 
             return !await _context.FIELD_TYPES
                 .AnyAsync(ft => ft.TypeName == typeName.Trim() &&
-                               (!ignoreId.HasValue || ft.id != ignoreId.Value));
+                               (!ignoreId.HasValue || ft.Id != ignoreId.Value));
         }
 
         public async Task<IEnumerable<FIELD_TYPES>> GetFieldTypesWithMultipleValuesAsync()
@@ -73,7 +73,7 @@ namespace FormBuilder.Services.Repository
                 .OrderBy(ft => ft.TypeName)
                 .Select(ft => new FIELD_TYPES
                 {
-                    id = ft.id,
+                    Id = ft.Id,
                     TypeName = ft.TypeName,
                     DataType = ft.DataType,
                     HasOptions = ft.HasOptions,
@@ -127,7 +127,7 @@ namespace FormBuilder.Services.Repository
             }
 
             // البحث حسب الـ id
-            return await query.FirstOrDefaultAsync(ft => ft.id == id && ft.IsActive);
+            return await query.FirstOrDefaultAsync(ft => ft.Id == id && ft.IsActive);
         }
 
     }

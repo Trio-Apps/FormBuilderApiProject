@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using FormBuilder.API.Models.DTOs;
+﻿using FormBuilder.API.Models.DTOs;
 using FormBuilder.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;

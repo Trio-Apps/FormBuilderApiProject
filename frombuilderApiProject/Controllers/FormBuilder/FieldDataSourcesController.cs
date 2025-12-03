@@ -1,5 +1,6 @@
 ﻿using FormBuilder.API.Models;
 using FormBuilder.Core.IServices.FormBuilder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,8 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+
     public class FieldDataSourcesController : ControllerBase
     {
         private readonly IFieldDataSourcesService _fieldDataSourcesService;

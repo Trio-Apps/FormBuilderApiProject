@@ -26,7 +26,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_ATTACHMENT_TYPES
                 .Include(fat => fat.FORM_BUILDER)
                 .Include(fat => fat.ATTACHMENT_TYPES)
-                .FirstOrDefaultAsync(fat => fat.id == id);
+                .FirstOrDefaultAsync(fat => fat.Id == id);
         }
 
         public async Task<IEnumerable<FORM_ATTACHMENT_TYPES>> GetAllAsync(Expression<Func<FORM_ATTACHMENT_TYPES, object>> include = null)
@@ -112,7 +112,7 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsActiveAsync(int id)
         {
             return await _context.FORM_ATTACHMENT_TYPES
-                .AnyAsync(fat => fat.id == id && fat.IsActive);
+                .AnyAsync(fat => fat.Id == id && fat.IsActive);
         }
 
         public async Task<int> DeleteByFormBuilderIdAsync(int formBuilderId)

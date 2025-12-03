@@ -65,7 +65,7 @@ namespace FormBuilder.Infrastructure.Repositories
         // FIXED: Check FIELD_OPTIONS table, not FORM_FIELDS
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _context.FIELD_OPTIONS.AnyAsync(x => x.id == id);
+            return await _context.FIELD_OPTIONS.AnyAsync(x => x.Id == id);
         }
     }
 }

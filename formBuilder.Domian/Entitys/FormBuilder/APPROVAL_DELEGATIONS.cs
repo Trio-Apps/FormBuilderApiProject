@@ -9,12 +9,10 @@ public class APPROVAL_DELEGATIONS : BaseEntity
   
 
     public string FromUserId { get; set; }
-    [ForeignKey("FromUserId")]
-    public virtual AppUser FromUser { get; set; }
+    
 
     public string ToUserId { get; set; }
-    [ForeignKey("ToUserId")]
-    public virtual AppUser ToUser { get; set; }
+
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }

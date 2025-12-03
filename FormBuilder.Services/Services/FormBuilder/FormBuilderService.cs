@@ -51,7 +51,7 @@ namespace FormBuilder.Services.Services
                 throw new ArgumentNullException(nameof(form));
 
             // Validate form code uniqueness, excluding the current form's Id
-            var exists = await _unitOfWork.FormBuilderRepository.IsFormCodeExistsAsync(form.FormCode, form.id);
+            var exists = await _unitOfWork.FormBuilderRepository.IsFormCodeExistsAsync(form.FormCode, form.Id);
             if (exists)
                 throw new InvalidOperationException($"Form code '{form.FormCode}' already exists.");
 
@@ -72,7 +72,7 @@ namespace FormBuilder.Services.Services
             var formRepo = _unitOfWork.Repositary<FORM_BUILDER>();
 
             // First, retrieve the entity to be deleted
-            var form = await formRepo.SingleOrDefaultAsync(f => f.id == id);
+            var form = await formRepo.SingleOrDefaultAsync(f => f.Id == id);
 
             if (form == null)
                 return false;
@@ -92,7 +92,7 @@ namespace FormBuilder.Services.Services
         {
             var formRepo = _unitOfWork.Repositary<FORM_BUILDER>();
             return await formRepo.SingleOrDefaultAsync(
-                f => f.id == id,
+                f => f.Id == id,
                 asNoTracking: asNoTracking);
         }
 

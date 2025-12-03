@@ -151,7 +151,7 @@ namespace FormBuilder.Services.Services
             var list = await _unitOfWork.FieldTypesRepository.GetFieldTypesForDropdownAsync();
             return list.Select(x => new FieldTypeDropdownDto
             {
-                Id = x.id,
+                Id = x.Id,
                 TypeName = x.TypeName
             });
         }
@@ -181,7 +181,7 @@ namespace FormBuilder.Services.Services
         // ================================
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _unitOfWork.Repositary<FIELD_TYPES>().AnyAsync(x => x.id == id);
+            return await _unitOfWork.Repositary<FIELD_TYPES>().AnyAsync(x => x.Id == id);
         }
 
         public async Task<int> GetUsageCountAsync(int fieldTypeId)
@@ -204,7 +204,7 @@ namespace FormBuilder.Services.Services
 
             return new FieldTypeDto
             {
-                Id = e.id,
+                Id = e.Id,
                 TypeName = e.TypeName ?? string.Empty,
                 DataType = e.DataType ?? string.Empty,
                 MaxLength = e.MaxLength,

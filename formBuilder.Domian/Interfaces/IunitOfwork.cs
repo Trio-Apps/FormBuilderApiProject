@@ -31,7 +31,17 @@ namespace formBuilder.Domian.Interfaces
         IDocumentSeriesRepository DocumentSeriesRepository { get; }
         IFormSubmissionsRepository FormSubmissionsRepository { get; } 
         IFormSubmissionValuesRepository FormSubmissionValuesRepository { get; } 
-        IFormSubmissionAttachmentsRepository FormSubmissionAttachmentsRepository { get; } 
+        IFormSubmissionAttachmentsRepository FormSubmissionAttachmentsRepository { get; }
+        IFormGridRepository FormGridRepository { get; }
+        IFormGridColumnRepository FormGridColumnRepository { get; }
+        IFormSubmissionGridRowRepository FormSubmissionGridRowRepository { get; }
+        IFormSubmissionGridCellRepository FormSubmissionGridCellRepository { get; }
+
+        // Add these two new repositories for Formulas
+        IFormulasRepository FormulasRepository { get; }
+        //IFormulaVariablesRepository FormulaVariablesRepository { get; }
+        IFormulaVariablesRepository FormulaVariablesRepository { get; }
+
 
 
 

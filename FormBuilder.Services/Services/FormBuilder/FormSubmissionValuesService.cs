@@ -255,7 +255,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.FormSubmissionValuesRepository.AnyAsync(v => v.id == id);
+                var exists = await _unitOfWork.FormSubmissionValuesRepository.AnyAsync(v => v.Id == id);
                 return new ApiResponse(200, "Form submission value existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -273,7 +273,7 @@ namespace FormBuilder.Services
 
             return new FormSubmissionValueDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 SubmissionId = entity.SubmissionId,
                 FieldId = entity.FieldId,
                 FieldCode = entity.FieldCode,

@@ -1,6 +1,7 @@
 ﻿using FormBuilder.API.Models;
 using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
+
     public class FormSubmissionValuesController : ControllerBase
     {
         private readonly IFormSubmissionValuesService _formSubmissionValuesService;

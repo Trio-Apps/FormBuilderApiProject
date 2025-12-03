@@ -31,17 +31,14 @@ public class FORM_SUBMISSIONS : BaseEntity
     [Required, StringLength(50)]
     public string DocumentNumber { get; set; }
 
-    [ForeignKey("AppUser")]
     public string SubmittedByUserId { get; set; }
-    public virtual AppUser SubmittedByUser { get; set; }
 
     public DateTime SubmittedDate { get; set; }
 
     [Required, StringLength(50)]
     public string Status { get; set; }
 
-    public DateTime CreatedDate { get; set; }
-    public DateTime LastUpdatedDate { get; set; }
+   
 
     public virtual ICollection<FORM_SUBMISSION_VALUES> FORM_SUBMISSION_VALUES { get; set; }
     public virtual ICollection<FORM_SUBMISSION_ATTACHMENTS> FORM_SUBMISSION_ATTACHMENTS { get; set; }

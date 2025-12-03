@@ -126,7 +126,7 @@ namespace FormBuilder.Services
                 // Validate if form builder exists
                 if (createDto.FormBuilderId.HasValue)
                 {
-                    var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.id == createDto.FormBuilderId.Value);
+                    var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.Id == createDto.FormBuilderId.Value);
                     if (!formBuilderExists)
                         return new ApiResponse(400, "Invalid form builder ID");
                 }
@@ -134,7 +134,7 @@ namespace FormBuilder.Services
                 // Validate parent menu if provided
                 if (createDto.ParentMenuId.HasValue)
                 {
-                    var parentExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.id == createDto.ParentMenuId.Value);
+                    var parentExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.Id == createDto.ParentMenuId.Value);
                     if (!parentExists)
                         return new ApiResponse(400, "Invalid parent menu ID");
                 }
@@ -143,7 +143,7 @@ namespace FormBuilder.Services
                 _unitOfWork.DocumentTypeRepository.Add(entity);
                 await _unitOfWork.CompleteAsyn();
 
-                var createdEntity = await _unitOfWork.DocumentTypeRepository.GetByIdAsync(entity.id);
+                var createdEntity = await _unitOfWork.DocumentTypeRepository.GetByIdAsync(entity.Id);
                 return new ApiResponse(200, "Document type created successfully", ToDto(createdEntity));
             }
             catch (Exception ex)
@@ -174,7 +174,7 @@ namespace FormBuilder.Services
                 // Validate if form builder exists
                 if (updateDto.FormBuilderId.HasValue)
                 {
-                    var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.id == updateDto.FormBuilderId.Value);
+                    var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.Id == updateDto.FormBuilderId.Value);
                     if (!formBuilderExists)
                         return new ApiResponse(400, "Invalid form builder ID");
                 }
@@ -182,7 +182,7 @@ namespace FormBuilder.Services
                 // Validate parent menu if provided
                 if (updateDto.ParentMenuId.HasValue)
                 {
-                    var parentExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.id == updateDto.ParentMenuId.Value);
+                    var parentExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.Id == updateDto.ParentMenuId.Value);
                     if (!parentExists)
                         return new ApiResponse(400, "Invalid parent menu ID");
                 }
@@ -245,7 +245,7 @@ namespace FormBuilder.Services
         {
             try
             {
-                var exists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.id == id);
+                var exists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.Id == id);
                 return new ApiResponse(200, "Document type existence checked successfully", exists);
             }
             catch (Exception ex)
@@ -276,7 +276,7 @@ namespace FormBuilder.Services
 
             return new DocumentTypeDto
             {
-                Id = entity.id,
+                Id = entity.Id,
                 Name = entity.Name,
                 Code = entity.Code,
                 FormBuilderId = entity.FormBuilderId,
