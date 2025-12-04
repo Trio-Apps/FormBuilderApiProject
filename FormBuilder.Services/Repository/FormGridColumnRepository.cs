@@ -116,18 +116,14 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<int> GetNextColumnOrderAsync(int gridId)
         {
-            try
-            {
+           
                 var maxOrder = await _context.FORM_GRID_COLUMNS
                     .Where(c => c.GridId == gridId)
                     .MaxAsync(c => (int?)c.ColumnOrder) ?? 0;
 
                 return maxOrder + 1;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            
+          
         }
 
         public async Task<bool> IsActiveAsync(int id)

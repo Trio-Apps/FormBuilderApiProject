@@ -14,9 +14,6 @@ namespace FormBuilder.Application.DTOS
         public string ErrorMessage { get; set; }
         public int StatusCode { get; set; }
 
-        public ServiceResult()
-        {
-        }
 
         public ServiceResult(bool success, T data, string errorMessage = "", int statusCode = 200)
         {

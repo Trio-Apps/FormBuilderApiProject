@@ -1,6 +1,5 @@
 ﻿using FormBuilder.Application.Abstractions;
 using FormBuilder.Application.Dtos.Auth;
-using FormBuilder.Core.DTOS.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormBuilder.API.Controllers
@@ -22,12 +21,12 @@ namespace FormBuilder.API.Controllers
             if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
                 return BadRequest("Username and password are required.");
 
-            var token = await _accountService.LoginAsync(request.Username, request.Password, cancellationToken);
+            var response = await _accountService.LoginAsync(request.Username, request.Password, cancellationToken);
 
-            if (token is null)
-                return Unauthorized("Invalid username or password.");
+            if (!response.Success)
+                return Unauthorized(new { response.ErrorMessage });
 
-            return Ok(new { Token = token });
+            return Ok(response);
         }
     }
 }
