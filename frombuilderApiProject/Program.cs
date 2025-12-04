@@ -2,16 +2,19 @@ using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
 using FormBuilder.API.Models;
+using FormBuilder.Application.Abstractions;
 using FormBuilder.core.Repository;
 using FormBuilder.Core.IServices.Auth;
 using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Core.IServices.FormBuilder.FormBuilder.Services.Services;
+using FormBuilder.Core.Models;
 using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Infrastructure.Repositories;
 using FormBuilder.Infrastructure.Repository;
+using FormBuilder.Infrastructure.Services;
 using FormBuilder.Services;
 using FormBuilder.Services.Repository;
 using FormBuilder.Services.Services;
@@ -98,7 +101,16 @@ builder.Services.AddSwaggerGen(options =>
         Console.WriteLine($"XML documentation file not found: {ex.Message}");
     }
 });
+builder.Services.AddDbContext<AkhmanageItContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
 
+    if (builder.Environment.IsDevelopment())
+    {
+        options.EnableSensitiveDataLogging();
+        options.EnableDetailedErrors();
+    }
+});
 // --------------------------------------------------
 // DbContext
 // --------------------------------------------------
@@ -224,7 +236,7 @@ builder.Services.AddScoped<IFormSubmissionGridCellRepository, FormSubmissionGrid
 builder.Services.AddScoped<IFormSubmissionGridCellService, FormSubmissionGridCellService>();
 builder.Services.AddScoped<IFormulasRepository, FormulasRepository>();
 builder.Services.AddScoped<IFormulaService, FormulaService>();
-
+builder.Services.AddScoped<IaccountService, accoutService>();
 
 // Unit of Work -  √ﬂœ „‰ √‰ «·«”„ ’ÕÌÕ
 builder.Services.AddScoped<IunitOfwork, UnitOfWork>();

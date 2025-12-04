@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "FormBuilder.API.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "api/Account/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Application.Dtos.Auth.LoginRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FormBuilder.API.Controllers.AttachmentTypesController",
     "Method": "GetAll",
     "RelativePath": "api/AttachmentTypes",

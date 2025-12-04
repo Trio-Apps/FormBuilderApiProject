@@ -4,18 +4,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.Core.DTOS.FormBuilder
 {
-    // Core DTOs
+    // Create DTOs
     public class CreateFormulaVariableDto
     {
-        [Required]
+        [Required(ErrorMessage = "Formula ID is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid formula ID")]
         public int FormulaId { get; set; }
 
-        [Required]
-        [StringLength(100, MinimumLength = 1)]
-        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$", ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
+        [Required(ErrorMessage = "Variable name is required")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Variable name must be between 1 and 100 characters")]
+        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$",
+            ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
         public string VariableName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Source field ID is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid source field ID")]
         public int SourceFieldId { get; set; }
 
         public bool IsActive { get; set; } = true;
@@ -23,12 +26,14 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
     public class BulkCreateFormulaVariableItemDto
     {
-        [Required]
-        [StringLength(100, MinimumLength = 1)]
-        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$", ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
+        [Required(ErrorMessage = "Variable name is required")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Variable name must be between 1 and 100 characters")]
+        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$",
+            ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
         public string VariableName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Source field ID is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid source field ID")]
         public int SourceFieldId { get; set; }
 
         public bool IsActive { get; set; } = true;
@@ -36,166 +41,48 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
     public class BulkCreateFormulaVariablesDto
     {
-        [Required]
+        [Required(ErrorMessage = "Formula ID is required")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid formula ID")]
         public int FormulaId { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(100)] // Prevent too many variables at once
+        [Required(ErrorMessage = "Variables list is required")]
+        [MinLength(1, ErrorMessage = "At least one variable is required")]
+        [MaxLength(100, ErrorMessage = "Cannot create more than 100 variables at once")]
         public List<BulkCreateFormulaVariableItemDto> Variables { get; set; } = new List<BulkCreateFormulaVariableItemDto>();
     }
 
+    // Update DTO
     public class UpdateFormulaVariableDto
     {
-        [StringLength(100, MinimumLength = 1)]
-        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$", ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "Variable name must be between 1 and 100 characters")]
+        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$",
+            ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
         public string VariableName { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Invalid SourceFieldId")]
+        [Range(1, int.MaxValue, ErrorMessage = "Invalid source field ID")]
         public int? SourceFieldId { get; set; }
 
         public bool? IsActive { get; set; }
     }
 
-    // Main response DTO
+    // Main Response DTO
     public class FormulaVariableDto
     {
         public int Id { get; set; }
-
-        // Formula information
         public int FormulaId { get; set; }
         public string FormulaName { get; set; }
         public string FormulaCode { get; set; }
-
-        // Variable information
         public string VariableName { get; set; }
-
-        // Source field information
         public int SourceFieldId { get; set; }
         public string SourceFieldCode { get; set; }
         public string SourceFieldName { get; set; }
         public string SourceFieldType { get; set; }
-
-        // Status
         public bool IsActive { get; set; }
-
-        // Audit
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
-
-        // Extended information (optional)
-        public FormulaInfoDto FormulaInfo { get; set; }
-        public FieldInfoDto FieldInfo { get; set; }
     }
 
-    // Support DTOs for nested information
-    public class FormulaInfoDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Expression { get; set; }
-        public int FormBuilderId { get; set; }
-        public bool IsActive { get; set; }
-    }
-
-    public class FieldInfoDto
-    {
-        public int Id { get; set; }
-        public string FieldCode { get; set; }
-        public string FieldName { get; set; }
-        public string FieldType { get; set; }
-        public int? FieldTypeId { get; set; }
-        public bool IsRequired { get; set; }
-        public bool IsActive { get; set; }
-    }
-
-    // Filter/Search DTOs
-    public class FormulaVariableFilterDto
-    {
-        public int? FormulaId { get; set; }
-        public int? FormBuilderId { get; set; }
-        public string VariableName { get; set; }
-        public int? SourceFieldId { get; set; }
-        public string FieldType { get; set; }
-        public bool? IsActive { get; set; }
-        public DateTime? CreatedFrom { get; set; }
-        public DateTime? CreatedTo { get; set; }
-        public string SearchTerm { get; set; }
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 20;
-        public string SortBy { get; set; } = "VariableName";
-        public bool SortDescending { get; set; } = false;
-    }
-
-    public class FormulaVariableSearchDto
-    {
-        [Required]
-        public int FormulaId { get; set; }
-
-        [Required]
-        [StringLength(50, MinimumLength = 1)]
-        public string SearchTerm { get; set; }
-
-        public bool IncludeInactive { get; set; } = false;
-    }
-
-    // Validation DTOs
-    public class VariableNameCheckDto
-    {
-        [Required]
-        public string VariableName { get; set; }
-
-        [Required]
-        public int FormulaId { get; set; }
-
-        public int? ExcludeVariableId { get; set; }
-    }
-
-    public class SourceFieldUsageCheckDto
-    {
-        [Required]
-        public int FieldId { get; set; }
-
-        public int? ExcludeFormulaId { get; set; }
-    }
-
-    public class FormulaVariableValidationDto
-    {
-        [Required]
-        public int FormulaId { get; set; }
-
-        [Required]
-        [StringLength(100, MinimumLength = 1)]
-        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$", ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
-        public string VariableName { get; set; }
-
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int SourceFieldId { get; set; }
-    }
-
-    // Batch operation DTOs
-    public class BatchToggleActiveDto
-    {
-        [Required]
-        [MinLength(1)]
-        [MaxLength(100)] // Limit batch size
-        public List<int> VariableIds { get; set; }
-
-        [Required]
-        public bool IsActive { get; set; }
-    }
-
-    public class BatchDeleteDto
-    {
-        [Required]
-        [MinLength(1)]
-        [MaxLength(100)]
-        public List<int> VariableIds { get; set; }
-    }
-
-    // Response DTOs for specific queries
+    // Response DTOs
     public class VariableMappingDto
     {
         public string VariableName { get; set; }
@@ -208,22 +95,12 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     public class VariableCountDto
     {
         public int FormulaId { get; set; }
-        public string FormulaName { get; set; }
         public int VariableCount { get; set; }
-        public int ActiveCount { get; set; }
-        public int InactiveCount { get; set; }
-    }
-
-    public class VariableNameDto
-    {
-        public string VariableName { get; set; }
-        public int VariableId { get; set; }
     }
 
     public class VariableStatisticsDto
     {
         public int FormulaId { get; set; }
-        public string FormulaName { get; set; }
         public int TotalVariables { get; set; }
         public int ActiveVariables { get; set; }
         public int InactiveVariables { get; set; }
@@ -238,41 +115,7 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int Count { get; set; }
     }
 
-    // Update specific properties
-    public class UpdateVariableNameDto
-    {
-        [Required]
-        [StringLength(100, MinimumLength = 1)]
-        [RegularExpression(@"^[a-zA-Z_][a-zA-Z0-9_]*$", ErrorMessage = "Variable name must start with a letter or underscore and contain only letters, numbers, and underscores")]
-        public string VariableName { get; set; }
-    }
-
-    public class UpdateSourceFieldDto
-    {
-        [Required]
-        [Range(1, int.MaxValue)]
-        public int SourceFieldId { get; set; }
-    }
-
-    public class UpdateStatusDto
-    {
-        [Required]
-        public bool IsActive { get; set; }
-    }
-
-    // Paginated response
-    public class PagedFormulaVariablesDto
-    {
-        public List<FormulaVariableDto> Variables { get; set; } = new List<FormulaVariableDto>();
-        public int TotalCount { get; set; }
-        public int PageNumber { get; set; }
-        public int PageSize { get; set; }
-        public int TotalPages { get; set; }
-        public bool HasPreviousPage { get; set; }
-        public bool HasNextPage { get; set; }
-    }
-
-    // Bulk operation responses
+    // Bulk Operation Response DTOs
     public class BulkCreateResponseDto
     {
         public int FormulaId { get; set; }
@@ -293,26 +136,5 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public List<string> FailedReasons { get; set; } = new List<string>();
         public DateTime OperationTime { get; set; } = DateTime.UtcNow;
     }
-
-    // Excel/Import DTOs
-    public class ImportFormulaVariableDto
-    {
-        public string VariableName { get; set; }
-        public string SourceFieldCode { get; set; }
-        public string SourceFieldName { get; set; }
-        public bool IsActive { get; set; } = true;
-    }
-
-    public class ImportFormulaVariablesDto
-    {
-        [Required]
-        public int FormulaId { get; set; }
-
-        [Required]
-        [MinLength(1)]
-        public List<ImportFormulaVariableDto> Variables { get; set; } = new List<ImportFormulaVariableDto>();
-
-        public bool OverwriteExisting { get; set; } = false;
-        public bool SkipInvalidRows { get; set; } = true;
-    }
 }
+
