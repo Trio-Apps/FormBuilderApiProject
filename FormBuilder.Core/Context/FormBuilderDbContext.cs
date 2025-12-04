@@ -9,16 +9,11 @@ using System.Linq;
 
 namespace FormBuilder.API.Data
 {
-    public class FormBuilderDbContext : IdentityDbContext<AppUser, IdentityRole, string>
+    public class FormBuilderDbContext : DbContext
     {
         public FormBuilderDbContext(DbContextOptions<FormBuilderDbContext> options) : base(options) { }
 
-        // ----------------------
-        // Identity & Auth Tables
-        // ----------------------
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<RolePermission> RolePermissions { get; set; }
+   
 
         // ----------------------
         // Form Builder Tables
@@ -64,51 +59,7 @@ namespace FormBuilder.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // ----------------------
-            // Identity Table Names
-            // ----------------------
-            modelBuilder.Entity<AppUser>().ToTable("appUsers");
-            modelBuilder.Entity<IdentityRole>().ToTable("AspNetRoles");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("AspNetUserClaims");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("AspNetUserLogins");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("AspNetUserTokens");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("AspNetUserRoles");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("AspNetRoleClaims");
-
-            modelBuilder.Entity<Permission>().ToTable("PERMISSIONS");
-            modelBuilder.Entity<RolePermission>().ToTable("ROLE_PERMISSIONS");
-
-            // ----------------------
-            // Auth Relationships
-            // ----------------------
-            modelBuilder.Entity<RolePermission>()
-                .HasOne(rp => rp.Role)
-                .WithMany()
-                .HasForeignKey(rp => rp.RoleID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RolePermission>()
-                .HasOne(rp => rp.Permission)
-                .WithMany(p => p.RolePermissions)
-                .HasForeignKey(rp => rp.PermissionID)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RefreshToken>()
-                .HasOne(rt => rt.User)
-                .WithMany()
-                .HasForeignKey(rt => rt.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            // ----------------------
-            // FIX: FK to AppUser to avoid multiple cascade paths
-            // ----------------------
-            foreach (var fk in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetForeignKeys())
-                .Where(fk => fk.PrincipalEntityType.Name.Contains("AspNetUsers")
-                          || fk.PrincipalEntityType.Name.Contains("AppUser")))
-            {
-                fk.DeleteBehavior = DeleteBehavior.Restrict;
-            }
+            
 
             // FORM_BUILDER relationships
             // ----------------------
@@ -311,7 +262,6 @@ namespace FormBuilder.API.Data
             modelBuilder.Entity<DOCUMENT_TYPES>().HasIndex(dt => dt.Code).IsUnique();
             modelBuilder.Entity<PROJECTS>().HasIndex(p => p.Code).IsUnique();
             modelBuilder.Entity<DOCUMENT_SERIES>().HasIndex(ds => ds.SeriesCode).IsUnique();
-            modelBuilder.Entity<RefreshToken>().HasIndex(rt => rt.Token).IsUnique();
         }
     }
 }

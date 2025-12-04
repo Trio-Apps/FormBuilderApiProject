@@ -2,13 +2,8 @@
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.FormBuilder;
-using FormBuilder.Domian.Entitys.FromBuilder;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace FormBuilder.Infrastructure.Repositories
 {
@@ -63,7 +58,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(c => c.ColumnName)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 throw;
             }
@@ -89,19 +84,13 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<FORM_GRID_COLUMNS> GetByColumnCodeAsync(string columnCode, int gridId)
         {
-            try
-            {
-                return await _context.FORM_GRID_COLUMNS
+             return await _context.FORM_GRID_COLUMNS
                     .Include(c => c.FORM_GRIDS)
                     .Include(c => c.FIELD_TYPES)
                     .FirstOrDefaultAsync(c =>
                         c.ColumnCode == columnCode &&
                         c.GridId == gridId);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+           
         }
 
         public async Task<bool> ColumnCodeExistsAsync(string columnCode, int gridId, int? excludeId = null)

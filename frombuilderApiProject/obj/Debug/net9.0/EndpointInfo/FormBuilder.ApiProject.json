@@ -2,7 +2,7 @@
   "openapi": "3.0.1",
   "info": {
     "title": "FormBuilder API",
-    "description": "FormBuilder API Documentation",
+    "description": "API for FormBuilder Application",
     "version": "v1"
   },
   "paths": {
@@ -15,29 +15,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.LoginRequestDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.LoginRequestDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.LoginRequestDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.LoginRequestDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.LoginRequestDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.LoginRequestDto"
               }
             }
           }
@@ -68,29 +56,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateAttachmentTypeDto"
               }
             }
           }
@@ -155,29 +131,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateAttachmentTypeDto"
               }
             }
           }
@@ -252,29 +216,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ToggleActiveDto"
               }
             }
           }
@@ -309,339 +261,6 @@
         }
       }
     },
-    "/api/Auth/login": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.LoginDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.LoginDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.LoginDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.AuthResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.AuthResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.AuthResult"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Auth/refresh-token": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.Auth.RefreshTokenRequest"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.Auth.RefreshTokenRequest"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.Auth.RefreshTokenRequest"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.AuthResult"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.AuthResult"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.AuthResult"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Auth/logout": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Auth/revoke-token": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Auth/change-password": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.ChangePasswordDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.ChangePasswordDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.ChangePasswordDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Auth/reset-password": {
-      "post": {
-        "tags": [
-          "Auth"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "string"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/DocumentSeries": {
       "get": {
         "tags": [
@@ -661,29 +280,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateDocumentSeriesDto"
               }
             }
           }
@@ -736,29 +343,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateDocumentSeriesDto"
               }
             }
           }
@@ -1031,29 +626,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateDocumentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateDocumentTypeDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateDocumentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateDocumentTypeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateDocumentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateDocumentTypeDto"
               }
             }
           }
@@ -1106,29 +689,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateDocumentTypeDto"
               }
             }
           }
@@ -1250,29 +821,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
               }
             }
           }
@@ -1320,29 +879,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldDataSourceDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldDataSourceDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldDataSourceDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldDataSourceDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldDataSourceDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldDataSourceDto"
               }
             }
           }
@@ -1509,29 +1056,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldDataSourceDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldDataSourceDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldDataSourceDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldDataSourceDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldDataSourceDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldDataSourceDto"
               }
             }
           }
@@ -1819,29 +1354,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
               }
             }
           }
@@ -1928,29 +1451,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldOptionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldOptionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldOptionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldOptionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldOptionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFieldOptionDto"
               }
             }
           }
@@ -2062,29 +1573,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FieldTypeCreateDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FieldTypeCreateDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FieldTypeCreateDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FieldTypeCreateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FieldTypeCreateDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FieldTypeCreateDto"
               }
             }
           }
@@ -2171,29 +1670,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FieldTypeUpdateDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FieldTypeUpdateDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FieldTypeUpdateDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FieldTypeUpdateDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FieldTypeUpdateDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FieldTypeUpdateDto"
               }
             }
           }
@@ -2586,29 +2073,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateFormAttachmentTypeDto"
               }
             }
           }
@@ -2661,29 +2136,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateFormAttachmentTypeDto"
               }
             }
           }
@@ -2955,29 +2418,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormBuilderDto"
               }
             }
           }
@@ -3008,38 +2459,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3049,38 +2479,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3130,38 +2539,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3187,29 +2575,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormBuilderDto"
               }
             }
           }
@@ -3223,38 +2599,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3264,38 +2619,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3305,38 +2639,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3367,38 +2680,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -3447,38 +2739,36 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "FormBuilder.ApiProject"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -3522,29 +2812,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFormFieldDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFormFieldDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFormFieldDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFormFieldDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFormFieldDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFormFieldDto"
               }
             }
           }
@@ -3631,29 +2909,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFormFieldDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFormFieldDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFormFieldDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFormFieldDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFormFieldDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.UpdateFormFieldDto"
               }
             }
           }
@@ -4104,29 +3370,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridColumnDto"
               }
             }
           }
@@ -4213,29 +3467,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridColumnDto"
               }
             }
           }
@@ -4741,29 +3983,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormGridDto"
               }
             }
           }
@@ -4850,29 +4080,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormGridDto"
               }
             }
           }
@@ -5358,29 +4576,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto"
               }
             }
           }
@@ -5411,38 +4617,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5452,38 +4637,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5536,38 +4700,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5596,29 +4739,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto"
               }
             }
           }
@@ -5632,38 +4763,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5673,38 +4783,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5714,38 +4803,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5779,38 +4847,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -5964,38 +5011,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -6172,29 +5198,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
               }
             }
           }
@@ -6339,29 +5353,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridCellDto"
               }
             }
           }
@@ -6448,29 +5450,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridCellDto"
               }
             }
           }
@@ -6700,29 +5690,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.CreateFormSubmissionGridRowDto"
               }
             }
           }
@@ -6809,29 +5787,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto"
               }
             }
           }
@@ -7574,29 +6540,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionDto"
               }
             }
           }
@@ -7649,29 +6603,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionDto"
               }
             }
           }
@@ -7848,29 +6790,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SubmitFormDto"
               }
             }
           }
@@ -7966,29 +6896,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
               }
             }
           }
@@ -8041,29 +6959,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
               }
             }
           }
@@ -8222,29 +7128,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionValueDto"
               }
             }
           }
@@ -8265,29 +7159,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto"
               }
             }
           }
@@ -8370,29 +7252,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.CreateFormTabDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.CreateFormTabDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.CreateFormTabDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.CreateFormTabDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.CreateFormTabDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.CreateFormTabDto"
               }
             }
           }
@@ -8423,38 +7293,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8464,38 +7313,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8505,38 +7333,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8589,38 +7396,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8649,29 +7435,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.UpdateFormTabDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.UpdateFormTabDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.UpdateFormTabDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.UpdateFormTabDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.UpdateFormTabDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs.UpdateFormTabDto"
               }
             }
           }
@@ -8685,38 +7459,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8726,38 +7479,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8767,38 +7499,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8832,38 +7543,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -8925,38 +7615,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -9009,38 +7678,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -9185,38 +7833,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -9226,38 +7853,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "application/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               },
               "text/json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                    },
-                    {
-                      "$ref": "#/components/schemas/Microsoft.AspNetCore.Http.HttpValidationProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
               }
             }
@@ -9353,29 +7959,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormulaDto"
               }
             }
           }
@@ -9448,29 +8042,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormulaDto"
               }
             }
           }
@@ -9700,29 +8282,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
               }
             }
           }
@@ -9743,29 +8313,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.ValidateExpressionDto"
               }
             }
           }
@@ -10095,29 +8653,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
               }
             }
           }
@@ -10149,29 +8695,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto"
               }
             }
           }
@@ -10237,29 +8771,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
               }
             }
           }
@@ -10280,29 +8802,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
               }
             }
           }
@@ -10323,29 +8833,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
               }
             }
           }
@@ -10411,29 +8909,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto"
               }
             }
           }
@@ -10468,194 +8954,6 @@
         }
       }
     },
-    "/api/Permissions": {
-      "get": {
-        "tags": [
-          "Permissions"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Permissions"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreatePermissionDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreatePermissionDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreatePermissionDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Permissions/{id}": {
-      "put": {
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdatePermissionDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdatePermissionDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdatePermissionDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.PermissionDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Permissions"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Projects": {
       "get": {
         "tags": [
@@ -10675,29 +8973,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.CreateProjectDto"
               }
             }
           }
@@ -10750,29 +9036,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.UpdateProjectDto"
               }
             }
           }
@@ -10859,29 +9133,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
               }
             },
             "text/json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
-                  }
-                ]
+                "$ref": "#/components/schemas/FormBuilder.API.Models.DTOs.ToggleActiveDto"
               }
             }
           }
@@ -10936,588 +9198,6 @@
             "schema": {
               "type": "integer",
               "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Roles": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Roles"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreateRoleDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreateRoleDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreateRoleDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Roles/{id}": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdateRoleDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdateRoleDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdateRoleDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Roles/name/{name}": {
-      "get": {
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "name",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.RoleDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Roles/{id}/permissions": {
-      "post": {
-        "tags": [
-          "Roles"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            },
-            "text/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Users": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                  }
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                  }
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Users"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreateUserDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreateUserDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.CreateUserDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Users/{id}": {
-      "get": {
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdateUserDto"
-                  }
-                ]
-              }
-            },
-            "text/json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdateUserDto"
-                  }
-                ]
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UpdateUserDto"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Application.DTOS.Auth.UsersDto"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Users/{id}/deactivate": {
-      "patch": {
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/Users/{id}/activate": {
-      "patch": {
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
             }
           }
         ],
@@ -11992,12 +9672,7 @@
             "nullable": true
           },
           "data": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
-              }
-            ],
-            "nullable": true
+            "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
           }
         },
         "additionalProperties": false
@@ -12529,200 +10204,6 @@
         },
         "additionalProperties": false
       },
-      "FormBuilder.Application.DTOS.Auth.CreatePermissionDto": {
-        "required": [
-          "permissionName"
-        ],
-        "type": "object",
-        "properties": {
-          "permissionName": {
-            "maxLength": 100,
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "maxLength": 255,
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.CreateRoleDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.CreateUserDto": {
-        "type": "object",
-        "properties": {
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "displayName": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.PermissionDto": {
-        "type": "object",
-        "properties": {
-          "permissionID": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "permissionName": {
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.RoleDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.UpdatePermissionDto": {
-        "type": "object",
-        "properties": {
-          "permissionName": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "description": {
-            "maxLength": 255,
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.UpdateRoleDto": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.UpdateUserDto": {
-        "type": "object",
-        "properties": {
-          "displayName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "isActive": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Application.DTOS.Auth.UsersDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "nullable": true
-          },
-          "userName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "displayName": {
-            "type": "string",
-            "nullable": true
-          },
-          "phoneNumber": {
-            "type": "string",
-            "nullable": true
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "emailConfirmed": {
-            "type": "boolean"
-          },
-          "createdDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "lastLoginDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "roles": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "FormBuilder.Application.Dtos.Auth.LoginRequestDto": {
         "type": "object",
         "properties": {
@@ -12731,20 +10212,6 @@
             "nullable": true
           },
           "password": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.Core.DTOS.Auth.RefreshTokenRequest": {
-        "type": "object",
-        "properties": {
-          "accessToken": {
-            "type": "string",
-            "nullable": true
-          },
-          "refreshToken": {
             "type": "string",
             "nullable": true
           }
@@ -13563,108 +11030,6 @@
         },
         "additionalProperties": false
       },
-      "FormBuilder.core.DTOS.Auth.AuthResult": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "user": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/FormBuilder.core.DTOS.Auth.UserDto"
-              }
-            ],
-            "nullable": true
-          },
-          "errorMessage": {
-            "type": "string",
-            "nullable": true
-          },
-          "statusCode": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.core.DTOS.Auth.ChangePasswordDto": {
-        "type": "object",
-        "properties": {
-          "currentPassword": {
-            "type": "string",
-            "nullable": true
-          },
-          "newPassword": {
-            "type": "string",
-            "nullable": true
-          },
-          "confirmPassword": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.core.DTOS.Auth.LoginDto": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.core.DTOS.Auth.UserDto": {
-        "type": "object",
-        "properties": {
-          "displayName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "token": {
-            "type": "string",
-            "nullable": true
-          },
-          "refreshToken": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Microsoft.AspNetCore.Http.HttpValidationProblemDetails": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "errors": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "nullable": true
-              }
-            },
-            "additionalProperties": { }
-          }
-        ]
-      },
       "Microsoft.AspNetCore.Mvc.ProblemDetails": {
         "type": "object",
         "properties": {
@@ -13692,19 +11057,6 @@
         },
         "additionalProperties": { }
       }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "apiKey",
-        "description": "Enter the Bearer token like: Bearer {your token}",
-        "name": "Authorization",
-        "in": "header"
-      }
     }
-  },
-  "security": [
-    {
-      "Bearer": [ ]
-    }
-  ]
+  }
 }
