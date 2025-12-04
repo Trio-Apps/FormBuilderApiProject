@@ -1,5 +1,6 @@
 ﻿using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Data;
+using FormBuilder.API.ExceptionHandlers;
 using FormBuilder.Application.Abstractions;
 using FormBuilder.core.Repository;
 using FormBuilder.Core.IServices.FormBuilder;
@@ -24,7 +25,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 
 // -----------------------------
-// Controllers + JSON
+// Controllers + JSON + ProblemDetails
 // -----------------------------
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -35,8 +36,11 @@ builder.Services.AddControllers()
 
 builder.Services.AddEndpointsApiExplorer();
 
+// Add ProblemDetails service for exception handling
+builder.Services.AddProblemDetails();
+
 // -----------------------------
-// Swagger Configuration with JWT Support
+// Swagger Configuration
 // -----------------------------
 builder.Services.AddSwaggerGen(c =>
 {
@@ -81,7 +85,15 @@ builder.Services.AddSwaggerGen(c =>
 // Security / Auth DbContext
 builder.Services.AddDbContext<AkhmanageItContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AuthConnection"));
+    var connectionString = builder.Configuration.GetConnectionString("AuthConnection");
+
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        connectionString = "Server=DESKTOP-B3NJLJM;Database=AkhmanageItDb;Trusted_Connection=True;TrustServerCertificate=True;";
+        Console.WriteLine("Using default Auth connection string");
+    }
+
+    options.UseSqlServer(connectionString);
 
     if (builder.Environment.IsDevelopment())
     {
@@ -93,7 +105,15 @@ builder.Services.AddDbContext<AkhmanageItContext>(options =>
 // Business / Forms DbContext
 builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        connectionString = "Server=DESKTOP-B3NJLJM;Database=FormBuilderDb;Trusted_Connection=True;TrustServerCertificate=True;";
+        Console.WriteLine("Using default FormBuilder connection string");
+    }
+
+    options.UseSqlServer(connectionString);
 
     if (builder.Environment.IsDevelopment())
     {
@@ -103,7 +123,7 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 });
 
 // -----------------------------
-// Dependency Injection - Services Registration
+// Dependency Injection
 // -----------------------------
 
 // Account Service
@@ -172,17 +192,19 @@ builder.Services.AddScoped<IFormSubmissionGridCellRepository, FormSubmissionGrid
 builder.Services.AddScoped<IFormulaService, FormulaService>();
 builder.Services.AddScoped<IFormulasRepository, FormulasRepository>();
 
+// Register GlobalExceptionHandler
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 // -----------------------------
-// JWT Authentication Configuration
+// JWT Authentication
 // -----------------------------
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = jwtSettings["Key"];
 
 if (string.IsNullOrEmpty(key))
 {
-    // Use default key for development if not configured
     key = "99n6tDRTzftaPXYI8/ohgs0WsMWS1Yd9JuY=";
-    Console.WriteLine("Warning: Using default JWT key. For production, configure JWT:Key in appsettings.json");
+    Console.WriteLine("Warning: Using default JWT key");
 }
 
 builder.Services.AddAuthentication(options =>
@@ -216,17 +238,12 @@ builder.Services.AddAuthentication(options =>
         {
             Console.WriteLine("Token validated successfully");
             return Task.CompletedTask;
-        },
-        OnChallenge = context =>
-        {
-            Console.WriteLine($"OnChallenge: {context.Error}, {context.ErrorDescription}");
-            return Task.CompletedTask;
         }
     };
 });
 
 // -----------------------------
-// CORS Configuration
+// CORS
 // -----------------------------
 builder.Services.AddCors(options =>
 {
@@ -247,7 +264,6 @@ var app = builder.Build();
 // Middleware Pipeline
 // -----------------------------
 
-// Development settings
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -257,7 +273,6 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "FormBuilder API v1");
         c.RoutePrefix = "swagger";
         c.DisplayRequestDuration();
-        c.EnablePersistAuthorization();
     });
 }
 else
@@ -267,13 +282,13 @@ else
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseRouting();
 
-// CORS must come after Routing and before Authentication
 app.UseCors("AllowAll");
 
-// Authentication & Authorization
+// Add exception handling middleware
+app.UseExceptionHandler();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -292,17 +307,12 @@ app.MapGet("/health", () => new
     Version = "1.0.0"
 });
 
-// Map controllers
 app.MapControllers();
 
-// Startup log
 app.Lifetime.ApplicationStarted.Register(() =>
 {
     var logger = app.Services.GetRequiredService<ILogger<Program>>();
     logger.LogInformation("FormBuilder API started successfully");
-    logger.LogInformation("Environment: {Environment}", app.Environment.EnvironmentName);
-    logger.LogInformation("Swagger UI: {Url}/swagger", app.Urls.FirstOrDefault() ?? "http://localhost:5000");
 });
 
-// Run application
 app.Run();
