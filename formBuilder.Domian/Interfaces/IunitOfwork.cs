@@ -40,7 +40,10 @@ namespace formBuilder.Domian.Interfaces
         // Add these two new repositories for Formulas
         IFormulasRepository FormulasRepository { get; }
         //IFormulaVariablesRepository FormulaVariablesRepository { get; }
-        IFormulaVariablesRepository FormulaVariablesRepository { get; }
+        IApprovalWorkflowRepository ApprovalWorkflowRepository { get; }
+        IApprovalStageRepository ApprovalStageRepository { get; }
+        IFormulaVariableRepository FormulaVariablesRepository { get; }
+
 
 
 

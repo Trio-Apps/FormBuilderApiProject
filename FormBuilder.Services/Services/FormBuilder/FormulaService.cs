@@ -1,5 +1,6 @@
 ﻿using formBuilder.Domian.Interfaces;
 using FormBuilder.API.Models;
+using FormBuilder.Application.DTOs.Formula;
 using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domain.Interfaces.Services;
@@ -381,14 +382,13 @@ namespace FormBuilder.Services
                 formulaDto.VariableCount = variables.Count();
 
                 // Use the fully qualified namespace
-                formulaDto.Variables = variables.Select(v => new FormBuilder.Core.DTOS.FormBuilder.FormulaVariableDto
+                formulaDto.Variables = variables.Select(v => new FormulaVariableDto
                 {
                     Id = v.Id,
                     FormulaId = v.FormulaId,
                     SourceFieldId = v.FORM_FIELDS.Id,
-                    FormulaCode = v.FORM_FIELDS?.FieldCode,
-                    FormulaName = v.FORM_FIELDS?.FieldName,
-                    SourceFieldType = v.FORM_FIELDS?.FIELD_TYPES?.TypeName,
+                    Formulaname = v.FORM_FIELDS?.FieldName,
+                    SourceFieldName = v.FORM_FIELDS?.FIELD_TYPES?.TypeName,
                     VariableName = v.VariableName
                 }).ToList();
 
@@ -781,10 +781,8 @@ namespace FormBuilder.Services
                 {
                     Id = v.Id,
                     FormulaId = v.FormulaId,
-                    FieldId = v.FORM_FIELDS.Id,
-                    FieldCode = v.FORM_FIELDS?.FieldCode,
-                    FieldName = v.FORM_FIELDS?.FieldName,
-                    FieldType = v.FORM_FIELDS?.FIELD_TYPES?.TypeName,
+                    SourceFieldId = v.FORM_FIELDS.Id,
+                    SourceFieldName = v.FORM_FIELDS?.FieldName,
                     VariableName = v.VariableName
                 }).ToList();
 

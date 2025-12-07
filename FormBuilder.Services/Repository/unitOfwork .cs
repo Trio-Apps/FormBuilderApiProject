@@ -8,6 +8,7 @@ using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Infrastructure.Repositories;
 using FormBuilder.Infrastructure.Repository;
+using FormBuilder.Services;
 using FormBuilder.Services.Repository;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ namespace FormBuilder.core.Repository
         private IFormSubmissionGridRowRepository _formSubmissionGridRowRepository;
         private IFormSubmissionGridCellRepository _formSubmissionGridCellRepository;
         private IFormulasRepository _formulasRepository;
+        private IApprovalWorkflowRepository _approvalWorkflowRepository;
+        private IFormulaVariableRepository _formulaVariablesRepository;
+        private IApprovalStageRepository _approvalStageRepository;
 
         public UnitOfWork(FormBuilderDbContext appDbContext)
         {
@@ -231,18 +235,26 @@ namespace FormBuilder.core.Repository
                 return _formulasRepository;
             }
         }
-        private IFormulaVariablesRepository _formulaVariablesRepository;
-        public IFormulaVariablesRepository FormulaVariablesRepository
+        public IFormulaVariableRepository FormulaVariablesRepository =>
+            _formulaVariablesRepository ??= new FormulaVariablesRepository (AppDbContext);
+
+        public IApprovalStageRepository ApprovalStageRepository
+            => _approvalStageRepository ??= new ApprovalStageRepository(AppDbContext);
+
+
+        public IApprovalWorkflowRepository ApprovalWorkflowRepository
         {
             get
             {
-                if (_formulaVariablesRepository == null)
+                if (_approvalWorkflowRepository == null)
                 {
-                    _formulaVariablesRepository = new FormulaVariablesRepository(AppDbContext);
+                    _approvalWorkflowRepository = new ApprovalWorkflowRepository(AppDbContext);
                 }
-                return _formulaVariablesRepository;
-            }
-        }
 
-    }
+                return _approvalWorkflowRepository;
+            }
+
+
+        }
 }
+    }

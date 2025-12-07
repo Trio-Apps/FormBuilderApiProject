@@ -16,6 +16,238 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
+    "Method": "Create",
+    "RelativePath": "api/ApprovalStage",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Application.DTOs.ApprovalWorkflow.ApprovalStageCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
+    "Method": "GetById",
+    "RelativePath": "api/ApprovalStage/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
+    "Method": "Update",
+    "RelativePath": "api/ApprovalStage/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Application.DTOs.ApprovalWorkflow.ApprovalStageUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
+    "Method": "Delete",
+    "RelativePath": "api/ApprovalStage/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
+    "Method": "ToggleActive",
+    "RelativePath": "api/ApprovalStage/{id}/toggle-active",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "isActive",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
+    "Method": "GetAll",
+    "RelativePath": "api/ApprovalStage/workflow/{workflowId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "workflowId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "GetAll",
+    "RelativePath": "api/ApprovalWorkflow",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "Create",
+    "RelativePath": "api/ApprovalWorkflow",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Application.DTOs.ApprovalWorkflow.ApprovalWorkflowCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "GetById",
+    "RelativePath": "api/ApprovalWorkflow/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "Update",
+    "RelativePath": "api/ApprovalWorkflow/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Application.DTOs.ApprovalWorkflow.ApprovalWorkflowUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "Delete",
+    "RelativePath": "api/ApprovalWorkflow/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "ToggleActive",
+    "RelativePath": "api/ApprovalWorkflow/{id}/toggle",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "isActive",
+        "Type": "System.Boolean",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "GetActive",
+    "RelativePath": "api/ApprovalWorkflow/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.ApprovalWorkflowController",
+    "Method": "GetByName",
+    "RelativePath": "api/ApprovalWorkflow/name/{name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FormBuilder.API.Controllers.AttachmentTypesController",
     "Method": "GetAll",
     "RelativePath": "api/AttachmentTypes",
@@ -5526,6 +5758,101 @@
         "Name": "formBuilderId",
         "Type": "System.Int32",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormulaVariablesController",
+    "Method": "GetAll",
+    "RelativePath": "api/FormulaVariables",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormulaVariablesController",
+    "Method": "Create",
+    "RelativePath": "api/FormulaVariables",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Application.DTOs.Formula.FormulaVariableCreateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormulaVariablesController",
+    "Method": "GetById",
+    "RelativePath": "api/FormulaVariables/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormulaVariablesController",
+    "Method": "Update",
+    "RelativePath": "api/FormulaVariables/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Application.DTOs.Formula.FormulaVariableUpdateDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormulaVariablesController",
+    "Method": "Delete",
+    "RelativePath": "api/FormulaVariables/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormulaVariablesController",
+    "Method": "Exists",
+    "RelativePath": "api/FormulaVariables/Exists/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

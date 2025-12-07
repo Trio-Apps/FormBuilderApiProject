@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.Infrastructure.Repositories
 {
-    public class FormulaVariablesRepository : BaseRepository<FORMULA_VARIABLES>, IFormulaVariablesRepository
+    public class FormulaVariablesRepository : BaseRepository<FORMULA_VARIABLES>, IFormulaVariableRepository
     {
         public FormBuilderDbContext _context { get; }
 
@@ -589,6 +589,11 @@ namespace FormBuilder.Infrastructure.Repositories
             return variables.ToDictionary(
                 v => v.VariableName,
                 v => v.FORM_FIELDS);
+        }
+
+        public Task<bool> AnyAsync(Func<FORMULA_VARIABLES, bool> predicate)
+        {
+            return Task.FromResult(_context.Set<FORMULA_VARIABLES>().AsEnumerable().Any(predicate));
         }
     }
 }

@@ -99,12 +99,18 @@ namespace FormBuilder.API.Extensions
             // Formula
             services.AddScoped<IFormulaService, FormulaService>();
             services.AddScoped<IFormulasRepository, FormulasRepository>();
+            services.AddScoped<IFormulaVariableService, FormulaVariableService>();
 
             // Roles
             services.AddScoped<IRoleService, RoleService>();
 
             // permissions
            services.AddScoped<IUserPermissionService, UserPermissionService>();
+            // Approval Workflow
+            services.AddScoped<IApprovalWorkflowService, ApprovalWorkflowService>();
+            services.AddScoped<IApprovalWorkflowRepository, ApprovalWorkflowRepository>();
+            services.AddScoped<IApprovalStageRepository, ApprovalStageRepository>();
+             services.AddScoped<IApprovalStageService, ApprovalStageService>();
 
 
             return services;
