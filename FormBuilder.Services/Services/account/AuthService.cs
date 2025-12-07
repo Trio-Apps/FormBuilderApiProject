@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 public class accountService : IaccountService
@@ -22,10 +23,27 @@ public class accountService : IaccountService
         _configuration = configuration;
     }
 
+    // دالة SHA512
+    private static string HashPassword(string password)
+    {
+        using (SHA512 sha = SHA512.Create())
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(password);
+            byte[] hash = sha.ComputeHash(bytes);
+            StringBuilder sb = new StringBuilder(128);
+            foreach (byte b in hash)
+                sb.Append(b.ToString("x2"));
+            return sb.ToString();
+        }
+    }
+
     public async Task<LoginResponseDto> LoginAsync(string username, string password, CancellationToken cancellationToken)
     {
+        string hashedPassword = HashPassword(password);
+
+        // ابحث عن المستخدم باستخدام الـ username و الـ hashed password
         var user = await _context.TblUsers
-            .FirstOrDefaultAsync(u => u.Username == username && u.Password == password, cancellationToken);
+            .FirstOrDefaultAsync(u => u.Username == username && u.Password == hashedPassword, cancellationToken);
 
         if (user == null)
             return new LoginResponseDto { Success = false, ErrorMessage = "Invalid username or password." };
@@ -54,7 +72,7 @@ public class accountService : IaccountService
         {
             Subject = new ClaimsIdentity(claims),
             NotBefore = now,
-            Expires = now.AddMinutes(expiryMinutes).AddSeconds(1), // فرق بسيط لتجنب IDX12401
+            Expires = now.AddMinutes(expiryMinutes).AddSeconds(1),
             SigningCredentials = creds,
             Issuer = jwtSettings["Issuer"],
             Audience = jwtSettings["Audience"]

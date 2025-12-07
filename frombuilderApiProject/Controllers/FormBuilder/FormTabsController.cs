@@ -13,7 +13,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "User")]
     public class FormTabsController : ControllerBase
     {
         private readonly IFormTabService _formTabService;

@@ -8,7 +8,7 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "Administration")]
 
     public class AttachmentTypesController : ControllerBase
     {

@@ -106,7 +106,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
-                .Include(f => f.CreatedByUserId)
                 .Where(f => f.Id == id && f.IsActive);
 
             // Apply includes for FIELD_TYPES
@@ -144,7 +143,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
-                .Include(f => f.CreatedByUserId)
                 .Include(f => f.FIELD_TYPES)
                 .Where(f => f.IsActive)
                 .OrderBy(f => f.FieldOrder)

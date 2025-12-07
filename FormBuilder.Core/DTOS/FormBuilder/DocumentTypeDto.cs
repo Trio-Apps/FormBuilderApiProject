@@ -38,8 +38,5 @@
         public bool? IsActive { get; set; }
     }
 
-    public class ToggleActiveDto
-    {
-        public bool IsActive { get; set; }
-    }
+    
 }

@@ -8,7 +8,7 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administration")]
 
     public class ProjectsController : ControllerBase
     {
@@ -75,13 +75,6 @@ namespace FormBuilder.API.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        // PATCH: api/projects/5/toggle-active
-        [HttpPatch("{id}/toggle-active")]
-        public async Task<IActionResult> ToggleActive(int id, [FromBody] ToggleActiveDto toggleDto)
-        {
-            var result = await _projectService.ToggleActiveAsync(id, toggleDto.IsActive);
-            return StatusCode(result.StatusCode, result);
-        }
 
         // GET: api/projects/5/exists
         [HttpGet("{id}/exists")]

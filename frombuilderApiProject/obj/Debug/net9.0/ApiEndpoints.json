@@ -465,27 +465,6 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
-    "Method": "ToggleActive",
-    "RelativePath": "api/DocumentTypes/{id}/toggle-active",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "toggleDto",
-        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.DocumentTypesController",
     "Method": "GetActive",
     "RelativePath": "api/DocumentTypes/active",
     "HttpMethod": "GET",
@@ -5648,27 +5627,6 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
-    "Method": "ToggleActive",
-    "RelativePath": "api/Projects/{id}/toggle-active",
-    "HttpMethod": "PATCH",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "id",
-        "Type": "System.Int32",
-        "IsRequired": true
-      },
-      {
-        "Name": "toggleDto",
-        "Type": "FormBuilder.API.Models.DTOs.ToggleActiveDto",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FormBuilder.API.Controllers.ProjectsController",
     "Method": "GetActive",
     "RelativePath": "api/Projects/active",
     "HttpMethod": "GET",
@@ -5715,21 +5673,23 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "Program\u002B\u003C\u003Ec",
-    "Method": "\u003C\u003CMain\u003E$\u003Eb__0_9",
-    "RelativePath": "health",
+    "ContainingType": "RolesController",
+    "Method": "GetAll",
+    "RelativePath": "api/Roles",
     "HttpMethod": "GET",
-    "IsController": false,
+    "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "\u003C\u003Ef__AnonymousType11\u00603[[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "application/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "GetAll",
+    "RelativePath": "api/UserPermission",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

@@ -10,7 +10,7 @@ namespace FormBuilder.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administration")]
     public class FormSubmissionGridRowsController : ControllerBase
     {
         private readonly IFormSubmissionGridRowService _formSubmissionGridRowService;

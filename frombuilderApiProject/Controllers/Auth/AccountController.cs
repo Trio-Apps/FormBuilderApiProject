@@ -18,8 +18,8 @@ namespace FormBuilder.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request, CancellationToken cancellationToken)
         {
-            if (request is null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
-                return BadRequest("Username and password are required.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var response = await _accountService.LoginAsync(request.Username, request.Password, cancellationToken);
 
