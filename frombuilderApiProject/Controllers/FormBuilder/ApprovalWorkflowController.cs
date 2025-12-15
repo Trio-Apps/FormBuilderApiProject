@@ -1,7 +1,8 @@
-using FormBuilder.Domian.Entitys.FormBuilder;
+using FormBuilder.API.Models;
 using FormBuilder.Application.DTOs.ApprovalWorkflow;
 using FormBuilder.Domain.Interfaces.Services;
-using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FormBuilder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,6 +10,8 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administration")]
+
     public class ApprovalWorkflowController : ControllerBase
     {
         private readonly IApprovalWorkflowService _workflowService;

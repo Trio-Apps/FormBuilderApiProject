@@ -2,6 +2,7 @@ using FormBuilder.Application.Abstractions;
 using FormBuilder.Application.Dtos.Auth;
 using FormBuilder.Core.Models;
 using formBuilder.Domian.Entitys;
+using FormBuilder.Infrastructure.Data;          // <-- مهم: لإحضار FormBuilderDbContext
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,13 +14,19 @@ using System.Text;
 
 public class accountService : IaccountService
 {
-    private readonly AkhmanageItContext _context;
+    private readonly AkhmanageItContext _identityContext;       // كان _context
+    private readonly FormBuilderDbContext _formBuilderContext;  // جديد
     private readonly IServer _server;
     private readonly IConfiguration _configuration;
 
-    public accountService(AkhmanageItContext context, IServer server, IConfiguration configuration)
+    public accountService(
+        AkhmanageItContext identityContext,
+        FormBuilderDbContext formBuilderContext,
+        IServer server,
+        IConfiguration configuration)
     {
-        _context = context;
+        _identityContext = identityContext;
+        _formBuilderContext = formBuilderContext;
         _server = server;
         _configuration = configuration;
     }
@@ -42,15 +49,15 @@ public class accountService : IaccountService
     {
         string hashedPassword = HashPassword(password);
 
-        // ابحث عن المستخدم باستخدام الـ username و الـ hashed password
-        var user = await _context.TblUsers
+        // ابحث عن المستخدم باستخدام الـ username و الـ hashed password من AkhmanageItContext
+        var user = await _identityContext.TblUsers
             .FirstOrDefaultAsync(u => u.Username == username && u.Password == hashedPassword, cancellationToken);
 
         if (user == null)
             return new LoginResponseDto { Success = false, ErrorMessage = "Invalid username or password." };
 
-        // نجيب الدور من جدول TblUserGroup باستخدام GroupId فقط
-        var group = await _context.TblUserGroups
+        // نجيب الدور من جدول TblUserGroup باستخدام GroupId فقط من AkhmanageItContext
+        var group = await _identityContext.TblUserGroups
             .FirstOrDefaultAsync(g => g.Id == user.Id, cancellationToken);
 
         var roleName = group?.Name ?? "User"; // Default role
@@ -85,10 +92,10 @@ public class accountService : IaccountService
 
         // Generate refresh token
         var refreshToken = GenerateRefreshToken();
-        var refreshTokenExpiryDays = int.TryParse(_configuration.GetSection("Jwt")["RefreshTokenExpiryDays"], out var days) ? days : 7;
+        var refreshTokenExpiryDays = int.TryParse(jwtSettings["RefreshTokenExpiryDays"], out var days) ? days : 7;
         var refreshTokenExpiresAt = DateTime.UtcNow.AddDays(refreshTokenExpiryDays);
 
-        // Save refresh token to database
+        // Save refresh token to FormBuilderDbContext
         var refreshTokenEntity = new REFRESH_TOKENS
         {
             UserId = user.Id,
@@ -98,8 +105,8 @@ public class accountService : IaccountService
             IsActive = true
         };
 
-        _context.REFRESH_TOKENS.Add(refreshTokenEntity);
-        await _context.SaveChangesAsync(cancellationToken);
+        _formBuilderContext.Set<REFRESH_TOKENS>().Add(refreshTokenEntity);
+        await _formBuilderContext.SaveChangesAsync(cancellationToken);
 
         // Revoke old refresh tokens for this user (keep only the latest 5)
         await RevokeOldRefreshTokensAsync(user.Id, cancellationToken);
@@ -117,7 +124,8 @@ public class accountService : IaccountService
 
     public async Task<RefreshTokenResponseDto> RefreshTokenAsync(string refreshToken, CancellationToken cancellationToken)
     {
-        var tokenEntity = await _context.REFRESH_TOKENS
+        // من FormBuilderDbContext
+        var tokenEntity = await _formBuilderContext.Set<REFRESH_TOKENS>()
             .FirstOrDefaultAsync(rt => rt.Token == refreshToken && rt.IsActive, cancellationToken);
 
         if (tokenEntity == null || tokenEntity.ExpiresAt < DateTime.UtcNow || tokenEntity.RevokedAt != null)
@@ -129,8 +137,8 @@ public class accountService : IaccountService
             };
         }
 
-        // Get user
-        var user = await _context.TblUsers
+        // Get user من AkhmanageItContext
+        var user = await _identityContext.TblUsers
             .FirstOrDefaultAsync(u => u.Id == tokenEntity.UserId, cancellationToken);
 
         if (user == null)
@@ -142,8 +150,8 @@ public class accountService : IaccountService
             };
         }
 
-        // Get user role
-        var group = await _context.TblUserGroups
+        // Get user role من AkhmanageItContext
+        var group = await _identityContext.TblUserGroups
             .FirstOrDefaultAsync(g => g.Id == user.Id, cancellationToken);
         var roleName = group?.Name ?? "User";
 
@@ -176,9 +184,9 @@ public class accountService : IaccountService
         var token = tokenHandler.CreateToken(tokenDescriptor);
         var tokenString = tokenHandler.WriteToken(token);
 
-        // Optionally rotate refresh token (generate new one and revoke old)
+        // Rotate refresh token في FormBuilderDbContext
         var newRefreshToken = GenerateRefreshToken();
-        var refreshTokenExpiryDays = int.TryParse(_configuration.GetSection("Jwt")["RefreshTokenExpiryDays"], out var days) ? days : 7;
+        var refreshTokenExpiryDays = int.TryParse(jwtSettings["RefreshTokenExpiryDays"], out var days) ? days : 7;
         var refreshTokenExpiresAt = DateTime.UtcNow.AddDays(refreshTokenExpiryDays);
 
         // Revoke old refresh token
@@ -195,8 +203,8 @@ public class accountService : IaccountService
             IsActive = true
         };
 
-        _context.REFRESH_TOKENS.Add(newRefreshTokenEntity);
-        await _context.SaveChangesAsync(cancellationToken);
+        _formBuilderContext.Set<REFRESH_TOKENS>().Add(newRefreshTokenEntity);
+        await _formBuilderContext.SaveChangesAsync(cancellationToken);
 
         return new RefreshTokenResponseDto
         {
@@ -210,14 +218,14 @@ public class accountService : IaccountService
 
     public async Task<bool> LogoutAsync(string refreshToken, CancellationToken cancellationToken)
     {
-        var tokenEntity = await _context.REFRESH_TOKENS
+        var tokenEntity = await _formBuilderContext.Set<REFRESH_TOKENS>()
             .FirstOrDefaultAsync(rt => rt.Token == refreshToken, cancellationToken);
 
         if (tokenEntity != null)
         {
             tokenEntity.RevokedAt = DateTime.UtcNow;
             tokenEntity.IsActive = false;
-            await _context.SaveChangesAsync(cancellationToken);
+            await _formBuilderContext.SaveChangesAsync(cancellationToken);
             return true;
         }
 
@@ -226,7 +234,7 @@ public class accountService : IaccountService
 
     public async Task<bool> RevokeAllUserTokensAsync(int userId, CancellationToken cancellationToken)
     {
-        var activeTokens = await _context.REFRESH_TOKENS
+        var activeTokens = await _formBuilderContext.Set<REFRESH_TOKENS>()
             .Where(rt => rt.UserId == userId && rt.IsActive && rt.RevokedAt == null)
             .ToListAsync(cancellationToken);
 
@@ -236,7 +244,7 @@ public class accountService : IaccountService
             token.IsActive = false;
         }
 
-        await _context.SaveChangesAsync(cancellationToken);
+        await _formBuilderContext.SaveChangesAsync(cancellationToken);
         return true;
     }
 
@@ -251,7 +259,7 @@ public class accountService : IaccountService
     private async Task RevokeOldRefreshTokensAsync(int userId, CancellationToken cancellationToken)
     {
         // Keep only the latest 5 active refresh tokens per user
-        var activeTokens = await _context.REFRESH_TOKENS
+        var activeTokens = await _formBuilderContext.Set<REFRESH_TOKENS>()
             .Where(rt => rt.UserId == userId && rt.IsActive && rt.RevokedAt == null)
             .OrderByDescending(rt => rt.CreatedAt)
             .ToListAsync(cancellationToken);
@@ -264,7 +272,7 @@ public class accountService : IaccountService
                 token.RevokedAt = DateTime.UtcNow;
                 token.IsActive = false;
             }
-            await _context.SaveChangesAsync(cancellationToken);
+            await _formBuilderContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

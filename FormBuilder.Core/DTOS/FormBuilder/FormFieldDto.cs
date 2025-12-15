@@ -1,5 +1,5 @@
 ﻿using FormBuilder.Core.DTOS.FormFields;
-using FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Core.DTOS.FormTabs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

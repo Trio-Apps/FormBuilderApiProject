@@ -12,6 +12,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administration")]
 
     public class FormFieldsController : ControllerBase
     {

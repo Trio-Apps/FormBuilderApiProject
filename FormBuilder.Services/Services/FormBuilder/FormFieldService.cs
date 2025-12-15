@@ -1,7 +1,7 @@
 using formBuilder.Domian.Entitys;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Domian.Entitys.FormBuilder;
-using FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Core.DTOS.FormTabs;
 using FormBuilder.Core.DTOS.FormFields;
 using FormBuilder.Domain.Interfaces;
 using FormBuilder.API.Models;

@@ -1,3 +1,6 @@
+using FormBuilder.Application.DTOS;
+using FormBuilder.Core.DTOS.Common;
+using FormBuilder.Core.DTOS.FormTabs;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using System;
 using System.Collections.Generic;
@@ -8,14 +11,16 @@ namespace FormBuilder.Services.Services
 {
     public interface IFormTabService
     {
-        Task<FORM_TABS> CreateTabAsync(FORM_TABS tabEntity);
-        Task<FORM_TABS?> GetTabByIdAsync(int id, bool asNoTracking = false);
-        Task<IEnumerable<FORM_TABS>> GetTabsByFormIdAsync(int formBuilderId);
-        Task<bool> UpdateTabAsync(FORM_TABS tabEntity);
-        Task<bool> DeleteTabAsync(int id);
-        Task<bool> IsTabCodeUniqueAsync(string tabCode, int? ignoreId = null);
-        Task<FORM_TABS?> GetTabWithDetailsAsync(int id, bool asNoTracking = false);
-        Task<IEnumerable<FORM_TABS>> GetAllTabsAsync(Expression<Func<FORM_TABS, bool>>? filter = null);
-        Task<bool> TabExistsAsync(int id);
+        Task<ServiceResult<IEnumerable<FormTabDto>>> GetAllAsync(Expression<Func<FORM_TABS, bool>>? filter = null);
+        Task<ServiceResult<PagedResult<FormTabDto>>> GetPagedAsync(int page = 1, int pageSize = 20, Expression<Func<FORM_TABS, bool>>? filter = null);
+        Task<ServiceResult<FormTabDto>> GetByIdAsync(int id, bool asNoTracking = false);
+        Task<ServiceResult<FormTabDto>> GetByCodeAsync(string tabCode, bool asNoTracking = false);
+        Task<ServiceResult<IEnumerable<FormTabDto>>> GetByFormIdAsync(int formBuilderId);
+        Task<ServiceResult<FormTabDto>> CreateAsync(CreateFormTabDto dto);
+        Task<ServiceResult<FormTabDto>> UpdateAsync(int id, UpdateFormTabDto dto);
+        Task<ServiceResult<bool>> DeleteAsync(int id);
+        Task<ServiceResult<bool>> ToggleActiveAsync(int id, bool isActive);
+        Task<ServiceResult<bool>> ExistsAsync(int id);
+        Task<ServiceResult<bool>> CodeExistsAsync(string tabCode, int? excludeId = null);
     }
 }

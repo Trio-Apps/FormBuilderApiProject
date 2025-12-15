@@ -1,3 +1,4 @@
+using formBuilder.Domian.Entitys;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
@@ -53,6 +54,7 @@ namespace FormBuilder.Infrastructure.Data
         public DbSet<OUTLOOK_APPROVAL_CONFIG> OUTLOOK_APPROVAL_CONFIG { get; set; }
         public DbSet<SAP_OBJECT_MAPPINGS> SAP_OBJECT_MAPPINGS { get; set; }
         public DbSet<SAP_FIELD_MAPPINGS> SAP_FIELD_MAPPINGS { get; set; }
+        public DbSet<REFRESH_TOKENS> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

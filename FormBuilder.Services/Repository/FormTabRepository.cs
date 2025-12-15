@@ -38,13 +38,15 @@ namespace FormBuilder.Infrastructure.Repository
             }
 
             /// <summary>
-            /// للتحقق مما إذا كان TabCode محدداً موجوداً بالفعل.
+            /// التحقق مما إذا كان TabCode فريداً (غير مستخدم من قبل).
+            /// يعيد true إذا كان الكود متاحاً / غير موجود في الجدول، و false إذا كان مستخدماً.
             /// </summary>
             public async Task<bool> IsTabCodeUniqueAsync(string tabCode, int? excludeId = null)
             {
                 if (string.IsNullOrEmpty(tabCode))
                 {
-                    return false; // لا يمكن التحقق إذا كان الكود فارغاً
+                    // نعتبره غير صالح => ليس فريداً
+                    return false;
                 }
 
                 // يبدأ الاستعلام بالبحث عن أي سجل يطابق TabCode
@@ -56,8 +58,11 @@ namespace FormBuilder.Infrastructure.Repository
                     query = query.Where(t => t.Id != excludeId.Value);
                 }
 
-                // التحقق مما إذا كان أي سجل يطابق الشروط موجوداً
-                return await query.AnyAsync();
+                // إذا وُجد أي سجل يطابق الشروط فهذا يعني أن الكود "غير فريد"
+                var exists = await query.AnyAsync();
+
+                // نعكس النتيجة لأن اسم الدالة يشير إلى "فريد"
+                return !exists;
             }
         }
     }

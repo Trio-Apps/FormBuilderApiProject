@@ -1,5 +1,6 @@
 ﻿using FormBuilder.API.Models.DTOs;
 using FormBuilder.Domain.Interfaces.Services;
+using FormBuilder.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -24,7 +25,7 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _documentTypeService.GetAllAsync();
-            return StatusCode(result.StatusCode, result);
+            return result.ToActionResult();
         }
 
        
@@ -32,7 +33,7 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _documentTypeService.GetByIdAsync(id);
-            return StatusCode(result.StatusCode, result);
+            return result.ToActionResult();
         }
 
        
@@ -40,7 +41,7 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> GetByCode(string code)
         {
             var result = await _documentTypeService.GetByCodeAsync(code);
-            return StatusCode(result.StatusCode, result);
+            return result.ToActionResult();
         }
 
       
@@ -48,7 +49,7 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> GetActive()
         {
             var result = await _documentTypeService.GetActiveAsync();
-            return StatusCode(result.StatusCode, result);
+            return result.ToActionResult();
         }
 
       
@@ -56,7 +57,7 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> GetByParentMenuId(int parentMenuId)
         {
             var result = await _documentTypeService.GetByParentMenuIdAsync(parentMenuId);
-            return StatusCode(result.StatusCode, result);
+            return result.ToActionResult();
         }
 
         
@@ -64,7 +65,7 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> GetRootMenuItems()
         {
             var result = await _documentTypeService.GetByParentMenuIdAsync(null);
-            return StatusCode(result.StatusCode, result);
+            return result.ToActionResult();
         }
 
         
@@ -72,7 +73,11 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> Create([FromBody] CreateDocumentTypeDto createDto)
         {
             var result = await _documentTypeService.CreateAsync(createDto);
-            return StatusCode(result.StatusCode, result);
+            if (result.Success && result.Data != null)
+            {
+                return CreatedAtAction(nameof(GetById), new { id = result.Data.Id }, result.Data);
+            }
+            return result.ToActionResult();
         }
 
       
@@ -80,7 +85,8 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] UpdateDocumentTypeDto updateDto)
         {
             var result = await _documentTypeService.UpdateAsync(id, updateDto);
-            return StatusCode(result.StatusCode, result);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
 
      
@@ -90,7 +96,8 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _documentTypeService.DeleteAsync(id);
-            return StatusCode(result.StatusCode, result);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
     }
 }

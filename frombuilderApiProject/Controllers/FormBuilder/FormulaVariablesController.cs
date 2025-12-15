@@ -1,6 +1,7 @@
-using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Application.DTOs.Formula;
 using FormBuilder.Domain.Interfaces.Services;
+using FormBuilder.Domian.Entitys.FormBuilder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administration")]
+
     public class FormulaVariablesController : ControllerBase
     {
         private readonly IFormulaVariableService _service;

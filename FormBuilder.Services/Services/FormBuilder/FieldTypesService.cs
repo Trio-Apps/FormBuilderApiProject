@@ -1,242 +1,175 @@
-using formBuilder.Domian.Entitys;
-using formBuilder.Domian.Interfaces;
+using AutoMapper;
+using FormBuilder.API.Models;
+using FormBuilder.Application.DTOS;
+using FormBuilder.Core.DTOS.Common;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domain.Interfaces;
-using FormBuilder.API.Models;
+using formBuilder.Domian.Interfaces;
+using FormBuilder.Services.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace FormBuilder.Services.Services
 {
-    public class FieldTypesService : IFieldTypesService
+    public class FieldTypesService
+        : BaseService<FIELD_TYPES, FieldTypeDto, FieldTypeCreateDto, FieldTypeUpdateDto>,
+          IFieldTypesService
     {
-        private readonly IunitOfwork _unitOfWork;
-
-        public FieldTypesService(IunitOfwork unitOfWork)
+        public FieldTypesService(IunitOfwork unitOfWork, IMapper mapper)
+            : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
-        // ================================
-        // CREATE
-        // ================================
-        public async Task<ApiResponse> CreateAsync(FieldTypeCreateDto dto)
+        protected override IBaseRepository<FIELD_TYPES> Repository => _unitOfWork.FieldTypesRepository;
+
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetAllAsync(Expression<Func<FIELD_TYPES, bool>>? filter = null)
+            => await base.GetAllAsync(filter);
+
+        public async Task<ServiceResult<PagedResult<FieldTypeDto>>> GetPagedAsync(int page = 1, int pageSize = 20, Expression<Func<FIELD_TYPES, bool>>? filter = null)
+            => await base.GetPagedAsync(page, pageSize, filter);
+
+        public async Task<ServiceResult<FieldTypeDto>> GetByIdAsync(int id, bool asNoTracking = false)
+            => await base.GetByIdAsync(id, asNoTracking);
+
+        public override async Task<ServiceResult<FieldTypeDto>> CreateAsync(FieldTypeCreateDto dto)
         {
-            if (dto == null)
-                return new ApiResponse(400, "DTO is required");
-
-            if (!await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(dto.TypeName))
-                return new ApiResponse(400, $"TypeName '{dto.TypeName}' already exists");
-
-            var entity = ToEntity(dto);
-
-            _unitOfWork.Repositary<FIELD_TYPES>().Add(entity);
-            await _unitOfWork.CompleteAsyn();
-
-            return new ApiResponse(200, "FieldType created successfully");
+            return await base.CreateAsync(dto);
         }
 
-        // ================================
-        // UPDATE
-        // ================================
-        public async Task<ApiResponse> UpdateAsync(FieldTypeUpdateDto dto, int id)
+        public override async Task<ServiceResult<FieldTypeDto>> UpdateAsync(int id, FieldTypeUpdateDto dto)
         {
-            if (dto == null)
-                return new ApiResponse(400, "DTO is required");
-
-            var entity = await _unitOfWork.FieldTypesRepository.GetByIdAsync(id);
-            if (entity == null)
-                return new ApiResponse(404, "FieldType not found");
-
-            if (!await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(dto.TypeName, id))
-                return new ApiResponse(400, $"TypeName '{dto.TypeName}' already exists");
-
-            MapUpdate(dto, entity);
-
-            _unitOfWork.Repositary<FIELD_TYPES>().Update(entity);
-            await _unitOfWork.CompleteAsyn();
-
-            return new ApiResponse(200, "FieldType updated successfully");
+            return await base.UpdateAsync(id, dto);
         }
 
-        // ================================
-        // DELETE (HARD)
-        // ================================
-        public async Task<ApiResponse> DeleteAsync(int id)
+        public override async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
-            var entity = await _unitOfWork.FieldTypesRepository.GetByIdAsync(id);
-            if (entity == null)
-                return new ApiResponse(404, "FieldType not found");
-
             var usageCount = await GetUsageCountAsync(id);
-            if (usageCount > 0)
-                return new ApiResponse(400, $"FieldType is used {usageCount} times — cannot delete");
+            if (!usageCount.Success) return ServiceResult<bool>.BadRequest(usageCount.ErrorMessage ?? "Usage check failed");
+            if (usageCount.Data > 0) return ServiceResult<bool>.BadRequest($"FieldType is used {usageCount.Data} times — cannot delete");
 
-            _unitOfWork.Repositary<FIELD_TYPES>().Delete(entity);
-            await _unitOfWork.CompleteAsyn();
-
-            return new ApiResponse(200, "FieldType deleted successfully");
+            return await base.DeleteAsync(id);
         }
 
-        // ================================
-        // SOFT DELETE
-        // ================================
-        public async Task<ApiResponse> SoftDeleteAsync(int id)
+        public async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
         {
-            var entity = await _unitOfWork.FieldTypesRepository.GetByIdAsync(id);
-            if (entity == null)
-                return new ApiResponse(404, "FieldType not found");
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
+            if (entity == null) return ServiceResult<bool>.NotFound();
 
             entity.IsActive = false;
-            _unitOfWork.Repositary<FIELD_TYPES>().Update(entity);
+            entity.UpdatedDate = DateTime.UtcNow;
+            Repository.Update(entity);
             await _unitOfWork.CompleteAsyn();
 
-            return new ApiResponse(200, "FieldType soft deleted successfully");
+            return ServiceResult<bool>.Ok(true);
         }
 
-        // ================================
-        // GET BY ID
-        // ================================
-        public async Task<FieldTypeDto> GetByIdAsync(int id)
-        {
-            var entity = await _unitOfWork.FieldTypesRepository.GetByIdAsync(id);
-            return ToDto(entity);
-        }
-
-        // ================================
-        // GET ALL
-        // ================================
-        public async Task<IEnumerable<FieldTypeDto>> GetAllAsync()
-        {
-            var list = await _unitOfWork.Repositary<FIELD_TYPES>().GetAllAsync();
-            return list.Select(ToDto);
-        }
-
-        // ================================
-        // SPECIAL QUERIES
-        // ================================
-        public async Task<IEnumerable<FieldTypeDto>> GetActiveAsync()
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetActiveAsync()
         {
             var list = await _unitOfWork.FieldTypesRepository.GetActiveFieldTypesAsync();
-            return list.Select(ToDto);
+            var mapped = _mapper.Map<IEnumerable<FieldTypeDto>>(list);
+            return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(mapped);
         }
 
-        public async Task<FieldTypeDto> GetByTypeNameAsync(string typeName)
+        public async Task<ServiceResult<FieldTypeDto>> GetByTypeNameAsync(string typeName, bool asNoTracking = false)
         {
-            var entity = await _unitOfWork.FieldTypesRepository.GetByTypeNameAsync(typeName);
-            return ToDto(entity);
+            if (string.IsNullOrWhiteSpace(typeName))
+                return ServiceResult<FieldTypeDto>.BadRequest("TypeName is required");
+
+            var entity = await _unitOfWork.FieldTypesRepository.GetByTypeNameAsync(typeName.Trim());
+            if (entity == null) return ServiceResult<FieldTypeDto>.NotFound();
+
+            return ServiceResult<FieldTypeDto>.Ok(_mapper.Map<FieldTypeDto>(entity));
         }
 
-        public async Task<IEnumerable<FieldTypeDto>> GetWithOptionsAsync()
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetWithOptionsAsync()
         {
             var list = await _unitOfWork.FieldTypesRepository.GetFieldTypesWithOptionsAsync();
-            return list.Select(ToDto);
+            return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 
-        public async Task<IEnumerable<FieldTypeDto>> GetByDataTypeAsync(string dataType)
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetByDataTypeAsync(string dataType)
         {
-            var list = await _unitOfWork.FieldTypesRepository.GetByDataTypeAsync(dataType);
-            return list.Select(ToDto);
+            if (string.IsNullOrWhiteSpace(dataType))
+                return ServiceResult<IEnumerable<FieldTypeDto>>.BadRequest("DataType is required");
+
+            var list = await _unitOfWork.FieldTypesRepository.GetByDataTypeAsync(dataType.Trim());
+            return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 
-        public async Task<IEnumerable<FieldTypeDto>> GetWithMultipleValuesAsync()
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetWithMultipleValuesAsync()
         {
             var list = await _unitOfWork.FieldTypesRepository.GetFieldTypesWithMultipleValuesAsync();
-            return list.Select(ToDto);
+            return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 
-        public async Task<IEnumerable<FieldTypeDropdownDto>> GetForDropdownAsync()
+        public async Task<ServiceResult<IEnumerable<FieldTypeDropdownDto>>> GetForDropdownAsync()
         {
             var list = await _unitOfWork.FieldTypesRepository.GetFieldTypesForDropdownAsync();
-            return list.Select(x => new FieldTypeDropdownDto
-            {
-                Id = x.Id,
-                TypeName = x.TypeName
-            });
+            return ServiceResult<IEnumerable<FieldTypeDropdownDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDropdownDto>>(list));
         }
 
-        public async Task<IEnumerable<FieldTypeDto>> GetBasicAsync()
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetBasicAsync()
         {
-            var list = await _unitOfWork.Repositary<FIELD_TYPES>().GetAllAsync(x => !x.HasOptions && !x.AllowMultiple);
-            return list.Select(ToDto);
+            var list = await Repository.GetAllAsync(x => !x.HasOptions && !x.AllowMultiple);
+            return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 
-        public async Task<IEnumerable<FieldTypeDto>> GetAdvancedAsync()
+        public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetAdvancedAsync()
         {
-            var list = await _unitOfWork.Repositary<FIELD_TYPES>().GetAllAsync(x => x.HasOptions || x.AllowMultiple);
-            return list.Select(ToDto);
+            var list = await Repository.GetAllAsync(x => x.HasOptions || x.AllowMultiple);
+            return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 
-        // ================================
-        // VALIDATION
-        // ================================
-        public async Task<bool> IsTypeNameUniqueAsync(string typeName, int? ignoreId = null)
+        public async Task<ServiceResult<bool>> IsTypeNameUniqueAsync(string typeName, int? ignoreId = null)
         {
-            return await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(typeName, ignoreId);
+            if (string.IsNullOrWhiteSpace(typeName))
+                return ServiceResult<bool>.BadRequest("TypeName is required");
+
+            var unique = await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(typeName.Trim(), ignoreId);
+            return ServiceResult<bool>.Ok(unique);
         }
 
-        // ================================
-        // UTILITY
-        // ================================
-        public async Task<bool> ExistsAsync(int id)
+        public async Task<ServiceResult<bool>> ExistsAsync(int id)
         {
-            return await _unitOfWork.Repositary<FIELD_TYPES>().AnyAsync(x => x.Id == id);
+            var exists = await Repository.AnyAsync(x => x.Id == id);
+            return ServiceResult<bool>.Ok(exists);
         }
 
-        public async Task<int> GetUsageCountAsync(int fieldTypeId)
+        public async Task<ServiceResult<int>> GetUsageCountAsync(int fieldTypeId)
         {
             var entity = await _unitOfWork.FieldTypesRepository.GetByIdAsync(fieldTypeId, x => x.FORM_FIELDS, x => x.FORM_GRID_COLUMNS);
-            if (entity == null) return 0;
+            if (entity == null) return ServiceResult<int>.NotFound();
 
             int countFields = entity.FORM_FIELDS?.Count(x => x.IsActive) ?? 0;
             int countGrid = entity.FORM_GRID_COLUMNS?.Count(x => x.IsActive) ?? 0;
 
-            return countFields + countGrid;
+            return ServiceResult<int>.Ok(countFields + countGrid);
         }
 
-        // ================================
-        // MAPPING
-        // ================================
-        private FieldTypeDto ToDto(FIELD_TYPES e)
+        protected override async Task<ValidationResult> ValidateCreateAsync(FieldTypeCreateDto dto)
         {
-            if (e == null) return null;
+            if (dto == null) return ValidationResult.Failure("Payload is required");
 
-            return new FieldTypeDto
+            var unique = await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(dto.TypeName);
+            if (!unique) return ValidationResult.Failure($"TypeName '{dto.TypeName}' already exists");
+
+            return ValidationResult.Success();
+        }
+
+        protected override async Task<ValidationResult> ValidateUpdateAsync(int id, FieldTypeUpdateDto dto, FIELD_TYPES entity)
+        {
+            if (dto == null) return ValidationResult.Failure("Payload is required");
+
+            if (!string.Equals(dto.TypeName, entity.TypeName, StringComparison.OrdinalIgnoreCase))
             {
-                Id = e.Id,
-                TypeName = e.TypeName ?? string.Empty,
-                DataType = e.DataType ?? string.Empty,
-                MaxLength = e.MaxLength,
-                HasOptions = e.HasOptions,
-                AllowMultiple = e.AllowMultiple,
-                IsActive = e.IsActive
-            };
-        }
+                var unique = await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(dto.TypeName, id);
+                if (!unique) return ValidationResult.Failure($"TypeName '{dto.TypeName}' already exists");
+            }
 
-        private FIELD_TYPES ToEntity(FieldTypeCreateDto dto)
-        {
-            return new FIELD_TYPES
-            {
-                TypeName = dto.TypeName,
-                DataType = dto.DataType,
-                MaxLength = dto.MaxLength,
-                HasOptions = dto.HasOptions,
-                AllowMultiple = dto.AllowMultiple,
-                IsActive = true,
-                CreatedByUserId = null, // يمكن ربطه بالمستخدم الحالي
-            };
-        }
-
-        private void MapUpdate(FieldTypeUpdateDto dto, FIELD_TYPES e)
-        {
-            e.TypeName = dto.TypeName;
-            e.DataType = dto.DataType;
-            e.MaxLength = dto.MaxLength;
-            e.HasOptions = dto.HasOptions;
-            e.AllowMultiple = dto.AllowMultiple;
-            e.IsActive = dto.IsActive;
+            return ValidationResult.Success();
         }
     }
 }

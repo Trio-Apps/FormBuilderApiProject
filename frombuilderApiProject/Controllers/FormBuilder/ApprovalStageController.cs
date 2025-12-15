@@ -3,11 +3,13 @@ using FormBuilder.Application.DTOs.ApprovalWorkflow;
 using FormBuilder.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Administration")]
     public class ApprovalStageController : ControllerBase
     {
         private readonly IApprovalStageService _service;
