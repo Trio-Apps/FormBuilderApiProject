@@ -14,6 +14,10 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
         public string? Description { get; set; }
 
+        public bool IsPublished { get; set; } = false;
+
+        public bool IsActive { get; set; } = true;
+
         // optional: will be set from authenticated user in controller
         public string? CreatedByUserId { get; set; }
     }

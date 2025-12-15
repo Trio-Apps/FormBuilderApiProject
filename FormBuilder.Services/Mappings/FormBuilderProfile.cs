@@ -15,8 +15,8 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.Version, opt => opt.MapFrom(_ => 1))
-                .ForMember(dest => dest.IsPublished, opt => opt.MapFrom(_ => false))
-                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(_ => true));
+                .ForMember(dest => dest.IsPublished, opt => opt.MapFrom(src => src.IsPublished))
+                .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive));
 
             CreateMap<UpdateFormBuilderDto, FORM_BUILDER>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())

@@ -14,8 +14,8 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
         public string Description { get; set; }
 
-        public bool IsPublished { get; set; }
+        public bool? IsPublished { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

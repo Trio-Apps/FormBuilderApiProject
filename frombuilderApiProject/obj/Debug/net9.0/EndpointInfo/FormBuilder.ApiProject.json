@@ -10152,6 +10152,12 @@
             "type": "string",
             "nullable": true
           },
+          "isPublished": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
           "createdByUserId": {
             "type": "string",
             "nullable": true
@@ -11420,10 +11426,12 @@
             "nullable": true
           },
           "isPublished": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "isActive": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           }
         },
         "additionalProperties": false
