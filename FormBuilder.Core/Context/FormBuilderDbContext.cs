@@ -1,4 +1,3 @@
-﻿using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
@@ -7,7 +6,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
-namespace FormBuilder.API.Data
+namespace FormBuilder.Infrastructure.Data
 {
     public class FormBuilderDbContext : DbContext
     {

@@ -1,5 +1,5 @@
-﻿using formBuilder.Domian.Interfaces;
-using FormBuilder.Domian.Entitys.froms; // المسار المفترض لكيان FORM_TABS
+using formBuilder.Domian.Interfaces;
+using FormBuilder.Domian.Entitys.FormBuilder; // المسار الصحيح لكيان FORM_TABS
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

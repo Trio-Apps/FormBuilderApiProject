@@ -1,5 +1,5 @@
-﻿using formBuilder.Domian.Interfaces;
-using FormBuilder.API.Models;
+using formBuilder.Domian.Interfaces;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

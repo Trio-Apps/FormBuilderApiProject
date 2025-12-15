@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.Core.DTOS.FormFields
 {
@@ -12,11 +12,11 @@ namespace FormBuilder.Core.DTOS.FormFields
 
         [Required(ErrorMessage = "FieldName is required")]
         [StringLength(200, ErrorMessage = "FieldName cannot exceed 200 characters")]
-        public string FieldName { get; set; }
+        public string FieldName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "FieldCode is required")]
         [StringLength(100, ErrorMessage = "FieldCode cannot exceed 100 characters")]
-        public string FieldCode { get; set; }
+        public string FieldCode { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "DataType is required")]
         [StringLength(50, ErrorMessage = "DataType cannot exceed 50 characters")]
@@ -25,10 +25,10 @@ namespace FormBuilder.Core.DTOS.FormFields
         public int FieldOrder { get; set; } = 0;
 
         [StringLength(200, ErrorMessage = "Placeholder cannot exceed 200 characters")]
-        public string Placeholder { get; set; }
+        public string? Placeholder { get; set; }
 
         [StringLength(500, ErrorMessage = "HintText cannot exceed 500 characters")]
-        public string HintText { get; set; }
+        public string? HintText { get; set; }
 
         public bool IsMandatory { get; set; } = false;
 
@@ -36,7 +36,7 @@ namespace FormBuilder.Core.DTOS.FormFields
 
         public bool IsVisible { get; set; } = true;
 
-        public string DefaultValueJson { get; set; }
+        public string? DefaultValueJson { get; set; }
 
         public int? MaxLength { get; set; }
 
@@ -47,14 +47,14 @@ namespace FormBuilder.Core.DTOS.FormFields
         public decimal? MaxValue { get; set; }
 
         [StringLength(500, ErrorMessage = "RegexPattern cannot exceed 500 characters")]
-        public string RegexPattern { get; set; }
+        public string? RegexPattern { get; set; }
 
         [StringLength(500, ErrorMessage = "ValidationMessage cannot exceed 500 characters")]
-        public string ValidationMessage { get; set; }
+        public string? ValidationMessage { get; set; }
 
-        public string VisibilityRuleJson { get; set; }
+        public string? VisibilityRuleJson { get; set; }
 
-        public string ReadOnlyRuleJson { get; set; }
+        public string? ReadOnlyRuleJson { get; set; }
 
         public bool IsActive { get; set; } = true;
 
@@ -63,9 +63,9 @@ namespace FormBuilder.Core.DTOS.FormFields
 
         public bool IsSearchable { get; set; } = false;
 
-        public string CssClass { get; set; }
+        public string? CssClass { get; set; }
 
-        public string Style { get; set; }
+        public string? Style { get; set; }
 
         // خيارات الحقل (لـ Dropdown, Radio, Checkbox)
         public List<FieldOptionDto> FieldOptions { get; set; } = new List<FieldOptionDto>();
@@ -75,10 +75,10 @@ namespace FormBuilder.Core.DTOS.FormFields
     {
         [Required(ErrorMessage = "OptionText is required")]
         [StringLength(200, ErrorMessage = "OptionText cannot exceed 200 characters")]
-        public string OptionText { get; set; }
+        public string OptionText { get; set; } = string.Empty;
 
         [StringLength(100, ErrorMessage = "OptionValue cannot exceed 100 characters")]
-        public string OptionValue { get; set; }
+        public string? OptionValue { get; set; }
 
         public int SortOrder { get; set; } = 0;
 
@@ -87,10 +87,10 @@ namespace FormBuilder.Core.DTOS.FormFields
         public bool IsActive { get; set; } = true;
 
         // خصائص إضافية للخيارات
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public string IconClass { get; set; }
+        public string? IconClass { get; set; }
 
-        public string Color { get; set; }
+        public string? Color { get; set; }
     }
 }

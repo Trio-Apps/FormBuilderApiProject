@@ -1,5 +1,6 @@
-﻿using FormBuilder.Application.Abstractions;
+using FormBuilder.Application.Abstractions;
 using FormBuilder.Application.Dtos.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FormBuilder.API.Controllers
@@ -27,6 +28,35 @@ namespace FormBuilder.API.Controllers
                 return Unauthorized(new { response.ErrorMessage });
 
             return Ok(response);
+        }
+
+        [HttpPost("refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequestDto request, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var response = await _accountService.RefreshTokenAsync(request.RefreshToken, cancellationToken);
+
+            if (!response.Success)
+                return Unauthorized(new { response.ErrorMessage });
+
+            return Ok(response);
+        }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public async Task<IActionResult> Logout([FromBody] RefreshTokenRequestDto request, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _accountService.LogoutAsync(request.RefreshToken, cancellationToken);
+
+            if (!result)
+                return BadRequest(new { message = "Invalid refresh token." });
+
+            return Ok(new { message = "Logged out successfully." });
         }
     }
 }

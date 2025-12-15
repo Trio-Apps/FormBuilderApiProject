@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.FromBuilder;
@@ -19,7 +19,7 @@ namespace FormBuilder.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<DOCUMENT_TYPES> GetByIdAsync(int id)
+        public async Task<DOCUMENT_TYPES?> GetByIdAsync(int id)
         {
             return await _context.DOCUMENT_TYPES
                 .Include(dt => dt.FORM_BUILDER)
@@ -27,7 +27,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .FirstOrDefaultAsync(dt => dt.Id == id);
         }
 
-        public async Task<DOCUMENT_TYPES> GetByCodeAsync(string code)
+        public async Task<DOCUMENT_TYPES?> GetByCodeAsync(string code)
         {
             return await _context.DOCUMENT_TYPES
                 .Include(dt => dt.FORM_BUILDER)

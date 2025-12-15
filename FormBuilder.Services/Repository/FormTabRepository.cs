@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domian.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -6,13 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FormBuilder.Domian.Entitys.FormBuilder;
 
 
-    // افترض أنك تستخدم هذا المسار لطبقة البنية التحتية
-    namespace FormBuilder.Infrastructure.Repository
+// افترض أنك تستخدم هذا المسار لطبقة البنية التحتية
+namespace FormBuilder.Infrastructure.Repository
     {
         // يجب أن يرث من تطبيق القاعدة العامة (BaseRepository) والواجهة المخصصة
-        public class FormTabRepository : BaseRepository<FORM_TABS>, IFormTabRepository
+        public class FormTabRepository : BaseRepository<Domian.Entitys.FormBuilder.FORM_TABS>, IFormTabRepository
         {
             // الوصول إلى DbContext مباشرة لتنفيذ الاستعلامات المعقدة
             private readonly FormBuilderDbContext _context;

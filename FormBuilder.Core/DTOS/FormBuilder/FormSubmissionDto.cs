@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,17 +12,17 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     {
         public int Id { get; set; }
         public int FormBuilderId { get; set; }
-        public string FormName { get; set; }
+        public string? FormName { get; set; }
         public int Version { get; set; }
         public int DocumentTypeId { get; set; }
-        public string DocumentTypeName { get; set; }
+        public string? DocumentTypeName { get; set; }
         public int SeriesId { get; set; }
-        public string SeriesCode { get; set; }
-        public string DocumentNumber { get; set; }
-        public string SubmittedByUserId { get; set; }
-        public string SubmittedByUserName { get; set; }
+        public string? SeriesCode { get; set; }
+        public string? DocumentNumber { get; set; }
+        public string? SubmittedByUserId { get; set; }
+        public string? SubmittedByUserName { get; set; }
         public DateTime SubmittedDate { get; set; }
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdatedDate { get; set; }
     }
@@ -46,15 +46,15 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int SeriesId { get; set; }
 
         [Required]
-        public string SubmittedByUserId { get; set; }
+        public string SubmittedByUserId { get; set; } = string.Empty;
 
         public string Status { get; set; } = "Draft";
     }
 
     public class UpdateFormSubmissionDto
     {
-        public string DocumentNumber { get; set; }
-        public string Status { get; set; }
+        public string? DocumentNumber { get; set; }
+        public string? Status { get; set; }
         public DateTime? SubmittedDate { get; set; }
     }
 
@@ -67,13 +67,13 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int Id { get; set; }
         public int SubmissionId { get; set; }
         public int FieldId { get; set; }
-        public string FieldCode { get; set; }
-        public string FieldName { get; set; }
-        public string ValueString { get; set; }
+        public string? FieldCode { get; set; }
+        public string? FieldName { get; set; }
+        public string? ValueString { get; set; }
         public decimal? ValueNumber { get; set; }
         public DateTime? ValueDate { get; set; }
         public bool? ValueBool { get; set; }
-        public string ValueJson { get; set; }
+        public string? ValueJson { get; set; }
     }
 
     public class SaveFormSubmissionValueDto
@@ -82,13 +82,13 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int FieldId { get; set; }
 
         [Required]
-        public string FieldCode { get; set; }
+        public string FieldCode { get; set; } = string.Empty;
 
-        public string ValueString { get; set; }
+        public string? ValueString { get; set; }
         public decimal? ValueNumber { get; set; }
         public DateTime? ValueDate { get; set; }
         public bool? ValueBool { get; set; }
-        public string ValueJson { get; set; }
+        public string? ValueJson { get; set; }
     }
 
     public class BulkSaveFieldValuesDto
@@ -110,19 +110,19 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int FieldId { get; set; }
 
         [Required]
-        public string FieldCode { get; set; }
+        public string FieldCode { get; set; } = string.Empty;
 
         [Required]
-        public string FileName { get; set; }
+        public string FileName { get; set; } = string.Empty;
 
         [Required]
-        public string FilePath { get; set; }
+        public string FilePath { get; set; } = string.Empty;
 
         [Required]
         public long FileSize { get; set; }
 
         [Required]
-        public string ContentType { get; set; }
+        public string ContentType { get; set; } = string.Empty;
     }
 
     public class UploadAttachmentDto
@@ -134,7 +134,7 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int FieldId { get; set; }
 
         [Required]
-        public string FieldCode { get; set; }
+        public string FieldCode { get; set; } = string.Empty;
     }
 
     // ================================
@@ -146,8 +146,8 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int Id { get; set; }
         public int SubmissionId { get; set; }
         public int GridId { get; set; }
-        public string GridName { get; set; }
-        public string GridCode { get; set; }
+        public string GridName { get; set; } = string.Empty;
+        public string GridCode { get; set; } = string.Empty;
         public int RowIndex { get; set; }
         public List<FormSubmissionGridCellDto> Cells { get; set; } = new();
     }
@@ -157,13 +157,13 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int Id { get; set; }
         public int RowId { get; set; }
         public int ColumnId { get; set; }
-        public string ColumnName { get; set; }
-        public string ColumnCode { get; set; }
-        public string ValueString { get; set; }
+        public string ColumnName { get; set; } = string.Empty;
+        public string ColumnCode { get; set; } = string.Empty;
+        public string? ValueString { get; set; }
         public decimal? ValueNumber { get; set; }
         public DateTime? ValueDate { get; set; }
         public bool? ValueBool { get; set; }
-        public string ValueJson { get; set; }
+        public string? ValueJson { get; set; }
     }
 
     public class SaveFormSubmissionGridDto
@@ -183,13 +183,13 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int ColumnId { get; set; }
 
         [Required]
-        public string ColumnCode { get; set; }
+        public string ColumnCode { get; set; } = string.Empty;
 
-        public string ValueString { get; set; }
+        public string? ValueString { get; set; }
         public decimal? ValueNumber { get; set; }
         public DateTime? ValueDate { get; set; }
         public bool? ValueBool { get; set; }
-        public string ValueJson { get; set; }
+        public string? ValueJson { get; set; }
     }
 
     public class BulkSaveGridDataDto
@@ -213,7 +213,7 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int SubmissionId { get; set; }
 
         [Required]
-        public string SubmittedByUserId { get; set; }
+        public string SubmittedByUserId { get; set; } = string.Empty;
     }
 
     public class ChangeStatusDto
@@ -222,9 +222,9 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int SubmissionId { get; set; }
 
         [Required]
-        public string Status { get; set; }
+        public string Status { get; set; } = string.Empty;
 
-        public string Comments { get; set; }
+        public string? Comments { get; set; }
     }
 
     public class SaveFormSubmissionDataDto
@@ -245,12 +245,12 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     {
         public int? FormBuilderId { get; set; }
         public int? DocumentTypeId { get; set; }
-        public string Status { get; set; }
-        public string SubmittedByUserId { get; set; }
+        public string? Status { get; set; }
+        public string? SubmittedByUserId { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public string DocumentNumber { get; set; }
-        public string SearchText { get; set; }
+        public string? DocumentNumber { get; set; }
+        public string? SearchText { get; set; }
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 20;
     }
@@ -283,14 +283,14 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
     public class SubmissionTrendDto
     {
-        public string Period { get; set; } // "2024-01", "2024-02", etc.
+        public string Period { get; set; } = string.Empty; // "2024-01", "2024-02", etc.
         public int Count { get; set; }
     }
 
     public class UserSubmissionStatsDto
     {
-        public string UserId { get; set; }
-        public string UserName { get; set; }
+        public string UserId { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public int TotalSubmissions { get; set; }
         public int DraftCount { get; set; }
         public int SubmittedCount { get; set; }
@@ -310,17 +310,17 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
     public class ValidationErrorDto
     {
-        public string FieldCode { get; set; }
-        public string FieldName { get; set; }
-        public string ErrorMessage { get; set; }
-        public string ErrorType { get; set; } // Required, Format, Range, etc.
+        public string FieldCode { get; set; } = string.Empty;
+        public string FieldName { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
+        public string ErrorType { get; set; } = string.Empty; // Required, Format, Range, etc.
     }
 
     public class ValidationWarningDto
     {
-        public string FieldCode { get; set; }
-        public string FieldName { get; set; }
-        public string WarningMessage { get; set; }
+        public string FieldCode { get; set; } = string.Empty;
+        public string FieldName { get; set; } = string.Empty;
+        public string WarningMessage { get; set; } = string.Empty;
     }
 
     public class WorkflowActionDto
@@ -329,10 +329,10 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int SubmissionId { get; set; }
 
         [Required]
-        public string Action { get; set; } // Approve, Reject, Return, Cancel
+        public string Action { get; set; } = string.Empty; // Approve, Reject, Return, Cancel
 
-        public string Comments { get; set; }
-        public string PerformedByUserId { get; set; }
+        public string? Comments { get; set; }
+        public string? PerformedByUserId { get; set; }
     }
 
     // ================================
@@ -341,8 +341,8 @@ namespace FormBuilder.Core.DTOS.FormBuilder
 
     public class ExportSubmissionsDto
     {
-        public FormSubmissionFilterDto Filter { get; set; }
-        public string ExportFormat { get; set; } // Excel, PDF, CSV
+        public FormSubmissionFilterDto? Filter { get; set; }
+        public string ExportFormat { get; set; } = string.Empty; // Excel, PDF, CSV
         public List<string> IncludeFields { get; set; } = new();
     }
 
@@ -352,12 +352,12 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int FormBuilderId { get; set; }
 
         [Required]
-        public string FileContent { get; set; } // Base64 encoded file
+        public string FileContent { get; set; } = string.Empty; // Base64 encoded file
 
         [Required]
-        public string FileName { get; set; }
+        public string FileName { get; set; } = string.Empty;
 
-        public string ImportedByUserId { get; set; }
+        public string? ImportedByUserId { get; set; }
     }
 
     public class ImportResultDto
@@ -366,14 +366,14 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int ImportedCount { get; set; }
         public int FailedCount { get; set; }
         public List<ImportErrorDto> Errors { get; set; } = new();
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 
     public class ImportErrorDto
     {
         public int RowNumber { get; set; }
-        public string FieldName { get; set; }
-        public string ErrorMessage { get; set; }
+        public string FieldName { get; set; } = string.Empty;
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 
     // ================================
@@ -384,13 +384,13 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     {
         public int Id { get; set; }
         public int SubmissionId { get; set; }
-        public string Action { get; set; }
-        public string Description { get; set; }
-        public string PerformedByUserId { get; set; }
-        public string PerformedByUserName { get; set; }
+        public string Action { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string PerformedByUserId { get; set; } = string.Empty;
+        public string PerformedByUserName { get; set; } = string.Empty;
         public DateTime PerformedDate { get; set; }
-        public string OldValues { get; set; }
-        public string NewValues { get; set; }
+        public string OldValues { get; set; } = string.Empty;
+        public string NewValues { get; set; } = string.Empty;
     }
 
     // ================================
@@ -410,10 +410,10 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     public class RecentSubmissionDto
     {
         public int Id { get; set; }
-        public string DocumentNumber { get; set; }
-        public string FormName { get; set; }
-        public string Status { get; set; }
+        public string? DocumentNumber { get; set; }
+        public string? FormName { get; set; }
+        public string Status { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; }
-        public string SubmittedByUserName { get; set; }
+        public string? SubmittedByUserName { get; set; }
     }
 }

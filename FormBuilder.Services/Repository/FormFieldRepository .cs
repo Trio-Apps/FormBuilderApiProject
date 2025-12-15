@@ -1,5 +1,5 @@
-﻿using formBuilder.Domian.Entitys;
-using FormBuilder.API.Data;
+using formBuilder.Domian.Entitys;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Entitys.froms;
@@ -100,7 +100,7 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Get by ID with included entities
-        public async Task<FORM_FIELDS> GetByIdAsync(int id, params Expression<Func<FIELD_TYPES, object>>[] includes)
+        public async Task<FORM_FIELDS?> GetByIdAsync(int id, params Expression<Func<FIELD_TYPES, object>>[] includes)
         {
             var query = _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
@@ -126,9 +126,9 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Override the base GetByIdAsync to include related entities
-        public  async Task<FORM_FIELDS> GetByIdAsync(int id)
+        public async Task<FORM_FIELDS?> GetByIdAsync(int id)
         {
-            return await GetByIdAsync(id, null);
+            return await GetByIdAsync(id, Array.Empty<Expression<Func<FIELD_TYPES, object>>>());
         }
         // Add this implementation
         public async Task<bool> ExistsAsync(int id)

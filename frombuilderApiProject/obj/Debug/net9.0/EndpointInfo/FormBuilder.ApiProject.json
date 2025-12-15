@@ -37,6 +37,68 @@
         }
       }
     },
+    "/api/Account/refresh-token": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Account/logout": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/ApprovalStage/workflow/{workflowId}": {
       "get": {
         "tags": [
@@ -2692,6 +2754,26 @@
       "get": {
         "tags": [
           "FormBuilder"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -9403,6 +9485,26 @@
         "tags": [
           "Projects"
         ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 1
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -10049,15 +10151,19 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "createdByUserId": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
       "CreateFormFieldDto": {
         "required": [
+          "dataType",
           "fieldCode",
           "fieldName",
-          "fieldOrder",
           "fieldTypeId",
           "tabId"
         ],
@@ -10081,15 +10187,24 @@
             "minLength": 0,
             "type": "string"
           },
+          "dataType": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
           "fieldOrder": {
             "type": "integer",
             "format": "int32"
           },
           "placeholder": {
+            "maxLength": 200,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "hintText": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -10106,30 +10221,32 @@
             "type": "string",
             "nullable": true
           },
-          "dataType": {
-            "type": "string",
-            "nullable": true
-          },
           "maxLength": {
             "type": "integer",
             "format": "int32",
             "nullable": true
           },
           "minValue": {
+            "minimum": 0,
             "type": "number",
             "format": "double",
             "nullable": true
           },
           "maxValue": {
+            "minimum": 0,
             "type": "number",
             "format": "double",
             "nullable": true
           },
           "regexPattern": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
           "validationMessage": {
+            "maxLength": 500,
+            "minLength": 0,
             "type": "string",
             "nullable": true
           },
@@ -10141,8 +10258,28 @@
             "type": "string",
             "nullable": true
           },
-          "createdByUserId": {
+          "isActive": {
+            "type": "boolean"
+          },
+          "showInList": {
+            "type": "boolean"
+          },
+          "isSearchable": {
+            "type": "boolean"
+          },
+          "cssClass": {
             "type": "string",
+            "nullable": true
+          },
+          "style": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldOptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FieldOptionDto"
+            },
             "nullable": true
           }
         },
@@ -10562,6 +10699,48 @@
             "maxLength": 200,
             "minLength": 0,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FieldOptionDto": {
+        "required": [
+          "optionText"
+        ],
+        "type": "object",
+        "properties": {
+          "optionText": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          },
+          "optionValue": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "sortOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "iconClass": {
+            "type": "string",
+            "nullable": true
+          },
+          "color": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -10989,6 +11168,19 @@
           }
         },
         "additionalProperties": { }
+      },
+      "RefreshTokenRequestDto": {
+        "required": [
+          "refreshToken"
+        ],
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
       },
       "SubmitFormDto": {
         "required": [

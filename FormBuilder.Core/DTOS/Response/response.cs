@@ -1,19 +1,19 @@
-﻿namespace FormBuilder.API.Models
+namespace FormBuilder.API.Models
 {
     public class ApiResponse<T>
     {
         public int StatusCode { get; set; }
-        public string Message { get; set; }
-        public T Data { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public T? Data { get; set; }
 
-        public ApiResponse(int statusCode, string message = null, T data = default)
+        public ApiResponse(int statusCode, string? message = null, T? data = default)
         {
             StatusCode = statusCode;
-            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
+            Message = message ?? GetDefaultMessageForStatusCode(statusCode) ?? string.Empty;
             Data = data;
         }
 
-        private string GetDefaultMessageForStatusCode(int statusCode)
+        private string? GetDefaultMessageForStatusCode(int statusCode)
         {
             return statusCode switch
             {
@@ -32,17 +32,17 @@
     public class ApiResponse
     {
         public int StatusCode { get; set; }
-        public string Message { get; set; }
-        public object ? Data { get; set; }
+        public string Message { get; set; } = string.Empty;
+        public object? Data { get; set; }
 
-        public ApiResponse(int statusCode, string message = null, object data = null)
+        public ApiResponse(int statusCode, string? message = null, object? data = null)
         {
             StatusCode = statusCode;
-            Message = message ?? GetDefaultMessageForStatusCode(statusCode);
-            Data = data ??null;
+            Message = message ?? GetDefaultMessageForStatusCode(statusCode) ?? string.Empty;
+            Data = data;
         }
 
-        private string GetDefaultMessageForStatusCode(int statusCode)
+        private string? GetDefaultMessageForStatusCode(int statusCode)
         {
             return statusCode switch
             {

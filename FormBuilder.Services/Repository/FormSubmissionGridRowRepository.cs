@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.FormBuilder;
@@ -20,7 +20,7 @@ namespace FormBuilder.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<FORM_SUBMISSION_GRID_ROWS> GetByIdAsync(int id)
+        public async Task<FORM_SUBMISSION_GRID_ROWS?> GetByIdAsync(int id)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace FormBuilder.Infrastructure.Repositories
                         .ThenInclude(g => g.FORM_BUILDER)
                     .FirstOrDefaultAsync(r => r.Id == id);
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -49,7 +49,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(r => r.RowIndex)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -68,7 +68,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(r => r.RowIndex)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -87,7 +87,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(r => r.RowIndex)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -105,7 +105,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .OrderBy(r => r.RowIndex)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -125,7 +125,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .OrderBy(r => r.RowIndex)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -141,7 +141,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
                 return maxIndex + 1;
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -156,7 +156,7 @@ namespace FormBuilder.Infrastructure.Repositories
                                    r.GridId == gridId &&
                                    r.RowIndex == rowIndex);
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -169,7 +169,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 return await _context.FORM_SUBMISSION_GRID_ROWS
                     .CountAsync(r => r.SubmissionId == submissionId && r.IsActive);
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -182,7 +182,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 return await _context.FORM_SUBMISSION_GRID_ROWS
                     .CountAsync(r => r.GridId == gridId && r.IsActive);
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }
@@ -204,7 +204,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(r => r.RowIndex)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }

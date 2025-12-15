@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace FormBuilder.Application.DTOs.ApprovalWorkflow
@@ -10,17 +10,17 @@ namespace FormBuilder.Application.DTOs.ApprovalWorkflow
     public class ApprovalWorkflowDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int DocumentTypeId { get; set; }
-        public string DocumentTypeName { get; set; } // للعرض
+        public string DocumentTypeName { get; set; } = string.Empty; // للعرض
         public bool IsActive { get; set; }
-        public List<ApprovalStageDto> Stages { get; set; }
+        public List<ApprovalStageDto> Stages { get; set; } = new();
     }
 
     // DTO لإنشاء Workflow جديد
     public class ApprovalWorkflowCreateDto
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int DocumentTypeId { get; set; }
         public bool IsActive { get; set; } = true;
     }
@@ -28,7 +28,7 @@ namespace FormBuilder.Application.DTOs.ApprovalWorkflow
     // DTO لتحديث Workflow موجود
     public class ApprovalWorkflowUpdateDto
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public int? DocumentTypeId { get; set; }
         public bool? IsActive { get; set; }
     }

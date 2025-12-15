@@ -1,5 +1,5 @@
-﻿using formBuilder.Domian.Interfaces;
-using FormBuilder.API.Models;
+using formBuilder.Domian.Interfaces;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.DTOS.FormRules;
 using FormBuilder.Domian.Entitys.froms;
 using System;

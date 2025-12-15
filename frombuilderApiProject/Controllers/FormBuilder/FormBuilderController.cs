@@ -1,11 +1,10 @@
-﻿using FormBuilder.API.Models;
 using FormBuilder.Core.DTOS.FormBuilder;
-using FormBuilder.Core.IServices.FormBuilder.FormBuilder.Services.Services;
+using FormBuilder.Domain.Interfaces.Services;
+using FormBuilder.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims; // REQUIRED for accessing claims/user ID
 using System.Threading.Tasks;
 
@@ -13,7 +12,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
     public class FormBuilderController : ControllerBase
     {
         private readonly IFormBuilderService _formBuilderService;
@@ -23,35 +22,13 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
             _formBuilderService = formBuilderService;
         }
 
-        // --- Manual Mapping Helper ---
-        private FormBuilderDto MapToDto(FORM_BUILDER entity)
-        {
-            if (entity == null) return null;
-            return new FormBuilderDto
-            {
-                
-                Id = entity.Id,
-                FormName = entity.FormName,
-                FormCode = entity.FormCode,
-                Description = entity.Description,
-                Version = entity.Version,
-                IsPublished = entity.IsPublished,
-                IsActive = entity.IsActive,
-
-                CreatedByUserId = entity.CreatedByUserId,
-                CreatedDate = entity.CreatedDate,
-                UpdatedDate = entity.UpdatedDate
-            };
-        }
-
         // --- GET Operations (Read) ---
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<FormBuilderDto>), 200)]
-        public async Task<IActionResult> GetAllForms()
+        public async Task<IActionResult> GetAllForms([FromQuery] int page = 1, [FromQuery] int pageSize = 20)
         {
-            var forms = await _formBuilderService.GetAllFormsAsync();
-            var formsDto = forms.Select(f => MapToDto(f)).ToList();
-            return Ok(formsDto);
+            var result = await _formBuilderService.GetPagedAsync(page, pageSize);
+            return result.ToActionResult();
         }
 
         [HttpGet("{id}")]
@@ -59,9 +36,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetFormById(int id)
         {
-            var form = await _formBuilderService.GetFormByIdAsync(id, asNoTracking: true);
-            if (form == null) return NotFound();
-            return Ok(MapToDto(form));
+            var result = await _formBuilderService.GetByIdAsync(id, asNoTracking: true);
+            return result.ToActionResult();
         }
 
         [HttpGet("code/{formCode}")]
@@ -69,9 +45,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetFormByCode(string formCode)
         {
-            var form = await _formBuilderService.GetFormByCodeAsync(formCode, asNoTracking: true);
-            if (form == null) return NotFound();
-            return Ok(MapToDto(form));
+            var result = await _formBuilderService.GetByCodeAsync(formCode, asNoTracking: true);
+            return result.ToActionResult();
         }
 
         // --- POST Operation (Create) ---
@@ -96,26 +71,14 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
             try
             {
-                var formEntity = new FORM_BUILDER
+                createDto.CreatedByUserId = currentUserId;
+                var result = await _formBuilderService.CreateAsync(createDto);
+                if (result.Success && result.Data != null)
                 {
-                    FormName = createDto.FormName,
-                    FormCode = createDto.FormCode,
-                    Description = createDto.Description,
+                    return CreatedAtAction(nameof(GetFormById), new { id = result.Data.Id }, result.Data);
+                }
 
-                    // Initializing non-nullable fields
-                    Version = 1,
-                    IsPublished = false,
-                    IsActive = true,
-                    CreatedDate = DateTime.UtcNow,
-
-                    // FOREIGN KEY FIX: Uses the authenticated user's ID to satisfy the database constraint.
-                    CreatedByUserId = currentUserId
-                };
-
-                var createdForm = await _formBuilderService.CreateFormAsync(formEntity);
-                var createdFormDto = MapToDto(createdForm);
-
-                return CreatedAtAction(nameof(GetFormById), new { id = createdFormDto.Id }, createdFormDto);
+                return result.ToActionResult();
             }
             catch (InvalidOperationException ex) when (ex.Message.Contains("Form code"))
             {
@@ -140,25 +103,11 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 return BadRequest(ModelState);
             }
 
-            var existingForm = await _formBuilderService.GetFormByIdAsync(id);
-            if (existingForm == null)
-            {
-                return NotFound();
-            }
-
             try
             {
-                existingForm.FormName = updateDto.FormName;
-                existingForm.FormCode = updateDto.FormCode;
-                existingForm.Description = updateDto.Description;
-                existingForm.IsPublished = updateDto.IsPublished;
-                existingForm.IsActive = updateDto.IsActive;
-                // 🛑 FIX: Changed 'existingForm.id' (lowercase) to 'existingForm.Id' (PascalCase)
-                existingForm.Id = id;
-
-                await _formBuilderService.UpdateFormAsync(existingForm);
-
-                return NoContent();
+                var result = await _formBuilderService.UpdateAsync(id, updateDto);
+                if (result.Success) return NoContent();
+                return result.ToActionResult();
             }
             catch (InvalidOperationException ex) when (ex.Message.Contains("Form code"))
             {
@@ -176,14 +125,9 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteForm(int id)
         {
-            var isDeleted = await _formBuilderService.DeleteFormAsync(id);
-
-            if (!isDeleted)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            var result = await _formBuilderService.DeleteAsync(id);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
     }
 }

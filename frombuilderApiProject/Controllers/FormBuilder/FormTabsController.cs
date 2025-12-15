@@ -1,5 +1,6 @@
 ﻿using FormBuilder.Core.DTOS.FormTabs;
 using FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,6 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
     public class FormTabsController : ControllerBase
     {
         private readonly IFormTabService _formTabService;

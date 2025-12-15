@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.API.Models
 {
@@ -6,8 +6,8 @@ namespace FormBuilder.API.Models
     {
         public int Id { get; set; }
         public int FieldId { get; set; }
-        public string OptionText { get; set; }
-        public string OptionValue { get; set; }
+        public string OptionText { get; set; } = string.Empty;
+        public string OptionValue { get; set; } = string.Empty;
         public int OptionOrder { get; set; }
         public bool IsDefault { get; set; }
         public bool IsActive { get; set; }
@@ -19,10 +19,10 @@ namespace FormBuilder.API.Models
         public int FieldId { get; set; }
 
         [Required, StringLength(200)]
-        public string OptionText { get; set; }
+        public string OptionText { get; set; } = string.Empty;
 
         [Required, StringLength(200)]
-        public string OptionValue { get; set; }
+        public string OptionValue { get; set; } = string.Empty;
 
         [Required]
         public int OptionOrder { get; set; }
@@ -34,10 +34,10 @@ namespace FormBuilder.API.Models
     public class UpdateFieldOptionDto
     {
         [Required, StringLength(200)]
-        public string OptionText { get; set; }
+        public string OptionText { get; set; } = string.Empty;
 
         [Required, StringLength(200)]
-        public string OptionValue { get; set; }
+        public string OptionValue { get; set; } = string.Empty;
 
         [Required]
         public int OptionOrder { get; set; }

@@ -1,4 +1,6 @@
-﻿using FormBuilder.API.Models;
+using FormBuilder.API.Models;
+using FormBuilder.Core.DTOS.FormFields;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,7 +9,7 @@ namespace FormBuilder.Domain.Interfaces
     public interface IFormFieldService
     {
         // Basic CRUD operations
-        Task<ApiResponse> CreateAsync(CreateFormFieldDto dto);
+        Task<ApiResponse> CreateAsync(Core.DTOS.FormFields.CreateFormFieldDto dto);
         Task<ApiResponse> UpdateAsync(UpdateFormFieldDto dto, int id);
         Task<ApiResponse> DeleteAsync(int id);
         Task<ApiResponse> SoftDeleteAsync(int id);

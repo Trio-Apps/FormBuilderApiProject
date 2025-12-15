@@ -1,11 +1,11 @@
-﻿using formBuilder.Domian.Entitys;
+using formBuilder.Domian.Entitys;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
 
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace FormBuilder.API.Models
+namespace FormBuilder.Domian.Entitys.FormBuilder
 {
     
 

@@ -1,8 +1,10 @@
-﻿using formBuilder.Domian.Entitys;
+using formBuilder.Domian.Entitys;
 using formBuilder.Domian.Interfaces;
-using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.DTOS.FormTabs.FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Core.DTOS.FormFields;
 using FormBuilder.Domain.Interfaces;
+using FormBuilder.API.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,7 +27,7 @@ namespace FormBuilder.Services.Services
         // ================================
         // CREATE
         // ================================
-        public async Task<ApiResponse> CreateAsync(CreateFormFieldDto dto)
+        public async Task<ApiResponse> CreateAsync(FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto dto)
         {
             if (dto == null)
                 return new ApiResponse(400, "DTO is required");
@@ -314,7 +316,7 @@ namespace FormBuilder.Services.Services
                     DataType = e.FIELD_TYPES.DataType,
                     IsActive = e.FIELD_TYPES.IsActive
                 } : null,
-                FieldOptions = e.FIELD_OPTIONS?.Where(fo => fo.IsActive).Select(fo => new FieldOptionDto
+                FieldOptions = e.FIELD_OPTIONS?.Where(fo => fo.IsActive).Select(fo => new FormBuilder.API.Models.FieldOptionDto
                 {
                     Id = fo.Id,
                     FieldId = fo.FieldId,
@@ -326,7 +328,7 @@ namespace FormBuilder.Services.Services
             };
         }
 
-        private FORM_FIELDS ToEntity(CreateFormFieldDto dto)
+        private FORM_FIELDS ToEntity(FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto dto)
         {
             return new FORM_FIELDS
             {
@@ -349,7 +351,6 @@ namespace FormBuilder.Services.Services
                 ValidationMessage = dto.ValidationMessage,
                 VisibilityRuleJson = dto.VisibilityRuleJson,
                 ReadOnlyRuleJson = dto.ReadOnlyRuleJson,
-                CreatedByUserId = dto.CreatedByUserId,
                 CreatedDate = DateTime.UtcNow,
                 IsActive = true
             };

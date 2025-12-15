@@ -1,5 +1,8 @@
-﻿using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domain.Interfaces;
+using FormBuilder.API.Models;
+using FormBuilder.Core.DTOS.FormFields;
+using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,7 +12,6 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Administration")]
 
     public class FormFieldsController : ControllerBase
     {

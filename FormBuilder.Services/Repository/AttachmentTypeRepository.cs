@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.FromBuilder;
@@ -19,7 +19,7 @@ namespace FormBuilder.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<ATTACHMENT_TYPES> GetByCodeAsync(string code)
+        public async Task<ATTACHMENT_TYPES?> GetByCodeAsync(string code)
         {
             return await _context.ATTACHMENT_TYPES
                 .FirstOrDefaultAsync(at => at.Code == code && at.IsActive);
@@ -51,7 +51,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .AnyAsync(at => at.Id == id && at.IsActive);
         }
 
-        public Task<ATTACHMENT_TYPES> GetByIdAsync(int id)
+        public Task<ATTACHMENT_TYPES?> GetByIdAsync(int id)
         {
             return _context.ATTACHMENT_TYPES
                 .FirstOrDefaultAsync(at => at.Id == id);

@@ -1,30 +1,23 @@
-﻿using global::FormBuilder.API.Models;
-using global::FormBuilder.Domian.Interfaces;
+using FormBuilder.Application.DTOS;
+using FormBuilder.Core.DTOS.Common;
+using FormBuilder.Core.DTOS.FormBuilder;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace FormBuilder.Core.IServices.FormBuilder
+namespace FormBuilder.Domain.Interfaces.Services
 {
-   
-
-
-    namespace FormBuilder.Services.Services
+    public interface IFormBuilderService
     {
-        public interface IFormBuilderService
-        {
-            Task<FORM_BUILDER> CreateFormAsync(FORM_BUILDER form);
-            Task<FORM_BUILDER> UpdateFormAsync(FORM_BUILDER form);
-            Task<bool> DeleteFormAsync(int id);
-            Task<FORM_BUILDER?> GetFormByIdAsync(int id, bool asNoTracking = false);
-            Task<FORM_BUILDER?> GetFormByCodeAsync(string formCode, bool asNoTracking = false);
-            Task<IEnumerable<FORM_BUILDER>> GetAllFormsAsync(Expression<Func<FORM_BUILDER, bool>>? filter = null);
-            Task<bool> IsFormCodeExistsAsync(string formCode, int? excludeId = null);
-            Task<int> GetFormsCountAsync(Expression<Func<FORM_BUILDER, bool>>? filter = null);
-            Task<bool> AnyFormsAsync(Expression<Func<FORM_BUILDER, bool>>? filter = null);
-        }
-
+        Task<ServiceResult<FormBuilderDto>> CreateAsync(CreateFormBuilderDto dto);
+        Task<ServiceResult<FormBuilderDto>> UpdateAsync(int id, UpdateFormBuilderDto dto);
+        Task<ServiceResult<bool>> DeleteAsync(int id);
+        Task<ServiceResult<FormBuilderDto>> GetByIdAsync(int id, bool asNoTracking = false);
+        Task<ServiceResult<FormBuilderDto>> GetByCodeAsync(string formCode, bool asNoTracking = false);
+        Task<ServiceResult<IEnumerable<FormBuilderDto>>> GetAllAsync(Expression<Func<FORM_BUILDER, bool>>? filter = null);
+        Task<ServiceResult<PagedResult<FormBuilderDto>>> GetPagedAsync(int page = 1, int pageSize = 20);
+        Task<ServiceResult<bool>> IsFormCodeExistsAsync(string formCode, int? excludeId = null);
     }
 }

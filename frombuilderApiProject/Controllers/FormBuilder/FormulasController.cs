@@ -1,5 +1,6 @@
-﻿using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.DTOS.FormBuilder;
+using FormBuilder.API.Models;
 using FormBuilder.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -358,19 +359,19 @@ namespace FormBuilder.API.Controllers
     // DTO classes for calculation
     public class BatchUpdateFormulaStatusDto
     {
-        public List<int> FormulaIds { get; set; }
+        public List<int> FormulaIds { get; set; } = new List<int>();
         public bool IsActive { get; set; }
     }
 
     public class CalculateExpressionDto
     {
-        public string ExpressionText { get; set; }
+        public string ExpressionText { get; set; } = string.Empty;
         public Dictionary<string, object> FieldValues { get; set; } = new Dictionary<string, object>();
     }
 
     public class CalculateAdvancedDto
     {
-        public string ExpressionText { get; set; }
+        public string ExpressionText { get; set; } = string.Empty;
         public Dictionary<string, object> FieldValues { get; set; } = new Dictionary<string, object>();
     }
 }

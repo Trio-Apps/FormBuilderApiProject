@@ -543,6 +543,15 @@ C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\re
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.pdb
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.genruntimeconfig.cache
 C:\Users\Trio Apps 3\Videos\apiProject\frombuilderApiProject\obj\Debug\net9.0\ref\FormBuilder.ApiProject.dll
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.AssemblyReference.cache
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.GeneratedMSBuildEditorConfig.editorconfig
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfoInputs.cache
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfo.cs
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.CoreCompileInputs.cache
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cs
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cache
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.sourcelink.json
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.Development.json
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\appsettings.json
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiProject.staticwebassets.endpoints.json
@@ -551,10 +560,15 @@ D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiP
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiProject.runtimeconfig.json
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiProject.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.ApiProject.pdb
+D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\AutoMapper.dll
+D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Azure.Core.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Azure.Identity.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\DocumentFormat.OpenXml.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\DocumentFormat.OpenXml.Framework.dll
+D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FluentValidation.dll
+D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FluentValidation.AspNetCore.dll
+D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FluentValidation.DependencyInjectionExtensions.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Humanizer.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
@@ -701,15 +715,6 @@ D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Serv
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Core.pdb
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Services.pdb
 D:\FormBuilderApiProject\frombuilderApiProject\bin\Debug\net9.0\FormBuilder.Domian.pdb
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.AssemblyReference.cache
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rpswa.dswa.cache.json
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.GeneratedMSBuildEditorConfig.editorconfig
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfoInputs.cache
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.AssemblyInfo.cs
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.csproj.CoreCompileInputs.cache
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cs
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.MvcApplicationPartsAssemblyInfo.cache
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.sourcelink.json
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rjimswa.dswa.cache.json
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
@@ -719,10 +724,10 @@ D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\staticwebassets.
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\staticwebassets.development.json
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\staticwebassets.build.endpoints.json
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\swae.build.ex.cache
-D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuil.6FE58BCE.Up2Date
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.dll
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\refint\FormBuilder.ApiProject.dll
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.pdb
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.genruntimeconfig.cache
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\ref\FormBuilder.ApiProject.dll
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

@@ -1,6 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using formBuilder.Domian.Entitys;
+using formBuilder.Domian.Entitys;
 
 namespace FormBuilder.Core.Models;
 
@@ -362,6 +364,8 @@ public partial class AkhmanageItContext : DbContext
     public virtual DbSet<TblUser> TblUsers { get; set; }
 
     public virtual DbSet<TblUserGroup> TblUserGroups { get; set; }
+
+    public virtual DbSet<REFRESH_TOKENS> REFRESH_TOKENS { get; set; }
 
     public virtual DbSet<TblUserGroupMenu> TblUserGroupMenus { get; set; }
 
@@ -6234,6 +6238,47 @@ public partial class AkhmanageItContext : DbContext
             entity.HasOne(d => d.IdLegalEntityNavigation).WithMany(p => p.TblUserPermissions)
                 .HasForeignKey(d => d.IdLegalEntity)
                 .HasConstraintName("FK_UserPermission_LegalEntity");
+        });
+
+        modelBuilder.Entity<REFRESH_TOKENS>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_REFRESH_TOKENS");
+
+            entity.ToTable("REFRESH_TOKENS");
+
+            entity.Property(e => e.Id).HasColumnName("Id");
+            entity.Property(e => e.UserId).HasColumnName("UserId");
+            entity.Property(e => e.Token)
+                .IsRequired()
+                .HasMaxLength(500)
+                .HasColumnName("Token");
+            entity.Property(e => e.ExpiresAt)
+                .IsRequired()
+                .HasColumnType("datetime")
+                .HasColumnName("ExpiresAt");
+            entity.Property(e => e.CreatedAt)
+                .IsRequired()
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnName("CreatedAt");
+            entity.Property(e => e.RevokedAt)
+                .HasColumnType("datetime")
+                .HasColumnName("RevokedAt");
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValue(true)
+                .HasColumnName("IsActive");
+            entity.Property(e => e.IpAddress)
+                .HasMaxLength(50)
+                .HasColumnName("IpAddress");
+            entity.Property(e => e.UserAgent)
+                .HasMaxLength(500)
+                .HasColumnName("UserAgent");
+
+            // Indexes
+            entity.HasIndex(e => e.Token).HasDatabaseName("IX_REFRESH_TOKENS_Token");
+            entity.HasIndex(e => e.UserId).HasDatabaseName("IX_REFRESH_TOKENS_UserId");
+            entity.HasIndex(e => e.ExpiresAt).HasDatabaseName("IX_REFRESH_TOKENS_ExpiresAt");
         });
 
         modelBuilder.Entity<TblWarehouse>(entity =>

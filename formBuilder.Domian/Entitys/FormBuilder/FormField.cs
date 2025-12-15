@@ -1,5 +1,5 @@
-﻿using formBuilder.Domian.Entitys;
-using FormBuilder.API.Models;
+using formBuilder.Domian.Entitys;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using FormBuilder.Domian.Entitys.froms;
 using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.froms;
@@ -21,7 +21,7 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Override BaseRepository methods to include relationships
-        public new async Task<FORMULA_VARIABLES> GetByIdAsync(int id)
+        public new async Task<FORMULA_VARIABLES?> GetByIdAsync(int id)
         {
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
@@ -80,7 +80,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public new async Task<FORMULA_VARIABLES> SingleOrDefaultAsync(
+        public new async Task<FORMULA_VARIABLES?> SingleOrDefaultAsync(
             Expression<Func<FORMULA_VARIABLES, bool>> filter,
             bool asNoTracking = false,
             params Expression<Func<FORMULA_VARIABLES, object>>[] includes)
@@ -141,7 +141,7 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Custom queries for FORMULA_VARIABLES entity
-        public async Task<FORMULA_VARIABLES> GetByVariableNameAsync(string variableName, int formulaId, params Expression<Func<FORMULA_VARIABLES, object>>[] includes)
+        public async Task<FORMULA_VARIABLES?> GetByVariableNameAsync(string variableName, int formulaId, params Expression<Func<FORMULA_VARIABLES, object>>[] includes)
         {
             var query = _context.Set<FORMULA_VARIABLES>().AsQueryable();
 
@@ -273,7 +273,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
             return await query
                 .Where(fv => fv.FormulaId == formulaId &&
-                            (fv.SourceFieldId == 0 || fv.SourceFieldId == null) &&
+                            fv.SourceFieldId == 0 &&
                             fv.IsActive)
                 .OrderBy(fv => fv.VariableName)
                 .ToListAsync();
@@ -323,7 +323,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<FORMULA_VARIABLES> GetByIdWithDetailsAsync(int id)
+        public async Task<FORMULA_VARIABLES?> GetByIdWithDetailsAsync(int id)
         {
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)

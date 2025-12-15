@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.FormBuilder;
@@ -18,16 +18,13 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Explicit implementation of GetByIdAsync with navigation properties
-        public async Task<FORM_GRID_COLUMNS> GetByIdAsync(int id)
+        public async Task<FORM_GRID_COLUMNS?> GetByIdAsync(int id)
         {
-           
-                return await _context.FORM_GRID_COLUMNS
-                    .Include(c => c.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Include(c => c.FIELD_TYPES)
-                    .FirstOrDefaultAsync(c => c.Id == id);
-            
-            
+            return await _context.FORM_GRID_COLUMNS
+                .Include(c => c.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .Include(c => c.FIELD_TYPES)
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         // Explicit implementation of GetAllAsync with navigation properties
@@ -76,21 +73,20 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(c => c.ColumnName)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public async Task<FORM_GRID_COLUMNS> GetByColumnCodeAsync(string columnCode, int gridId)
+        public async Task<FORM_GRID_COLUMNS?> GetByColumnCodeAsync(string columnCode, int gridId)
         {
-             return await _context.FORM_GRID_COLUMNS
-                    .Include(c => c.FORM_GRIDS)
-                    .Include(c => c.FIELD_TYPES)
-                    .FirstOrDefaultAsync(c =>
-                        c.ColumnCode == columnCode &&
-                        c.GridId == gridId);
-           
+            return await _context.FORM_GRID_COLUMNS
+                .Include(c => c.FORM_GRIDS)
+                .Include(c => c.FIELD_TYPES)
+                .FirstOrDefaultAsync(c =>
+                    c.ColumnCode == columnCode &&
+                    c.GridId == gridId);
         }
 
         public async Task<bool> ColumnCodeExistsAsync(string columnCode, int gridId, int? excludeId = null)
@@ -107,9 +103,8 @@ namespace FormBuilder.Infrastructure.Repositories
 
                 return await query.AnyAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                
                 throw;
             }
         }
@@ -137,7 +132,7 @@ namespace FormBuilder.Infrastructure.Repositories
 
                 return column?.IsActive ?? false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -155,7 +150,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(c => c.ColumnOrder)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -173,7 +168,7 @@ namespace FormBuilder.Infrastructure.Repositories
                     .ThenBy(c => c.ColumnOrder)
                     .ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

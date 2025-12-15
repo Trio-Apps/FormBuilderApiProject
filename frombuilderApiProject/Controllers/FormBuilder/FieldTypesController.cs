@@ -1,7 +1,8 @@
-﻿using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domian.Entitys;
 using FormBuilder.Domian.Interfaces;
 using FormBuilder.Services.Services;
+using FormBuilder.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
 
     public class FieldTypesController : ControllerBase
     {

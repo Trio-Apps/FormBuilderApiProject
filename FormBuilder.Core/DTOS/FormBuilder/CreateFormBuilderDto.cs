@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.Core.DTOS.FormBuilder
 {
@@ -6,12 +6,15 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     {
         [Required]
         [StringLength(200)]
-        public string FormName { get; set; }
+        public string FormName { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string FormCode { get; set; }
+        public string FormCode { get; set; } = string.Empty;
 
-        public string Description { get; set; }
+        public string? Description { get; set; }
+
+        // optional: will be set from authenticated user in controller
+        public string? CreatedByUserId { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using FormBuilder.API.Data;
+using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Entitys.FromBuilder;
@@ -14,16 +14,17 @@ namespace FormBuilder.Infrastructure.Repositories
     public class FormGridRepository : BaseRepository<FORM_GRIDS>, IFormGridRepository
     {
         private readonly FormBuilderDbContext _context;
-        private readonly ILogger<FormGridRepository> _logger;
+        private readonly ILogger<FormGridRepository>? _logger;
 
-        public FormGridRepository(FormBuilderDbContext context)
+        public FormGridRepository(FormBuilderDbContext context, ILogger<FormGridRepository>? logger = null)
             : base(context)
         {
             _context = context;
+            _logger = logger;
         }
 
         // Override or add GetByIdAsync to include navigation properties
-        public async Task<FORM_GRIDS> GetByIdAsync(int id)
+        public async Task<FORM_GRIDS?> GetByIdAsync(int id)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting form grid by ID: {Id}", id);
+                _logger?.LogError(ex, "Error getting form grid by ID: {Id}", id);
                 throw;
             }
         }
@@ -53,7 +54,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting all form grids");
+                _logger?.LogError(ex, "Error getting all form grids");
                 throw;
             }
         }
@@ -72,7 +73,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting grids by form builder ID: {FormBuilderId}", formBuilderId);
+                _logger?.LogError(ex, "Error getting grids by form builder ID: {FormBuilderId}", formBuilderId);
                 throw;
             }
         }
@@ -91,7 +92,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting grids by tab ID: {TabId}", tabId);
+                _logger?.LogError(ex, "Error getting grids by tab ID: {TabId}", tabId);
                 throw;
             }
         }
@@ -110,12 +111,12 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting active grids by form builder ID: {FormBuilderId}", formBuilderId);
+                _logger?.LogError(ex, "Error getting active grids by form builder ID: {FormBuilderId}", formBuilderId);
                 throw;
             }
         }
 
-        public async Task<FORM_GRIDS> GetByGridCodeAsync(string gridCode, int formBuilderId)
+        public async Task<FORM_GRIDS?> GetByGridCodeAsync(string gridCode, int formBuilderId)
         {
             try
             {
@@ -128,7 +129,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting grid by code: {GridCode}, form builder: {FormBuilderId}",
+                _logger?.LogError(ex, "Error getting grid by code: {GridCode}, form builder: {FormBuilderId}",
                     gridCode, formBuilderId);
                 throw;
             }
@@ -150,7 +151,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error checking if grid code exists: {GridCode}, form builder: {FormBuilderId}",
+                _logger?.LogError(ex, "Error checking if grid code exists: {GridCode}, form builder: {FormBuilderId}",
                     gridCode, formBuilderId);
                 throw;
             }
@@ -175,7 +176,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error getting next grid order for form builder: {FormBuilderId}, tab: {TabId}",
+                _logger?.LogError(ex, "Error getting next grid order for form builder: {FormBuilderId}, tab: {TabId}",
                     formBuilderId, tabId);
                 throw;
             }
@@ -194,7 +195,7 @@ namespace FormBuilder.Infrastructure.Repositories
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error checking if grid is active: {Id}", id);
+                _logger?.LogError(ex, "Error checking if grid is active: {Id}", id);
                 throw;
             }
         }
