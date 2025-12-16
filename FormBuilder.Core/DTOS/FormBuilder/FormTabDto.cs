@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using FormBuilder.API.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.Core.DTOS.FormTabs
@@ -13,6 +15,9 @@ namespace FormBuilder.Core.DTOS.FormTabs
         public bool IsActive { get; set; }
         public string CreatedByUserId { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        // Nested fields for public form rendering
+        public List<FormFieldDto> Fields { get; set; } = new List<FormFieldDto>();
     }
 
     public class UpdateFormTabDto

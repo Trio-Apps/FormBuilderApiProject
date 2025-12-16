@@ -43,6 +43,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [HttpGet("code/{formCode}")]
         [ProducesResponseType(typeof(FormBuilderDto), 200)]
         [ProducesResponseType(404)]
+        [AllowAnonymous]
+
         public async Task<IActionResult> GetFormByCode(string formCode)
         {
             var result = await _formBuilderService.GetByCodeAsync(formCode, asNoTracking: true);

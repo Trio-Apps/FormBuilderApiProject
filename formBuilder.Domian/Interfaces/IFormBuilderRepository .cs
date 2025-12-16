@@ -8,12 +8,16 @@ using global::FormBuilder.Domian.Entitys.FormBuilder;
 
 namespace FormBuilder.Domian.Interfaces
 {
-   
-        public interface IFormBuilderRepository : IBaseRepository<FORM_BUILDER>
-        {
-            // يمكنك إضافة أي عمليات خاصة بالـ FormBuilder هنا
-            Task<bool> IsFormCodeExistsAsync(string formCode, int? excludeId = null);
-        }
+    public interface IFormBuilderRepository : IBaseRepository<FORM_BUILDER>
+    {
+        // يمكنك إضافة أي عمليات خاصة بالـ FormBuilder هنا
+        Task<bool> IsFormCodeExistsAsync(string formCode, int? excludeId = null);
+
+        /// <summary>
+        /// Gets a form by code including its tabs and fields (for public/anonymous view).
+        /// </summary>
+        Task<FORM_BUILDER?> GetFormWithTabsAndFieldsByCodeAsync(string formCode);
     }
+}
 
 

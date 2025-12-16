@@ -40,6 +40,9 @@ builder.Services.AddSwaggerGen(c =>
         Description = "API for FormBuilder Application"
     });
 
+    // Use fully qualified type names for schema IDs to avoid conflicts
+    c.CustomSchemaIds(type => type.FullName);
+
     // Add JWT Authentication to Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -76,11 +79,7 @@ builder.Services.AddDbContext<AkhmanageItContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("AuthConnection");
 
-    if (string.IsNullOrEmpty(connectionString))
-    {
-        connectionString = "Server=DESKTOP-B3NJLJM;Database=AkhmanageItDb;Trusted_Connection=True;TrustServerCertificate=True;";
-        Console.WriteLine("Using default Auth connection string");
-    }
+  
 
     options.UseSqlServer(connectionString);
 

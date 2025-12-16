@@ -3,6 +3,7 @@ using FormBuilder.Core.DTOS.FormTabs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace FormBuilder.API.Models
 {
@@ -56,6 +57,8 @@ namespace FormBuilder.API.Models
         public bool IsActive { get; set; }
 
         // Navigation properties as DTOs
+        // Ignored in JSON to prevent circular reference with FormTabDto.Fields (helps Swagger schema generation)
+        [JsonIgnore]
         public FormTabDto? Tab { get; set; }
         public FieldTypeDto? FieldType { get; set; }
         public List<FieldOptionDto> FieldOptions { get; set; } = new List<FieldOptionDto>();

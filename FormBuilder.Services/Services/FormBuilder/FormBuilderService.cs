@@ -10,6 +10,9 @@ using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Services.Services.Base;
+using FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.API.Models;
+using System.Linq;
 
 namespace FormBuilder.Services.Services
 {
@@ -29,10 +32,84 @@ namespace FormBuilder.Services.Services
             if (string.IsNullOrWhiteSpace(formCode))
                 return ServiceResult<FormBuilderDto>.BadRequest("Form code is required");
 
-            var entity = await Repository.SingleOrDefaultAsync(f => f.FormCode == formCode.Trim(), asNoTracking);
+            // Load the form with its tabs and fields for public/anonymous usage
+            var entity = await _unitOfWork.FormBuilderRepository.GetFormWithTabsAndFieldsByCodeAsync(formCode.Trim());
             if (entity == null) return ServiceResult<FormBuilderDto>.NotFound();
 
-            return ServiceResult<FormBuilderDto>.Ok(_mapper.Map<FormBuilderDto>(entity));
+            // Map the basic form data
+            var dto = _mapper.Map<FormBuilderDto>(entity);
+
+            // Manually map tabs and fields for the public form view
+            dto.Tabs = entity.FORM_TABS
+                .Where(t => t.IsActive)
+                .OrderBy(t => t.TabOrder)
+                .Select(t => new FormTabDto
+                {
+                    Id = t.Id,
+                    FormBuilderId = t.FormBuilderId,
+                    TabName = t.TabName,
+                    TabCode = t.TabCode,
+                    TabOrder = t.TabOrder,
+                    IsActive = t.IsActive,
+                    CreatedByUserId = t.CreatedByUserId,
+                    CreatedDate = t.CreatedDate,
+                    Fields = t.FORM_FIELDS
+                        .Where(f => f.IsActive)
+                        .OrderBy(f => f.FieldOrder)
+                        .Select(f => new FormFieldDto
+                        {
+                            Id = f.Id,
+                            TabId = f.TabId,
+                            FieldTypeId = f.FieldTypeId,
+                            FieldTypeName = f.FIELD_TYPES?.TypeName,
+                            FieldName = f.FieldName,
+                            FieldCode = f.FieldCode,
+                            FieldOrder = f.FieldOrder,
+                            Placeholder = f.Placeholder,
+                            HintText = f.HintText,
+                            IsMandatory = f.IsMandatory,
+                            IsEditable = f.IsEditable,
+                            IsVisible = f.IsVisible,
+                            DefaultValueJson = f.DefaultValueJson,
+                            DataType = f.DataType,
+                            MaxLength = f.MaxLength,
+                            MinValue = f.MinValue,
+                            MaxValue = f.MaxValue,
+                            RegexPattern = f.RegexPattern,
+                            ValidationMessage = f.ValidationMessage,
+                            VisibilityRuleJson = f.VisibilityRuleJson,
+                            ReadOnlyRuleJson = f.ReadOnlyRuleJson,
+                            CreatedDate = f.CreatedDate,
+                            CreatedByUserId = f.CreatedByUserId,
+                            IsActive = f.IsActive,
+                            // Map FieldType
+                            FieldType = f.FIELD_TYPES != null ? new FieldTypeDto
+                            {
+                                Id = f.FIELD_TYPES.Id,
+                                TypeName = f.FIELD_TYPES.TypeName,
+                                DataType = f.FIELD_TYPES.DataType,
+                                MaxLength = f.FIELD_TYPES.MaxLength,
+                                HasOptions = f.FIELD_TYPES.HasOptions,
+                                AllowMultiple = f.FIELD_TYPES.AllowMultiple,
+                                IsActive = f.FIELD_TYPES.IsActive
+                            } : null,
+                            // For public view we only need basic option data
+                            FieldOptions = f.FIELD_OPTIONS?
+                                .Where(fo => fo.IsActive)
+                                .Select(fo => new FieldOptionDto
+                                {
+                                    Id = fo.Id,
+                                    FieldId = fo.FieldId,
+                                    OptionText = fo.OptionText,
+                                    OptionValue = fo.OptionValue,
+                                    OptionOrder = fo.OptionOrder,
+                                    IsActive = fo.IsActive
+                                }).ToList() ?? new System.Collections.Generic.List<FieldOptionDto>()
+                        }).ToList()
+                })
+                .ToList();
+
+            return ServiceResult<FormBuilderDto>.Ok(dto);
         }
 
         public async Task<ServiceResult<IEnumerable<FormBuilderDto>>> GetAllAsync(Expression<Func<FORM_BUILDER, bool>>? filter = null)

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using FormBuilder.Core.DTOS.FormTabs;
 
 namespace FormBuilder.Core.DTOS.FormBuilder
 {
@@ -16,5 +18,8 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public string CreatedByUserId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
+
+        // Public view: tabs & fields (for anonymous access)
+        public List<FormTabDto> Tabs { get; set; } = new List<FormTabDto>();
     }
 }

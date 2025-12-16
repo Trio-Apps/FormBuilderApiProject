@@ -1,0 +1,30 @@
+import { useState } from 'react'
+import BaseField from './BaseField'
+import { FormField } from '../../types/form'
+import './fields.css'
+
+interface TextFieldProps {
+  field: FormField
+}
+
+const TextField = ({ field }: TextFieldProps) => {
+  const [value, setValue] = useState('')
+
+  return (
+    <BaseField field={field}>
+      <input
+        type="text"
+        className="form-input"
+        placeholder={field.placeholder || ''}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        maxLength={field.maxLength}
+        disabled={!field.isEditable}
+        readOnly={!field.isEditable}
+      />
+    </BaseField>
+  )
+}
+
+export default TextField
+
