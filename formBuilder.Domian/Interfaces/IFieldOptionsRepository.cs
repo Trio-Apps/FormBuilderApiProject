@@ -1,4 +1,4 @@
-﻿using formBuilder.Domian.Interfaces;
+using formBuilder.Domian.Interfaces;
 using FormBuilder.Domian.Entitys.froms;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,9 +12,6 @@ namespace FormBuilder.Domain.Interfaces
         Task<FIELD_OPTIONS> GetDefaultOptionAsync(int fieldId);
         Task<bool> FieldHasOptionsAsync(int fieldId);
         Task<int> GetOptionsCountAsync(int fieldId);
-        Task<FIELD_OPTIONS> GetByIdAsync(int id);
-        Task<bool> ExistsAsync(int id);
-
-
+        // Note: GetByIdAsync and ExistsAsync are inherited from IBaseRepository<FIELD_OPTIONS>
     }
 }

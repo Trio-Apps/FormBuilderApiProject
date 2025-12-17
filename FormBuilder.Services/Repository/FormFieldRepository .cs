@@ -84,7 +84,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_TYPES)
-                .Where(f => f.TabId == tabId && f.IsMandatory && f.IsActive)
+                .Where(f => f.TabId == tabId && (f.IsMandatory ?? false) && f.IsActive)
                 .OrderBy(f => f.FieldOrder)
                 .ToListAsync();
         }
@@ -106,35 +106,14 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
+                .Include(f => f.FIELD_TYPES)
                 .Where(f => f.Id == id && f.IsActive);
-
-            // Apply includes for FIELD_TYPES
-            if (includes != null && includes.Length > 0)
-            {
-                query = query.Include(f => f.FIELD_TYPES);
-                foreach (var include in includes)
-                {
-                    query = query.Include(f => f.FIELD_TYPES);
-                }
-            }
-            else
-            {
-                query = query.Include(f => f.FIELD_TYPES);
-            }
 
             return await query.FirstOrDefaultAsync();
         }
 
-        // Override the base GetByIdAsync to include related entities
-        public async Task<FORM_FIELDS?> GetByIdAsync(int id)
-        {
-            return await GetByIdAsync(id, Array.Empty<Expression<Func<FIELD_TYPES, object>>>());
-        }
-        // Add this implementation
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _context.FORM_FIELDS.AnyAsync(x => x.Id == id);
-        }
+        // Note: Base GetByIdAsync and ExistsAsync are inherited from BaseRepository
+        // This overload provides additional includes for specialized queries
 
         // Override the base GetAllAsync to include related entities and filtering
         public override async Task<ICollection<FORM_FIELDS>> GetAllAsync(Expression<Func<FORM_FIELDS, bool>>? filter = null, params Expression<Func<FORM_FIELDS, object>>[] includes)

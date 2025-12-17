@@ -1077,17 +1077,7 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
@@ -1103,17 +1093,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
@@ -1129,17 +1109,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
@@ -1160,17 +1130,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
@@ -1186,17 +1146,103 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "SoftDeleteFieldOption",
+    "RelativePath": "api/FieldOptions/{id}/soft",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
-    ]
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "CreateBulkFieldOptions",
+    "RelativePath": "api/FieldOptions/bulk",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "createDtos",
+        "Type": "System.Collections.Generic.List\u00601[[FormBuilder.API.Models.CreateFieldOptionDto, FormBuilder.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "GetFieldOptionsByFieldId",
+    "RelativePath": "api/FieldOptions/field/{fieldId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "GetActiveFieldOptionsByFieldId",
+    "RelativePath": "api/FieldOptions/field/{fieldId}/active",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "GetOptionsCount",
+    "RelativePath": "api/FieldOptions/field/{fieldId}/count",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldOptionsController",
+    "Method": "GetDefaultOption",
+    "RelativePath": "api/FieldOptions/field/{fieldId}/default",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FieldTypesController",
@@ -1824,17 +1870,7 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -1850,17 +1886,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -1876,17 +1902,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -1907,17 +1923,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -1933,17 +1939,23 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "SoftDeleteFormField",
+    "RelativePath": "api/FormFields/{id}/soft",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
-    ]
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -1959,17 +1971,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -1979,17 +1981,7 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -2005,17 +1997,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -2031,43 +2013,23 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
-    "Method": "SoftDeleteFormField",
-    "RelativePath": "api/FormFields/soft-delete/{id}",
-    "HttpMethod": "DELETE",
+    "Method": "GetFieldsCountByForm",
+    "RelativePath": "api/FormFields/form/{formBuilderId}/count",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "id",
+        "Name": "formBuilderId",
         "Type": "System.Int32",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -2083,17 +2045,23 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
+    "Method": "GetFieldsCountByTab",
+    "RelativePath": "api/FormFields/tab/{tabId}/count",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
+        "Name": "tabId",
+        "Type": "System.Int32",
+        "IsRequired": true
       }
-    ]
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -2109,17 +2077,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -2135,17 +2093,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
@@ -2161,17 +2109,7 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "FormBuilder.API.Models.ApiResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FormGridColumnsController",

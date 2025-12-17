@@ -1,29 +1,34 @@
+using FormBuilder.Application.DTOS;
 using FormBuilder.API.Models;
 using FormBuilder.Core.DTOS.FormFields;
 using FormBuilder.Domian.Entitys.FormBuilder;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
+using UpdateFormFieldDto = FormBuilder.API.Models.UpdateFormFieldDto;
 
-namespace FormBuilder.Domain.Interfaces
+namespace FormBuilder.Core.IServices.FormBuilder
 {
     public interface IFormFieldService
     {
-        // Basic CRUD operations
-        Task<ApiResponse> CreateAsync(Core.DTOS.FormFields.CreateFormFieldDto dto);
-        Task<ApiResponse> UpdateAsync(UpdateFormFieldDto dto, int id);
-        Task<ApiResponse> DeleteAsync(int id);
-        Task<ApiResponse> SoftDeleteAsync(int id);
-        Task<FormFieldDto> GetByIdAsync(int id);
-        Task<IEnumerable<FormFieldDto>> GetAllAsync();
+        // Base CRUD operations
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetAllAsync(Expression<Func<FORM_FIELDS, bool>>? filter = null);
+        Task<ServiceResult<FormFieldDto>> GetByIdAsync(int id, bool asNoTracking = false);
+        Task<ServiceResult<FormFieldDto>> CreateAsync(CreateFormFieldDto dto);
+        Task<ServiceResult<FormFieldDto>> UpdateAsync(int id, UpdateFormFieldDto dto);
+        Task<ServiceResult<bool>> DeleteAsync(int id);
 
-        // Special queries
-        Task<IEnumerable<FormFieldDto>> GetActiveAsync();
-        Task<IEnumerable<FormFieldDto>> GetByTabIdAsync(int tabId);
-        Task<IEnumerable<FormFieldDto>> GetByFormIdAsync(int formBuilderId);
-        Task<IEnumerable<FormFieldDto>> GetMandatoryFieldsAsync(int tabId);
-        Task<IEnumerable<FormFieldDto>> GetVisibleFieldsAsync(int tabId);
-        Task<FormFieldDto> GetByFieldCodeAsync(string fieldCode);
-        Task<IEnumerable<FormFieldDto>> GetEditableFieldsAsync(int tabId);
+        // Custom operations specific to FormField
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetActiveAsync();
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetByTabIdAsync(int tabId);
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetByFormIdAsync(int formBuilderId);
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetMandatoryFieldsAsync(int tabId);
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetVisibleFieldsAsync(int tabId);
+        Task<ServiceResult<FormFieldDto>> GetByFieldCodeAsync(string fieldCode);
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetEditableFieldsAsync(int tabId);
+        Task<ServiceResult<bool>> SoftDeleteAsync(int id);
 
         // Validation
         Task<bool> IsFieldCodeUniqueAsync(string fieldCode, int? ignoreId = null);
@@ -31,8 +36,8 @@ namespace FormBuilder.Domain.Interfaces
 
         // Utility
         Task<bool> ExistsAsync(int id);
-        Task<int> GetUsageCountAsync(int fieldId);
-        Task<int> GetFieldsCountByTabAsync(int tabId);
-        Task<int> GetFieldsCountByFormAsync(int formBuilderId);
+        Task<ServiceResult<int>> GetUsageCountAsync(int fieldId);
+        Task<ServiceResult<int>> GetFieldsCountByTabAsync(int tabId);
+        Task<ServiceResult<int>> GetFieldsCountByFormAsync(int formBuilderId);
     }
 }

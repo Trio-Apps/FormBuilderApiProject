@@ -1,32 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\FormBuilderApiProject\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\repository\\formbuilderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\repository\\formbuilderrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\services\\formbuilder\\formbuilderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\formbuilder\\formbuilderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\iservices\\formbuilder\\iformulavariablesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\iservices\\formbuilder\\iformulavariablesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\dtos\\formbuilder\\fieldtypecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\dtos\\formbuilder\\fieldtypecreatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\dtos\\formbuilder\\fieldtypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\dtos\\formbuilder\\fieldtypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -34,89 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FormBuilderRepository.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Repository\\FormBuilderRepository.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Repository\\FormBuilderRepository.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Repository\\FormBuilderRepository.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Repository\\FormBuilderRepository.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAA1wAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T08:09:07.56Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "IFormulaVariablesService.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\IServices\\FormBuilder\\IFormulaVariablesService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Core\\IServices\\FormBuilder\\IFormulaVariablesService.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\IServices\\FormBuilder\\IFormulaVariablesService.cs",
-              "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IFormulaVariablesService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T07:30:45.218Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FieldTypeDto.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeDto.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeDto.cs",
-              "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T07:30:17.91Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FieldTypeCreateDto.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeCreateDto.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeCreateDto.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeCreateDto.cs",
-              "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FieldTypeCreateDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T07:30:12.31Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FormBuilderService.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
-              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
-              "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAowA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T07:27:57.065Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Program.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Program.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Program.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Program.cs",
-              "ViewState": "AgIAAN4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-16T07:05:26.644Z",
-              "EditorCaption": ""
             }
           ]
         }

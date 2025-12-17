@@ -1,19 +1,17 @@
-using FormBuilder.Domian.Entitys.FormBuilder;
-using FormBuilder.Domain.Interfaces;
+using FormBuilder.API.Extensions;
 using FormBuilder.API.Models;
-using FormBuilder.Core.DTOS.FormFields;
-using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
+using FormBuilder.Core.IServices.FormBuilder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
+using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
+using UpdateFormFieldDto = FormBuilder.API.Models.UpdateFormFieldDto;
 
 namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Administration")]
-
     public class FormFieldsController : ControllerBase
     {
         private readonly IFormFieldService _formFieldService;
@@ -27,306 +25,177 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         // GET ALL FORM FIELDS
         // ================================
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> GetAllFormFields()
+        public async Task<IActionResult> GetAllFormFields()
         {
-            try
-            {
-                var formFields = await _formFieldService.GetAllAsync();
-                return Ok(new ApiResponse(200, "Form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving form fields: {ex.Message}"));
-            }
+            var result = await _formFieldService.GetAllAsync();
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET ACTIVE FORM FIELDS
+        // ================================
+        [HttpGet("active")]
+        public async Task<IActionResult> GetActiveFormFields()
+        {
+            var result = await _formFieldService.GetActiveAsync();
+            return result.ToActionResult();
         }
 
         // ================================
         // GET FORM FIELD BY ID
         // ================================
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ApiResponse>> GetFormFieldById(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetFormFieldById(int id)
         {
-            try
-            {
-                var formField = await _formFieldService.GetByIdAsync(id);
-                if (formField == null)
-                {
-                    return NotFound(new ApiResponse(404, "Form field not found"));
-                }
+            var result = await _formFieldService.GetByIdAsync(id, asNoTracking: true);
+            return result.ToActionResult();
+        }
 
-                return Ok(new ApiResponse(200, "Form field retrieved successfully", formField));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving form field: {ex.Message}"));
-            }
+        // ================================
+        // GET FORM FIELD BY FIELD CODE
+        // ================================
+        [HttpGet("code/{fieldCode}")]
+        public async Task<IActionResult> GetFormFieldByCode(string fieldCode)
+        {
+            var result = await _formFieldService.GetByFieldCodeAsync(fieldCode);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET FORM FIELDS BY TAB ID
+        // ================================
+        [HttpGet("tab/{tabId}")]
+        public async Task<IActionResult> GetFormFieldsByTabId(int tabId)
+        {
+            var result = await _formFieldService.GetByTabIdAsync(tabId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET FORM FIELDS BY FORM ID
+        // ================================
+        [HttpGet("form/{formBuilderId}")]
+        public async Task<IActionResult> GetFormFieldsByFormId(int formBuilderId)
+        {
+            var result = await _formFieldService.GetByFormIdAsync(formBuilderId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET MANDATORY FIELDS BY TAB ID
+        // ================================
+        [HttpGet("tab/{tabId}/mandatory")]
+        public async Task<IActionResult> GetMandatoryFields(int tabId)
+        {
+            var result = await _formFieldService.GetMandatoryFieldsAsync(tabId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET VISIBLE FIELDS BY TAB ID
+        // ================================
+        [HttpGet("tab/{tabId}/visible")]
+        public async Task<IActionResult> GetVisibleFields(int tabId)
+        {
+            var result = await _formFieldService.GetVisibleFieldsAsync(tabId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET EDITABLE FIELDS BY TAB ID
+        // ================================
+        [HttpGet("tab/{tabId}/editable")]
+        public async Task<IActionResult> GetEditableFields(int tabId)
+        {
+            var result = await _formFieldService.GetEditableFieldsAsync(tabId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET USAGE COUNT
+        // ================================
+        [HttpGet("{id:int}/usage-count")]
+        public async Task<IActionResult> GetFormFieldUsageCount(int id)
+        {
+            var result = await _formFieldService.GetUsageCountAsync(id);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET FIELDS COUNT BY TAB
+        // ================================
+        [HttpGet("tab/{tabId}/count")]
+        public async Task<IActionResult> GetFieldsCountByTab(int tabId)
+        {
+            var result = await _formFieldService.GetFieldsCountByTabAsync(tabId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET FIELDS COUNT BY FORM
+        // ================================
+        [HttpGet("form/{formBuilderId}/count")]
+        public async Task<IActionResult> GetFieldsCountByForm(int formBuilderId)
+        {
+            var result = await _formFieldService.GetFieldsCountByFormAsync(formBuilderId);
+            return result.ToActionResult();
         }
 
         // ================================
         // CREATE FORM FIELD
         // ================================
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> CreateFormField([FromBody] CreateFormFieldDto createFormFieldDto)
+        public async Task<IActionResult> CreateFormField([FromBody] CreateFormFieldDto createFormFieldDto)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(new ApiResponse(400, "Invalid form field data", ModelState));
-                }
-
-                var result = await _formFieldService.CreateAsync(createFormFieldDto);
-
-                if (result.StatusCode == 200 || result.StatusCode == 201)
-                {
-                    // Extract the ID from the result to use in CreatedAtAction
-                    var createdId = ExtractIdFromResult(result);
-                    if (createdId.HasValue)
-                    {
-                        return CreatedAtAction(nameof(GetFormFieldById), new { id = createdId.Value }, result);
-                    }
-                    return Ok(result);
-                }
-
-                return BadRequest(result);
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
+
+            var result = await _formFieldService.CreateAsync(createFormFieldDto);
+            if (result.Success && result.Data != null)
             {
-                return StatusCode(500, new ApiResponse(500, $"Error creating form field: {ex.Message}"));
+                return CreatedAtAction(nameof(GetFormFieldById), new { id = result.Data.Id }, result.Data);
             }
+            return result.ToActionResult();
         }
 
         // ================================
         // UPDATE FORM FIELD
         // ================================
-        [HttpPut("{id}")]
-        public async Task<ActionResult<ApiResponse>> UpdateFormField(int id, [FromBody] UpdateFormFieldDto updateFormFieldDto)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateFormField(int id, [FromBody] UpdateFormFieldDto updateFormFieldDto)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(new ApiResponse(400, "Invalid form field data", ModelState));
-                }
-
-                var result = await _formFieldService.UpdateAsync(updateFormFieldDto, id);
-
-                if (result.StatusCode == 200)
-                {
-                    return Ok(result);
-                }
-                else if (result.StatusCode == 404)
-                {
-                    return NotFound(result);
-                }
-
-                return BadRequest(result);
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error updating form field: {ex.Message}"));
-            }
+
+            var result = await _formFieldService.UpdateAsync(id, updateFormFieldDto);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
 
         // ================================
         // DELETE FORM FIELD (HARD DELETE)
         // ================================
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteFormField(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteFormField(int id)
         {
-            try
-            {
-                var result = await _formFieldService.DeleteAsync(id);
-
-                if (result.StatusCode == 200)
-                {
-                    return Ok(result);
-                }
-                else if (result.StatusCode == 404)
-                {
-                    return NotFound(result);
-                }
-
-                return BadRequest(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error deleting form field: {ex.Message}"));
-            }
+            var result = await _formFieldService.DeleteAsync(id);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
 
         // ================================
         // SOFT DELETE FORM FIELD
         // ================================
-        [HttpDelete("soft-delete/{id}")]
-        public async Task<ActionResult<ApiResponse>> SoftDeleteFormField(int id)
+        [HttpDelete("{id:int}/soft")]
+        public async Task<IActionResult> SoftDeleteFormField(int id)
         {
-            try
-            {
-                var result = await _formFieldService.SoftDeleteAsync(id);
-
-                if (result.StatusCode == 200)
-                {
-                    return Ok(result);
-                }
-                else if (result.StatusCode == 404)
-                {
-                    return NotFound(result);
-                }
-
-                return BadRequest(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error soft deleting form field: {ex.Message}"));
-            }
-        }
-
-        // ================================
-        // SPECIAL QUERIES
-        // ================================
-
-        // GET ACTIVE FORM FIELDS
-        [HttpGet("active")]
-        public async Task<ActionResult<ApiResponse>> GetActiveFormFields()
-        {
-            try
-            {
-                var formFields = await _formFieldService.GetActiveAsync();
-                return Ok(new ApiResponse(200, "Active form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving active form fields: {ex.Message}"));
-            }
-        }
-
-        // GET FORM FIELDS BY TAB ID
-        [HttpGet("tab/{tabId}")]
-        public async Task<ActionResult<ApiResponse>> GetFormFieldsByTabId(int tabId)
-        {
-            try
-            {
-                var formFields = await _formFieldService.GetByTabIdAsync(tabId);
-                return Ok(new ApiResponse(200, "Form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving form fields by tab: {ex.Message}"));
-            }
-        }
-
-        // GET FORM FIELDS BY FORM ID
-        [HttpGet("form/{formBuilderId}")]
-
-        public async Task<ActionResult<ApiResponse>> GetFormFieldsByFormId(int formBuilderId)
-        {
-            try
-            {
-                var formFields = await _formFieldService.GetByFormIdAsync(formBuilderId);
-                return Ok(new ApiResponse(200, "Form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving form fields by form: {ex.Message}"));
-            }
-        }
-
-        // GET MANDATORY FIELDS BY TAB ID
-        [HttpGet("tab/{tabId}/mandatory")]
-        public async Task<ActionResult<ApiResponse>> GetMandatoryFields(int tabId)
-        {
-            try
-            {
-                var formFields = await _formFieldService.GetMandatoryFieldsAsync(tabId);
-                return Ok(new ApiResponse(200, "Mandatory form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving mandatory form fields: {ex.Message}"));
-            }
-        }
-
-        // GET VISIBLE FIELDS BY TAB ID
-        [HttpGet("tab/{tabId}/visible")]
-        public async Task<ActionResult<ApiResponse>> GetVisibleFields(int tabId)
-        {
-            try
-            {
-                var formFields = await _formFieldService.GetVisibleFieldsAsync(tabId);
-                return Ok(new ApiResponse(200, "Visible form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving visible form fields: {ex.Message}"));
-            }
-        }
-
-        // GET EDITABLE FIELDS BY TAB ID
-        [HttpGet("tab/{tabId}/editable")]
-        public async Task<ActionResult<ApiResponse>> GetEditableFields(int tabId)
-        {
-            try
-            {
-                var formFields = await _formFieldService.GetEditableFieldsAsync(tabId);
-                return Ok(new ApiResponse(200, "Editable form fields retrieved successfully", formFields));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving editable form fields: {ex.Message}"));
-            }
-        }
-
-        // GET FORM FIELD BY FIELD CODE
-        [HttpGet("code/{fieldCode}")]
-        public async Task<ActionResult<ApiResponse>> GetFormFieldByCode(string fieldCode)
-        {
-            try
-            {
-                var formField = await _formFieldService.GetByFieldCodeAsync(fieldCode);
-                if (formField == null)
-                {
-                    return NotFound(new ApiResponse(404, "Form field not found"));
-                }
-
-                return Ok(new ApiResponse(200, "Form field retrieved successfully", formField));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving form field by code: {ex.Message}"));
-            }
-        }
-
-        // GET USAGE COUNT
-        [HttpGet("{id}/usage-count")]
-        public async Task<ActionResult<ApiResponse>> GetFormFieldUsageCount(int id)
-        {
-            try
-            {
-                var usageCount = await _formFieldService.GetUsageCountAsync(id);
-                return Ok(new ApiResponse(200, "Form field usage count retrieved successfully", usageCount));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving form field usage count: {ex.Message}"));
-            }
-        }
-
-        // Helper method to extract ID from service result
-        private int? ExtractIdFromResult(ApiResponse result)
-        {
-            if (result.Data is FormFieldDto formFieldDto)
-            {
-                return formFieldDto.Id;
-            }
-
-            // If Data is a dynamic object with Id property
-            if (result.Data != null && result.Data.GetType().GetProperty("Id") != null)
-            {
-                return (int?)result.Data.GetType().GetProperty("Id")?.GetValue(result.Data);
-            }
-
-            return null;
+            var result = await _formFieldService.SoftDeleteAsync(id);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
     }
 }

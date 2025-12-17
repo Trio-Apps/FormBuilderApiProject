@@ -1702,24 +1702,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -1748,24 +1731,53 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FieldOptions/field/{fieldId}": {
+      "get": {
+        "tags": [
+          "FieldOptions"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FieldOptions/field/{fieldId}/active": {
+      "get": {
+        "tags": [
+          "FieldOptions"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -1788,24 +1800,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -1845,24 +1840,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -1883,24 +1861,116 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FieldOptions/field/{fieldId}/default": {
+      "get": {
+        "tags": [
+          "FieldOptions"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FieldOptions/field/{fieldId}/count": {
+      "get": {
+        "tags": [
+          "FieldOptions"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FieldOptions/bulk": {
+      "post": {
+        "tags": [
+          "FieldOptions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
                 }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
                 }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.CreateFieldOptionDto"
                 }
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FieldOptions/{id}/soft": {
+      "delete": {
+        "tags": [
+          "FieldOptions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2877,24 +2947,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -2923,24 +2976,19 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormFields/active": {
+      "get": {
+        "tags": [
+          "FormFields"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -2963,24 +3011,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -3020,24 +3051,7 @@
         },
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       },
@@ -3058,93 +3072,29 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
     },
-    "/api/FormFields/soft-delete/{id}": {
-      "delete": {
+    "/api/FormFields/code/{fieldCode}": {
+      "get": {
         "tags": [
           "FormFields"
         ],
         "parameters": [
           {
-            "name": "id",
+            "name": "fieldCode",
             "in": "path",
             "required": true,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/FormFields/active": {
-      "get": {
-        "tags": [
-          "FormFields"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3167,24 +3117,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3207,24 +3140,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3247,24 +3163,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3287,24 +3186,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3327,63 +3209,7 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/FormFields/code/{fieldCode}": {
-      "get": {
-        "tags": [
-          "FormFields"
-        ],
-        "parameters": [
-          {
-            "name": "fieldCode",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
+            "description": "OK"
           }
         }
       }
@@ -3406,24 +3232,76 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormFields/tab/{tabId}/count": {
+      "get": {
+        "tags": [
+          "FormFields"
+        ],
+        "parameters": [
+          {
+            "name": "tabId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormFields/form/{formBuilderId}/count": {
+      "get": {
+        "tags": [
+          "FormFields"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormFields/{id}/soft": {
+      "delete": {
+        "tags": [
+          "FormFields"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -10200,15 +10078,6 @@
             "type": "string",
             "nullable": true
           },
-          "dataType": {
-            "type": "string",
-            "nullable": true
-          },
-          "maxLength": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
           "minValue": {
             "type": "number",
             "format": "double",
@@ -10224,14 +10093,6 @@
             "nullable": true
           },
           "validationMessage": {
-            "type": "string",
-            "nullable": true
-          },
-          "visibilityRuleJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "readOnlyRuleJson": {
             "type": "string",
             "nullable": true
           },
@@ -10380,19 +10241,18 @@
             "nullable": true
           },
           "isMandatory": {
-            "type": "boolean"
-          },
-          "isEditable": {
-            "type": "boolean"
-          },
-          "isVisible": {
-            "type": "boolean"
-          },
-          "defaultValueJson": {
-            "type": "string",
+            "type": "boolean",
             "nullable": true
           },
-          "dataType": {
+          "isEditable": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isVisible": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "defaultValueJson": {
             "type": "string",
             "nullable": true
           },
@@ -10416,14 +10276,6 @@
             "nullable": true
           },
           "validationMessage": {
-            "type": "string",
-            "nullable": true
-          },
-          "visibilityRuleJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "readOnlyRuleJson": {
             "type": "string",
             "nullable": true
           }
@@ -11257,7 +11109,6 @@
       },
       "FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto": {
         "required": [
-          "dataType",
           "fieldCode",
           "fieldName",
           "fieldTypeId",
@@ -11280,11 +11131,6 @@
           },
           "fieldCode": {
             "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "dataType": {
-            "maxLength": 50,
             "minLength": 0,
             "type": "string"
           },
@@ -11343,14 +11189,6 @@
           "validationMessage": {
             "maxLength": 500,
             "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "visibilityRuleJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "readOnlyRuleJson": {
             "type": "string",
             "nullable": true
           },

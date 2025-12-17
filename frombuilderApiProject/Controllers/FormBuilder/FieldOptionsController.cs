@@ -1,18 +1,17 @@
-using FormBuilder.Domian.Entitys.FormBuilder;
-using FormBuilder.Core.IServices.FormBuilder;
+using FormBuilder.API.Extensions;
 using FormBuilder.API.Models;
+using FormBuilder.Core.IServices.FormBuilder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using CreateFieldOptionDto = FormBuilder.API.Models.CreateFieldOptionDto;
+using UpdateFieldOptionDto = FormBuilder.API.Models.UpdateFieldOptionDto;
 
 namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Administration")]
-
     public class FieldOptionsController : ControllerBase
     {
         private readonly IFieldOptionsService _fieldOptionsService;
@@ -26,122 +25,132 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         // GET ALL FIELD OPTIONS
         // ================================
         [HttpGet]
-        public async Task<ActionResult<ApiResponse>> GetAllFieldOptions()
+        public async Task<IActionResult> GetAllFieldOptions()
         {
-            try
-            {
-                // Note: You'll need to add this method to your IFieldOptionsService interface
-                var result = await _fieldOptionsService.GetAllAsync();
-                return StatusCode(result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving field options: {ex.Message}"));
-            }
+            var result = await _fieldOptionsService.GetAllAsync();
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET FIELD OPTIONS BY FIELD ID
+        // ================================
+        [HttpGet("field/{fieldId}")]
+        public async Task<IActionResult> GetFieldOptionsByFieldId(int fieldId)
+        {
+            var result = await _fieldOptionsService.GetByFieldIdAsync(fieldId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET ACTIVE FIELD OPTIONS BY FIELD ID
+        // ================================
+        [HttpGet("field/{fieldId}/active")]
+        public async Task<IActionResult> GetActiveFieldOptionsByFieldId(int fieldId)
+        {
+            var result = await _fieldOptionsService.GetActiveByFieldIdAsync(fieldId);
+            return result.ToActionResult();
         }
 
         // ================================
         // GET FIELD OPTION BY ID
         // ================================
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ApiResponse>> GetFieldOptionById(int id)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetFieldOptionById(int id)
         {
-            try
-            {
-                var result = await _fieldOptionsService.GetByIdAsync(id);
-                return StatusCode(result.StatusCode, result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error retrieving field option: {ex.Message}"));
-            }
+            var result = await _fieldOptionsService.GetByIdAsync(id, asNoTracking: true);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET DEFAULT OPTION BY FIELD ID
+        // ================================
+        [HttpGet("field/{fieldId}/default")]
+        public async Task<IActionResult> GetDefaultOption(int fieldId)
+        {
+            var result = await _fieldOptionsService.GetDefaultOptionAsync(fieldId);
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // GET OPTIONS COUNT BY FIELD ID
+        // ================================
+        [HttpGet("field/{fieldId}/count")]
+        public async Task<IActionResult> GetOptionsCount(int fieldId)
+        {
+            var result = await _fieldOptionsService.GetOptionsCountAsync(fieldId);
+            return result.ToActionResult();
         }
 
         // ================================
         // CREATE FIELD OPTION
         // ================================
         [HttpPost]
-        public async Task<ActionResult<ApiResponse>> CreateFieldOption([FromBody] CreateFieldOptionDto createFieldOptionDto)
+        public async Task<IActionResult> CreateFieldOption([FromBody] CreateFieldOptionDto createFieldOptionDto)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(new ApiResponse(400, "Invalid field option data", ModelState));
-                }
-
-                var result = await _fieldOptionsService.CreateAsync(createFieldOptionDto);
-
-                if (result.StatusCode == 200)
-                {
-                    return CreatedAtAction(nameof(GetFieldOptionById), new { id = result.Data?.GetType().GetProperty("Id")?.GetValue(result.Data) }, result);
-                }
-
-                return BadRequest(result);
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
+
+            var result = await _fieldOptionsService.CreateAsync(createFieldOptionDto);
+            if (result.Success && result.Data != null)
             {
-                return StatusCode(500, new ApiResponse(500, $"Error creating field option: {ex.Message}"));
+                return CreatedAtAction(nameof(GetFieldOptionById), new { id = result.Data.Id }, result.Data);
             }
+            return result.ToActionResult();
+        }
+
+        // ================================
+        // CREATE BULK FIELD OPTIONS
+        // ================================
+        [HttpPost("bulk")]
+        public async Task<IActionResult> CreateBulkFieldOptions([FromBody] System.Collections.Generic.List<CreateFieldOptionDto> createDtos)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _fieldOptionsService.CreateBulkAsync(createDtos);
+            return result.ToActionResult();
         }
 
         // ================================
         // UPDATE FIELD OPTION
         // ================================
-        [HttpPut("{id}")]
-        public async Task<ActionResult<ApiResponse>> UpdateFieldOption(int id, [FromBody] UpdateFieldOptionDto updateFieldOptionDto)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateFieldOption(int id, [FromBody] UpdateFieldOptionDto updateFieldOptionDto)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(new ApiResponse(400, "Invalid field option data", ModelState));
-                }
-
-                var result = await _fieldOptionsService.UpdateAsync(id, updateFieldOptionDto);
-
-                if (result.StatusCode == 200)
-                {
-                    return Ok(result);
-                }
-                else if (result.StatusCode == 404)
-                {
-                    return NotFound(result);
-                }
-
-                return BadRequest(result);
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error updating field option: {ex.Message}"));
-            }
+
+            var result = await _fieldOptionsService.UpdateAsync(id, updateFieldOptionDto);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
 
         // ================================
-        // DELETE FIELD OPTION
+        // DELETE FIELD OPTION (HARD DELETE)
         // ================================
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ApiResponse>> DeleteFieldOption(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteFieldOption(int id)
         {
-            try
-            {
-                var result = await _fieldOptionsService.DeleteAsync(id);
+            var result = await _fieldOptionsService.DeleteAsync(id);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
+        }
 
-                if (result.StatusCode == 200)
-                {
-                    return Ok(result);
-                }
-                else if (result.StatusCode == 404)
-                {
-                    return NotFound(result);
-                }
-
-                return BadRequest(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new ApiResponse(500, $"Error deleting field option: {ex.Message}"));
-            }
+        // ================================
+        // SOFT DELETE FIELD OPTION
+        // ================================
+        [HttpDelete("{id:int}/soft")]
+        public async Task<IActionResult> SoftDeleteFieldOption(int id)
+        {
+            var result = await _fieldOptionsService.SoftDeleteAsync(id);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
     }
 }

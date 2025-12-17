@@ -1,4 +1,3 @@
-using DocumentFormat.OpenXml.InkML;
 using FormBuilder.Infrastructure.Data;
 using FormBuilder.core;
 using FormBuilder.Domain.Interfaces;
@@ -14,12 +13,9 @@ namespace FormBuilder.Infrastructure.Repositories
     {
         public FormBuilderDbContext _context { get; }
 
-        // REMOVE this line: private readonly FormBuilderDbContext _context;
-
         public FieldOptionsRepository(FormBuilderDbContext context) : base(context)
         {
             _context = context;
-            // The base constructor already sets up _context
         }
 
         public async Task<IEnumerable<FIELD_OPTIONS>> GetByFieldIdAsync(int fieldId)
@@ -56,16 +52,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .CountAsync(fo => fo.FieldId == fieldId && fo.IsActive);
         }
 
-        // FIXED: Use the base class method instead of custom implementation
-        public  async Task<FIELD_OPTIONS> GetByIdAsync(int id)
-        {
-            return await _context.FIELD_OPTIONS.FindAsync(id);
-        }
-
-        // FIXED: Check FIELD_OPTIONS table, not FORM_FIELDS
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _context.FIELD_OPTIONS.AnyAsync(x => x.Id == id);
-        }
+        // Note: GetByIdAsync and ExistsAsync are inherited from BaseRepository
+        // No need to override them unless custom logic is required
     }
 }

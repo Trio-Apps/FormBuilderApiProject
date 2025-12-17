@@ -79,7 +79,11 @@ builder.Services.AddDbContext<AkhmanageItContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("AuthConnection");
 
-  
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        connectionString = "Server=DESKTOP-B3NJLJM;Database=AkhmanageItDb;Trusted_Connection=True;TrustServerCertificate=True;";
+        Console.WriteLine("Using default Auth connection string");
+    }
 
     options.UseSqlServer(connectionString);
 

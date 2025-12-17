@@ -1,226 +1,111 @@
-using formBuilder.Domian.Entitys;
+using AutoMapper;
 using formBuilder.Domian.Interfaces;
-using FormBuilder.Domian.Entitys.FormBuilder;
-using FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Application.DTOS;
+using FormBuilder.Core.DTOS.Common;
 using FormBuilder.Core.DTOS.FormFields;
-using FormBuilder.Domain.Interfaces;
+using FormBuilder.Core.IServices.FormBuilder;
+using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.API.Models;
-using Microsoft.Extensions.Logging;
+using FormBuilder.Services.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
+using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
+using UpdateFormFieldDto = FormBuilder.API.Models.UpdateFormFieldDto;
 
 namespace FormBuilder.Services.Services
 {
-    public class FormFieldService : IFormFieldService
+    public class FormFieldService : BaseService<FORM_FIELDS, FormFieldDto, CreateFormFieldDto, UpdateFormFieldDto>, IFormFieldService
     {
-        private readonly IunitOfwork _unitOfWork;
-        private readonly ILogger<FormFieldService> _logger;
-
-        public FormFieldService(IunitOfwork unitOfWork, ILogger<FormFieldService> logger)
+        public FormFieldService(IunitOfwork unitOfWork, IMapper mapper)
+            : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            _logger = logger;
         }
 
+        protected override IBaseRepository<FORM_FIELDS> Repository => _unitOfWork.FormFieldRepository;
+
         // ================================
-        // CREATE
+        // CUSTOM OPERATIONS
         // ================================
-        public async Task<ApiResponse> CreateAsync(FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto dto)
+
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetActiveAsync()
         {
-            if (dto == null)
-                return new ApiResponse(400, "DTO is required");
-
-            try
-            {
-                // Validate field code uniqueness
-                if (!await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(dto.FieldCode))
-                    return new ApiResponse(400, $"Field code '{dto.FieldCode}' already exists");
-
-                // Validate field name uniqueness within tab
-                if (!await _unitOfWork.FormFieldRepository.IsFieldNameUniqueAsync(dto.FieldName, null, dto.TabId))
-                    return new ApiResponse(400, $"Field name '{dto.FieldName}' already exists in this tab");
-
-                var entity = ToEntity(dto);
-
-                _unitOfWork.Repositary<FORM_FIELDS>().Add(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Form field created successfully");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while creating form field");
-                return new ApiResponse(500, "An error occurred while creating the form field");
-            }
+            var entities = await Repository.GetAllAsync(e => e.IsActive);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(entities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
-        // ================================
-        // UPDATE
-        // ================================
-        public async Task<ApiResponse> UpdateAsync(UpdateFormFieldDto dto, int id)
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetByTabIdAsync(int tabId)
         {
-            if (dto == null)
-                return new ApiResponse(400, "DTO is required");
-
-            try
-            {
-                var entity = await _unitOfWork.FormFieldRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Form field not found");
-
-                // Validate field code uniqueness (ignore current field)
-                if (!await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(dto.FieldCode, id))
-                    return new ApiResponse(400, $"Field code '{dto.FieldCode}' already exists");
-
-                // Validate field name uniqueness within tab (ignore current field)
-                if (!await _unitOfWork.FormFieldRepository.IsFieldNameUniqueAsync(dto.FieldName, id, dto.TabId))
-                    return new ApiResponse(400, $"Field name '{dto.FieldName}' already exists in this tab");
-
-                MapUpdate(dto, entity);
-
-                _unitOfWork.Repositary<FORM_FIELDS>().Update(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Form field updated successfully");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while updating form field with ID {FormFieldId}", id);
-                return new ApiResponse(500, "An error occurred while updating the form field");
-            }
+            var entities = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(entities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
-        // ================================
-        // DELETE (HARD)
-        // ================================
-        public async Task<ApiResponse> DeleteAsync(int id)
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetByFormIdAsync(int formBuilderId)
         {
-            try
-            {
-                var entity = await _unitOfWork.FormFieldRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Form field not found");
-
-                var usageCount = await GetUsageCountAsync(id);
-                if (usageCount > 0)
-                    return new ApiResponse(400, $"Form field is used {usageCount} times — cannot delete");
-
-                _unitOfWork.Repositary<FORM_FIELDS>().Delete(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Form field deleted successfully");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while deleting form field with ID {FormFieldId}", id);
-                return new ApiResponse(500, "An error occurred while deleting the form field");
-            }
+            var entities = await _unitOfWork.FormFieldRepository.GetFieldsByFormIdAsync(formBuilderId);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(entities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
-        // ================================
-        // SOFT DELETE
-        // ================================
-        public async Task<ApiResponse> SoftDeleteAsync(int id)
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetMandatoryFieldsAsync(int tabId)
         {
-            try
-            {
-                var entity = await _unitOfWork.FormFieldRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Form field not found");
-
-                entity.IsActive = false;
-                _unitOfWork.Repositary<FORM_FIELDS>().Update(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Form field soft deleted successfully");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error while soft deleting form field with ID {FormFieldId}", id);
-                return new ApiResponse(500, "An error occurred while soft deleting the form field");
-            }
+            var entities = await _unitOfWork.FormFieldRepository.GetMandatoryFieldsAsync(tabId);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(entities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
-        // ================================
-        // GET BY ID
-        // ================================
-        public async Task<FormFieldDto> GetByIdAsync(int id)
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetVisibleFieldsAsync(int tabId)
         {
-            var entity = await _unitOfWork.FormFieldRepository.GetByIdAsync(id);
-            return ToDto(entity);
+            var entities = await _unitOfWork.FormFieldRepository.GetVisibleFieldsAsync(tabId);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(entities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
-        // ================================
-        // GET ALL
-        // ================================
-        public async Task<IEnumerable<FormFieldDto>> GetAllAsync()
+        public async Task<ServiceResult<FormFieldDto>> GetByFieldCodeAsync(string fieldCode)
         {
-            var list = await _unitOfWork.FormFieldRepository.GetAllAsync();
-            return list.Select(ToDto);
+            if (string.IsNullOrWhiteSpace(fieldCode))
+                return ServiceResult<FormFieldDto>.BadRequest("Field code is required");
+
+            var entities = await Repository.GetAllAsync(e => e.FieldCode == fieldCode && e.IsActive);
+            var entity = entities.FirstOrDefault();
+            
+            if (entity == null)
+                return ServiceResult<FormFieldDto>.NotFound();
+
+            var dto = _mapper.Map<FormFieldDto>(entity);
+            return ServiceResult<FormFieldDto>.Ok(dto);
         }
 
-        // ================================
-        // SPECIAL QUERIES
-        // ================================
-        public async Task<IEnumerable<FormFieldDto>> GetActiveAsync()
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetEditableFieldsAsync(int tabId)
         {
-            var list = await _unitOfWork.FormFieldRepository.GetAllAsync();
-            return list.Where(x => x.IsActive).Select(ToDto);
+            var entities = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
+            var editableEntities = entities.Where(e => e.IsEditable ?? false);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(editableEntities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
-        public async Task<IEnumerable<FormFieldDto>> GetByTabIdAsync(int tabId)
+        public async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
         {
-            var list = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
-            return list.Select(ToDto);
-        }
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
+            if (entity == null)
+                return ServiceResult<bool>.NotFound();
 
-        public async Task<IEnumerable<FormFieldDto>> GetByFormIdAsync(int formBuilderId)
-        {
-            var list = await _unitOfWork.FormFieldRepository.GetFieldsByFormIdAsync(formBuilderId);
-            return list.Select(ToDto);
-        }
+            entity.IsActive = false;
+            entity.UpdatedDate = DateTime.UtcNow;
+            Repository.Update(entity);
+            await _unitOfWork.CompleteAsyn();
 
-        public async Task<IEnumerable<FormFieldDto>> GetMandatoryFieldsAsync(int tabId)
-        {
-            var list = await _unitOfWork.FormFieldRepository.GetMandatoryFieldsAsync(tabId);
-            return list.Select(ToDto);
-        }
-
-        public async Task<IEnumerable<FormFieldDto>> GetVisibleFieldsAsync(int tabId)
-        {
-            var list = await _unitOfWork.FormFieldRepository.GetVisibleFieldsAsync(tabId);
-            return list.Select(ToDto);
-        }
-
-        public async Task<FormFieldDto> GetByFieldCodeAsync(string fieldCode)
-        {
-            var list = await _unitOfWork.Repositary<FORM_FIELDS>().GetAllAsync(x => x.FieldCode == fieldCode && x.IsActive);
-            var entity = list.FirstOrDefault();
-            return ToDto(entity);
-        }
-
-        public async Task<IEnumerable<FormFieldDropdownDto>> GetForDropdownAsync(int tabId)
-        {
-            var list = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
-            return list.Select(x => new FormFieldDropdownDto
-            {
-                Id = x.Id,
-                FieldName = x.FieldName,
-                FieldCode = x.FieldCode
-            });
-        }
-
-        public async Task<IEnumerable<FormFieldDto>> GetEditableFieldsAsync(int tabId)
-        {
-            var list = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
-            return list.Where(x => x.IsEditable).Select(ToDto);
+            return ServiceResult<bool>.Ok(true);
         }
 
         // ================================
         // VALIDATION
         // ================================
+
         public async Task<bool> IsFieldCodeUniqueAsync(string fieldCode, int? ignoreId = null)
         {
             return await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(fieldCode, ignoreId);
@@ -234,16 +119,17 @@ namespace FormBuilder.Services.Services
         // ================================
         // UTILITY
         // ================================
+
         public async Task<bool> ExistsAsync(int id)
         {
-            return await _unitOfWork.Repositary<FORM_FIELDS>().AnyAsync(x => x.Id == id);
+            return await Repository.AnyAsync(e => e.Id == id);
         }
 
-        public async Task<int> GetUsageCountAsync(int fieldId)
+        public async Task<ServiceResult<int>> GetUsageCountAsync(int fieldId)
         {
-            // Check if field is used in form submissions, formulas, etc.
-            var entity = await _unitOfWork.FormFieldRepository.GetByIdAsync(fieldId);
-            if (entity == null) return 0;
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == fieldId);
+            if (entity == null)
+                return ServiceResult<int>.NotFound();
 
             // Add logic to check usage in related entities
             // For example: FORM_SUBMISSION_VALUES, FORMULA_VARIABLES, etc.
@@ -252,139 +138,111 @@ namespace FormBuilder.Services.Services
             // Example: count form submission values
             // count += entity.FORM_SUBMISSION_VALUES?.Count(x => x.IsActive) ?? 0;
 
-            return count;
+            return ServiceResult<int>.Ok(count);
         }
 
-        public async Task<int> GetFieldsCountByTabAsync(int tabId)
+        public async Task<ServiceResult<int>> GetFieldsCountByTabAsync(int tabId)
         {
             var fields = await _unitOfWork.FormFieldRepository.GetFieldsByTabIdAsync(tabId);
-            return fields.Count();
+            return ServiceResult<int>.Ok(fields.Count());
         }
 
-        public async Task<int> GetFieldsCountByFormAsync(int formBuilderId)
+        public async Task<ServiceResult<int>> GetFieldsCountByFormAsync(int formBuilderId)
         {
             var fields = await _unitOfWork.FormFieldRepository.GetFieldsByFormIdAsync(formBuilderId);
-            return fields.Count();
+            return ServiceResult<int>.Ok(fields.Count());
         }
 
         // ================================
-        // MAPPING
+        // CREATE OVERRIDE - Support optional FieldOptions
         // ================================
-        private FormFieldDto ToDto(FORM_FIELDS e)
-        {
-            if (e == null) return null;
 
-            return new FormFieldDto
+        public override async Task<ServiceResult<FormFieldDto>> CreateAsync(CreateFormFieldDto dto)
+        {
+            if (dto == null) return ServiceResult<FormFieldDto>.BadRequest("Payload is required");
+
+            var validation = await ValidateCreateAsync(dto);
+            if (!validation.IsValid) return ServiceResult<FormFieldDto>.BadRequest(validation.ErrorMessage ?? "Validation failed");
+
+            var entity = _mapper.Map<FORM_FIELDS>(dto);
+            entity.CreatedDate = entity.CreatedDate == default ? DateTime.UtcNow : entity.CreatedDate;
+            entity.IsActive = true;
+
+            Repository.Add(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            // Create field options if provided (optional)
+            if (dto.FieldOptions != null && dto.FieldOptions.Any())
             {
-                Id = e.Id,
-                TabId = e.TabId,
-                FieldTypeId = e.FieldTypeId,
-                FieldTypeName = e.FIELD_TYPES?.TypeName,
-                FieldName = e.FieldName,
-                FieldCode = e.FieldCode,
-                FieldOrder = e.FieldOrder,
-                Placeholder = e.Placeholder,
-                HintText = e.HintText,
-                IsMandatory = e.IsMandatory,
-                IsEditable = e.IsEditable,
-                IsVisible = e.IsVisible,
-                DefaultValueJson = e.DefaultValueJson,
-                DataType = e.DataType,
-                MaxLength = e.MaxLength,
-                MinValue = e.MinValue,
-                MaxValue = e.MaxValue,
-                RegexPattern = e.RegexPattern,
-                ValidationMessage = e.ValidationMessage,
-                VisibilityRuleJson = e.VisibilityRuleJson,
-                ReadOnlyRuleJson = e.ReadOnlyRuleJson,
-                CreatedDate = e.CreatedDate,
-                CreatedByUserId = e.CreatedByUserId,
-                IsActive = e.IsActive,
-                Tab = e.FORM_TABS != null ? new FormTabDto
+                var fieldOptions = dto.FieldOptions.Select((option, index) => new FormBuilder.Domian.Entitys.froms.FIELD_OPTIONS
                 {
-                    Id = e.FORM_TABS.Id,
-                    TabName = e.FORM_TABS.TabName,
-                    TabCode = e.FORM_TABS.TabCode,
-                    TabOrder = e.FORM_TABS.TabOrder,
-                    IsActive = e.FORM_TABS.IsActive
-                } : null,
-                FieldType = e.FIELD_TYPES != null ? new FieldTypeDto
+                    FieldId = entity.Id,
+                    OptionText = option.OptionText,
+                    OptionValue = option.OptionValue ?? option.OptionText,
+                    OptionOrder = option.SortOrder != 0 ? option.SortOrder : index + 1,
+                    IsDefault = option.IsDefault,
+                    IsActive = option.IsActive,
+                    CreatedDate = DateTime.UtcNow
+                }).ToList();
+
+                foreach (var option in fieldOptions)
                 {
-                    Id = e.FIELD_TYPES.Id,
-                    TypeName = e.FIELD_TYPES.TypeName,
-                    AllowMultiple = e.FIELD_TYPES.AllowMultiple,
-                    DataType = e.FIELD_TYPES.DataType,
-                    IsActive = e.FIELD_TYPES.IsActive
-                } : null,
-                FieldOptions = e.FIELD_OPTIONS?.Where(fo => fo.IsActive).Select(fo => new FormBuilder.API.Models.FieldOptionDto
-                {
-                    Id = fo.Id,
-                    FieldId = fo.FieldId,
-                    OptionText = fo.OptionText,
-                    OptionValue = fo.OptionValue,
-                    OptionOrder = fo.OptionOrder,
-                    IsActive = fo.IsActive
-                }).ToList()
-            };
+                    _unitOfWork.FieldOptionsRepository.Add(option);
+                }
+
+                await _unitOfWork.CompleteAsyn();
+            }
+
+            return ServiceResult<FormFieldDto>.Ok(_mapper.Map<FormFieldDto>(entity));
         }
 
-        private FORM_FIELDS ToEntity(FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto dto)
+        // ================================
+        // VALIDATION OVERRIDES
+        // ================================
+
+        protected override async Task<ValidationResult> ValidateCreateAsync(CreateFormFieldDto dto)
         {
-            return new FORM_FIELDS
-            {
-                TabId = dto.TabId,
-                FieldTypeId = dto.FieldTypeId,
-                FieldName = dto.FieldName,
-                FieldCode = dto.FieldCode,
-                FieldOrder = dto.FieldOrder,
-                Placeholder = dto.Placeholder,
-                HintText = dto.HintText,
-                IsMandatory = dto.IsMandatory,
-                IsEditable = dto.IsEditable,
-                IsVisible = dto.IsVisible,
-                DefaultValueJson = dto.DefaultValueJson,
-                DataType = dto.DataType,
-                MaxLength = dto.MaxLength,
-                MinValue = dto.MinValue,
-                MaxValue = dto.MaxValue,
-                RegexPattern = dto.RegexPattern,
-                ValidationMessage = dto.ValidationMessage,
-                VisibilityRuleJson = dto.VisibilityRuleJson,
-                ReadOnlyRuleJson = dto.ReadOnlyRuleJson,
-                CreatedDate = DateTime.UtcNow,
-                IsActive = true
-            };
+            // Validate field code uniqueness
+            if (!await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(dto.FieldCode))
+                return ValidationResult.Failure($"Field code '{dto.FieldCode}' already exists");
+
+            // Validate field name uniqueness within tab
+            if (!await _unitOfWork.FormFieldRepository.IsFieldNameUniqueAsync(dto.FieldName, null, dto.TabId))
+                return ValidationResult.Failure($"Field name '{dto.FieldName}' already exists in this tab");
+
+            // FieldOptions are optional - no validation needed
+            // If provided, they will be created after the field is created
+
+            return ValidationResult.Success();
         }
 
-        private void MapUpdate(UpdateFormFieldDto dto, FORM_FIELDS e)
+        protected override async Task<ValidationResult> ValidateUpdateAsync(int id, UpdateFormFieldDto dto, FORM_FIELDS entity)
         {
-            e.TabId = dto.TabId;
-            e.FieldTypeId = dto.FieldTypeId;
-            e.FieldName = dto.FieldName;
-            e.FieldCode = dto.FieldCode;
-            e.FieldOrder = dto.FieldOrder;
-            e.Placeholder = dto.Placeholder;
-            e.HintText = dto.HintText;
-            e.IsMandatory = dto.IsMandatory;
-            e.IsEditable = dto.IsEditable;
-            e.IsVisible = dto.IsVisible;
-            e.DefaultValueJson = dto.DefaultValueJson;
-            e.DataType = dto.DataType;
-            e.MaxLength = dto.MaxLength;
-            e.MinValue = dto.MinValue;
-            e.MaxValue = dto.MaxValue;
-            e.RegexPattern = dto.RegexPattern;
-            e.ValidationMessage = dto.ValidationMessage;
-            e.VisibilityRuleJson = dto.VisibilityRuleJson;
-            e.ReadOnlyRuleJson = dto.ReadOnlyRuleJson;
-        }
-    }
+            // Validate field code uniqueness (ignore current field)
+            if (!await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(dto.FieldCode, id))
+                return ValidationResult.Failure($"Field code '{dto.FieldCode}' already exists");
 
-    // Additional DTO for dropdown
-    public class FormFieldDropdownDto
-    {
-        public int Id { get; set; }
-        public string FieldName { get; set; }
-        public string FieldCode { get; set; }
+            // Validate field name uniqueness within tab (ignore current field)
+            if (!await _unitOfWork.FormFieldRepository.IsFieldNameUniqueAsync(dto.FieldName, id, dto.TabId))
+                return ValidationResult.Failure($"Field name '{dto.FieldName}' already exists in this tab");
+
+            return ValidationResult.Success();
+        }
+
+        public override async Task<ServiceResult<bool>> DeleteAsync(int id)
+        {
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
+            if (entity == null)
+                return ServiceResult<bool>.NotFound();
+
+            var usageCountResult = await GetUsageCountAsync(id);
+            if (usageCountResult.Success && usageCountResult.Data > 0)
+                return ServiceResult<bool>.BadRequest($"Form field is used {usageCountResult.Data} times — cannot delete");
+
+            Repository.Delete(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            return ServiceResult<bool>.Ok(true);
+        }
     }
 }

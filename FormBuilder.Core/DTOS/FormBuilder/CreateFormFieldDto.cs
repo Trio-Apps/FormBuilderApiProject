@@ -18,10 +18,6 @@ namespace FormBuilder.Core.DTOS.FormFields
         [StringLength(100, ErrorMessage = "FieldCode cannot exceed 100 characters")]
         public string FieldCode { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "DataType is required")]
-        [StringLength(50, ErrorMessage = "DataType cannot exceed 50 characters")]
-        public string DataType { get; set; } = "string";
-
         public int FieldOrder { get; set; } = 0;
 
         [StringLength(200, ErrorMessage = "Placeholder cannot exceed 200 characters")]
@@ -51,10 +47,6 @@ namespace FormBuilder.Core.DTOS.FormFields
 
         [StringLength(500, ErrorMessage = "ValidationMessage cannot exceed 500 characters")]
         public string? ValidationMessage { get; set; }
-
-        public string? VisibilityRuleJson { get; set; }
-
-        public string? ReadOnlyRuleJson { get; set; }
 
         public bool IsActive { get; set; } = true;
 
