@@ -113,13 +113,13 @@ namespace FormBuilder.Services.Services
 
         public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetBasicAsync()
         {
-            var list = await Repository.GetAllAsync(x => !x.HasOptions && !x.AllowMultiple);
+            var list = await Repository.GetAllAsync(x => (!x.HasOptions.HasValue || !x.HasOptions.Value) && (!x.AllowMultiple.HasValue || !x.AllowMultiple.Value));
             return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 
         public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetAdvancedAsync()
         {
-            var list = await Repository.GetAllAsync(x => x.HasOptions || x.AllowMultiple);
+            var list = await Repository.GetAllAsync(x => (x.HasOptions.HasValue && x.HasOptions.Value) || (x.AllowMultiple.HasValue && x.AllowMultiple.Value));
             return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
         }
 

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 public class FieldTypeCreateDto
 {
@@ -9,6 +9,6 @@ public class FieldTypeCreateDto
     public string DataType { get; set; }
 
     public int? MaxLength { get; set; }
-    public bool HasOptions { get; set; }
-    public bool AllowMultiple { get; set; }
+    public bool? HasOptions { get; set; }
+    public bool? AllowMultiple { get; set; }
 }

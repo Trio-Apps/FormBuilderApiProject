@@ -1,7 +1,44 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\FormBuilderApiProject\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\repository\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\repository\\baserepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\services\\base\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\base\\baseservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\services\\formbuilder\\fieldtypesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\formbuilder\\fieldtypesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\iservices\\formbuilder\\iprojectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\iservices\\formbuilder\\iprojectservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\iservices\\formbuilder\\iformtabservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\iservices\\formbuilder\\iformtabservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FormBuilderApiProject\\FormBuilder.Core\\Migrations\\20251217112055_update flied type .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:FormBuilder.Core\\Migrations\\20251217112055_update flied type .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\services\\formbuilder\\formbuilderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\formbuilder\\formbuilderservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|d:\\formbuilderapiproject\\formbuilder.domian\\entitys\\formbuilder\\formfield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\formbuilder\\formfield.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|d:\\formbuilderapiproject\\formbuilder.domian\\entitys\\formbuilder\\formbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25FAA2DB-493C-4590-99BC-BE3BC51F6456}|formBuilder.Domian\\FormBuilder.Domian.csproj|solutionrelative:formbuilder.domian\\entitys\\formbuilder\\formbuilder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +46,128 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BaseRepository.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Repository\\BaseRepository.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Repository\\BaseRepository.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Repository\\BaseRepository.cs*",
+              "RelativeToolTip": "FormBuilder.Services\\Repository\\BaseRepository.cs*",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAcwDYAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:44:57.334Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BaseService.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\Base\\BaseService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\Base\\BaseService.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\Base\\BaseService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\Base\\BaseService.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAkwCEAAAA6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:33:57.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IProjectService.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\IServices\\FormBuilder\\IProjectService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Core\\IServices\\FormBuilder\\IProjectService.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\IServices\\FormBuilder\\IProjectService.cs",
+              "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IProjectService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:33:20.489Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IFormTabService.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\IServices\\FormBuilder\\IFormTabService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Core\\IServices\\FormBuilder\\IFormTabService.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\IServices\\FormBuilder\\IFormTabService.cs",
+              "RelativeToolTip": "FormBuilder.Core\\IServices\\FormBuilder\\IFormTabService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:33:07.555Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "20251217112055_update flied type .cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\Migrations\\20251217112055_update flied type .cs",
+              "RelativeDocumentMoniker": "FormBuilder.Core\\Migrations\\20251217112055_update flied type .cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\Migrations\\20251217112055_update flied type .cs",
+              "RelativeToolTip": "FormBuilder.Core\\Migrations\\20251217112055_update flied type .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:20:55.282Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FormBuilderService.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FormBuilderService.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAcwFgAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:19:42.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FieldTypesService.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FieldTypesService.cs",
+              "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\FormBuilder\\FieldTypesService.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FieldTypesService.cs",
+              "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\FieldTypesService.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwB8AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:19:39.899Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FormField.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\formBuilder.Domian\\Entitys\\FormBuilder\\FormField.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\FormBuilder\\FormField.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\formBuilder.Domian\\Entitys\\FormBuilder\\FormField.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\FormField.cs",
+              "ViewState": "AgIAABgAAAAAAAAAAAA4wAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:11:56.731Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FormBuilder.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\formBuilder.Domian\\Entitys\\FormBuilder\\FormBuilder.cs",
+              "RelativeDocumentMoniker": "formBuilder.Domian\\Entitys\\FormBuilder\\FormBuilder.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\formBuilder.Domian\\Entitys\\FormBuilder\\FormBuilder.cs",
+              "RelativeToolTip": "formBuilder.Domian\\Entitys\\FormBuilder\\FormBuilder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T11:11:54.768Z",
+              "EditorCaption": ""
             }
           ]
         }

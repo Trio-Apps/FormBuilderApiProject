@@ -16,8 +16,8 @@ public class FIELD_TYPES :BaseEntity
     public string DataType { get; set; }
 
     public int? MaxLength { get; set; }
-    public bool HasOptions { get; set; }
-    public bool AllowMultiple { get; set; }
+    public bool ? HasOptions { get; set; }
+    public bool ? AllowMultiple { get; set; }
     public bool IsActive { get; set; }
 
     public virtual ICollection<FORM_FIELDS> FORM_FIELDS { get; set; }

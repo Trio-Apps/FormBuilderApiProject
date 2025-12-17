@@ -35,7 +35,7 @@ namespace FormBuilder.Services.Repository
         public async Task<IEnumerable<FIELD_TYPES>> GetFieldTypesWithOptionsAsync()
         {
             return await _context.FIELD_TYPES
-                .Where(ft => ft.HasOptions && ft.IsActive)
+                .Where(ft => ft.HasOptions.HasValue && ft.HasOptions.Value && ft.IsActive)
                 .OrderBy(ft => ft.TypeName)
                 .ToListAsync();
         }
@@ -61,7 +61,7 @@ namespace FormBuilder.Services.Repository
         public async Task<IEnumerable<FIELD_TYPES>> GetFieldTypesWithMultipleValuesAsync()
         {
             return await _context.FIELD_TYPES
-                .Where(ft => ft.AllowMultiple && ft.IsActive)
+                .Where(ft => ft.AllowMultiple.HasValue && ft.AllowMultiple.Value && ft.IsActive)
                 .OrderBy(ft => ft.TypeName)
                 .ToListAsync();
         }
@@ -100,7 +100,7 @@ namespace FormBuilder.Services.Repository
         public async Task<IEnumerable<FIELD_TYPES>> GetBasicFieldTypesAsync()
         {
             return await _context.FIELD_TYPES
-                .Where(ft => ft.IsActive && !ft.HasOptions && !ft.AllowMultiple)
+                .Where(ft => ft.IsActive && (!ft.HasOptions.HasValue || !ft.HasOptions.Value) && (!ft.AllowMultiple.HasValue || !ft.AllowMultiple.Value))
                 .OrderBy(ft => ft.TypeName)
                 .ToListAsync();
         }
@@ -108,7 +108,7 @@ namespace FormBuilder.Services.Repository
         public async Task<IEnumerable<FIELD_TYPES>> GetAdvancedFieldTypesAsync()
         {
             return await _context.FIELD_TYPES
-                .Where(ft => ft.IsActive && (ft.HasOptions || ft.AllowMultiple))
+                .Where(ft => ft.IsActive && ((ft.HasOptions.HasValue && ft.HasOptions.Value) || (ft.AllowMultiple.HasValue && ft.AllowMultiple.Value)))
                 .OrderBy(ft => ft.TypeName)
                 .ToListAsync();
         }

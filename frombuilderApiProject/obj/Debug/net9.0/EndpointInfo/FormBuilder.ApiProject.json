@@ -9296,10 +9296,12 @@
             "nullable": true
           },
           "hasOptions": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "allowMultiple": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -9325,10 +9327,12 @@
             "nullable": true
           },
           "hasOptions": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "allowMultiple": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "isActive": {
             "type": "boolean"
@@ -9359,10 +9363,12 @@
             "nullable": true
           },
           "hasOptions": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "allowMultiple": {
-            "type": "boolean"
+            "type": "boolean",
+            "nullable": true
           },
           "isActive": {
             "type": "boolean"

@@ -366,3 +366,4 @@ ADD ConditionJson NVARCHAR(MAX) NULL;
 **المراجع**: AI Assistant
 **الحالة**: ✅ جاهز للتطبيق
 
+
