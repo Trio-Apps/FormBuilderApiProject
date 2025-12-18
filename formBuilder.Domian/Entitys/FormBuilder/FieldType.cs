@@ -12,6 +12,9 @@ public class FIELD_TYPES :BaseEntity
     [Required, StringLength(100)]
     public string TypeName { get; set; } = string.Empty;
 
+    [StringLength(100)]
+    public string? ForeignTypeName { get; set; }
+
     [StringLength(50)]
     public string DataType { get; set; } = string.Empty;
 

@@ -1,4 +1,5 @@
 import { FormTab } from '../types/form'
+import { useLanguage } from '../contexts/LanguageContext'
 import './TabNavigation.css'
 
 interface TabNavigationProps {
@@ -8,6 +9,16 @@ interface TabNavigationProps {
 }
 
 const TabNavigation = ({ tabs, activeIndex, onTabChange }: TabNavigationProps) => {
+  const { currentLanguage } = useLanguage()
+  
+  const getTabName = (tab: FormTab) => {
+    // Support both naming patterns: name_ar/name_en and foreignTabName/TabName
+    if (currentLanguage === 'ar') {
+      return tab.name_ar || tab.foreignTabName || tab.tabName
+    }
+    return tab.name_en || tab.tabName
+  }
+
   return (
     <div className="tab-navigation">
       <div className="tab-list">
@@ -18,7 +29,7 @@ const TabNavigation = ({ tabs, activeIndex, onTabChange }: TabNavigationProps) =
             onClick={() => onTabChange(index)}
             type="button"
           >
-            {tab.tabName}
+            {getTabName(tab)}
           </button>
         ))}
       </div>

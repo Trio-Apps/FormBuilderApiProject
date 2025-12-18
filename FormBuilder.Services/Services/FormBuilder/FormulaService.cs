@@ -7,6 +7,7 @@ using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,14 @@ namespace FormBuilder.Services
     {
         private readonly IunitOfwork _unitOfWork;
         private readonly IFormulasRepository _formulasRepository;
+        private readonly IStringLocalizer<FormulaService>? _localizer;
 
-        public FormulaService(IunitOfwork unitOfWork, IFormulasRepository formulasRepository, IMapper mapper) : base(unitOfWork, mapper)
+        public FormulaService(IunitOfwork unitOfWork, IFormulasRepository formulasRepository, IMapper mapper, IStringLocalizer<FormulaService>? localizer = null) 
+            : base(unitOfWork, mapper, null)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _formulasRepository = formulasRepository ?? throw new ArgumentNullException(nameof(formulasRepository));
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<FORMULAS> Repository => _unitOfWork.FormulasRepository;
@@ -47,11 +51,17 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<FormulaDto>> GetByCodeAsync(string code, int formBuilderId)
         {
             if (string.IsNullOrWhiteSpace(code))
-                return ServiceResult<FormulaDto>.BadRequest("Formula code is required");
+            {
+                var message = _localizer?["Formula_CodeRequired"] ?? "Formula code is required";
+                return ServiceResult<FormulaDto>.BadRequest(message);
+            }
 
             var formula = await _formulasRepository.GetByCodeAsync(code, formBuilderId);
             if (formula == null)
-                return ServiceResult<FormulaDto>.NotFound("Formula not found");
+            {
+                var message = _localizer?["Formula_NotFound"] ?? "Formula not found";
+                return ServiceResult<FormulaDto>.NotFound(message);
+            }
 
             var formulaDto = _mapper.Map<FormulaDto>(formula);
             return ServiceResult<FormulaDto>.Ok(formulaDto);
@@ -60,14 +70,20 @@ namespace FormBuilder.Services
         public override async Task<ServiceResult<FormulaDto>> CreateAsync(CreateFormulaDto createDto)
         {
             if (createDto == null)
-                return ServiceResult<FormulaDto>.BadRequest("DTO is required");
+            {
+                var message = _localizer?["Formula_DtoRequired"] ?? "DTO is required";
+                return ServiceResult<FormulaDto>.BadRequest(message);
+            }
 
             // Validate form builder exists
             var formBuilderExists = await _unitOfWork.FormBuilderRepository
                 .AnyAsync(fb => fb.Id == createDto.FormBuilderId);
 
             if (!formBuilderExists)
-                return ServiceResult<FormulaDto>.NotFound("Form builder not found");
+            {
+                var message = _localizer?["Formula_FormBuilderNotFound"] ?? "Form builder not found";
+                return ServiceResult<FormulaDto>.NotFound(message);
+            }
 
             // Validate result field if provided
             if (createDto.ResultFieldId.HasValue)
@@ -77,7 +93,10 @@ namespace FormBuilder.Services
                     createDto.FormBuilderId);
 
                 if (!fieldBelongsToForm)
-                    return ServiceResult<FormulaDto>.BadRequest("Result field not found or doesn't belong to the form");
+                {
+                    var message = _localizer?["Formula_ResultFieldNotFound"] ?? "Result field not found or doesn't belong to the form";
+                    return ServiceResult<FormulaDto>.BadRequest(message);
+                }
             }
 
             // Validate expression
@@ -88,7 +107,10 @@ namespace FormBuilder.Services
             });
 
             if (!validationResult.Success)
-                return ServiceResult<FormulaDto>.BadRequest(validationResult.ErrorMessage ?? "Expression validation failed");
+            {
+                var message = validationResult.ErrorMessage ?? (_localizer?["Formula_ExpressionValidationFailed"] ?? "Expression validation failed");
+                return ServiceResult<FormulaDto>.BadRequest(message);
+            }
 
             var result = await base.CreateAsync(createDto);
             if (!result.Success)
@@ -96,7 +118,10 @@ namespace FormBuilder.Services
 
             // Use result.Data directly instead of GetByIdWithDetailsAsync
             if (result.Data == null)
-                return ServiceResult<FormulaDto>.Error("Failed to create formula");
+            {
+                var message = _localizer?["Formula_CreateFailed"] ?? "Failed to create formula";
+                return ServiceResult<FormulaDto>.Error(message);
+            }
 
             return ServiceResult<FormulaDto>.Ok(result.Data);
         }
@@ -106,7 +131,10 @@ namespace FormBuilder.Services
             // Check if code already exists
             var codeExists = await _formulasRepository.CodeExistsAsync(dto.Code, dto.FormBuilderId);
             if (codeExists)
-                return ValidationResult.Failure("Formula code already exists for this form");
+            {
+                var message = _localizer?["Formula_CodeExists"] ?? "Formula code already exists for this form";
+                return ValidationResult.Failure(message);
+            }
 
             return ValidationResult.Success();
         }
@@ -114,11 +142,17 @@ namespace FormBuilder.Services
         public override async Task<ServiceResult<FormulaDto>> UpdateAsync(int id, UpdateFormulaDto updateDto)
         {
             if (updateDto == null)
-                return ServiceResult<FormulaDto>.BadRequest("DTO is required");
+            {
+                var message = _localizer?["Formula_DtoRequired"] ?? "DTO is required";
+                return ServiceResult<FormulaDto>.BadRequest(message);
+            }
 
             var entity = await _formulasRepository.SingleOrDefaultAsync(f => f.Id == id, asNoTracking: false);
             if (entity == null)
-                return ServiceResult<FormulaDto>.NotFound("Formula not found");
+            {
+                var message = _localizer?["Formula_NotFound"] ?? "Formula not found";
+                return ServiceResult<FormulaDto>.NotFound(message);
+            }
 
             // Check if code already exists (excluding current record)
             if (!string.IsNullOrEmpty(updateDto.Code) && updateDto.Code != entity.Code)
@@ -127,7 +161,10 @@ namespace FormBuilder.Services
                     updateDto.Code, entity.FormBuilderId, id);
 
                 if (codeExists)
-                    return ServiceResult<FormulaDto>.BadRequest("Formula code already exists for this form");
+                {
+                    var message = _localizer?["Formula_CodeExists"] ?? "Formula code already exists for this form";
+                    return ServiceResult<FormulaDto>.BadRequest(message);
+                }
             }
 
             // Validate result field if provided
@@ -175,7 +212,8 @@ namespace FormBuilder.Services
             var hasVariables = await _formulasRepository.HasFormulaVariablesAsync(id);
             if (hasVariables)
             {
-                return ServiceResult<bool>.BadRequest("Cannot delete formula because it has associated variables. Delete variables first.");
+                var message = _localizer?["Formula_CannotDeleteWithVariables"] ?? "Cannot delete formula because it has associated variables. Delete variables first.";
+                return ServiceResult<bool>.BadRequest(message);
             }
 
             return await base.DeleteAsync(id);
@@ -185,7 +223,10 @@ namespace FormBuilder.Services
         {
             var formulas = await _formulasRepository.GetByFormBuilderAsync(formBuilderId);
             if (!formulas.Any())
-                return ServiceResult<int>.NotFound("No formulas found for this form builder");
+            {
+                var message = _localizer?["Formula_NoFormulasFound"] ?? "No formulas found for this form builder";
+                return ServiceResult<int>.NotFound(message);
+            }
 
             // Check if any formula has variables
             var formulasWithVariables = new List<FORMULAS>();
@@ -200,8 +241,9 @@ namespace FormBuilder.Services
 
             if (formulasWithVariables.Any())
             {
-                return ServiceResult<int>.BadRequest(
-                    $"Cannot delete {formulasWithVariables.Count} formulas because they have associated variables. Delete variables first.");
+                var message = _localizer?["Formula_CannotDeleteMultipleWithVariables", formulasWithVariables.Count] 
+                    ?? $"Cannot delete {formulasWithVariables.Count} formulas because they have associated variables. Delete variables first.";
+                return ServiceResult<int>.BadRequest(message);
             }
 
             var formulasList = formulas.ToList();
@@ -291,7 +333,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<IEnumerable<FormulaDto>>> SearchFormulasAsync(string searchTerm, int formBuilderId)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
-                return ServiceResult<IEnumerable<FormulaDto>>.BadRequest("Search term is required");
+            {
+                var message = _localizer?["Formula_SearchTermRequired"] ?? "Search term is required";
+                return ServiceResult<IEnumerable<FormulaDto>>.BadRequest(message);
+            }
 
             var formulas = await _formulasRepository.SearchFormulasAsync(searchTerm, formBuilderId);
             var formulaDtos = _mapper.Map<IEnumerable<FormulaDto>>(formulas);
@@ -361,7 +406,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<FormulaDto>> UpdateFormulaExpressionAsync(int id, string expressionText)
         {
             if (string.IsNullOrWhiteSpace(expressionText))
-                return ServiceResult<FormulaDto>.BadRequest("Expression text is required");
+            {
+                var message = _localizer?["Formula_ExpressionTextRequired"] ?? "Expression text is required";
+                return ServiceResult<FormulaDto>.BadRequest(message);
+            }
 
             var entity = await _formulasRepository.SingleOrDefaultAsync(f => f.Id == id, asNoTracking: false);
             if (entity == null)
@@ -403,7 +451,8 @@ namespace FormBuilder.Services
 
             if (string.IsNullOrWhiteSpace(expressionText))
             {
-                return ServiceResult<ValidateExpressionResultDto>.BadRequest("Expression text is required");
+                var message = _localizer?["Formula_ExpressionTextRequired"] ?? "Expression text is required";
+                return ServiceResult<ValidateExpressionResultDto>.BadRequest(message);
             }
 
             // Get valid field codes for this form
@@ -458,8 +507,9 @@ namespace FormBuilder.Services
             }
             else
             {
-                return ServiceResult<ValidateExpressionResultDto>.BadRequest(
-                    $"Invalid field codes found: {string.Join(", ", invalidCodes)}");
+                var message = _localizer?["Formula_InvalidFieldCodes", string.Join(", ", invalidCodes)] 
+                    ?? $"Invalid field codes found: {string.Join(", ", invalidCodes)}";
+                return ServiceResult<ValidateExpressionResultDto>.BadRequest(message);
             }
         }
         #endregion
@@ -523,7 +573,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<int>> BatchUpdateFormulaStatusAsync(List<int> formulaIds, bool isActive)
         {
             if (formulaIds == null || !formulaIds.Any())
-                return ServiceResult<int>.BadRequest("Formula IDs are required");
+            {
+                var message = _localizer?["Formula_IdsRequired"] ?? "Formula IDs are required";
+                return ServiceResult<int>.BadRequest(message);
+            }
 
             var formulas = new List<FORMULAS>();
             foreach (var id in formulaIds)
@@ -558,7 +611,10 @@ namespace FormBuilder.Services
             // Check if new code already exists
             var codeExists = await _formulasRepository.CodeExistsAsync(duplicateDto.NewCode, duplicateDto.TargetFormBuilderId);
             if (codeExists)
-                return ServiceResult<FormulaDto>.BadRequest("Formula code already exists for target form");
+            {
+                var message = _localizer?["Formula_CodeExists"] ?? "Formula code already exists for target form";
+                return ServiceResult<FormulaDto>.BadRequest(message);
+            }
 
             var newFormula = new FORMULAS
             {
@@ -632,7 +688,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<object>> PreviewCalculationAsync(PreviewCalculationDto previewDto)
         {
             if (previewDto == null)
-                return ServiceResult<object>.BadRequest("Preview calculation DTO is required");
+            {
+                var message = _localizer?["Formula_PreviewDtoRequired"] ?? "Preview calculation DTO is required";
+                return ServiceResult<object>.BadRequest(message);
+            }
 
             return await SafeCalculateExpressionAsync(previewDto.ExpressionText, previewDto.FieldValues);
         }
@@ -670,7 +729,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<object>> SafeCalculateExpressionAsync(string expressionText, Dictionary<string, object> fieldValues)
         {
             if (string.IsNullOrWhiteSpace(expressionText))
-                return ServiceResult<object>.BadRequest("Expression text is required");
+            {
+                var message = _localizer?["Formula_ExpressionTextRequired"] ?? "Expression text is required";
+                return ServiceResult<object>.BadRequest(message);
+            }
 
             try
             {
@@ -701,7 +763,9 @@ namespace FormBuilder.Services
             }
             catch (Exception ex)
             {
-                return ServiceResult<object>.Error($"Error calculating expression: {ex.Message}", 500);
+                var message = _localizer?["Formula_CalculationError", ex.Message] 
+                    ?? $"Error calculating expression: {ex.Message}";
+                return ServiceResult<object>.Error(message, 500);
             }
         }
         #endregion

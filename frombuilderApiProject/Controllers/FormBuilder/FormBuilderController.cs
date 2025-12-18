@@ -3,6 +3,7 @@ using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims; // REQUIRED for accessing claims/user ID
@@ -13,13 +14,17 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Administration")]
+    [Produces("application/json")]
     public class FormBuilderController : ControllerBase
     {
         private readonly IFormBuilderService _formBuilderService;
+        private readonly IStringLocalizer<FormBuilderController> _localizer;
 
-        public FormBuilderController(IFormBuilderService formBuilderService)
+        public FormBuilderController(IFormBuilderService formBuilderService,
+                                     IStringLocalizer<FormBuilderController> localizer)
         {
             _formBuilderService = formBuilderService;
+            _localizer = localizer;
         }
 
         // --- GET Operations (Read) ---
@@ -68,7 +73,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
             if (string.IsNullOrEmpty(currentUserId))
             {
-                return Unauthorized("User ID not found in claims. Ensure the request is authenticated.");
+                return Unauthorized(new { message = _localizer["FormBuilder_UserIdNotFound"] });
             }
 
             createDto.CreatedByUserId = currentUserId;

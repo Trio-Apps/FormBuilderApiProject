@@ -1,0 +1,29 @@
+/* RTL Support Styles */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .language-switcher {
+  left: 20px;
+  right: auto;
+}
+
+[dir="rtl"] .form-viewer-content {
+  text-align: right;
+}
+
+[dir="rtl"] .form-header {
+  text-align: right;
+}
+
+[dir="rtl"] .form-fields-container {
+  text-align: right;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+

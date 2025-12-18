@@ -1,0 +1,56 @@
+{
+  "common": {
+    "tabs": "Tabs",
+    "field": "Field",
+    "fields": "Fields",
+    "formBuilder": "Form Builder",
+    "formBuilders": "Form Builders",
+    "fieldType": "Field Type",
+    "fieldTypes": "Field Types",
+    "option": "Option",
+    "options": "Options",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "required": "Required",
+    "optional": "Optional"
+  },
+  "errors": {
+    "formNotFound": "Form not found",
+    "failedToFetchForm": "Failed to fetch form",
+    "validationFailed": "Validation failed",
+    "requiredField": "This field is required",
+    "invalidEmail": "Invalid email address",
+    "invalidNumber": "Invalid number",
+    "minValue": "Minimum value is {{min}}",
+    "maxValue": "Maximum value is {{max}}",
+    "minLength": "Minimum length is {{min}} characters",
+    "maxLength": "Maximum length is {{max}} characters"
+  },
+  "form": {
+    "noFields": "No fields available",
+    "submitSuccess": "Form submitted successfully",
+    "submitError": "Failed to submit form",
+    "fieldRequired": "{{fieldName}} is required",
+    "invalidFormat": "Invalid format"
+  },
+  "fields": {
+    "text": "Text",
+    "number": "Number",
+    "email": "Email",
+    "date": "Date",
+    "textarea": "Textarea",
+    "select": "Select",
+    "checkbox": "Checkbox",
+    "radio": "Radio",
+    "file": "File",
+    "switch": "Switch"
+  }
+}
+

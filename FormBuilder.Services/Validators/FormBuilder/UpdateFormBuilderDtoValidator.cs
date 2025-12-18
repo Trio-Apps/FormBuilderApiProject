@@ -11,6 +11,10 @@ namespace FormBuilder.Services.Validators.FormBuilder
                 .NotEmpty()
                 .MaximumLength(200);
 
+            RuleFor(x => x.ForeignFormName)
+                .MaximumLength(200)
+                .When(x => !string.IsNullOrWhiteSpace(x.ForeignFormName));
+
             RuleFor(x => x.FormCode)
                 .NotEmpty()
                 .MaximumLength(100)
@@ -20,6 +24,10 @@ namespace FormBuilder.Services.Validators.FormBuilder
             RuleFor(x => x.Description)
                 .MaximumLength(1000)
                 .When(x => !string.IsNullOrWhiteSpace(x.Description));
+
+            RuleFor(x => x.ForeignDescription)
+                .MaximumLength(1000)
+                .When(x => !string.IsNullOrWhiteSpace(x.ForeignDescription));
         }
     }
 }

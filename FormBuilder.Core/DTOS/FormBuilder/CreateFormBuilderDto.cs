@@ -8,11 +8,16 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         [StringLength(200)]
         public string FormName { get; set; } = string.Empty;
 
+        [StringLength(200)]
+        public string? ForeignFormName { get; set; }
+
         [Required]
         [StringLength(100)]
         public string FormCode { get; set; } = string.Empty;
 
         public string? Description { get; set; }
+
+        public string? ForeignDescription { get; set; }
 
         public bool IsPublished { get; set; } = false;
 

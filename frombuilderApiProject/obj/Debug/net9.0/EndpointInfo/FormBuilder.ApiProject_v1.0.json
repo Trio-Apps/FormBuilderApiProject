@@ -1,0 +1,31 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "FormBuilder API",
+    "description": "\r\n            <h2>FormBuilder API Documentation</h2>\r\n            <p>This API provides endpoints for managing forms, submissions, and related operations.</p>\r\n            <h3>Authentication</h3>\r\n            <p>Most endpoints require JWT authentication. Use the <strong>/api/v1.0/Account/login</strong> endpoint to obtain a token.</p>\r\n            <h3>API Versioning</h3>\r\n            <p>This API supports versioning via:</p>\r\n            <ul>\r\n                <li>Query string: <code>?version=1.0</code></li>\r\n                <li>Header: <code>X-Version: 1.0</code></li>\r\n                <li>URL path: <code>/api/v1.0/[controller]</code></li>\r\n            </ul>\r\n            <h3>Rate Limiting</h3>\r\n            <p>API requests are rate-limited. Check response headers for rate limit information.</p>\r\n        ",
+    "contact": {
+      "name": "FormBuilder Support",
+      "email": "support@formbuilder.com"
+    },
+    "license": {
+      "name": "MIT License"
+    },
+    "version": "1.0"
+  },
+  "paths": { },
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "Enter 'Bearer' [space] and then your token. Example: 'Bearer 12345abcdef'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

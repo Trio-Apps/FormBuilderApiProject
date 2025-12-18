@@ -2631,23 +2631,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                  }
-                }
-              },
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                  }
-                }
-              },
-              "text/json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -2686,17 +2670,7 @@
           "201": {
             "description": "Created",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
                 }
@@ -2706,17 +2680,7 @@
           "400": {
             "description": "Bad Request",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2726,17 +2690,7 @@
           "409": {
             "description": "Conflict",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2766,17 +2720,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
                 }
@@ -2786,17 +2730,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2846,17 +2780,7 @@
           "400": {
             "description": "Bad Request",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2866,17 +2790,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2886,17 +2800,7 @@
           "409": {
             "description": "Conflict",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2927,17 +2831,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -2966,17 +2860,7 @@
           "200": {
             "description": "OK",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormBuilderDto"
                 }
@@ -2986,17 +2870,7 @@
           "404": {
             "description": "Not Found",
             "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
-                }
-              },
-              "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
                 }
@@ -9482,6 +9356,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignTypeName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "dataType": {
             "maxLength": 50,
             "minLength": 0,
@@ -9515,6 +9395,10 @@
             "type": "string",
             "nullable": true
           },
+          "foreignTypeName": {
+            "type": "string",
+            "nullable": true
+          },
           "dataType": {
             "type": "string",
             "nullable": true
@@ -9534,6 +9418,16 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "type_name_en": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "type_name_ar": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
           }
         },
         "additionalProperties": false
@@ -9548,6 +9442,12 @@
             "maxLength": 100,
             "minLength": 0,
             "type": "string"
+          },
+          "foreignTypeName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
           },
           "dataType": {
             "maxLength": 50,
@@ -9971,6 +9871,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignOptionText": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "optionValue": {
             "maxLength": 200,
             "minLength": 0,
@@ -10153,6 +10059,10 @@
             "type": "string",
             "nullable": true
           },
+          "foreignOptionText": {
+            "type": "string",
+            "nullable": true
+          },
           "optionValue": {
             "type": "string",
             "nullable": true
@@ -10205,6 +10115,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignFieldName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "fieldCode": {
             "maxLength": 100,
             "minLength": 0,
@@ -10218,7 +10134,15 @@
             "type": "string",
             "nullable": true
           },
+          "foreignPlaceholder": {
+            "type": "string",
+            "nullable": true
+          },
           "hintText": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreignHintText": {
             "type": "string",
             "nullable": true
           },
@@ -10253,6 +10177,10 @@
             "type": "string",
             "nullable": true
           },
+          "foreignValidationMessage": {
+            "type": "string",
+            "nullable": true
+          },
           "createdDate": {
             "type": "string",
             "format": "date-time"
@@ -10267,6 +10195,40 @@
           },
           "isActive": {
             "type": "boolean"
+          },
+          "label_en": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "label_ar": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "placeholder_en": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "placeholder_ar": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "type": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "is_required": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "tab_id": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           },
           "fieldType": {
             "$ref": "#/components/schemas/FieldTypeDto"
@@ -10339,6 +10301,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignOptionText": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "optionValue": {
             "maxLength": 200,
             "minLength": 0,
@@ -10380,6 +10348,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignFieldName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "fieldCode": {
             "maxLength": 100,
             "minLength": 0,
@@ -10393,7 +10367,15 @@
             "type": "string",
             "nullable": true
           },
+          "foreignPlaceholder": {
+            "type": "string",
+            "nullable": true
+          },
           "hintText": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreignHintText": {
             "type": "string",
             "nullable": true
           },
@@ -10433,6 +10415,10 @@
             "nullable": true
           },
           "validationMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreignValidationMessage": {
             "type": "string",
             "nullable": true
           }
@@ -10800,12 +10786,22 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignFormName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "formCode": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string"
           },
           "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreignDescription": {
             "type": "string",
             "nullable": true
           },
@@ -11022,11 +11018,19 @@
             "type": "string",
             "nullable": true
           },
+          "foreignFormName": {
+            "type": "string",
+            "nullable": true
+          },
           "formCode": {
             "type": "string",
             "nullable": true
           },
           "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreignDescription": {
             "type": "string",
             "nullable": true
           },
@@ -11241,12 +11245,22 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignFormName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "formCode": {
             "maxLength": 100,
             "minLength": 0,
             "type": "string"
           },
           "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "foreignDescription": {
             "type": "string",
             "nullable": true
           },
@@ -11379,6 +11393,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignFieldName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "fieldCode": {
             "maxLength": 100,
             "minLength": 0,
@@ -11394,7 +11414,19 @@
             "type": "string",
             "nullable": true
           },
+          "foreignPlaceholder": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "hintText": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "foreignHintText": {
             "maxLength": 500,
             "minLength": 0,
             "type": "string",
@@ -11442,6 +11474,12 @@
             "type": "string",
             "nullable": true
           },
+          "foreignValidationMessage": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "isActive": {
             "type": "boolean"
           },
@@ -11479,6 +11517,12 @@
             "maxLength": 200,
             "minLength": 0,
             "type": "string"
+          },
+          "foreignOptionText": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
           },
           "optionValue": {
             "maxLength": 100,
@@ -11615,6 +11659,12 @@
             "minLength": 0,
             "type": "string"
           },
+          "foreignTabName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "tabCode": {
             "maxLength": 50,
             "minLength": 0,
@@ -11649,6 +11699,10 @@
             "type": "string",
             "nullable": true
           },
+          "foreignTabName": {
+            "type": "string",
+            "nullable": true
+          },
           "tabCode": {
             "type": "string",
             "nullable": true
@@ -11667,6 +11721,25 @@
           "createdDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "name_en": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "name_ar": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "is_active": {
+            "type": "boolean",
+            "readOnly": true
           },
           "fields": {
             "type": "array",
@@ -11689,6 +11762,12 @@
             "maxLength": 100,
             "minLength": 0,
             "type": "string"
+          },
+          "foreignTabName": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
           },
           "tabCode": {
             "maxLength": 50,

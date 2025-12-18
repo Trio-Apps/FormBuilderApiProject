@@ -85,6 +85,10 @@ namespace FormBuilder.Core.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("ForeignTypeName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<bool?>("HasOptions")
                         .HasColumnType("bit");
 
@@ -190,6 +194,19 @@ namespace FormBuilder.Core.Migrations
 
                     b.Property<int>("FieldTypeId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ForeignFieldName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("ForeignHintText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForeignPlaceholder")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForeignValidationMessage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HintText")
                         .IsRequired()
@@ -629,6 +646,13 @@ namespace FormBuilder.Core.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ForeignDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ForeignFormName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("FormCode")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -833,6 +857,10 @@ namespace FormBuilder.Core.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ForeignTabName")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
@@ -1648,6 +1676,10 @@ namespace FormBuilder.Core.Migrations
 
                     b.Property<int>("FieldId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ForeignOptionText")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");

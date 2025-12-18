@@ -12,6 +12,7 @@ using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Services.Services.Base;
 using FormBuilder.Core.DTOS.FormTabs;
 using FormBuilder.API.Models;
+using Microsoft.Extensions.Localization;
 using System.Linq;
 
 namespace FormBuilder.Services.Services
@@ -20,9 +21,12 @@ namespace FormBuilder.Services.Services
         : BaseService<FORM_BUILDER, FormBuilderDto, CreateFormBuilderDto, UpdateFormBuilderDto>,
           IFormBuilderService
     {
-        public FormBuilderService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<FormBuilderService>? _localizer;
+
+        public FormBuilderService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<FormBuilderService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<FORM_BUILDER> Repository => _unitOfWork.FormBuilderRepository;
@@ -30,7 +34,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<FormBuilderDto>> GetByCodeAsync(string formCode, bool asNoTracking = false)
         {
             if (string.IsNullOrWhiteSpace(formCode))
-                return ServiceResult<FormBuilderDto>.BadRequest("Form code is required");
+            {
+                var message = _localizer?["FormBuilder_FormCodeRequired"] ?? "Form code is required";
+                return ServiceResult<FormBuilderDto>.BadRequest(message);
+            }
 
             // Load the form with its tabs and fields for public/anonymous usage
             var entity = await _unitOfWork.FormBuilderRepository.GetFormWithTabsAndFieldsByCodeAsync(formCode.Trim());
@@ -48,6 +55,7 @@ namespace FormBuilder.Services.Services
                     Id = t.Id,
                     FormBuilderId = t.FormBuilderId,
                     TabName = t.TabName,
+                    ForeignTabName = t.ForeignTabName,
                     TabCode = t.TabCode,
                     TabOrder = t.TabOrder,
                     IsActive = t.IsActive,
@@ -63,10 +71,13 @@ namespace FormBuilder.Services.Services
                             FieldTypeId = f.FieldTypeId,
                             FieldTypeName = f.FIELD_TYPES?.TypeName,
                             FieldName = f.FieldName,
+                            ForeignFieldName = f.ForeignFieldName,
                             FieldCode = f.FieldCode,
                             FieldOrder = f.FieldOrder,
                             Placeholder = f.Placeholder,
+                            ForeignPlaceholder = f.ForeignPlaceholder,
                             HintText = f.HintText,
+                            ForeignHintText = f.ForeignHintText,
                             IsMandatory = f.IsMandatory ?? false,
                             IsEditable = f.IsEditable ?? false,
                             IsVisible = f.IsVisible,
@@ -75,7 +86,7 @@ namespace FormBuilder.Services.Services
                             MaxValue = f.MaxValue,
                             RegexPattern = f.RegexPattern,
                             ValidationMessage = f.ValidationMessage,
-                          
+                            ForeignValidationMessage = f.ForeignValidationMessage,
                             CreatedDate = f.CreatedDate,
                             CreatedByUserId = f.CreatedByUserId,
                             IsActive = f.IsActive,
@@ -84,6 +95,7 @@ namespace FormBuilder.Services.Services
                             {
                                 Id = f.FIELD_TYPES.Id,
                                 TypeName = f.FIELD_TYPES.TypeName,
+                                ForeignTypeName = f.FIELD_TYPES.ForeignTypeName,
                                 DataType = f.FIELD_TYPES.DataType,
                                 MaxLength = f.FIELD_TYPES.MaxLength,
                                 HasOptions = f.FIELD_TYPES.HasOptions,
@@ -98,6 +110,7 @@ namespace FormBuilder.Services.Services
                                     Id = fo.Id,
                                     FieldId = fo.FieldId,
                                     OptionText = fo.OptionText,
+                                    ForeignOptionText = fo.ForeignOptionText,
                                     OptionValue = fo.OptionValue,
                                     OptionOrder = fo.OptionOrder,
                                     IsActive = fo.IsActive
@@ -122,7 +135,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<bool>> IsFormCodeExistsAsync(string formCode, int? excludeId = null)
         {
             if (string.IsNullOrWhiteSpace(formCode))
-                return ServiceResult<bool>.BadRequest("Form code is required");
+            {
+                var message = _localizer?["FormBuilder_FormCodeRequired"] ?? "Form code is required";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             var exists = await _unitOfWork.FormBuilderRepository.IsFormCodeExistsAsync(formCode.Trim(), excludeId);
             return ServiceResult<bool>.Ok(exists);

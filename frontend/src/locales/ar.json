@@ -1,0 +1,56 @@
+{
+  "common": {
+    "tabs": "التبويبات",
+    "field": "حقل",
+    "fields": "الحقول",
+    "formBuilder": "منشئ النماذج",
+    "formBuilders": "منشئو النماذج",
+    "fieldType": "نوع الحقل",
+    "fieldTypes": "أنواع الحقول",
+    "option": "خيار",
+    "options": "الخيارات",
+    "submit": "إرسال",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجح",
+    "required": "مطلوب",
+    "optional": "اختياري"
+  },
+  "errors": {
+    "formNotFound": "النموذج غير موجود",
+    "failedToFetchForm": "فشل تحميل النموذج",
+    "validationFailed": "فشل التحقق من البيانات",
+    "requiredField": "هذا الحقل مطلوب",
+    "invalidEmail": "عنوان بريد إلكتروني غير صالح",
+    "invalidNumber": "رقم غير صالح",
+    "minValue": "الحد الأدنى للقيمة هو {{min}}",
+    "maxValue": "الحد الأقصى للقيمة هو {{max}}",
+    "minLength": "الحد الأدنى للطول هو {{min}} حرف",
+    "maxLength": "الحد الأقصى للطول هو {{max}} حرف"
+  },
+  "form": {
+    "noFields": "لا توجد حقول متاحة",
+    "submitSuccess": "تم إرسال النموذج بنجاح",
+    "submitError": "فشل إرسال النموذج",
+    "fieldRequired": "{{fieldName}} مطلوب",
+    "invalidFormat": "تنسيق غير صالح"
+  },
+  "fields": {
+    "text": "نص",
+    "number": "رقم",
+    "email": "بريد إلكتروني",
+    "date": "تاريخ",
+    "textarea": "نص طويل",
+    "select": "قائمة منسدلة",
+    "checkbox": "مربع اختيار",
+    "radio": "زر اختيار",
+    "file": "ملف",
+    "switch": "مفتاح"
+  }
+}
+

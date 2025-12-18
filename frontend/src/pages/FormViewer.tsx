@@ -4,10 +4,13 @@ import { FormBuilder } from '../types/form'
 import { ApiService } from '../services/api'
 import TabNavigation from '../components/TabNavigation'
 import FormFieldRenderer from '../components/FormFieldRenderer'
+import LanguageSwitcher from '../components/LanguageSwitcher'
+import { useLanguage } from '../contexts/LanguageContext'
 import './FormViewer.css'
 
 const FormViewer = () => {
   const { formPublicId } = useParams<{ formPublicId: string }>()
+  const { t } = useLanguage()
   const [form, setForm] = useState<FormBuilder | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -27,19 +30,19 @@ const FormViewer = () => {
         const formData = await ApiService.getFormByCode(formPublicId)
         setForm(formData)
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load form')
+        setError(err instanceof Error ? err.message : t('errors.failedToFetchForm'))
       } finally {
         setLoading(false)
       }
     }
 
     fetchForm()
-  }, [formPublicId])
+  }, [formPublicId, t])
 
   if (loading) {
     return (
       <div className="form-viewer-container">
-        <div className="form-viewer-loading">Loading form...</div>
+        <div className="form-viewer-loading">{t('common.loading')}</div>
       </div>
     )
   }
@@ -47,8 +50,9 @@ const FormViewer = () => {
   if (error) {
     return (
       <div className="form-viewer-container">
+        <LanguageSwitcher />
         <div className="form-viewer-error">
-          <h2>Form Not Found</h2>
+          <h2>{t('errors.formNotFound')}</h2>
           <p>{error}</p>
         </div>
       </div>
@@ -58,25 +62,47 @@ const FormViewer = () => {
   if (!form) {
     return (
       <div className="form-viewer-container">
+        <LanguageSwitcher />
         <div className="form-viewer-error">
-          <h2>Form Not Found</h2>
-          <p>The requested form could not be found.</p>
+          <h2>{t('errors.formNotFound')}</h2>
+          <p>{t('errors.formNotFound')}</p>
         </div>
       </div>
     )
   }
 
+  const { currentLanguage } = useLanguage()
   const activeTabs = form.tabs.filter(tab => tab.isActive).sort((a, b) => a.tabOrder - b.tabOrder)
   const activeTab = activeTabs[activeTabIndex]
+
+  // Get multilingual form name and description
+  const getFormName = () => {
+    if (currentLanguage === 'ar' && form.foreignFormName) {
+      return form.foreignFormName
+    }
+    return form.formName
+  }
+
+  const getFormDescription = () => {
+    if (currentLanguage === 'ar' && form.foreignDescription) {
+      return form.foreignDescription
+    }
+    return form.description
+  }
 
   return (
     <div className="form-viewer-container">
       <div className="form-viewer-content">
+        {/* Language Switcher */}
+        <div style={{ position: 'absolute', top: '20px', right: '20px' }}>
+          <LanguageSwitcher />
+        </div>
+
         {/* Form Header */}
         <div className="form-header">
-          <h1 className="form-title">{form.formName}</h1>
-          {form.description && (
-            <p className="form-description">{form.description}</p>
+          <h1 className="form-title">{getFormName()}</h1>
+          {getFormDescription() && (
+            <p className="form-description">{getFormDescription()}</p>
           )}
         </div>
 
@@ -105,7 +131,7 @@ const FormViewer = () => {
             {activeTabIndex === activeTabs.length - 1 && (
               <div className="form-submit-container">
                 <button type="button" className="form-submit-button">
-                  Submit
+                  {t('common.submit')}
                 </button>
               </div>
             )}
@@ -114,7 +140,7 @@ const FormViewer = () => {
 
         {activeTabs.length === 0 && (
           <div className="form-empty">
-            <p>This form has no tabs or fields to display.</p>
+            <p>{t('form.noFields')}</p>
           </div>
         )}
       </div>

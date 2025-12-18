@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import BaseField from './BaseField'
 import { FormField } from '../../types/form'
+import { useLanguage } from '../../contexts/LanguageContext'
 import './fields.css'
 
 interface RadioFieldProps {
@@ -9,9 +10,17 @@ interface RadioFieldProps {
 
 const RadioField = ({ field }: RadioFieldProps) => {
   const [value, setValue] = useState('')
+  const { currentLanguage } = useLanguage()
   const sortedOptions = [...field.fieldOptions]
     .filter(opt => opt.isActive)
     .sort((a, b) => a.optionOrder - b.optionOrder)
+
+  const getOptionText = (option: { optionText: string; foreignOptionText?: string }) => {
+    if (currentLanguage === 'ar' && option.foreignOptionText) {
+      return option.foreignOptionText
+    }
+    return option.optionText
+  }
 
   return (
     <BaseField field={field}>
@@ -26,7 +35,7 @@ const RadioField = ({ field }: RadioFieldProps) => {
               onChange={(e) => setValue(e.target.value)}
               disabled={!field.isEditable}
             />
-            <span>{option.optionText}</span>
+            <span>{getOptionText(option)}</span>
           </label>
         ))}
       </div>

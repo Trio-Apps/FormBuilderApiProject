@@ -7,6 +7,7 @@ namespace FormBuilder.API.Models
         public int Id { get; set; }
         public int FieldId { get; set; }
         public string OptionText { get; set; } = string.Empty;
+        public string? ForeignOptionText { get; set; }
         public string OptionValue { get; set; } = string.Empty;
         public int OptionOrder { get; set; }
         public bool IsDefault { get; set; }
@@ -20,6 +21,9 @@ namespace FormBuilder.API.Models
 
         [Required, StringLength(200)]
         public string OptionText { get; set; } = string.Empty;
+
+        [StringLength(200)]
+        public string? ForeignOptionText { get; set; }
 
         [Required, StringLength(200)]
         public string OptionValue { get; set; } = string.Empty;
@@ -35,6 +39,9 @@ namespace FormBuilder.API.Models
     {
         [Required, StringLength(200)]
         public string OptionText { get; set; } = string.Empty;
+
+        [StringLength(200)]
+        public string? ForeignOptionText { get; set; }
 
         [Required, StringLength(200)]
         public string OptionValue { get; set; } = string.Empty;

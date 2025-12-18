@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace FormBuilder.API.ExceptionHandlers;
 
 /// <summary>
 /// Handles global exceptions and writes problem details responses.
 /// </summary>
-public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetailsService)
+public sealed class GlobalExceptionHandler(
+    IProblemDetailsService problemDetailsService,
+    ILogger<GlobalExceptionHandler> logger)
     : IExceptionHandler
 {
     /// <summary>
@@ -22,12 +26,27 @@ public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetails
         CancellationToken cancellationToken
     )
     {
+        var statusCode = DetermineStatusCode(exception);
+        var title = GetExceptionTitle(exception);
+        var detail = GetExceptionDetail(exception, httpContext);
+
+        // Log the exception
+        LogException(exception, httpContext, statusCode);
+
         ProblemDetails problemDetails = new()
         {
-            Status = StatusCodes.Status500InternalServerError,
-            Title = exception.GetType().Name,
-            Detail = exception.Message,
+            Status = statusCode,
+            Title = title,
+            Detail = detail,
+            Instance = httpContext.Request.Path
         };
+
+        // Add additional details for development environment
+        if (httpContext.RequestServices.GetRequiredService<IWebHostEnvironment>().IsDevelopment())
+        {
+            problemDetails.Extensions.TryAdd("StackTrace", exception.StackTrace);
+            problemDetails.Extensions.TryAdd("ExceptionType", exception.GetType().FullName);
+        }
 
         if (exception.InnerException is not null)
         {
@@ -35,10 +54,10 @@ public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetails
                 "InnerExceptionType",
                 exception.InnerException.GetType().Name
             );
-            problemDetails.Extensions.TryAdd("InnerException", exception.InnerException);
+            problemDetails.Extensions.TryAdd("InnerExceptionMessage", exception.InnerException.Message);
         }
 
-        httpContext.Response.StatusCode = problemDetails.Status.Value;
+        httpContext.Response.StatusCode = statusCode;
 
         return await problemDetailsService.TryWriteAsync(
             new()
@@ -47,6 +66,77 @@ public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetails
                 Exception = exception,
                 ProblemDetails = problemDetails,
             }
+        );
+    }
+
+    private int DetermineStatusCode(Exception exception)
+    {
+        return exception switch
+        {
+            ArgumentNullException or ArgumentException => StatusCodes.Status400BadRequest,
+            UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
+            KeyNotFoundException or InvalidOperationException => StatusCodes.Status404NotFound,
+            DbUpdateConcurrencyException => StatusCodes.Status409Conflict,
+            DbUpdateException => StatusCodes.Status400BadRequest,
+            TimeoutException => StatusCodes.Status408RequestTimeout,
+            _ => StatusCodes.Status500InternalServerError
+        };
+    }
+
+    private string GetExceptionTitle(Exception exception)
+    {
+        return exception switch
+        {
+            ArgumentNullException => "Invalid Request",
+            ArgumentException => "Invalid Argument",
+            UnauthorizedAccessException => "Unauthorized",
+            KeyNotFoundException => "Resource Not Found",
+            InvalidOperationException => "Invalid Operation",
+            DbUpdateConcurrencyException => "Concurrency Conflict",
+            DbUpdateException => "Database Error",
+            TimeoutException => "Request Timeout",
+            _ => "Internal Server Error"
+        };
+    }
+
+    private string GetExceptionDetail(Exception exception, HttpContext httpContext)
+    {
+        // Don't expose sensitive information in production
+        var isDevelopment = httpContext.RequestServices
+            .GetRequiredService<IWebHostEnvironment>().IsDevelopment();
+
+        if (isDevelopment)
+        {
+            return exception.Message;
+        }
+
+        // Return generic messages in production
+        return exception switch
+        {
+            ArgumentNullException or ArgumentException => "The request contains invalid data.",
+            UnauthorizedAccessException => "You are not authorized to perform this action.",
+            KeyNotFoundException => "The requested resource was not found.",
+            InvalidOperationException => "The requested operation cannot be completed.",
+            DbUpdateConcurrencyException => "The resource has been modified by another user.",
+            DbUpdateException => "An error occurred while saving data.",
+            TimeoutException => "The request timed out. Please try again.",
+            _ => "An error occurred while processing your request."
+        };
+    }
+
+    private void LogException(Exception exception, HttpContext httpContext, int statusCode)
+    {
+        var logLevel = statusCode >= 500 ? LogLevel.Error : LogLevel.Warning;
+
+        logger.Log(
+            logLevel,
+            exception,
+            "Exception occurred: {ExceptionType} - {Message} | Path: {Path} | Method: {Method} | StatusCode: {StatusCode}",
+            exception.GetType().Name,
+            exception.Message,
+            httpContext.Request.Path,
+            httpContext.Request.Method,
+            statusCode
         );
     }
 }

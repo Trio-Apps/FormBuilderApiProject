@@ -7,6 +7,7 @@ using FormBuilder.API.Models;
 using FormBuilder.Services.Services.Base;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Core.DTOS.Common;
+using Microsoft.Extensions.Localization;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,13 @@ namespace FormBuilder.Services
     public class ApprovalWorkflowService : BaseService<APPROVAL_WORKFLOWS, ApprovalWorkflowDto, ApprovalWorkflowCreateDto, ApprovalWorkflowUpdateDto>, IApprovalWorkflowService
     {
         private readonly IunitOfwork _unitOfWork;
+        private readonly IStringLocalizer<ApprovalWorkflowService>? _localizer;
 
-        public ApprovalWorkflowService(IunitOfwork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public ApprovalWorkflowService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<ApprovalWorkflowService>? localizer = null) 
+            : base(unitOfWork, mapper, null)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<APPROVAL_WORKFLOWS> Repository => _unitOfWork.ApprovalWorkflowRepository;
@@ -73,7 +77,10 @@ namespace FormBuilder.Services
         {
             var nameExists = await _unitOfWork.ApprovalWorkflowRepository.AnyAsync(x => x.Name == dto.Name);
             if (nameExists)
-                return ValidationResult.Failure("Workflow name already exists");
+            {
+                var message = _localizer?["ApprovalWorkflow_NameExists"] ?? "Workflow name already exists";
+                return ValidationResult.Failure(message);
+            }
 
             return ValidationResult.Success();
         }
@@ -90,7 +97,10 @@ namespace FormBuilder.Services
             {
                 var exists = await _unitOfWork.ApprovalWorkflowRepository.AnyAsync(x => x.Name == dto.Name && x.Id != id);
                 if (exists)
-                    return ValidationResult.Failure("Workflow name already exists");
+                {
+                    var message = _localizer?["ApprovalWorkflow_NameExists"] ?? "Workflow name already exists";
+                    return ValidationResult.Failure(message);
+                }
             }
 
             return ValidationResult.Success();
@@ -112,7 +122,10 @@ namespace FormBuilder.Services
         {
             var entity = await _unitOfWork.ApprovalWorkflowRepository.GetByNameAsync(name);
             if (entity == null)
-                return new ApiResponse(404, "Workflow not found");
+            {
+                var message = _localizer?["ApprovalWorkflow_NotFound"] ?? "Workflow not found";
+                return new ApiResponse(404, message);
+            }
 
             var dto = _mapper.Map<ApprovalWorkflowDto>(entity);
             return new ApiResponse(200, "Workflow retrieved", dto);

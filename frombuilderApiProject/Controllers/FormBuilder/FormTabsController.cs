@@ -1,8 +1,9 @@
-﻿using FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.Core.DTOS.FormTabs;
 using FormBuilder.Services.Services;
 using FormBuilder.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,13 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
     public class FormTabsController : ControllerBase
     {
         private readonly IFormTabService _formTabService;
+        private readonly IStringLocalizer<FormTabsController> _localizer;
 
-        public FormTabsController(IFormTabService formTabService)
+        public FormTabsController(IFormTabService formTabService,
+                                  IStringLocalizer<FormTabsController> localizer)
         {
             _formTabService = formTabService ?? throw new ArgumentNullException(nameof(formTabService));
+            _localizer = localizer;
         }
 
         // GET: api/FormTabs
@@ -75,7 +79,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
             var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(currentUserId))
-                return Unauthorized("User ID not found in claims.");
+                return Unauthorized(new { message = _localizer["FormTabs_UserIdNotFound"] });
 
             createDto.CreatedByUserId = currentUserId;
             var result = await _formTabService.CreateAsync(createDto);
@@ -138,7 +142,9 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 {
                     tabCode,
                     exists = result.Data,
-                    message = result.Data ? "Tab code already exists" : "Tab code is available"
+                    message = result.Data
+                        ? _localizer["FormTabs_TabCodeExists"]
+                        : _localizer["FormTabs_TabCodeAvailable"]
                 });
             }
             return result.ToActionResult();
@@ -156,7 +162,9 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 {
                     id,
                     exists = result.Data,
-                    message = result.Data ? "Tab exists" : "Tab does not exist"
+                    message = result.Data
+                        ? _localizer["FormTabs_TabExists"]
+                        : _localizer["FormTabs_TabNotExists"]
                 });
             }
             return result.ToActionResult();

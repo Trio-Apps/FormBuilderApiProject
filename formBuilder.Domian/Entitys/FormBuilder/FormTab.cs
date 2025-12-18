@@ -16,6 +16,9 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         [Required, StringLength(200)]
         public string TabName { get; set; }
 
+        [StringLength(200)]
+        public string? ForeignTabName { get; set; }
+
         [StringLength(100)]
         public string TabCode { get; set; }
 

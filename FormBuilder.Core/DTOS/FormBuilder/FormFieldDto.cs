@@ -21,6 +21,9 @@ namespace FormBuilder.API.Models
         [Required, StringLength(200)]
         public string FieldName { get; set; } = string.Empty;
 
+        [StringLength(200)]
+        public string? ForeignFieldName { get; set; }
+
         [Required, StringLength(100)]
         public string FieldCode { get; set; } = string.Empty;
 
@@ -28,7 +31,9 @@ namespace FormBuilder.API.Models
         public int FieldOrder { get; set; }
 
         public string? Placeholder { get; set; }
+        public string? ForeignPlaceholder { get; set; }
         public string HintText { get; set; }
+        public string? ForeignHintText { get; set; }
 
         [Required]
         public bool ?IsMandatory { get; set; }
@@ -44,6 +49,7 @@ namespace FormBuilder.API.Models
         public decimal? MaxValue { get; set; }
         public string? RegexPattern { get; set; }
         public string? ValidationMessage { get; set; }
+        public string? ForeignValidationMessage { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public string? CreatedByUserId { get; set; }
@@ -51,6 +57,15 @@ namespace FormBuilder.API.Models
 
         [Required]
         public bool IsActive { get; set; }
+
+        // Computed properties for task requirements (label_ar / label_en pattern)
+        public string label_en => FieldName;
+        public string? label_ar => ForeignFieldName;
+        public string? placeholder_en => Placeholder;
+        public string? placeholder_ar => ForeignPlaceholder;
+        public string? type => FieldTypeName;
+        public bool is_required => IsMandatory ?? false;
+        public int tab_id => TabId;
 
         // Navigation properties as DTOs
         // Ignored in JSON to prevent circular reference with FormTabDto.Fields (helps Swagger schema generation)
@@ -71,6 +86,9 @@ namespace FormBuilder.API.Models
         [Required, StringLength(200)]
         public string FieldName { get; set; } = string.Empty;
 
+        [StringLength(200)]
+        public string? ForeignFieldName { get; set; }
+
         [Required, StringLength(100)]
         public string FieldCode { get; set; } = string.Empty;
 
@@ -78,7 +96,9 @@ namespace FormBuilder.API.Models
         public int FieldOrder { get; set; }
 
         public string? Placeholder { get; set; }
+        public string? ForeignPlaceholder { get; set; }
         public string HintText { get; set; }
+        public string? ForeignHintText { get; set; }
 
         public bool ?IsMandatory { get; set; } = true;
         public bool ?IsEditable { get; set; } = true;
@@ -89,6 +109,7 @@ namespace FormBuilder.API.Models
         public decimal? MaxValue { get; set; }
         public string? RegexPattern { get; set; }
         public string? ValidationMessage { get; set; }
+        public string? ForeignValidationMessage { get; set; }
 
         public string? CreatedByUserId { get; set; }
     }
@@ -104,6 +125,9 @@ namespace FormBuilder.API.Models
         [Required, StringLength(200)]
         public string FieldName { get; set; } = string.Empty;
 
+        [StringLength(200)]
+        public string? ForeignFieldName { get; set; }
+
         [Required, StringLength(100)]
         public string FieldCode { get; set; } = string.Empty;
 
@@ -111,7 +135,9 @@ namespace FormBuilder.API.Models
         public int FieldOrder { get; set; }
 
         public string? Placeholder { get; set; }
+        public string? ForeignPlaceholder { get; set; }
         public string HintText { get; set; }
+        public string? ForeignHintText { get; set; }
 
         public bool? IsMandatory { get; set; }
         public bool? IsEditable { get; set; }
@@ -123,5 +149,6 @@ namespace FormBuilder.API.Models
         public decimal? MaxValue { get; set; }
         public string? RegexPattern { get; set; }
         public string? ValidationMessage { get; set; }
+        public string? ForeignValidationMessage { get; set; }
     }
 }

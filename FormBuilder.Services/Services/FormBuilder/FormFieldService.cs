@@ -7,6 +7,7 @@ using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.API.Models;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace FormBuilder.Services.Services
 {
     public class FormFieldService : BaseService<FORM_FIELDS, FormFieldDto, CreateFormFieldDto, UpdateFormFieldDto>, IFormFieldService
     {
-        public FormFieldService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<FormFieldService>? _localizer;
+
+        public FormFieldService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<FormFieldService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<FORM_FIELDS> Repository => _unitOfWork.FormFieldRepository;
@@ -68,7 +72,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<FormFieldDto>> GetByFieldCodeAsync(string fieldCode)
         {
             if (string.IsNullOrWhiteSpace(fieldCode))
-                return ServiceResult<FormFieldDto>.BadRequest("Field code is required");
+            {
+                var message = _localizer?["FormField_FieldCodeRequired"] ?? "Field code is required";
+                return ServiceResult<FormFieldDto>.BadRequest(message);
+            }
 
             var entities = await Repository.GetAllAsync(e => e.FieldCode == fieldCode && e.IsActive);
             var entity = entities.FirstOrDefault();
@@ -159,10 +166,18 @@ namespace FormBuilder.Services.Services
 
         public override async Task<ServiceResult<FormFieldDto>> CreateAsync(CreateFormFieldDto dto)
         {
-            if (dto == null) return ServiceResult<FormFieldDto>.BadRequest("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ServiceResult<FormFieldDto>.BadRequest(message);
+            }
 
             var validation = await ValidateCreateAsync(dto);
-            if (!validation.IsValid) return ServiceResult<FormFieldDto>.BadRequest(validation.ErrorMessage ?? "Validation failed");
+            if (!validation.IsValid)
+            {
+                var message = validation.ErrorMessage ?? (_localizer?["Common_ValidationFailed"] ?? "Validation failed");
+                return ServiceResult<FormFieldDto>.BadRequest(message);
+            }
 
             var entity = _mapper.Map<FORM_FIELDS>(dto);
             entity.CreatedDate = entity.CreatedDate == default ? DateTime.UtcNow : entity.CreatedDate;
@@ -204,11 +219,17 @@ namespace FormBuilder.Services.Services
         {
             // Validate field code uniqueness
             if (!await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(dto.FieldCode))
-                return ValidationResult.Failure($"Field code '{dto.FieldCode}' already exists");
+            {
+                var message = _localizer?["FormField_FieldCodeExists", dto.FieldCode] ?? $"Field code '{dto.FieldCode}' already exists";
+                return ValidationResult.Failure(message);
+            }
 
             // Validate field name uniqueness within tab
             if (!await _unitOfWork.FormFieldRepository.IsFieldNameUniqueAsync(dto.FieldName, null, dto.TabId))
-                return ValidationResult.Failure($"Field name '{dto.FieldName}' already exists in this tab");
+            {
+                var message = _localizer?["FormField_FieldNameExists", dto.FieldName] ?? $"Field name '{dto.FieldName}' already exists in this tab";
+                return ValidationResult.Failure(message);
+            }
 
             // FieldOptions are optional - no validation needed
             // If provided, they will be created after the field is created
@@ -220,11 +241,17 @@ namespace FormBuilder.Services.Services
         {
             // Validate field code uniqueness (ignore current field)
             if (!await _unitOfWork.FormFieldRepository.IsFieldCodeUniqueAsync(dto.FieldCode, id))
-                return ValidationResult.Failure($"Field code '{dto.FieldCode}' already exists");
+            {
+                var message = _localizer?["FormField_FieldCodeExists", dto.FieldCode] ?? $"Field code '{dto.FieldCode}' already exists";
+                return ValidationResult.Failure(message);
+            }
 
             // Validate field name uniqueness within tab (ignore current field)
             if (!await _unitOfWork.FormFieldRepository.IsFieldNameUniqueAsync(dto.FieldName, id, dto.TabId))
-                return ValidationResult.Failure($"Field name '{dto.FieldName}' already exists in this tab");
+            {
+                var message = _localizer?["FormField_FieldNameExists", dto.FieldName] ?? $"Field name '{dto.FieldName}' already exists in this tab";
+                return ValidationResult.Failure(message);
+            }
 
             return ValidationResult.Success();
         }
@@ -237,7 +264,10 @@ namespace FormBuilder.Services.Services
 
             var usageCountResult = await GetUsageCountAsync(id);
             if (usageCountResult.Success && usageCountResult.Data > 0)
-                return ServiceResult<bool>.BadRequest($"Form field is used {usageCountResult.Data} times — cannot delete");
+            {
+                var message = _localizer?["FormField_CannotDeleteUsed", usageCountResult.Data] ?? $"Form field is used {usageCountResult.Data} times — cannot delete";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             Repository.Delete(entity);
             await _unitOfWork.CompleteAsyn();

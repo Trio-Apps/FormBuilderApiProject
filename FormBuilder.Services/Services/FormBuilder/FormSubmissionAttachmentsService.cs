@@ -6,6 +6,7 @@ using FormBuilder.Services.Services.Base;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Core.DTOS.Common;
 using FormBuilder.API.Models;
+using FormBuilder.Core.IServices;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -19,10 +20,15 @@ namespace FormBuilder.Services
     public class FormSubmissionAttachmentsService : BaseService<FORM_SUBMISSION_ATTACHMENTS, FormSubmissionAttachmentDto, CreateFormSubmissionAttachmentDto, UpdateFormSubmissionAttachmentDto>, IFormSubmissionAttachmentsService
     {
         private readonly IunitOfwork _unitOfWork;
+        private readonly IFileStorageService _fileStorageService;
 
-        public FormSubmissionAttachmentsService(IunitOfwork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public FormSubmissionAttachmentsService(
+            IunitOfwork unitOfWork, 
+            IMapper mapper,
+            IFileStorageService fileStorageService) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _fileStorageService = fileStorageService ?? throw new ArgumentNullException(nameof(fileStorageService));
         }
 
         protected override IBaseRepository<FORM_SUBMISSION_ATTACHMENTS> Repository => _unitOfWork.FormSubmissionAttachmentsRepository;
@@ -173,15 +179,20 @@ namespace FormBuilder.Services
             if (file.Length > 10 * 1024 * 1024)
                 return new ApiResponse<FormSubmissionAttachmentDto>(400, "File size exceeds maximum allowed size (10MB)");
 
-            // Generate unique file name
-            var fileName = $"{Guid.NewGuid()}_{Path.GetFileName(file.FileName)}";
-            var filePath = Path.Combine("uploads", "attachments", fileName);
-
-            // TODO: Save file to storage (local, Azure Blob, etc.)
-            // using (var stream = new FileStream(filePath, FileMode.Create))
-            // {
-            //     await file.CopyToAsync(stream);
-            // }
+            // Save file to storage
+            string filePath;
+            try
+            {
+                using (var stream = file.OpenReadStream())
+                {
+                    var subFolder = $"submissions/{uploadDto.SubmissionId}";
+                    filePath = await _fileStorageService.SaveFileAsync(stream, file.FileName, subFolder);
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse<FormSubmissionAttachmentDto>(500, $"Error saving file: {ex.Message}");
+            }
 
             var createDto = new CreateFormSubmissionAttachmentDto
             {

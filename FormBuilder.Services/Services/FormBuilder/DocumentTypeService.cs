@@ -6,6 +6,7 @@ using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace FormBuilder.Services
         : BaseService<DOCUMENT_TYPES, DocumentTypeDto, CreateDocumentTypeDto, UpdateDocumentTypeDto>,
           IDocumentTypeService
     {
-        public DocumentTypeService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<DocumentTypeService>? _localizer;
+
+        public DocumentTypeService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<DocumentTypeService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<DOCUMENT_TYPES> Repository => _unitOfWork.DocumentTypeRepository;
@@ -66,7 +70,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<DocumentTypeDto>> GetByCodeAsync(string code, bool asNoTracking = false)
         {
             if (string.IsNullOrWhiteSpace(code))
-                return ServiceResult<DocumentTypeDto>.BadRequest("Code is required");
+            {
+                var message = _localizer?["DocumentType_CodeRequired"] ?? "Code is required";
+                return ServiceResult<DocumentTypeDto>.BadRequest(message);
+            }
 
             var entity = await _unitOfWork.DocumentTypeRepository.GetByCodeAsync(code.Trim());
             if (entity == null) return ServiceResult<DocumentTypeDto>.NotFound();
@@ -129,7 +136,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<bool>> CodeExistsAsync(string code, int? excludeId = null)
         {
             if (string.IsNullOrWhiteSpace(code))
-                return ServiceResult<bool>.BadRequest("Code is required");
+            {
+                var message = _localizer?["DocumentType_CodeRequired"] ?? "Code is required";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             var exists = await _unitOfWork.DocumentTypeRepository.CodeExistsAsync(code.Trim(), excludeId);
             return ServiceResult<bool>.Ok(exists);
@@ -137,15 +147,27 @@ namespace FormBuilder.Services
 
         protected override async Task<ValidationResult> ValidateCreateAsync(CreateDocumentTypeDto dto)
         {
-            if (dto == null) return ValidationResult.Failure("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ValidationResult.Failure(message);
+            }
 
             var exists = await _unitOfWork.DocumentTypeRepository.CodeExistsAsync(dto.Code);
-            if (exists) return ValidationResult.Failure($"Document type code '{dto.Code}' already exists.");
+            if (exists)
+            {
+                var message = _localizer?["DocumentType_CodeExists", dto.Code] ?? $"Document type code '{dto.Code}' already exists.";
+                return ValidationResult.Failure(message);
+            }
 
             if (dto.FormBuilderId.HasValue)
             {
                 var formBuilderExists = await _unitOfWork.FormBuilderRepository.AnyAsync(e => e.Id == dto.FormBuilderId.Value);
-                if (!formBuilderExists) return ValidationResult.Failure("Invalid form builder ID");
+                if (!formBuilderExists)
+                {
+                    var message = _localizer?["DocumentType_InvalidFormBuilderId"] ?? "Invalid form builder ID";
+                    return ValidationResult.Failure(message);
+                }
             }
 
             if (dto.ParentMenuId.HasValue)

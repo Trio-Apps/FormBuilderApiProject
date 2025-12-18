@@ -55,9 +55,6 @@ const FormFieldRenderer = ({ field }: FormFieldRendererProps) => {
   return (
     <div className="form-field-wrapper">
       {renderField()}
-      {field.hintText && (
-        <div className="field-hint">{field.hintText}</div>
-      )}
     </div>
   )
 }

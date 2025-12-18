@@ -7,6 +7,7 @@ using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.API.Models;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,12 @@ namespace FormBuilder.Services.Services
 {
     public class FieldOptionsService : BaseService<FIELD_OPTIONS, FieldOptionDto, CreateFieldOptionDto, UpdateFieldOptionDto>, IFieldOptionsService
     {
-        public FieldOptionsService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<FieldOptionsService>? _localizer;
+
+        public FieldOptionsService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<FieldOptionsService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<FIELD_OPTIONS> Repository => _unitOfWork.FieldOptionsRepository;
@@ -47,7 +51,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<IEnumerable<FieldOptionDto>>> CreateBulkAsync(List<CreateFieldOptionDto> createDtos)
         {
             if (createDtos == null || !createDtos.Any())
-                return ServiceResult<IEnumerable<FieldOptionDto>>.BadRequest("No field options provided");
+            {
+                var message = _localizer?["FieldOptions_NoOptionsProvided"] ?? "No field options provided";
+                return ServiceResult<IEnumerable<FieldOptionDto>>.BadRequest(message);
+            }
 
             // Validate all field IDs exist
             var fieldIds = createDtos.Select(d => d.FieldId).Distinct().ToList();
@@ -55,7 +62,10 @@ namespace FormBuilder.Services.Services
             {
                 var fieldExists = await _unitOfWork.FormFieldRepository.AnyAsync(f => f.Id == fieldId);
                 if (!fieldExists)
-                    return ServiceResult<IEnumerable<FieldOptionDto>>.BadRequest($"Invalid field ID: {fieldId}");
+                {
+                    var message = _localizer?["FieldOptions_InvalidFieldId", fieldId] ?? $"Invalid field ID: {fieldId}";
+                    return ServiceResult<IEnumerable<FieldOptionDto>>.BadRequest(message);
+                }
             }
 
             var entities = _mapper.Map<List<FIELD_OPTIONS>>(createDtos);
@@ -90,7 +100,10 @@ namespace FormBuilder.Services.Services
         {
             var defaultOption = await _unitOfWork.FieldOptionsRepository.GetDefaultOptionAsync(fieldId);
             if (defaultOption == null)
-                return ServiceResult<FieldOptionDto>.NotFound("No default option found for this field");
+            {
+                var message = _localizer?["FieldOptions_NoDefaultFound"] ?? "No default option found for this field";
+                return ServiceResult<FieldOptionDto>.NotFound(message);
+            }
 
             var dto = _mapper.Map<FieldOptionDto>(defaultOption);
             return ServiceResult<FieldOptionDto>.Ok(dto);
@@ -116,7 +129,10 @@ namespace FormBuilder.Services.Services
             // Validate if field exists
             var fieldExists = await _unitOfWork.FormFieldRepository.AnyAsync(f => f.Id == dto.FieldId);
             if (!fieldExists)
-                return ValidationResult.Failure($"Invalid field ID: {dto.FieldId}");
+            {
+                var message = _localizer?["FieldOptions_InvalidFieldId", dto.FieldId] ?? $"Invalid field ID: {dto.FieldId}";
+                return ValidationResult.Failure(message);
+            }
 
             return ValidationResult.Success();
         }

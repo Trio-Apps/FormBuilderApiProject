@@ -5,6 +5,7 @@ using FormBuilder.Core.DTOS.FormTabs;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,12 @@ namespace FormBuilder.Services.Services
         : BaseService<FORM_TABS, FormTabDto, CreateFormTabDto, UpdateFormTabDto>,
           IFormTabService
     {
-        public FormTabService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<FormTabService>? _localizer;
+
+        public FormTabService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<FormTabService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<FORM_TABS> Repository => _unitOfWork.FormTabRepository;
@@ -36,7 +40,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<FormTabDto>> GetByCodeAsync(string tabCode, bool asNoTracking = false)
         {
             if (string.IsNullOrWhiteSpace(tabCode))
-                return ServiceResult<FormTabDto>.BadRequest("Tab code is required");
+            {
+                var message = _localizer?["FormTab_TabCodeRequired"] ?? "Tab code is required";
+                return ServiceResult<FormTabDto>.BadRequest(message);
+            }
 
             var entity = await Repository.SingleOrDefaultAsync(t => t.TabCode == tabCode.Trim(), asNoTracking);
             if (entity == null) return ServiceResult<FormTabDto>.NotFound();
@@ -88,7 +95,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<bool>> CodeExistsAsync(string tabCode, int? excludeId = null)
         {
             if (string.IsNullOrWhiteSpace(tabCode))
-                return ServiceResult<bool>.BadRequest("Tab code is required");
+            {
+                var message = _localizer?["FormTab_TabCodeRequired"] ?? "Tab code is required";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             var isUnique = await _unitOfWork.FormTabRepository.IsTabCodeUniqueAsync(tabCode.Trim(), excludeId);
             // IsTabCodeUniqueAsync returns true if unique (doesn't exist), so exists = !isUnique

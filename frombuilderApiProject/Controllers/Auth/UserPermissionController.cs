@@ -1,6 +1,7 @@
 using FormBuilder.Application.Dtos.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.Security.Claims;
 
 [ApiController]
@@ -9,10 +10,12 @@ using System.Security.Claims;
 public class UserPermissionController : ControllerBase
 {
     private readonly IUserPermissionService _permissionService;
+    private readonly IStringLocalizer<UserPermissionController> _localizer;
 
-    public UserPermissionController(IUserPermissionService permissionService)
+    public UserPermissionController(IUserPermissionService permissionService, IStringLocalizer<UserPermissionController> localizer)
     {
         _permissionService = permissionService;
+        _localizer = localizer;
     }
 
     [HttpGet]
@@ -36,7 +39,7 @@ public class UserPermissionController : ControllerBase
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
-            return Unauthorized(new { message = "Invalid user token." });
+            return Unauthorized(new { message = _localizer["Common_InvalidUserToken"] });
 
         var permissions = await _permissionService.GetUserPermissionsAsync(userId);
         return Ok(permissions);
@@ -47,7 +50,7 @@ public class UserPermissionController : ControllerBase
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
-            return Unauthorized(new { message = "Invalid user token." });
+            return Unauthorized(new { message = _localizer["Common_InvalidUserToken"] });
 
         var hasPermission = await _permissionService.HasPermissionAsync(userId, request.PermissionName);
         return Ok(new { hasPermission, permissionName = request.PermissionName });
@@ -58,7 +61,7 @@ public class UserPermissionController : ControllerBase
     {
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
-            return Unauthorized(new { message = "Invalid user token." });
+            return Unauthorized(new { message = _localizer["Common_InvalidUserToken"] });
 
         var results = await _permissionService.CheckMultiplePermissionsAsync(userId, request.PermissionNames);
         return Ok(results);

@@ -40,6 +40,11 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] FieldTypeCreateDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _fieldTypesService.CreateAsync(dto);
             if (result.Success && result.Data != null)
             {
@@ -52,6 +57,11 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, [FromBody] FieldTypeUpdateDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var result = await _fieldTypesService.UpdateAsync(id, dto);
             if (result.Success) return NoContent();
             return result.ToActionResult();

@@ -14,6 +14,9 @@ namespace FormBuilder.Core.DTOS.FormFields
         [StringLength(200, ErrorMessage = "FieldName cannot exceed 200 characters")]
         public string FieldName { get; set; } = string.Empty;
 
+        [StringLength(200, ErrorMessage = "ForeignFieldName cannot exceed 200 characters")]
+        public string? ForeignFieldName { get; set; }
+
         [Required(ErrorMessage = "FieldCode is required")]
         [StringLength(100, ErrorMessage = "FieldCode cannot exceed 100 characters")]
         public string FieldCode { get; set; } = string.Empty;
@@ -23,8 +26,14 @@ namespace FormBuilder.Core.DTOS.FormFields
         [StringLength(200, ErrorMessage = "Placeholder cannot exceed 200 characters")]
         public string? Placeholder { get; set; }
 
+        [StringLength(200, ErrorMessage = "ForeignPlaceholder cannot exceed 200 characters")]
+        public string? ForeignPlaceholder { get; set; }
+
         [StringLength(500, ErrorMessage = "HintText cannot exceed 500 characters")]
         public string? HintText { get; set; }
+
+        [StringLength(500, ErrorMessage = "ForeignHintText cannot exceed 500 characters")]
+        public string? ForeignHintText { get; set; }
 
         public bool IsMandatory { get; set; } = false;
 
@@ -48,6 +57,9 @@ namespace FormBuilder.Core.DTOS.FormFields
         [StringLength(500, ErrorMessage = "ValidationMessage cannot exceed 500 characters")]
         public string? ValidationMessage { get; set; }
 
+        [StringLength(500, ErrorMessage = "ForeignValidationMessage cannot exceed 500 characters")]
+        public string? ForeignValidationMessage { get; set; }
+
         public bool IsActive { get; set; } = true;
 
         // خصائص إضافية للتحكم في السلوك
@@ -68,6 +80,9 @@ namespace FormBuilder.Core.DTOS.FormFields
         [Required(ErrorMessage = "OptionText is required")]
         [StringLength(200, ErrorMessage = "OptionText cannot exceed 200 characters")]
         public string OptionText { get; set; } = string.Empty;
+
+        [StringLength(200, ErrorMessage = "ForeignOptionText cannot exceed 200 characters")]
+        public string? ForeignOptionText { get; set; }
 
         [StringLength(100, ErrorMessage = "OptionValue cannot exceed 100 characters")]
         public string? OptionValue { get; set; }

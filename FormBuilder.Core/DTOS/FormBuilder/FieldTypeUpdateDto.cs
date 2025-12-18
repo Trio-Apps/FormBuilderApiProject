@@ -7,6 +7,9 @@ public class FieldTypeUpdateDto
     [Required, StringLength(100)]
     public string TypeName { get; set; }
 
+    [StringLength(100)]
+    public string? ForeignTypeName { get; set; }
+
     [StringLength(50)]
     public string DataType { get; set; }
 

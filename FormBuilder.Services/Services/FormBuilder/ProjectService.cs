@@ -6,6 +6,7 @@ using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Entitys.FromBuilder;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -17,9 +18,12 @@ namespace FormBuilder.Services
         : BaseService<PROJECTS, ProjectDto, CreateProjectDto, UpdateProjectDto>,
           IProjectService
     {
-        public ProjectService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<ProjectService>? _localizer;
+
+        public ProjectService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<ProjectService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<PROJECTS> Repository => _unitOfWork.ProjectRepository;
@@ -86,7 +90,10 @@ namespace FormBuilder.Services
         public async Task<ServiceResult<bool>> CodeExistsAsync(string code, int? excludeId = null)
         {
             if (string.IsNullOrWhiteSpace(code))
-                return ServiceResult<bool>.BadRequest("Project code is required");
+            {
+                var message = _localizer?["Project_CodeRequired"] ?? "Project code is required";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             var exists = await _unitOfWork.ProjectRepository.CodeExistsAsync(code.Trim(), excludeId);
             return ServiceResult<bool>.Ok(exists);
@@ -94,22 +101,38 @@ namespace FormBuilder.Services
 
         protected override async Task<ValidationResult> ValidateCreateAsync(CreateProjectDto dto)
         {
-            if (dto == null) return ValidationResult.Failure("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ValidationResult.Failure(message);
+            }
 
             var exists = await _unitOfWork.ProjectRepository.CodeExistsAsync(dto.Code);
-            if (exists) return ValidationResult.Failure($"Project code '{dto.Code}' already exists.");
+            if (exists)
+            {
+                var message = _localizer?["Project_CodeExists", dto.Code] ?? $"Project code '{dto.Code}' already exists.";
+                return ValidationResult.Failure(message);
+            }
 
             return ValidationResult.Success();
         }
 
         protected override async Task<ValidationResult> ValidateUpdateAsync(int id, UpdateProjectDto dto, PROJECTS entity)
         {
-            if (dto == null) return ValidationResult.Failure("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ValidationResult.Failure(message);
+            }
 
             if (!string.IsNullOrWhiteSpace(dto.Code) && !string.Equals(dto.Code, entity.Code, StringComparison.OrdinalIgnoreCase))
             {
                 var exists = await _unitOfWork.ProjectRepository.CodeExistsAsync(dto.Code, id);
-                if (exists) return ValidationResult.Failure($"Project code '{dto.Code}' already exists.");
+                if (exists)
+                {
+                    var message = _localizer?["Project_CodeExists", dto.Code] ?? $"Project code '{dto.Code}' already exists.";
+                    return ValidationResult.Failure(message);
+                }
             }
 
             return ValidationResult.Success();

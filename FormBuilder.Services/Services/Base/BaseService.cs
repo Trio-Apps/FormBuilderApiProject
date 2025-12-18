@@ -9,6 +9,7 @@ using formBuilder.Domian.Interfaces;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Core.DTOS.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace FormBuilder.Services.Services.Base
 {
@@ -20,11 +21,13 @@ namespace FormBuilder.Services.Services.Base
     {
         protected readonly IunitOfwork _unitOfWork;
         protected readonly IMapper _mapper;
+        protected readonly IStringLocalizer<BaseService<TEntity, TDto, TCreateDto, TUpdateDto>>? _localizer;
 
-        protected BaseService(IunitOfwork unitOfWork, IMapper mapper)
+        protected BaseService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<BaseService<TEntity, TDto, TCreateDto, TUpdateDto>>? localizer = null)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _localizer = localizer;
         }
 
         protected abstract IBaseRepository<TEntity> Repository { get; }
@@ -60,17 +63,29 @@ namespace FormBuilder.Services.Services.Base
         public virtual async Task<ServiceResult<TDto>> GetByIdAsync(int id, bool asNoTracking = true)
         {
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking);
-            if (entity == null) return ServiceResult<TDto>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<TDto>.NotFound(message);
+            }
 
             return ServiceResult<TDto>.Ok(_mapper.Map<TDto>(entity));
         }
 
         public virtual async Task<ServiceResult<TDto>> CreateAsync(TCreateDto dto)
         {
-            if (dto == null) return ServiceResult<TDto>.BadRequest("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ServiceResult<TDto>.BadRequest(message);
+            }
 
             var validation = await ValidateCreateAsync(dto);
-            if (!validation.IsValid) return ServiceResult<TDto>.BadRequest(validation.ErrorMessage ?? "Validation failed");
+            if (!validation.IsValid)
+            {
+                var message = validation.ErrorMessage ?? (_localizer?["Common_ValidationFailed"] ?? "Validation failed");
+                return ServiceResult<TDto>.BadRequest(message);
+            }
 
             var entity = _mapper.Map<TEntity>(dto);
             entity.CreatedDate = entity.CreatedDate == default ? DateTime.UtcNow : entity.CreatedDate;
@@ -84,13 +99,25 @@ namespace FormBuilder.Services.Services.Base
 
         public virtual async Task<ServiceResult<TDto>> UpdateAsync(int id, TUpdateDto dto)
         {
-            if (dto == null) return ServiceResult<TDto>.BadRequest("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ServiceResult<TDto>.BadRequest(message);
+            }
 
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
-            if (entity == null) return ServiceResult<TDto>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<TDto>.NotFound(message);
+            }
 
             var validation = await ValidateUpdateAsync(id, dto, entity);
-            if (!validation.IsValid) return ServiceResult<TDto>.BadRequest(validation.ErrorMessage ?? "Validation failed");
+            if (!validation.IsValid)
+            {
+                var message = validation.ErrorMessage ?? (_localizer?["Common_ValidationFailed"] ?? "Validation failed");
+                return ServiceResult<TDto>.BadRequest(message);
+            }
 
             _mapper.Map(dto, entity);
             entity.UpdatedDate = DateTime.UtcNow;
@@ -104,7 +131,11 @@ namespace FormBuilder.Services.Services.Base
         public virtual async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
-            if (entity == null) return ServiceResult<bool>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<bool>.NotFound(message);
+            }
 
             Repository.Delete(entity);
             await _unitOfWork.CompleteAsyn();
@@ -128,7 +159,11 @@ namespace FormBuilder.Services.Services.Base
         public virtual async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
         {
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
-            if (entity == null) return ServiceResult<bool>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<bool>.NotFound(message);
+            }
 
             entity.IsActive = false;
             entity.UpdatedDate = DateTime.UtcNow;
@@ -142,7 +177,11 @@ namespace FormBuilder.Services.Services.Base
         public virtual async Task<ServiceResult<TDto>> ToggleActiveAsync(int id, bool isActive)
         {
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
-            if (entity == null) return ServiceResult<TDto>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<TDto>.NotFound(message);
+            }
 
             entity.IsActive = isActive;
             entity.UpdatedDate = DateTime.UtcNow;

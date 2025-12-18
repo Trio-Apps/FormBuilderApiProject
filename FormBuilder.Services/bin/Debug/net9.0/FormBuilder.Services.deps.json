@@ -15,10 +15,19 @@
           "FormBuilder.Domian": "1.0.0",
           "Microsoft.AspNetCore.Identity": "2.3.1",
           "Microsoft.EntityFrameworkCore": "9.0.11",
+          "Microsoft.Extensions.Localization.Abstractions": "9.0.0",
           "System.IdentityModel.Tokens.Jwt": "8.14.0"
         },
         "runtime": {
           "FormBuilder.Services.dll": {}
+        },
+        "resources": {
+          "ar/FormBuilder.Services.resources.dll": {
+            "locale": "ar"
+          },
+          "en/FormBuilder.Services.resources.dll": {
+            "locale": "en"
+          }
         }
       },
       "AutoMapper/12.0.1": {
@@ -550,6 +559,14 @@
           "lib/net9.0/Microsoft.Extensions.Identity.Stores.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.1125.52006"
+          }
+        }
+      },
+      "Microsoft.Extensions.Localization.Abstractions/9.0.0": {
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.Localization.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.24.52903"
           }
         }
       },
@@ -1237,6 +1254,13 @@
       "sha512": "sha512-H05q2662AqhXUU+dHoCZQGtZe6vk+5fvGYfAZbFuDKeIJYZzT4ICjEB5o4Dc26d2ZBJ4D0hcDbO9HPnbnr51sw==",
       "path": "microsoft.extensions.identity.stores/9.0.11",
       "hashPath": "microsoft.extensions.identity.stores.9.0.11.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Localization.Abstractions/9.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wc7PaRhPOnio5Csj80b3UgBWA5l6bp28EhGem7gtfpVopcwbkfPb2Sk8Cu6eBnIW3ZNf1YUgYJzwtjzZEM8+iw==",
+      "path": "microsoft.extensions.localization.abstractions/9.0.0",
+      "hashPath": "microsoft.extensions.localization.abstractions.9.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging/9.0.11": {
       "type": "package",

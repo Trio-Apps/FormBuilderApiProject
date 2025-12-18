@@ -6,6 +6,7 @@ using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domain.Interfaces;
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Services.Services.Base;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,12 @@ namespace FormBuilder.Services.Services
         : BaseService<FIELD_TYPES, FieldTypeDto, FieldTypeCreateDto, FieldTypeUpdateDto>,
           IFieldTypesService
     {
-        public FieldTypesService(IunitOfwork unitOfWork, IMapper mapper)
-            : base(unitOfWork, mapper)
+        private readonly IStringLocalizer<FieldTypesService>? _localizer;
+
+        public FieldTypesService(IunitOfwork unitOfWork, IMapper mapper, IStringLocalizer<FieldTypesService>? localizer = null)
+            : base(unitOfWork, mapper, null)
         {
+            _localizer = localizer;
         }
 
         protected override IBaseRepository<FIELD_TYPES> Repository => _unitOfWork.FieldTypesRepository;
@@ -47,8 +51,16 @@ namespace FormBuilder.Services.Services
         public override async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
             var usageCount = await GetUsageCountAsync(id);
-            if (!usageCount.Success) return ServiceResult<bool>.BadRequest(usageCount.ErrorMessage ?? "Usage check failed");
-            if (usageCount.Data > 0) return ServiceResult<bool>.BadRequest($"FieldType is used {usageCount.Data} times — cannot delete");
+            if (!usageCount.Success)
+            {
+                var message = usageCount.ErrorMessage ?? (_localizer?["FieldTypes_UsageCheckFailed"] ?? "Usage check failed");
+                return ServiceResult<bool>.BadRequest(message);
+            }
+            if (usageCount.Data > 0)
+            {
+                var message = _localizer?["FieldTypes_CannotDeleteUsed", usageCount.Data] ?? $"FieldType is used {usageCount.Data} times — cannot delete";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             return await base.DeleteAsync(id);
         }
@@ -76,10 +88,17 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<FieldTypeDto>> GetByTypeNameAsync(string typeName, bool asNoTracking = false)
         {
             if (string.IsNullOrWhiteSpace(typeName))
-                return ServiceResult<FieldTypeDto>.BadRequest("TypeName is required");
+            {
+                var message = _localizer?["FieldTypes_TypeNameRequired"] ?? "TypeName is required";
+                return ServiceResult<FieldTypeDto>.BadRequest(message);
+            }
 
             var entity = await _unitOfWork.FieldTypesRepository.GetByTypeNameAsync(typeName.Trim());
-            if (entity == null) return ServiceResult<FieldTypeDto>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<FieldTypeDto>.NotFound(message);
+            }
 
             return ServiceResult<FieldTypeDto>.Ok(_mapper.Map<FieldTypeDto>(entity));
         }
@@ -93,7 +112,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<IEnumerable<FieldTypeDto>>> GetByDataTypeAsync(string dataType)
         {
             if (string.IsNullOrWhiteSpace(dataType))
-                return ServiceResult<IEnumerable<FieldTypeDto>>.BadRequest("DataType is required");
+            {
+                var message = _localizer?["FieldTypes_DataTypeRequired"] ?? "DataType is required";
+                return ServiceResult<IEnumerable<FieldTypeDto>>.BadRequest(message);
+            }
 
             var list = await _unitOfWork.FieldTypesRepository.GetByDataTypeAsync(dataType.Trim());
             return ServiceResult<IEnumerable<FieldTypeDto>>.Ok(_mapper.Map<IEnumerable<FieldTypeDto>>(list));
@@ -126,7 +148,10 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<bool>> IsTypeNameUniqueAsync(string typeName, int? ignoreId = null)
         {
             if (string.IsNullOrWhiteSpace(typeName))
-                return ServiceResult<bool>.BadRequest("TypeName is required");
+            {
+                var message = _localizer?["FieldTypes_TypeNameRequired"] ?? "TypeName is required";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             var unique = await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(typeName.Trim(), ignoreId);
             return ServiceResult<bool>.Ok(unique);
@@ -141,7 +166,11 @@ namespace FormBuilder.Services.Services
         public async Task<ServiceResult<int>> GetUsageCountAsync(int fieldTypeId)
         {
             var entity = await _unitOfWork.FieldTypesRepository.GetByIdAsync(fieldTypeId, x => x.FORM_FIELDS, x => x.FORM_GRID_COLUMNS);
-            if (entity == null) return ServiceResult<int>.NotFound();
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<int>.NotFound(message);
+            }
 
             int countFields = entity.FORM_FIELDS?.Count(x => x.IsActive) ?? 0;
             int countGrid = entity.FORM_GRID_COLUMNS?.Count(x => x.IsActive) ?? 0;
@@ -151,22 +180,38 @@ namespace FormBuilder.Services.Services
 
         protected override async Task<ValidationResult> ValidateCreateAsync(FieldTypeCreateDto dto)
         {
-            if (dto == null) return ValidationResult.Failure("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ValidationResult.Failure(message);
+            }
 
             var unique = await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(dto.TypeName);
-            if (!unique) return ValidationResult.Failure($"TypeName '{dto.TypeName}' already exists");
+            if (!unique)
+            {
+                var message = _localizer?["FieldTypes_TypeNameExists", dto.TypeName] ?? $"TypeName '{dto.TypeName}' already exists";
+                return ValidationResult.Failure(message);
+            }
 
             return ValidationResult.Success();
         }
 
         protected override async Task<ValidationResult> ValidateUpdateAsync(int id, FieldTypeUpdateDto dto, FIELD_TYPES entity)
         {
-            if (dto == null) return ValidationResult.Failure("Payload is required");
+            if (dto == null)
+            {
+                var message = _localizer?["Common_PayloadRequired"] ?? "Payload is required";
+                return ValidationResult.Failure(message);
+            }
 
             if (!string.Equals(dto.TypeName, entity.TypeName, StringComparison.OrdinalIgnoreCase))
             {
                 var unique = await _unitOfWork.FieldTypesRepository.IsTypeNameUniqueAsync(dto.TypeName, id);
-                if (!unique) return ValidationResult.Failure($"TypeName '{dto.TypeName}' already exists");
+                if (!unique)
+                {
+                    var message = _localizer?["FieldTypes_TypeNameExists", dto.TypeName] ?? $"TypeName '{dto.TypeName}' already exists";
+                    return ValidationResult.Failure(message);
+                }
             }
 
             return ValidationResult.Success();

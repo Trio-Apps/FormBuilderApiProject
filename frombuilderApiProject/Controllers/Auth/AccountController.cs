@@ -2,18 +2,22 @@ using FormBuilder.Application.Abstractions;
 using FormBuilder.Application.Dtos.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class AccountController : ControllerBase
     {
         private readonly IaccountService _accountService;
+        private readonly IStringLocalizer<AccountController> _localizer;
 
-        public AccountController(IaccountService accountService)
+        public AccountController(IaccountService accountService, IStringLocalizer<AccountController> localizer)
         {
             _accountService = accountService;
+            _localizer = localizer;
         }
 
         [HttpPost("login")]
@@ -25,7 +29,7 @@ namespace FormBuilder.API.Controllers
             var response = await _accountService.LoginAsync(request.Username, request.Password, cancellationToken);
 
             if (!response.Success)
-                return Unauthorized(new { response.ErrorMessage });
+                return Unauthorized(new { message = _localizer["Login_InvalidCredentials"] });
 
             return Ok(response);
         }
@@ -54,9 +58,9 @@ namespace FormBuilder.API.Controllers
             var result = await _accountService.LogoutAsync(request.RefreshToken, cancellationToken);
 
             if (!result)
-                return BadRequest(new { message = "Invalid refresh token." });
+                return BadRequest(new { message = _localizer["Auth_InvalidRefreshToken"] });
 
-            return Ok(new { message = "Logged out successfully." });
+            return Ok(new { message = _localizer["Auth_LoggedOut"] });
         }
 
         [HttpPost("revoke-all-tokens/{userId}")]
@@ -64,14 +68,14 @@ namespace FormBuilder.API.Controllers
         public async Task<IActionResult> RevokeAllUserTokens(int userId, CancellationToken cancellationToken)
         {
             if (userId <= 0)
-                return BadRequest(new { message = "Invalid user ID." });
+                return BadRequest(new { message = _localizer["Auth_InvalidUserId"] });
 
             var result = await _accountService.RevokeAllUserTokensAsync(userId, cancellationToken);
 
             if (!result)
-                return BadRequest(new { message = "Failed to revoke tokens." });
+                return BadRequest(new { message = _localizer["Auth_RevokeFailed"] });
 
-            return Ok(new { message = "All user tokens revoked successfully." });
+            return Ok(new { message = _localizer["Auth_RevokeSuccess"] });
         }
 
         [HttpGet("current-user")]
@@ -80,12 +84,12 @@ namespace FormBuilder.API.Controllers
         {
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
-                return Unauthorized(new { message = "Invalid user token." });
+                return Unauthorized(new { message = _localizer["Auth_InvalidUserToken"] });
 
             var userInfo = await _accountService.GetCurrentUserAsync(userId, cancellationToken);
 
             if (userInfo == null)
-                return NotFound(new { message = "User not found." });
+                return NotFound(new { message = _localizer["Auth_UserNotFound"] });
 
             return Ok(userInfo);
         }
@@ -99,14 +103,14 @@ namespace FormBuilder.API.Controllers
 
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
-                return Unauthorized(new { message = "Invalid user token." });
+                return Unauthorized(new { message = _localizer["Auth_InvalidUserToken"] });
 
             var result = await _accountService.ChangePasswordAsync(userId, request.CurrentPassword, request.NewPassword, cancellationToken);
 
             if (!result)
-                return BadRequest(new { message = "Current password is incorrect or user not found." });
+                return BadRequest(new { message = _localizer["Auth_ChangePasswordFailed"] });
 
-            return Ok(new { message = "Password changed successfully. All existing sessions have been revoked." });
+            return Ok(new { message = _localizer["Auth_ChangePasswordSuccess"] });
         }
     }
 }

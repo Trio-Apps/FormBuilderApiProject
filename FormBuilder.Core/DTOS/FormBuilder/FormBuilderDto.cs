@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using FormBuilder.Core.DTOS.FormTabs;
 
@@ -8,8 +8,10 @@ namespace FormBuilder.Core.DTOS.FormBuilder
     {
         public int Id { get; set; }
         public string FormName { get; set; }
+        public string? ForeignFormName { get; set; }
         public string FormCode { get; set; }
         public string Description { get; set; }
+        public string? ForeignDescription { get; set; }
         public int Version { get; set; }
         public bool IsPublished { get; set; }
         public bool IsActive { get; set; }

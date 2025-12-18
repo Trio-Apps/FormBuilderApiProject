@@ -1,8 +1,9 @@
-﻿using formBuilder.Domian.Interfaces;
+using formBuilder.Domian.Interfaces;
 using AutoMapper;
 using FluentValidation;
 using FormBuilder.Application.Abstractions;
 using FormBuilder.core.Repository;
+using FormBuilder.Core.IServices;
 using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Core.Models;
 using FormBuilder.Domain.Interfaces;
@@ -15,6 +16,7 @@ using FormBuilder.Services;
 using FormBuilder.Services.Mappings;
 using FormBuilder.Services.Repository;
 using FormBuilder.Services.Services;
+using FormBuilder.Services.Services.FileStorage;
 using FormBuilder.Services.Validators.FormBuilder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -118,6 +120,8 @@ namespace FormBuilder.API.Extensions
             services.AddScoped<IApprovalStageRepository, ApprovalStageRepository>();
              services.AddScoped<IApprovalStageService, ApprovalStageService>();
 
+            // File Storage
+            services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
             return services;
         }

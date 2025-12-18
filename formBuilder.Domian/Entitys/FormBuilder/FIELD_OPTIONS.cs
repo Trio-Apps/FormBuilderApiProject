@@ -21,6 +21,9 @@ namespace FormBuilder.Domian.Entitys.froms
         [Required, StringLength(200)]
         public string OptionText { get; set; }
 
+        [StringLength(200)]
+        public string? ForeignOptionText { get; set; }
+
         [Required, StringLength(200)]
         public string OptionValue { get; set; }
 

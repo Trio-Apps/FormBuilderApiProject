@@ -1,17 +1,27 @@
 using FormBuilder.Infrastructure.Data;
 using FormBuilder.API.ExceptionHandlers;
 using FormBuilder.API.Extensions;
+using FormBuilder.API.HealthChecks;
 using FormBuilder.Core.Models;
 using FormBuilder.Core.Configuration;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Globalization;
 using System.Text;
+using System.Text.Json;
 using FormBuilder.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// -----------------------------
+// Localization
+// -----------------------------
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 
 // -----------------------------
 // Controllers + JSON + ProblemDetails
@@ -31,7 +41,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddProblemDetails();
 
 // -----------------------------
-// Swagger Configuration
+// Swagger Configuration (بسيط كما كان سابقاً)
 // -----------------------------
 builder.Services.AddSwaggerGen(c =>
 {
@@ -122,6 +132,23 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 builder.Services.AddMemoryCache();
 
 // -----------------------------
+// Health Checks
+// -----------------------------
+builder.Services.AddHealthChecks()
+    .AddCheck<FormBuilderDbHealthCheck>("formbuilder-db", tags: new[] { "db", "ready" })
+    .AddCheck<AuthDbHealthCheck>("auth-db", tags: new[] { "db", "ready" });
+
+// -----------------------------
+// Response Compression
+// -----------------------------
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+    options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.BrotliCompressionProvider>();
+    options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.GzipCompressionProvider>();
+});
+
+// -----------------------------
 // Dependency Injection
 // -----------------------------
 
@@ -185,16 +212,31 @@ builder.Services.Configure<RateLimitingOptions>(
     builder.Configuration.GetSection(RateLimitingOptions.SectionName));
 
 // -----------------------------
-// CORS
+// CORS - Improved Security
 // -----------------------------
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() 
+    ?? new[] { "http://localhost:3000", "http://localhost:5173" };
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins(allowedOrigins)
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials(); // Important for cookies/auth headers
     });
+
+    // Keep AllowAll for development only
+    if (builder.Environment.IsDevelopment())
+    {
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+    }
 });
 
 // -----------------------------
@@ -203,18 +245,39 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // -----------------------------
-// Middleware Pipeline
+// Middleware Pipeline + Localization
 // -----------------------------
+
+var supportedCultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("ar")
+};
+
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures
+});
 
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
+    
     app.UseSwaggerUI(c =>
     {
+        // Swagger endpoint for v1 (كما كان سابقاً)
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "FormBuilder API v1");
+
         c.RoutePrefix = "swagger";
         c.DisplayRequestDuration();
+        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
+        c.EnableDeepLinking();
+        c.EnableFilter();
+        c.ShowExtensions();
+        c.EnableValidator();
     });
 }
 else
@@ -228,12 +291,16 @@ else
 
 app.UseHttpsRedirection();
 
+// Response Compression
+app.UseResponseCompression();
+
 // Add Rate Limiting Middleware (قبل Routing)
 app.UseRateLimiting();
 
 app.UseRouting();
 
-app.UseCors("AllowAll");
+// CORS - Use specific origins in production, AllowAll in development
+app.UseCors(builder.Environment.IsDevelopment() ? "AllowAll" : "AllowSpecificOrigins");
 
 // Add exception handling middleware
 app.UseExceptionHandler();
@@ -251,6 +318,37 @@ app.Map("/error", ap => ap.Run(async context =>
 
 
 app.MapControllers();
+
+// Health Check Endpoints
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResponseWriter = async (context, report) =>
+    {
+        context.Response.ContentType = "application/json";
+        var result = JsonSerializer.Serialize(new
+        {
+            status = report.Status.ToString(),
+            checks = report.Entries.Select(e => new
+            {
+                name = e.Key,
+                status = e.Value.Status.ToString(),
+                exception = e.Value.Exception?.Message,
+                duration = e.Value.Duration.ToString()
+            })
+        });
+        await context.Response.WriteAsync(result);
+    }
+});
+
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
+    Predicate = check => check.Tags.Contains("ready")
+});
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false // No checks for liveness, just returns 200 if app is running
+});
 
 app.Lifetime.ApplicationStarted.Register(() =>
 {

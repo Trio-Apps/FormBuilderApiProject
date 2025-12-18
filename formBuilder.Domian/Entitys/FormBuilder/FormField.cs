@@ -21,12 +21,17 @@ public class FORM_FIELDS :BaseEntity
     [Required, StringLength(200)]
     public string FieldName { get; set; } = string.Empty;
 
+    [StringLength(200)]
+    public string? ForeignFieldName { get; set; }
+
     [Required, StringLength(100)]
     public string FieldCode { get; set; } = string.Empty;
 
     public int FieldOrder { get; set; }
     public string ?Placeholder { get; set; }
+    public string? ForeignPlaceholder { get; set; }
     public string HintText { get; set; } = string.Empty;
+    public string? ForeignHintText { get; set; }
     public bool ?IsMandatory { get; set; }
     public bool ?IsEditable { get; set; }
     public bool IsVisible { get; set; }
@@ -35,6 +40,7 @@ public class FORM_FIELDS :BaseEntity
     public decimal? MaxValue { get; set; }
     public string ? RegexPattern { get; set; }
     public string ?ValidationMessage { get; set; }
+    public string? ForeignValidationMessage { get; set; }
 
 
     public new bool IsActive { get; set; }
