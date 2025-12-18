@@ -2,12 +2,14 @@ using FormBuilder.Infrastructure.Data;
 using FormBuilder.API.ExceptionHandlers;
 using FormBuilder.API.Extensions;
 using FormBuilder.Core.Models;
+using FormBuilder.Core.Configuration;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using FormBuilder.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -115,6 +117,11 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 });
 
 // -----------------------------
+// Caching
+// -----------------------------
+builder.Services.AddMemoryCache();
+
+// -----------------------------
 // Dependency Injection
 // -----------------------------
 
@@ -172,6 +179,12 @@ builder.Services.AddAuthentication(options =>
 });
 
 // -----------------------------
+// Rate Limiting Configuration
+// -----------------------------
+builder.Services.Configure<RateLimitingOptions>(
+    builder.Configuration.GetSection(RateLimitingOptions.SectionName));
+
+// -----------------------------
 // CORS
 // -----------------------------
 builder.Services.AddCors(options =>
@@ -214,6 +227,10 @@ else
 
 
 app.UseHttpsRedirection();
+
+// Add Rate Limiting Middleware (قبل Routing)
+app.UseRateLimiting();
+
 app.UseRouting();
 
 app.UseCors("AllowAll");

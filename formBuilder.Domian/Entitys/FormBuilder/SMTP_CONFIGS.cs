@@ -1,6 +1,5 @@
 using formBuilder.Domian.Entitys;
 using FormBuilder.Domian.Entitys.FormBuilder;
-using FormBuilder.Domian.Entitys.FormBuilder;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -38,7 +37,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
         [Required, StringLength(200)]
         public string FromDisplayName { get; set; }
 
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<EMAIL_TEMPLATES> EMAIL_TEMPLATES { get; set; }
     }

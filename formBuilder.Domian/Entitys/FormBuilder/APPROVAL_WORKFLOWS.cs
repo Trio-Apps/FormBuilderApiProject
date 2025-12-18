@@ -22,7 +22,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
         [Required, StringLength(200)]
         public string Name { get; set; }
 
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<APPROVAL_STAGES> APPROVAL_STAGES { get; set; }
     }

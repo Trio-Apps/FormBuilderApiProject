@@ -39,7 +39,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 
         [Required]
         [Column("IsActive")]
-        public bool IsActive { get; set; } = true;
+        public new bool IsActive { get; set; } = true;
 
         // Navigation properties
         public virtual FORM_BUILDER FORM_BUILDER { get; set; }

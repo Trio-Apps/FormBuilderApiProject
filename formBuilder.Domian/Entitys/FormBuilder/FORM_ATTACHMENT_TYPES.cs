@@ -26,7 +26,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
         public virtual ATTACHMENT_TYPES ATTACHMENT_TYPES { get; set; }
 
         public bool IsMandatory { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 
 

@@ -22,6 +22,10 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<FORM_SUBMISSIONS?> GetByIdAsync(int id)
         {
             return await _context.FORM_SUBMISSIONS
+                .Include(fs => fs.FORM_BUILDER)
+                .Include(fs => fs.DOCUMENT_TYPES)
+                .Include(fs => fs.DOCUMENT_SERIES)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(fs => fs.Id == id);
         }
 

@@ -1,4 +1,4 @@
-﻿using formBuilder.Domian.Entitys;
+using formBuilder.Domian.Entitys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,6 +31,6 @@ namespace FormBuilder.Domian.Entitys.froms
         public string RequestBodyJson { get; set; }
         public string ValuePath { get; set; }
         public string TextPath { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 }

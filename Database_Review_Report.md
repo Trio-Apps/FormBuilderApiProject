@@ -367,3 +367,5 @@ ADD ConditionJson NVARCHAR(MAX) NULL;
 **الحالة**: ✅ جاهز للتطبيق
 
 
+
+

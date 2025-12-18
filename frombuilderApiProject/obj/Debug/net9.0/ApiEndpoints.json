@@ -1,6 +1,32 @@
 [
   {
     "ContainingType": "FormBuilder.API.Controllers.AccountController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/Account/change-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Application.Dtos.Auth.ChangePasswordRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.AccountController",
+    "Method": "GetCurrentUser",
+    "RelativePath": "api/Account/current-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.AccountController",
     "Method": "Login",
     "RelativePath": "api/Account/login",
     "HttpMethod": "POST",
@@ -42,6 +68,22 @@
       {
         "Name": "request",
         "Type": "FormBuilder.Application.Dtos.Auth.RefreshTokenRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.AccountController",
+    "Method": "RevokeAllUserTokens",
+    "RelativePath": "api/Account/revoke-all-tokens/{userId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
@@ -5174,7 +5216,7 @@
     "Parameters": [
       {
         "Name": "batchDto",
-        "Type": "FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.BatchUpdateFormulaStatusDto",
         "IsRequired": true
       }
     ],
@@ -5206,7 +5248,7 @@
     "Parameters": [
       {
         "Name": "calculateDto",
-        "Type": "FormBuilder.API.Controllers.CalculateAdvancedDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CalculateAdvancedDto",
         "IsRequired": true
       }
     ],
@@ -5222,7 +5264,7 @@
     "Parameters": [
       {
         "Name": "calculateDto",
-        "Type": "FormBuilder.API.Controllers.CalculateExpressionDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto",
         "IsRequired": true
       }
     ],
@@ -5238,7 +5280,7 @@
     "Parameters": [
       {
         "Name": "calculateDto",
-        "Type": "FormBuilder.API.Controllers.CalculateExpressionDto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto",
         "IsRequired": true
       }
     ],
@@ -5823,6 +5865,90 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "CheckPermission",
+    "RelativePath": "api/UserPermission/check",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Application.Dtos.Auth.CheckPermissionRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "CheckMultiplePermissions",
+    "RelativePath": "api/UserPermission/check-multiple",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Application.Dtos.Auth.CheckPermissionsRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "GetCurrentUserPermissions",
+    "RelativePath": "api/UserPermission/current-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "GetPermissionMatrix",
+    "RelativePath": "api/UserPermission/matrix",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "GetRolePermissions",
+    "RelativePath": "api/UserPermission/role/{roleId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "roleId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "UserPermissionController",
+    "Method": "GetUserPermissions",
+    "RelativePath": "api/UserPermission/user/{userId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   }
 ]

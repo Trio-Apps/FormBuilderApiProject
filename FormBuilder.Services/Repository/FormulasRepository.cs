@@ -133,7 +133,7 @@ namespace FormBuilder.Infrastructure.Repositories
         // Override BaseRepository methods
         // ====================
 
-        public new async Task<FORMULAS> GetByIdAsync(int id)
+        public async Task<FORMULAS> GetByIdAsync(int id)
         {
             return await _context.FORMULAS
                 .Include(f => f.FORM_BUILDER)
@@ -152,7 +152,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
 
-        public new async Task<IEnumerable<FORMULAS>> GetAllAsync()
+        public async Task<IEnumerable<FORMULAS>> GetAllAsync()
         {
             return await _context.FORMULAS
                 .Include(f => f.FORM_BUILDER)
@@ -163,7 +163,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public new async Task<IEnumerable<FORMULAS>> GetAllAsync(Expression<Func<FORMULAS, bool>>? filter = null, params Expression<Func<FORMULAS, object>>[] includes)
+        public async Task<IEnumerable<FORMULAS>> GetAllAsync(Expression<Func<FORMULAS, bool>>? filter = null, params Expression<Func<FORMULAS, object>>[] includes)
         {
             var query = _context.FORMULAS.AsQueryable();
 

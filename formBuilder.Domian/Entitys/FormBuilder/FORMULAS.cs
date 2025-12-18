@@ -10,22 +10,22 @@ public class FORMULAS : BaseEntity
    
 
     [ForeignKey("FormBuilderId")]
-    public virtual FORM_BUILDER FORM_BUILDER { get; set; }
+    public virtual FORM_BUILDER FORM_BUILDER { get; set; } = null!;
     public int FormBuilderId { get; set; }
 
     [Required, StringLength(200)]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [Required, StringLength(100)]
-    public string Code { get; set; }
+    public string Code { get; set; } = string.Empty;
 
-    public string ExpressionText { get; set; }
+    public string ExpressionText { get; set; } = string.Empty;
 
     public int? ResultFieldId { get; set; } // Nullable لو مش دايمًا مرتبط
     [ForeignKey("ResultFieldId")]
-    public virtual FORM_FIELDS RESULT_FIELD { get; set; }
+    public virtual FORM_FIELDS RESULT_FIELD { get; set; } = null!;
 
-    public bool IsActive { get; set; }
+    public new bool IsActive { get; set; }
 
-    public virtual ICollection<FORMULA_VARIABLES> FORMULA_VARIABLES { get; set; }
+    public virtual ICollection<FORMULA_VARIABLES> FORMULA_VARIABLES { get; set; } = null!;
 }

@@ -23,7 +23,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
         public string Code { get; set; }
 
         public string Description { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<DOCUMENT_SERIES> DOCUMENT_SERIES { get; set; }
     }

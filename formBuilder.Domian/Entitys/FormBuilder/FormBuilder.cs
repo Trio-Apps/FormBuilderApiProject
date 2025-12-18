@@ -20,10 +20,10 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         [Required, StringLength(100)]
         public string FormCode { get; set; }
 
-        public string Description { get; set; }
-        public int Version { get; set; }
+        public string ? Description { get; set; }
+        public int ? Version { get; set; }
         public bool IsPublished { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
        
 

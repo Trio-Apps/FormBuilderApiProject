@@ -22,12 +22,14 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<ATTACHMENT_TYPES?> GetByCodeAsync(string code)
         {
             return await _context.ATTACHMENT_TYPES
+                .AsNoTracking()
                 .FirstOrDefaultAsync(at => at.Code == code && at.IsActive);
         }
 
         public async Task<IEnumerable<ATTACHMENT_TYPES>> GetActiveAsync()
         {
             return await _context.ATTACHMENT_TYPES
+                .AsNoTracking()
                 .Where(at => at.IsActive)
                 .OrderBy(at => at.Name)
                 .ToListAsync();
@@ -35,7 +37,9 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<bool> CodeExistsAsync(string code, int? excludeId = null)
         {
-            var query = _context.ATTACHMENT_TYPES.Where(at => at.Code == code);
+            var query = _context.ATTACHMENT_TYPES
+                .AsNoTracking()
+                .Where(at => at.Code == code);
 
             if (excludeId.HasValue)
             {
@@ -48,12 +52,14 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsActiveAsync(int id)
         {
             return await _context.ATTACHMENT_TYPES
+                .AsNoTracking()
                 .AnyAsync(at => at.Id == id && at.IsActive);
         }
 
         public Task<ATTACHMENT_TYPES?> GetByIdAsync(int id)
         {
             return _context.ATTACHMENT_TYPES
+                .AsNoTracking()
                 .FirstOrDefaultAsync(at => at.Id == id);
         }
     }

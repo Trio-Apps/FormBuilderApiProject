@@ -32,6 +32,6 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
         [Required, StringLength(500)]
         public string ErrorMessage { get; set; }
 
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 }

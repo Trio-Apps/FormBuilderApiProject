@@ -49,18 +49,23 @@ public class accountService : IaccountService
     {
         string hashedPassword = HashPassword(password);
 
-        // ابحث عن المستخدم باستخدام الـ username و الـ hashed password من AkhmanageItContext
+        // ابحث عن المستخدم مع UserGroup في استعلام واحد لتجنب N+1 Query
         var user = await _identityContext.TblUsers
-            .FirstOrDefaultAsync(u => u.Username == username && u.Password == hashedPassword, cancellationToken);
+            .Include(u => u.TblUserGroupUsers)
+                .ThenInclude(ugu => ugu.IdUserGroupNavigation)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Username == username && u.Password == hashedPassword && u.IsActive, cancellationToken);
 
         if (user == null)
             return new LoginResponseDto { Success = false, ErrorMessage = "Invalid username or password." };
 
-        // نجيب الدور من جدول TblUserGroup باستخدام GroupId فقط من AkhmanageItContext
-        var group = await _identityContext.TblUserGroups
-            .FirstOrDefaultAsync(g => g.Id == user.Id, cancellationToken);
+        // نجيب الدور من العلاقة الصحيحة TblUserGroupUser
+        var userGroup = user.TblUserGroupUsers
+            .Where(ugu => ugu.IdUserGroupNavigation.IsActive)
+            .Select(ugu => ugu.IdUserGroupNavigation)
+            .FirstOrDefault();
 
-        var roleName = group?.Name ?? "User"; // Default role
+        var roleName = userGroup?.Name ?? "User"; // Default role
 
         var now = DateTime.UtcNow;
         var jwtSettings = _configuration.GetSection("Jwt");
@@ -74,6 +79,9 @@ public class accountService : IaccountService
             new Claim(ClaimTypes.Role, roleName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
+
+        // لا نضيف Permissions في Token لتقليل الحجم
+        // سيتم التحقق من Permissions من PermissionService عند الحاجة
 
         var expiryMinutes = Convert.ToDouble(jwtSettings["ExpiryMinutes"]);
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -106,10 +114,12 @@ public class accountService : IaccountService
         };
 
         _formBuilderContext.Set<REFRESH_TOKENS>().Add(refreshTokenEntity);
-        await _formBuilderContext.SaveChangesAsync(cancellationToken);
-
-        // Revoke old refresh tokens for this user (keep only the latest 5)
+        
+        // Revoke old refresh tokens for this user (keep only the latest 5) قبل SaveChanges
         await RevokeOldRefreshTokensAsync(user.Id, cancellationToken);
+        
+        // حفظ كل التغييرات في SaveChanges واحد
+        await _formBuilderContext.SaveChangesAsync(cancellationToken);
 
         return new LoginResponseDto
         {
@@ -117,6 +127,10 @@ public class accountService : IaccountService
             Token = tokenString,
             RefreshToken = refreshToken,
             Role = roleName,
+            UserId = user.Id,
+            Username = user.Username,
+            Email = user.Email,
+            Name = user.Name,
             ExpiresAt = tokenDescriptor.Expires!.Value,
             RefreshTokenExpiresAt = refreshTokenExpiresAt
         };
@@ -137,9 +151,12 @@ public class accountService : IaccountService
             };
         }
 
-        // Get user من AkhmanageItContext
+        // Get user مع UserGroup في استعلام واحد لتجنب N+1 Query
         var user = await _identityContext.TblUsers
-            .FirstOrDefaultAsync(u => u.Id == tokenEntity.UserId, cancellationToken);
+            .Include(u => u.TblUserGroupUsers)
+                .ThenInclude(ugu => ugu.IdUserGroupNavigation)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == tokenEntity.UserId && u.IsActive, cancellationToken);
 
         if (user == null)
         {
@@ -150,10 +167,12 @@ public class accountService : IaccountService
             };
         }
 
-        // Get user role من AkhmanageItContext
-        var group = await _identityContext.TblUserGroups
-            .FirstOrDefaultAsync(g => g.Id == user.Id, cancellationToken);
-        var roleName = group?.Name ?? "User";
+        // Get user role من العلاقة الصحيحة TblUserGroupUser
+        var userGroup = user.TblUserGroupUsers
+            .Where(ugu => ugu.IdUserGroupNavigation.IsActive)
+            .Select(ugu => ugu.IdUserGroupNavigation)
+            .FirstOrDefault();
+        var roleName = userGroup?.Name ?? "User";
 
         // Generate new access token
         var now = DateTime.UtcNow;
@@ -168,6 +187,9 @@ public class accountService : IaccountService
             new Claim(ClaimTypes.Role, roleName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
+
+        // لا نضيف Permissions في Token لتقليل الحجم
+        // سيتم التحقق من Permissions من PermissionService عند الحاجة
 
         var expiryMinutes = Convert.ToDouble(jwtSettings["ExpiryMinutes"]);
         var tokenDescriptor = new SecurityTokenDescriptor
@@ -204,6 +226,10 @@ public class accountService : IaccountService
         };
 
         _formBuilderContext.Set<REFRESH_TOKENS>().Add(newRefreshTokenEntity);
+        
+        // Revoke old refresh tokens قبل SaveChanges
+        await RevokeOldRefreshTokensAsync(user.Id, cancellationToken);
+        
         await _formBuilderContext.SaveChangesAsync(cancellationToken);
 
         return new RefreshTokenResponseDto
@@ -219,7 +245,7 @@ public class accountService : IaccountService
     public async Task<bool> LogoutAsync(string refreshToken, CancellationToken cancellationToken)
     {
         var tokenEntity = await _formBuilderContext.Set<REFRESH_TOKENS>()
-            .FirstOrDefaultAsync(rt => rt.Token == refreshToken, cancellationToken);
+            .FirstOrDefaultAsync(rt => rt.Token == refreshToken && rt.IsActive, cancellationToken);
 
         if (tokenEntity != null)
         {
@@ -238,13 +264,18 @@ public class accountService : IaccountService
             .Where(rt => rt.UserId == userId && rt.IsActive && rt.RevokedAt == null)
             .ToListAsync(cancellationToken);
 
-        foreach (var token in activeTokens)
+        if (activeTokens.Any())
         {
-            token.RevokedAt = DateTime.UtcNow;
-            token.IsActive = false;
+            var now = DateTime.UtcNow;
+            foreach (var token in activeTokens)
+            {
+                token.RevokedAt = now;
+                token.IsActive = false;
+            }
+
+            await _formBuilderContext.SaveChangesAsync(cancellationToken);
         }
 
-        await _formBuilderContext.SaveChangesAsync(cancellationToken);
         return true;
     }
 
@@ -256,6 +287,60 @@ public class accountService : IaccountService
         return Convert.ToBase64String(randomNumber);
     }
 
+    public async Task<UserInfoDto?> GetCurrentUserAsync(int userId, CancellationToken cancellationToken)
+    {
+        var user = await _identityContext.TblUsers
+            .Include(u => u.TblUserGroupUsers)
+                .ThenInclude(ugu => ugu.IdUserGroupNavigation)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId && u.IsActive, cancellationToken);
+
+        if (user == null)
+            return null;
+
+        var userGroup = user.TblUserGroupUsers
+            .Where(ugu => ugu.IdUserGroupNavigation.IsActive)
+            .Select(ugu => ugu.IdUserGroupNavigation)
+            .FirstOrDefault();
+
+        return new UserInfoDto
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Name = user.Name,
+            Email = user.Email,
+            Phone = user.Phone,
+            Role = userGroup?.Name ?? "User",
+            IsActive = user.IsActive
+        };
+    }
+
+    public async Task<bool> ChangePasswordAsync(int userId, string currentPassword, string newPassword, CancellationToken cancellationToken)
+    {
+        var hashedCurrentPassword = HashPassword(currentPassword);
+        var hashedNewPassword = HashPassword(newPassword);
+
+        var user = await _identityContext.TblUsers
+            .FirstOrDefaultAsync(u => u.Id == userId && u.Password == hashedCurrentPassword && u.IsActive, cancellationToken);
+
+        if (user == null)
+            return false;
+
+        user.Password = hashedNewPassword;
+        user.UpdatedDate = DateTime.UtcNow;
+
+        await _identityContext.SaveChangesAsync(cancellationToken);
+
+        // Revoke all existing tokens for security
+        await RevokeAllUserTokensAsync(userId, cancellationToken);
+
+        return true;
+    }
+
+    // تم إزالة GetUserPermissionsForClaimsAsync
+    // Permissions لن تُضاف في JWT Token لتقليل الحجم
+    // سيتم التحقق من Permissions من UserPermissionService عند الحاجة
+
     private async Task RevokeOldRefreshTokensAsync(int userId, CancellationToken cancellationToken)
     {
         // Keep only the latest 5 active refresh tokens per user
@@ -266,13 +351,14 @@ public class accountService : IaccountService
 
         if (activeTokens.Count > 5)
         {
+            var now = DateTime.UtcNow;
             var tokensToRevoke = activeTokens.Skip(5);
             foreach (var token in tokensToRevoke)
             {
-                token.RevokedAt = DateTime.UtcNow;
+                token.RevokedAt = now;
                 token.IsActive = false;
             }
-            await _formBuilderContext.SaveChangesAsync(cancellationToken);
+            // لا نحفظ هنا - سيتم الحفظ في SaveChanges الرئيسي
         }
     }
 }

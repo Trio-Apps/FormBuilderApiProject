@@ -58,5 +58,55 @@ namespace FormBuilder.API.Controllers
 
             return Ok(new { message = "Logged out successfully." });
         }
+
+        [HttpPost("revoke-all-tokens/{userId}")]
+        [Authorize(Roles = "Administration")]
+        public async Task<IActionResult> RevokeAllUserTokens(int userId, CancellationToken cancellationToken)
+        {
+            if (userId <= 0)
+                return BadRequest(new { message = "Invalid user ID." });
+
+            var result = await _accountService.RevokeAllUserTokensAsync(userId, cancellationToken);
+
+            if (!result)
+                return BadRequest(new { message = "Failed to revoke tokens." });
+
+            return Ok(new { message = "All user tokens revoked successfully." });
+        }
+
+        [HttpGet("current-user")]
+        [Authorize]
+        public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
+        {
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+                return Unauthorized(new { message = "Invalid user token." });
+
+            var userInfo = await _accountService.GetCurrentUserAsync(userId, cancellationToken);
+
+            if (userInfo == null)
+                return NotFound(new { message = "User not found." });
+
+            return Ok(userInfo);
+        }
+
+        [HttpPost("change-password")]
+        [Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDto request, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+                return Unauthorized(new { message = "Invalid user token." });
+
+            var result = await _accountService.ChangePasswordAsync(userId, request.CurrentPassword, request.NewPassword, cancellationToken);
+
+            if (!result)
+                return BadRequest(new { message = "Current password is incorrect or user not found." });
+
+            return Ok(new { message = "Password changed successfully. All existing sessions have been revoked." });
+        }
     }
 }

@@ -10,16 +10,16 @@ public class FIELD_TYPES :BaseEntity
     
 
     [Required, StringLength(100)]
-    public string TypeName { get; set; }
+    public string TypeName { get; set; } = string.Empty;
 
     [StringLength(50)]
-    public string DataType { get; set; }
+    public string DataType { get; set; } = string.Empty;
 
     public int? MaxLength { get; set; }
     public bool ? HasOptions { get; set; }
     public bool ? AllowMultiple { get; set; }
-    public bool IsActive { get; set; }
+    public new bool IsActive { get; set; }
 
-    public virtual ICollection<FORM_FIELDS> FORM_FIELDS { get; set; }
-    public virtual ICollection<FORM_GRID_COLUMNS> FORM_GRID_COLUMNS { get; set; }
+    public virtual ICollection<FORM_FIELDS> FORM_FIELDS { get; set; } = null!;
+    public virtual ICollection<FORM_GRID_COLUMNS> FORM_GRID_COLUMNS { get; set; } = null!;
 }

@@ -8,13 +8,13 @@ public class APPROVAL_DELEGATIONS : BaseEntity
 {
   
 
-    public string FromUserId { get; set; }
+    public string FromUserId { get; set; } = string.Empty;
     
 
-    public string ToUserId { get; set; }
+    public string ToUserId { get; set; } = string.Empty;
 
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
-    public bool IsActive { get; set; }
+    public new bool IsActive { get; set; }
 }

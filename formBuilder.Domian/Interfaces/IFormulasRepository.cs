@@ -1,4 +1,4 @@
-﻿using formBuilder.Domian.Interfaces;
+using formBuilder.Domian.Interfaces;
 using FormBuilder.Domian.Entitys.froms;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,13 +8,6 @@ namespace FormBuilder.Domain.Interfaces.Repositories
 {
     public interface IFormulasRepository : IBaseRepository<FORMULAS>
     {
-        // Override BaseRepository methods with "new" keyword
-        new Task<FORMULAS> GetByIdAsync(int id);
-        new Task<IEnumerable<FORMULAS>> GetAllAsync();
-        new Task<IEnumerable<FORMULAS>> GetAllAsync(Expression<Func<FORMULAS, bool>>? filter = null, params Expression<Func<FORMULAS, object>>[] includes);
-        new Task<FORMULAS> SingleOrDefaultAsync(Expression<Func<FORMULAS, bool>> filter, bool asNoTracking = false, params Expression<Func<FORMULAS, object>>[] includes);
-        new Task<int> CountAsync(Expression<Func<FORMULAS, bool>>? filter = null);
-        new Task<bool> AnyAsync(Expression<Func<FORMULAS, bool>>? filter = null);
 
         // Custom queries for FORMULAS entity
         Task<FORMULAS> GetByCodeAsync(string code, int formBuilderId, params Expression<Func<FORMULAS, object>>[] includes);
@@ -46,5 +39,8 @@ namespace FormBuilder.Domain.Interfaces.Repositories
 
         // Formula calculation helper
         Task<Dictionary<string, FORM_FIELDS>> GetFieldMappingsFromExpressionAsync(string expressionText, int formBuilderId);
+
+        // Search method
+        Task<IEnumerable<FORMULAS>> SearchFormulasAsync(string searchTerm, int formBuilderId);
     }
 }

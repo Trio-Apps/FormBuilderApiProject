@@ -71,25 +71,14 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 return Unauthorized("User ID not found in claims. Ensure the request is authenticated.");
             }
 
-            try
+            createDto.CreatedByUserId = currentUserId;
+            var result = await _formBuilderService.CreateAsync(createDto);
+            if (result.Success && result.Data != null)
             {
-                createDto.CreatedByUserId = currentUserId;
-                var result = await _formBuilderService.CreateAsync(createDto);
-                if (result.Success && result.Data != null)
-                {
-                    return CreatedAtAction(nameof(GetFormById), new { id = result.Data.Id }, result.Data);
-                }
+                return CreatedAtAction(nameof(GetFormById), new { id = result.Data.Id }, result.Data);
+            }
 
-                return result.ToActionResult();
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Form code"))
-            {
-                return Conflict(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            return result.ToActionResult();
         }
 
         // --- PUT Operation (Update) ---
@@ -105,20 +94,9 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 return BadRequest(ModelState);
             }
 
-            try
-            {
-                var result = await _formBuilderService.UpdateAsync(id, updateDto);
-                if (result.Success) return NoContent();
-                return result.ToActionResult();
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("Form code"))
-            {
-                return Conflict(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var result = await _formBuilderService.UpdateAsync(id, updateDto);
+            if (result.Success) return NoContent();
+            return result.ToActionResult();
         }
 
         // --- DELETE Operation ---

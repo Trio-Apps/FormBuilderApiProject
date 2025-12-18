@@ -1,10 +1,12 @@
-using formBuilder.Domian.Entitys;
 using formBuilder.Domian.Interfaces;
-using FormBuilder.Domian.Entitys.FormBuilder;
+using FormBuilder.API.Models;
+using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Domain.Interfaces;
-using FormBuilder.Domian.Entitys.froms;
-using FormBuilder.API.Models;
+using FormBuilder.Services.Services.Base;
+using FormBuilder.Application.DTOS;
+using FormBuilder.Core.DTOS.Common;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,288 +14,148 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.Services.Services
 {
-    public class FieldDataSourcesService : IFieldDataSourcesService
+    public class FieldDataSourcesService : BaseService<FIELD_DATA_SOURCES, FieldDataSourceDto, CreateFieldDataSourceDto, UpdateFieldDataSourceDto>, IFieldDataSourcesService
     {
         private readonly IunitOfwork _unitOfWork;
         private readonly IFieldDataSourcesRepository _fieldDataSourcesRepository;
 
-        public FieldDataSourcesService(IunitOfwork unitOfWork, IFieldDataSourcesRepository fieldDataSourcesRepository)
+        public FieldDataSourcesService(IunitOfwork unitOfWork, IFieldDataSourcesRepository fieldDataSourcesRepository, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
-            _fieldDataSourcesRepository = fieldDataSourcesRepository;
+            _fieldDataSourcesRepository = fieldDataSourcesRepository ?? throw new ArgumentNullException(nameof(fieldDataSourcesRepository));
         }
-        // ================================
-        // GET ALL FIELD DATA SOURCES
-        // ================================
+
+        protected override IBaseRepository<FIELD_DATA_SOURCES> Repository => _unitOfWork.FieldDataSourcesRepository;
+
         public async Task<ApiResponse> GetAllAsync()
         {
-            try
-            {
-                var dataSources = await _unitOfWork.Repositary<FIELD_DATA_SOURCES>().GetAllAsync();
-                var dataSourceDtos = dataSources.Select(ToDto).ToList();
-                return new ApiResponse(200, "All field data sources retrieved successfully", dataSourceDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving all field data sources: {ex.Message}");
-            }
-        }
-        // ================================
-        // GET BY FIELD ID
-        // ================================
-        public async Task<ApiResponse> GetByFieldIdAsync(int fieldId)
-        {
-            try
-            {
-                var dataSources = await _fieldDataSourcesRepository.GetByFieldIdAsync(fieldId);
-                var dataSourceDtos = dataSources.Select(ToDto).ToList();
-                return new ApiResponse(200, "Field data sources retrieved successfully", dataSourceDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving field data sources: {ex.Message}");
-            }
+            var result = await base.GetAllAsync();
+            return ConvertToApiResponse(result);
         }
 
-        // ================================
-        // GET ACTIVE BY FIELD ID
-        // ================================
-        public async Task<ApiResponse> GetActiveByFieldIdAsync(int fieldId)
-        {
-            try
-            {
-                var dataSources = await _fieldDataSourcesRepository.GetActiveByFieldIdAsync(fieldId);
-                var dataSourceDtos = dataSources.Select(ToDto).ToList();
-                return new ApiResponse(200, "Active field data sources retrieved successfully", dataSourceDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving active field data sources: {ex.Message}");
-            }
-        }
-
-        // ================================
-        // GET BY ID
-        // ================================
         public async Task<ApiResponse> GetByIdAsync(int id)
         {
-            try
-            {
-                var dataSource = await _fieldDataSourcesRepository.GetByIdAsync(id);
-                if (dataSource == null)
-                    return new ApiResponse(404, "Field data source not found");
-
-                var dataSourceDto = ToDto(dataSource);
-                return new ApiResponse(200, "Field data source retrieved successfully", dataSourceDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving field data source: {ex.Message}");
-            }
+            var result = await base.GetByIdAsync(id);
+            return ConvertToApiResponse(result);
         }
 
-        // ================================
-        // CREATE
-        // ================================
+        public async Task<ApiResponse> GetByFieldIdAsync(int fieldId)
+        {
+            var dataSources = await _fieldDataSourcesRepository.GetByFieldIdAsync(fieldId);
+            var dataSourceDtos = _mapper.Map<IEnumerable<FieldDataSourceDto>>(dataSources);
+            return new ApiResponse(200, "Field data sources retrieved successfully", dataSourceDtos);
+        }
+
+        public async Task<ApiResponse> GetActiveByFieldIdAsync(int fieldId)
+        {
+            var dataSources = await _fieldDataSourcesRepository.GetActiveByFieldIdAsync(fieldId);
+            var dataSourceDtos = _mapper.Map<IEnumerable<FieldDataSourceDto>>(dataSources);
+            return new ApiResponse(200, "Active field data sources retrieved successfully", dataSourceDtos);
+        }
+
         public async Task<ApiResponse> CreateAsync(CreateFieldDataSourceDto createDto)
         {
-            try
-            {
-                if (createDto == null)
-                    return new ApiResponse(400, "DTO is required");
-
-                // Validate if field exists
-                var fieldExists = await _unitOfWork.Repositary<FORM_FIELDS>().AnyAsync(x => x.Id == createDto.FieldId);
-                if (!fieldExists)
-                    return new ApiResponse(400, "Invalid field ID");
-
-                var entity = ToEntity(createDto);
-                _unitOfWork.Repositary<FIELD_DATA_SOURCES>().Add(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Field data source created successfully", ToDto(entity));
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error creating field data source: {ex.Message}");
-            }
+            var result = await base.CreateAsync(createDto);
+            return ConvertToApiResponse(result);
         }
 
-        // ================================
-        // CREATE BULK
-        // ================================
+        protected override async Task<ValidationResult> ValidateCreateAsync(CreateFieldDataSourceDto dto)
+        {
+            // Validate if field exists
+            var fieldExists = await _unitOfWork.FormFieldRepository.AnyAsync(x => x.Id == dto.FieldId);
+            if (!fieldExists)
+                return ValidationResult.Failure("Invalid field ID");
+
+            return ValidationResult.Success();
+        }
+
         public async Task<ApiResponse> CreateBulkAsync(List<CreateFieldDataSourceDto> createDtos)
         {
-            try
-            {
-                if (createDtos == null || !createDtos.Any())
-                    return new ApiResponse(400, "No field data sources provided");
+            if (createDtos == null || !createDtos.Any())
+                return new ApiResponse(400, "No field data sources provided");
 
-                var entities = createDtos.Select(ToEntity).ToList();
-                _unitOfWork.Repositary<FIELD_DATA_SOURCES>().AddRange(entities);
-                await _unitOfWork.CompleteAsyn();
-
-                var resultDtos = entities.Select(ToDto).ToList();
-                return new ApiResponse(200, "Field data sources created successfully", resultDtos);
-            }
-            catch (Exception ex)
+            // Validate all field IDs exist
+            var fieldIds = createDtos.Select(d => d.FieldId).Distinct().ToList();
+            foreach (var fieldId in fieldIds)
             {
-                return new ApiResponse(500, $"Error creating field data sources: {ex.Message}");
+                var fieldExists = await _unitOfWork.FormFieldRepository.AnyAsync(f => f.Id == fieldId);
+                if (!fieldExists)
+                    return new ApiResponse(400, $"Invalid field ID: {fieldId}");
             }
+
+            // Validate each DTO
+            foreach (var dto in createDtos)
+            {
+                var validation = await ValidateCreateAsync(dto);
+                if (!validation.IsValid)
+                    return new ApiResponse(400, validation.ErrorMessage ?? "Validation failed");
+            }
+
+            var entities = _mapper.Map<List<FIELD_DATA_SOURCES>>(createDtos);
+            foreach (var entity in entities)
+            {
+                entity.CreatedDate = entity.CreatedDate == default ? DateTime.UtcNow : entity.CreatedDate;
+                entity.IsActive = true;
+            }
+
+            _unitOfWork.FieldDataSourcesRepository.AddRange(entities);
+            await _unitOfWork.CompleteAsyn();
+
+            var resultDtos = _mapper.Map<IEnumerable<FieldDataSourceDto>>(entities);
+            return new ApiResponse(200, "Field data sources created successfully", resultDtos);
         }
 
-        // ================================
-        // UPDATE
-        // ================================
         public async Task<ApiResponse> UpdateAsync(int id, UpdateFieldDataSourceDto updateDto)
         {
-            try
-            {
-                if (updateDto == null)
-                    return new ApiResponse(400, "DTO is required");
-
-                var entity = await _fieldDataSourcesRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Field data source not found");
-
-                MapUpdate(updateDto, entity);
-                _unitOfWork.Repositary<FIELD_DATA_SOURCES>().Update(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Field data source updated successfully", ToDto(entity));
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error updating field data source: {ex.Message}");
-            }
+            var result = await base.UpdateAsync(id, updateDto);
+            return ConvertToApiResponse(result);
         }
 
-        // ================================
-        // DELETE (HARD)
-        // ================================
         public async Task<ApiResponse> DeleteAsync(int id)
         {
-            try
-            {
-                var entity = await _fieldDataSourcesRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Field data source not found");
-
-                _unitOfWork.Repositary<FIELD_DATA_SOURCES>().Delete(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Field data source deleted successfully");
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error deleting field data source: {ex.Message}");
-            }
+            var result = await base.DeleteAsync(id);
+            return ConvertToApiResponse(result);
         }
 
-        // ================================
-        // SOFT DELETE
-        // ================================
         public async Task<ApiResponse> SoftDeleteAsync(int id)
         {
-            try
-            {
-                var entity = await _fieldDataSourcesRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Field data source not found");
-
-                entity.IsActive = false;
-                _unitOfWork.Repositary<FIELD_DATA_SOURCES>().Update(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Field data source soft deleted successfully");
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error soft deleting field data source: {ex.Message}");
-            }
+            var result = await base.SoftDeleteAsync(id);
+            return ConvertToApiResponse(result);
         }
 
-        // ================================
-        // GET BY FIELD ID AND TYPE
-        // ================================
         public async Task<ApiResponse> GetByFieldIdAndTypeAsync(int fieldId, string sourceType)
         {
-            try
-            {
-                var dataSource = await _fieldDataSourcesRepository.GetByFieldIdAsync(fieldId, sourceType);
-                if (dataSource == null)
-                    return new ApiResponse(404, "Field data source not found for the specified type");
+            var dataSource = await _fieldDataSourcesRepository.GetByFieldIdAsync(fieldId, sourceType);
+            if (dataSource == null)
+                return new ApiResponse(404, "Field data source not found for the specified type");
 
-                var dataSourceDto = ToDto(dataSource);
-                return new ApiResponse(200, "Field data source retrieved successfully", dataSourceDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving field data source: {ex.Message}");
-            }
+            var dataSourceDto = _mapper.Map<FieldDataSourceDto>(dataSource);
+            return new ApiResponse(200, "Field data source retrieved successfully", dataSourceDto);
         }
 
-        // ================================
-        // GET DATA SOURCES COUNT
-        // ================================
         public async Task<ApiResponse> GetDataSourcesCountAsync(int fieldId)
         {
-            try
-            {
-                var count = await _fieldDataSourcesRepository.GetDataSourcesCountAsync(fieldId);
-                return new ApiResponse(200, "Data sources count retrieved successfully", count);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving data sources count: {ex.Message}");
-            }
+            var count = await _fieldDataSourcesRepository.GetDataSourcesCountAsync(fieldId);
+            return new ApiResponse(200, "Data sources count retrieved successfully", count);
         }
 
         // ================================
-        // MAPPING
+        // HELPER METHODS
         // ================================
-        private FieldDataSourceDto ToDto(FIELD_DATA_SOURCES entity)
+        private ApiResponse ConvertToApiResponse<T>(ServiceResult<T> result)
         {
-            if (entity == null) return null;
-
-            return new FieldDataSourceDto
-            {
-                Id = entity.Id,
-                FieldId = entity.FieldId,
-                SourceType = entity.SourceType,
-                ApiUrl = entity.ApiUrl,
-                HttpMethod = entity.HttpMethod,
-                RequestBodyJson = entity.RequestBodyJson,
-                ValuePath = entity.ValuePath,
-                TextPath = entity.TextPath,
-                IsActive = entity.IsActive
-            };
+            if (result.Success)
+                return new ApiResponse(result.StatusCode, "Success", result.Data);
+            else
+                return new ApiResponse(result.StatusCode, result.ErrorMessage);
         }
 
-        private FIELD_DATA_SOURCES ToEntity(CreateFieldDataSourceDto dto)
+        private ApiResponse ConvertToApiResponse(ServiceResult<bool> result)
         {
-            return new FIELD_DATA_SOURCES
-            {
-                FieldId = dto.FieldId,
-                SourceType = dto.SourceType,
-                ApiUrl = dto.ApiUrl,
-                HttpMethod = dto.HttpMethod,
-                RequestBodyJson = dto.RequestBodyJson,
-                ValuePath = dto.ValuePath,
-                TextPath = dto.TextPath,
-                IsActive = dto.IsActive
-            };
-        }
-
-        private void MapUpdate(UpdateFieldDataSourceDto dto, FIELD_DATA_SOURCES entity)
-        {
-            entity.SourceType = dto.SourceType;
-            entity.ApiUrl = dto.ApiUrl;
-            entity.HttpMethod = dto.HttpMethod;
-            entity.RequestBodyJson = dto.RequestBodyJson;
-            entity.ValuePath = dto.ValuePath;
-            entity.TextPath = dto.TextPath;
-            entity.IsActive = dto.IsActive;
+            if (result.Success)
+                return new ApiResponse(result.StatusCode, "Success", result.Data);
+            else
+                return new ApiResponse(result.StatusCode, result.ErrorMessage);
         }
     }
 }

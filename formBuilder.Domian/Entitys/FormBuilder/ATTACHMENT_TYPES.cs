@@ -22,7 +22,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 
         public string Description { get; set; }
         public int MaxSizeMB { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<FORM_ATTACHMENT_TYPES> FORM_ATTACHMENT_TYPES { get; set; }
     }

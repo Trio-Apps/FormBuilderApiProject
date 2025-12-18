@@ -627,7 +627,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FormCode")
@@ -649,7 +648,7 @@ namespace FormBuilder.Core.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Version")
+                    b.Property<int?>("Version")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

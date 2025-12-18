@@ -35,7 +35,7 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         public int? MaxLength { get; set; }
         public string DefaultValueJson { get; set; }
         public string ValidationRuleJson { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<FORM_SUBMISSION_GRID_CELLS> FORM_SUBMISSION_GRID_CELLS { get; set; }
     }

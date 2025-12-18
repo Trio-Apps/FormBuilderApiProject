@@ -24,23 +24,22 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(c => c.FORM_GRIDS)
                     .ThenInclude(g => g.FORM_BUILDER)
                 .Include(c => c.FIELD_TYPES)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         // Explicit implementation of GetAllAsync with navigation properties
         public async Task<IEnumerable<FORM_GRID_COLUMNS>> GetAllAsync()
         {
-            
-                return await _context.FORM_GRID_COLUMNS
-                    .Include(c => c.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Include(c => c.FIELD_TYPES)
-                    .OrderBy(c => c.GridId)
-                    .ThenBy(c => c.ColumnOrder)
-                    .ThenBy(c => c.ColumnName)
-                    .ToListAsync();
-            
-            
+            return await _context.FORM_GRID_COLUMNS
+                .Include(c => c.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .Include(c => c.FIELD_TYPES)
+                .AsNoTracking()
+                .OrderBy(c => c.GridId)
+                .ThenBy(c => c.ColumnOrder)
+                .ThenBy(c => c.ColumnName)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_GRID_COLUMNS>> GetByGridIdAsync(int gridId)
@@ -63,20 +62,14 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<IEnumerable<FORM_GRID_COLUMNS>> GetActiveByGridIdAsync(int gridId)
         {
-            try
-            {
-                return await _context.FORM_GRID_COLUMNS
-                    .Include(c => c.FORM_GRIDS)
-                    .Include(c => c.FIELD_TYPES)
-                    .Where(c => c.GridId == gridId && c.IsActive)
-                    .OrderBy(c => c.ColumnOrder)
-                    .ThenBy(c => c.ColumnName)
-                    .ToListAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await _context.FORM_GRID_COLUMNS
+                .Include(c => c.FORM_GRIDS)
+                .Include(c => c.FIELD_TYPES)
+                .AsNoTracking()
+                .Where(c => c.GridId == gridId && c.IsActive)
+                .OrderBy(c => c.ColumnOrder)
+                .ThenBy(c => c.ColumnName)
+                .ToListAsync();
         }
 
         public async Task<FORM_GRID_COLUMNS?> GetByColumnCodeAsync(string columnCode, int gridId)
@@ -84,6 +77,7 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_GRID_COLUMNS
                 .Include(c => c.FORM_GRIDS)
                 .Include(c => c.FIELD_TYPES)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c =>
                     c.ColumnCode == columnCode &&
                     c.GridId == gridId);
@@ -91,34 +85,26 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<bool> ColumnCodeExistsAsync(string columnCode, int gridId, int? excludeId = null)
         {
-            try
-            {
-                var query = _context.FORM_GRID_COLUMNS
-                    .Where(c => c.ColumnCode == columnCode && c.GridId == gridId);
+            var query = _context.FORM_GRID_COLUMNS
+                .AsNoTracking()
+                .Where(c => c.ColumnCode == columnCode && c.GridId == gridId);
 
-                if (excludeId.HasValue)
-                {
-                    query = query.Where(c => c.Id != excludeId.Value);
-                }
-
-                return await query.AnyAsync();
-            }
-            catch (Exception)
+            if (excludeId.HasValue)
             {
-                throw;
+                query = query.Where(c => c.Id != excludeId.Value);
             }
+
+            return await query.AnyAsync();
         }
 
         public async Task<int> GetNextColumnOrderAsync(int gridId)
         {
-           
-                var maxOrder = await _context.FORM_GRID_COLUMNS
-                    .Where(c => c.GridId == gridId)
-                    .MaxAsync(c => (int?)c.ColumnOrder) ?? 0;
+            var maxOrder = await _context.FORM_GRID_COLUMNS
+                .AsNoTracking()
+                .Where(c => c.GridId == gridId)
+                .MaxAsync(c => (int?)c.ColumnOrder) ?? 0;
 
-                return maxOrder + 1;
-            
-          
+            return maxOrder + 1;
         }
 
         public async Task<bool> IsActiveAsync(int id)
@@ -140,20 +126,14 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<IEnumerable<FORM_GRID_COLUMNS>> GetByFormBuilderIdAsync(int formBuilderId)
         {
-            try
-            {
-                return await _context.FORM_GRID_COLUMNS
-                    .Include(c => c.FORM_GRIDS)
-                    .Include(c => c.FIELD_TYPES)
-                    .Where(c => c.FORM_GRIDS != null && c.FORM_GRIDS.FormBuilderId == formBuilderId)
-                    .OrderBy(c => c.GridId)
-                    .ThenBy(c => c.ColumnOrder)
-                    .ToListAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return await _context.FORM_GRID_COLUMNS
+                .Include(c => c.FORM_GRIDS)
+                .Include(c => c.FIELD_TYPES)
+                .AsNoTracking()
+                .Where(c => c.FORM_GRIDS != null && c.FORM_GRIDS.FormBuilderId == formBuilderId)
+                .OrderBy(c => c.GridId)
+                .ThenBy(c => c.ColumnOrder)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_GRID_COLUMNS>> GetByFieldTypeIdAsync(int fieldTypeId)

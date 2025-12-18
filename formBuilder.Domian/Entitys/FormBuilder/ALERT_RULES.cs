@@ -41,6 +41,6 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
        
         public string TargetUserId { get; set; }
 
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 }

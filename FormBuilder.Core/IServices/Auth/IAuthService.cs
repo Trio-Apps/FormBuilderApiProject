@@ -10,4 +10,6 @@ public interface IaccountService
     Task<RefreshTokenResponseDto> RefreshTokenAsync(string refreshToken, CancellationToken cancellationToken);
     Task<bool> LogoutAsync(string refreshToken, CancellationToken cancellationToken);
     Task<bool> RevokeAllUserTokensAsync(int userId, CancellationToken cancellationToken);
+    Task<UserInfoDto?> GetCurrentUserAsync(int userId, CancellationToken cancellationToken);
+    Task<bool> ChangePasswordAsync(int userId, string currentPassword, string newPassword, CancellationToken cancellationToken);
 }

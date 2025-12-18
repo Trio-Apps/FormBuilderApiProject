@@ -1,10 +1,12 @@
 using formBuilder.Domian.Interfaces;
-using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Entitys.froms;
-using FormBuilder.Domian.Interfaces;
+using FormBuilder.Services.Services.Base;
+using FormBuilder.Application.DTOS;
+using FormBuilder.Core.DTOS.Common;
 using FormBuilder.API.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,356 +14,236 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.Services
 {
-    public class FormSubmissionsService : IFormSubmissionsService
+    public class FormSubmissionsService : BaseService<FORM_SUBMISSIONS, FormSubmissionDto, CreateFormSubmissionDto, UpdateFormSubmissionDto>, IFormSubmissionsService
     {
         private readonly IunitOfwork _unitOfWork;
 
-        public FormSubmissionsService(IunitOfwork unitOfWork)
+        public FormSubmissionsService(IunitOfwork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
+        protected override IBaseRepository<FORM_SUBMISSIONS> Repository => _unitOfWork.FormSubmissionsRepository;
+
         public async Task<ApiResponse> GetAllAsync()
         {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionsRepository.GetSubmissionsWithDetailsAsync();
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "All form submissions retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
-            }
+            var submissions = await _unitOfWork.FormSubmissionsRepository.GetSubmissionsWithDetailsAsync();
+            var submissionDtos = _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+            return new ApiResponse(200, "All form submissions retrieved successfully", submissionDtos);
         }
 
         public async Task<ApiResponse> GetByIdAsync(int id)
         {
-            try
-            {
-                var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdWithDetailsAsync(id);
-                if (submission == null)
-                    return new ApiResponse(404, "Form submission not found");
+            var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdWithDetailsAsync(id);
+            if (submission == null)
+                return new ApiResponse(404, "Form submission not found");
 
-                var submissionDto = ToDetailDto(submission);
-                return new ApiResponse(200, "Form submission retrieved successfully", submissionDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submission: {ex.Message}");
-            }
+            var submissionDto = _mapper.Map<FormSubmissionDetailDto>(submission);
+            return new ApiResponse(200, "Form submission retrieved successfully", submissionDto);
         }
 
         public async Task<ApiResponse> GetByIdWithDetailsAsync(int id)
         {
-            try
-            {
-                var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdWithDetailsAsync(id);
-                if (submission == null)
-                    return new ApiResponse(404, "Form submission not found");
+            var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdWithDetailsAsync(id);
+            if (submission == null)
+                return new ApiResponse(404, "Form submission not found");
 
-                var submissionDto = ToDetailDto(submission);
-                return new ApiResponse(200, "Form submission with details retrieved successfully", submissionDto);
-            }
-            catch (Exception ex)
+            var submissionDto = _mapper.Map<FormSubmissionDetailDto>(submission);
+            
+            // Map nested collections if needed
+            if (submission.FORM_SUBMISSION_VALUES != null)
             {
-                return new ApiResponse(500, $"Error retrieving form submission with details: {ex.Message}");
+                submissionDto.FieldValues = _mapper.Map<List<FormSubmissionValueDto>>(submission.FORM_SUBMISSION_VALUES);
             }
+            if (submission.FORM_SUBMISSION_ATTACHMENTS != null)
+            {
+                submissionDto.Attachments = _mapper.Map<List<FormSubmissionAttachmentDto>>(submission.FORM_SUBMISSION_ATTACHMENTS);
+            }
+            if (submission.FORM_SUBMISSION_GRID_ROWS != null)
+            {
+                // Map grid rows with cells
+                submissionDto.GridData = submission.FORM_SUBMISSION_GRID_ROWS
+                    .Select(row => new FormSubmissionGridDto
+                    {
+                        Id = row.Id,
+                        SubmissionId = row.SubmissionId,
+                        GridId = row.GridId,
+                        GridName = row.FORM_GRIDS?.GridName ?? string.Empty,
+                        GridCode = row.FORM_GRIDS?.GridCode ?? string.Empty,
+                        RowIndex = row.RowIndex,
+                        Cells = row.FORM_SUBMISSION_GRID_CELLS != null
+                            ? _mapper.Map<List<FormSubmissionGridCellDto>>(row.FORM_SUBMISSION_GRID_CELLS)
+                            : new List<FormSubmissionGridCellDto>()
+                    }).ToList();
+            }
+
+            return new ApiResponse(200, "Form submission with details retrieved successfully", submissionDto);
         }
 
         public async Task<ApiResponse> GetByDocumentNumberAsync(string documentNumber)
         {
-            try
-            {
-                var submission = await _unitOfWork.FormSubmissionsRepository.GetByDocumentNumberAsync(documentNumber);
-                if (submission == null)
-                    return new ApiResponse(404, "Form submission not found");
+            var submission = await _unitOfWork.FormSubmissionsRepository.GetByDocumentNumberAsync(documentNumber);
+            if (submission == null)
+                return new ApiResponse(404, "Form submission not found");
 
-                var submissionDto = ToDto(submission);
-                return new ApiResponse(200, "Form submission retrieved successfully", submissionDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submission: {ex.Message}");
-            }
+            var submissionDto = _mapper.Map<FormSubmissionDto>(submission);
+            return new ApiResponse(200, "Form submission retrieved successfully", submissionDto);
         }
 
         public async Task<ApiResponse> GetByFormBuilderIdAsync(int formBuilderId)
         {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByFormBuilderIdAsync(formBuilderId);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
-            }
+            var submissions = await _unitOfWork.FormSubmissionsRepository.GetByFormBuilderIdAsync(formBuilderId);
+            var submissionDtos = _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+            return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
         }
 
         public async Task<ApiResponse> GetByDocumentTypeIdAsync(int documentTypeId)
         {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByDocumentTypeIdAsync(documentTypeId);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions: {ex.Message}");
-            }
+            var submissions = await _unitOfWork.FormSubmissionsRepository.GetByDocumentTypeIdAsync(documentTypeId);
+            var submissionDtos = _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+            return new ApiResponse(200, "Form submissions retrieved successfully", submissionDtos);
         }
 
         public async Task<ApiResponse> GetByUserIdAsync(string userId)
         {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByUserIdAsync(userId);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "User form submissions retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving user form submissions: {ex.Message}");
-            }
+            var submissions = await _unitOfWork.FormSubmissionsRepository.GetByUserIdAsync(userId);
+            var submissionDtos = _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+            return new ApiResponse(200, "User form submissions retrieved successfully", submissionDtos);
         }
 
         public async Task<ApiResponse> GetByStatusAsync(string status)
         {
-            try
-            {
-                var submissions = await _unitOfWork.FormSubmissionsRepository.GetByStatusAsync(status);
-                var submissionDtos = submissions.Select(ToDto).ToList();
-                return new ApiResponse(200, "Form submissions by status retrieved successfully", submissionDtos);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error retrieving form submissions by status: {ex.Message}");
-            }
+            var submissions = await _unitOfWork.FormSubmissionsRepository.GetByStatusAsync(status);
+            var submissionDtos = _mapper.Map<IEnumerable<FormSubmissionDto>>(submissions);
+            return new ApiResponse(200, "Form submissions by status retrieved successfully", submissionDtos);
         }
 
         public async Task<ApiResponse> CreateAsync(CreateFormSubmissionDto createDto)
         {
-            try
-            {
-                if (createDto == null)
-                    return new ApiResponse(400, "DTO is required");
+            if (createDto == null)
+                return new ApiResponse(400, "DTO is required");
 
-                // Generate document number
-                var series = await _unitOfWork.DocumentSeriesRepository.GetByIdAsync(createDto.SeriesId);
-                if (series == null)
-                    return new ApiResponse(404, "Document series not found");
+            // Generate document number
+            var series = await _unitOfWork.DocumentSeriesRepository.GetByIdAsync(createDto.SeriesId);
+            if (series == null)
+                return new ApiResponse(404, "Document series not found");
 
-                var nextNumber = await _unitOfWork.DocumentSeriesRepository.GetNextNumberAsync(createDto.SeriesId);
-                var documentNumber = $"{series.SeriesCode}-{nextNumber:D6}";
+            var nextNumber = await _unitOfWork.DocumentSeriesRepository.GetNextNumberAsync(createDto.SeriesId);
+            var documentNumber = $"{series.SeriesCode}-{nextNumber:D6}";
 
-                // Get next version
-                var version = await _unitOfWork.FormSubmissionsRepository.GetNextVersionAsync(createDto.FormBuilderId);
+            // Get next version
+            var version = await _unitOfWork.FormSubmissionsRepository.GetNextVersionAsync(createDto.FormBuilderId);
 
-                var entity = new FORM_SUBMISSIONS
-                {
-                    FormBuilderId = createDto.FormBuilderId,
-                    DocumentTypeId = createDto.DocumentTypeId,
-                    SeriesId = createDto.SeriesId,
-                    DocumentNumber = documentNumber,
-                    SubmittedByUserId = createDto.SubmittedByUserId,
-                    Version = version,
-                    Status = createDto.Status,
-                    // Fixed: remove invalid cast from string to DateTime
-                    // Use current UTC time as initial submitted date (avoids casting and nullability issues)
-                    SubmittedDate = DateTime.UtcNow,
-                    CreatedDate = DateTime.UtcNow,
-                    UpdatedDate = DateTime.UtcNow
-                };
+            var entity = _mapper.Map<FORM_SUBMISSIONS>(createDto);
+            entity.DocumentNumber = documentNumber;
+            entity.Version = version;
+            entity.SubmittedDate = DateTime.UtcNow;
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdatedDate = DateTime.UtcNow;
 
-                _unitOfWork.FormSubmissionsRepository.Add(entity);
-                await _unitOfWork.CompleteAsyn();
+            _unitOfWork.FormSubmissionsRepository.Add(entity);
+            await _unitOfWork.CompleteAsyn();
 
-                return new ApiResponse(200, "Form submission created successfully", ToDto(entity));
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error creating form submission: {ex.Message}");
-            }
+            var createdEntity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(entity.Id);
+            var submissionDto = _mapper.Map<FormSubmissionDto>(createdEntity);
+            return new ApiResponse(200, "Form submission created successfully", submissionDto);
         }
 
         public async Task<ApiResponse> UpdateAsync(int id, UpdateFormSubmissionDto updateDto)
         {
-            try
+            if (updateDto == null)
+                return new ApiResponse(400, "DTO is required");
+
+            var entity = await _unitOfWork.FormSubmissionsRepository.SingleOrDefaultAsync(s => s.Id == id, asNoTracking: false);
+            if (entity == null)
+                return new ApiResponse(404, "Form submission not found");
+
+            // Check document number uniqueness if changed
+            if (!string.IsNullOrEmpty(updateDto.DocumentNumber) && updateDto.DocumentNumber != entity.DocumentNumber)
             {
-                if (updateDto == null)
-                    return new ApiResponse(400, "DTO is required");
-
-                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Form submission not found");
-
-                if (!string.IsNullOrEmpty(updateDto.DocumentNumber) && updateDto.DocumentNumber != entity.DocumentNumber)
-                {
-                    var documentNumberExists = await _unitOfWork.FormSubmissionsRepository.DocumentNumberExistsAsync(updateDto.DocumentNumber);
-                    if (documentNumberExists)
-                        return new ApiResponse(400, "Document number already exists");
-                }
-
-                MapUpdate(updateDto, entity);
-                entity.UpdatedDate = DateTime.UtcNow;
-
-                _unitOfWork.FormSubmissionsRepository.Update(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Form submission updated successfully", ToDto(entity));
+                var documentNumberExists = await _unitOfWork.FormSubmissionsRepository.DocumentNumberExistsAsync(updateDto.DocumentNumber);
+                if (documentNumberExists)
+                    return new ApiResponse(400, "Document number already exists");
             }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error updating form submission: {ex.Message}");
-            }
+
+            _mapper.Map(updateDto, entity);
+            entity.UpdatedDate = DateTime.UtcNow;
+
+            _unitOfWork.FormSubmissionsRepository.Update(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            var updatedEntity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
+            var submissionDto = _mapper.Map<FormSubmissionDto>(updatedEntity);
+            return new ApiResponse(200, "Form submission updated successfully", submissionDto);
         }
 
         public async Task<ApiResponse> DeleteAsync(int id)
         {
-            try
-            {
-                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Form submission not found");
-
-                _unitOfWork.FormSubmissionsRepository.Delete(entity);
-                await _unitOfWork.CompleteAsyn();
-
-                return new ApiResponse(200, "Form submission deleted successfully");
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error deleting form submission: {ex.Message}");
-            }
+            var result = await base.DeleteAsync(id);
+            return ConvertToApiResponse(result);
         }
 
         public async Task<ApiResponse> SubmitAsync(SubmitFormDto submitDto)
         {
-            try
-            {
-                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(submitDto.SubmissionId);
-                if (entity == null)
-                    return new ApiResponse(404, "Form submission not found");
+            var entity = await _unitOfWork.FormSubmissionsRepository.SingleOrDefaultAsync(s => s.Id == submitDto.SubmissionId, asNoTracking: false);
+            if (entity == null)
+                return new ApiResponse(404, "Form submission not found");
 
-                if (entity.Status == "Submitted")
-                    return new ApiResponse(400, "Form submission is already submitted");
+            if (entity.Status == "Submitted")
+                return new ApiResponse(400, "Form submission is already submitted");
 
-                entity.Status = "Submitted";
-                entity.SubmittedDate = DateTime.UtcNow;
-                entity.SubmittedByUserId = submitDto.SubmittedByUserId;
-                entity.UpdatedDate = DateTime.UtcNow;
+            entity.Status = "Submitted";
+            entity.SubmittedDate = DateTime.UtcNow;
+            entity.SubmittedByUserId = submitDto.SubmittedByUserId;
+            entity.UpdatedDate = DateTime.UtcNow;
 
-                _unitOfWork.FormSubmissionsRepository.Update(entity);
-                await _unitOfWork.CompleteAsyn();
+            _unitOfWork.FormSubmissionsRepository.Update(entity);
+            await _unitOfWork.CompleteAsyn();
 
-                return new ApiResponse(200, "Form submission submitted successfully", ToDto(entity));
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error submitting form submission: {ex.Message}");
-            }
+            var submissionDto = _mapper.Map<FormSubmissionDto>(entity);
+            return new ApiResponse(200, "Form submission submitted successfully", submissionDto);
         }
 
         public async Task<ApiResponse> UpdateStatusAsync(int id, string status)
         {
-            try
-            {
-                var entity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
-                if (entity == null)
-                    return new ApiResponse(404, "Form submission not found");
+            var entity = await _unitOfWork.FormSubmissionsRepository.SingleOrDefaultAsync(s => s.Id == id, asNoTracking: false);
+            if (entity == null)
+                return new ApiResponse(404, "Form submission not found");
 
-                entity.Status = status;
-                entity.UpdatedDate = DateTime.UtcNow;
+            entity.Status = status;
+            entity.UpdatedDate = DateTime.UtcNow;
 
-                _unitOfWork.FormSubmissionsRepository.Update(entity);
-                await _unitOfWork.CompleteAsyn();
+            _unitOfWork.FormSubmissionsRepository.Update(entity);
+            await _unitOfWork.CompleteAsyn();
 
-                return new ApiResponse(200, $"Form submission status updated to {status} successfully", ToDto(entity));
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error updating form submission status: {ex.Message}");
-            }
+            var updatedEntity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(id);
+            var submissionDto = _mapper.Map<FormSubmissionDto>(updatedEntity);
+            return new ApiResponse(200, $"Form submission status updated to {status} successfully", submissionDto);
         }
 
         public async Task<ApiResponse> ExistsAsync(int id)
         {
-            try
-            {
-                var exists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == id);
-                return new ApiResponse(200, "Form submission existence checked successfully", exists);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(500, $"Error checking form submission existence: {ex.Message}");
-            }
+            var exists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == id);
+            return new ApiResponse(200, "Form submission existence checked successfully", exists);
         }
 
         // ================================
-        // MAPPING METHODS
+        // HELPER METHODS
         // ================================
-        private FormSubmissionDto ToDto(FORM_SUBMISSIONS entity)
+        private ApiResponse ConvertToApiResponse<T>(ServiceResult<T> result)
         {
-            if (entity == null) return null;
-
-            return new FormSubmissionDto
-            {
-                Id = entity.Id,
-                FormBuilderId = entity.FormBuilderId,
-                FormName = entity.FORM_BUILDER?.FormName,
-                Version = entity.Version,
-                DocumentTypeId = entity.DocumentTypeId,
-                DocumentTypeName = entity.DOCUMENT_TYPES?.Name,
-                SeriesId = entity.SeriesId,
-                SeriesCode = entity.DOCUMENT_SERIES?.SeriesCode,
-                DocumentNumber = entity.DocumentNumber,
-                SubmittedByUserId = entity.SubmittedByUserId,
-                SubmittedDate = entity.SubmittedDate,
-                Status = entity.Status,
-                CreatedDate = entity.CreatedDate,
-            };
+            if (result.Success)
+                return new ApiResponse(result.StatusCode, "Success", result.Data);
+            else
+                return new ApiResponse(result.StatusCode, result.ErrorMessage);
         }
 
-        private FormSubmissionDetailDto ToDetailDto(FORM_SUBMISSIONS entity)
+        private ApiResponse ConvertToApiResponse(ServiceResult<bool> result)
         {
-            if (entity == null) return null;
-
-            var dto = new FormSubmissionDetailDto
-            {
-                Id = entity.Id,
-                FormBuilderId = entity.FormBuilderId,
-                FormName = entity.FORM_BUILDER?.FormName,
-                Version = entity.Version,
-                DocumentTypeId = entity.DocumentTypeId,
-                DocumentTypeName = entity.DOCUMENT_TYPES?.Name,
-                SeriesId = entity.SeriesId,
-                SeriesCode = entity.DOCUMENT_SERIES?.SeriesCode,
-                DocumentNumber = entity.DocumentNumber,
-                SubmittedByUserId = entity.SubmittedByUserId,
-                SubmittedDate = entity.SubmittedDate,
-                Status = entity.Status,
-                CreatedDate = entity.CreatedDate,
-            };
-
-            // Map field values, attachments, and grid data if needed
-            // This would require additional mapping methods
-
-            return dto;
-        }
-
-        private void MapUpdate(UpdateFormSubmissionDto dto, FORM_SUBMISSIONS entity)
-        {
-            if (!string.IsNullOrEmpty(dto.DocumentNumber))
-                entity.DocumentNumber = dto.DocumentNumber;
-
-            if (!string.IsNullOrEmpty(dto.Status))
-                entity.Status = dto.Status;
-
-            if (dto.SubmittedDate.HasValue)
-                entity.SubmittedDate = dto.SubmittedDate.Value;
+            if (result.Success)
+                return new ApiResponse(result.StatusCode, "Success", result.Data);
+            else
+                return new ApiResponse(result.StatusCode, result.ErrorMessage);
         }
     }
 }

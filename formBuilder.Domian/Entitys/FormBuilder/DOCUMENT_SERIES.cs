@@ -1,4 +1,4 @@
-﻿using formBuilder.Domian.Entitys;
+using formBuilder.Domian.Entitys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -27,7 +27,7 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 
         public int NextNumber { get; set; }
         public bool IsDefault { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<FORM_SUBMISSIONS> FORM_SUBMISSIONS { get; set; }
     }

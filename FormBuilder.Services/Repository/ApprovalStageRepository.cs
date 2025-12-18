@@ -1,6 +1,7 @@
 using FormBuilder.Infrastructure.Data;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domain.Interfaces.Repositories;
+using FormBuilder.core;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace FormBuilder.Infrastructure.Repositories
 {
-    public class ApprovalStageRepository : IApprovalStageRepository
+    public class ApprovalStageRepository : BaseRepository<APPROVAL_STAGES>, IApprovalStageRepository
     {
         private readonly FormBuilderDbContext _context;
 
-        public ApprovalStageRepository(FormBuilderDbContext context)
+        public ApprovalStageRepository(FormBuilderDbContext context) : base(context)
         {
             _context = context;
         }
@@ -29,21 +30,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.APPROVAL_STAGES
                 .Include(s => s.APPROVAL_WORKFLOWS)
                 .FirstOrDefaultAsync(s => s.Id == id);
-        }
-
-        public void Add(APPROVAL_STAGES entity)
-        {
-            _context.APPROVAL_STAGES.Add(entity);
-        }
-
-        public void Update(APPROVAL_STAGES entity)
-        {
-            _context.APPROVAL_STAGES.Update(entity);
-        }
-
-        public void Delete(APPROVAL_STAGES entity)
-        {
-            _context.APPROVAL_STAGES.Remove(entity);
         }
 
         public async Task<bool> AnyAsync(int id)

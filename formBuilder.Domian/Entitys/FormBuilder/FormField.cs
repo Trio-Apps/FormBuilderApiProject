@@ -12,21 +12,21 @@ public class FORM_FIELDS :BaseEntity
 
     [ForeignKey("FORM_TABS")]
     public int TabId { get; set; }
-    public virtual FORM_TABS FORM_TABS { get; set; }
+    public virtual FORM_TABS FORM_TABS { get; set; } = null!;
 
     [ForeignKey("FIELD_TYPES")]
     public int FieldTypeId { get; set; }
-    public virtual FIELD_TYPES FIELD_TYPES { get; set; }
+    public virtual FIELD_TYPES FIELD_TYPES { get; set; } = null!;
 
     [Required, StringLength(200)]
-    public string FieldName { get; set; }
+    public string FieldName { get; set; } = string.Empty;
 
     [Required, StringLength(100)]
-    public string FieldCode { get; set; }
+    public string FieldCode { get; set; } = string.Empty;
 
     public int FieldOrder { get; set; }
     public string ?Placeholder { get; set; }
-    public string HintText { get; set; }
+    public string HintText { get; set; } = string.Empty;
     public bool ?IsMandatory { get; set; }
     public bool ?IsEditable { get; set; }
     public bool IsVisible { get; set; }
@@ -37,12 +37,12 @@ public class FORM_FIELDS :BaseEntity
     public string ?ValidationMessage { get; set; }
 
 
-    public bool  IsActive { get; set; }
+    public new bool IsActive { get; set; }
 
-    public virtual ICollection<FIELD_OPTIONS> FIELD_OPTIONS { get; set; }
-    public virtual ICollection<FIELD_DATA_SOURCES> FIELD_DATA_SOURCES { get; set; }
-    public virtual ICollection<FORM_SUBMISSION_VALUES> FORM_SUBMISSION_VALUES { get; set; }
-    public virtual ICollection<FORM_SUBMISSION_ATTACHMENTS> FORM_SUBMISSION_ATTACHMENTS { get; set; }
-    public virtual ICollection<SAP_FIELD_MAPPINGS> SAP_FIELD_MAPPINGS { get; set; }
-    public virtual ICollection<FORMULA_VARIABLES> FORMULA_VARIABLES { get; set; }
+    public virtual ICollection<FIELD_OPTIONS> FIELD_OPTIONS { get; set; } = null!;
+    public virtual ICollection<FIELD_DATA_SOURCES> FIELD_DATA_SOURCES { get; set; } = null!;
+    public virtual ICollection<FORM_SUBMISSION_VALUES> FORM_SUBMISSION_VALUES { get; set; } = null!;
+    public virtual ICollection<FORM_SUBMISSION_ATTACHMENTS> FORM_SUBMISSION_ATTACHMENTS { get; set; } = null!;
+    public virtual ICollection<SAP_FIELD_MAPPINGS> SAP_FIELD_MAPPINGS { get; set; } = null!;
+    public virtual ICollection<FORMULA_VARIABLES> FORMULA_VARIABLES { get; set; } = null!;
 }

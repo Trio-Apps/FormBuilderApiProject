@@ -35,6 +35,6 @@ namespace FormBuilder.Domian.Entitys.FromBuilder
 
         public string ActionConfigJson { get; set; }
         public bool IsVisibleDefault { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         public virtual SMTP_CONFIGS SMTP_CONFIGS { get; set; }
 
         public bool IsDefault { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<ALERT_RULES> ALERT_RULES { get; set; }
     }

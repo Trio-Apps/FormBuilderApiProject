@@ -22,192 +22,126 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<FORM_SUBMISSION_GRID_ROWS?> GetByIdAsync(int id)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .FirstOrDefaultAsync(r => r.Id == id);
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(r => r.Id == id);
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_GRID_ROWS>> GetAllAsync()
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .OrderBy(r => r.SubmissionId)
-                    .ThenBy(r => r.GridId)
-                    .ThenBy(r => r.RowIndex)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .OrderBy(r => r.SubmissionId)
+                .ThenBy(r => r.GridId)
+                .ThenBy(r => r.RowIndex)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_GRID_ROWS>> GetBySubmissionIdAsync(int submissionId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Where(r => r.SubmissionId == submissionId)
-                    .OrderBy(r => r.GridId)
-                    .ThenBy(r => r.RowIndex)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .Where(r => r.SubmissionId == submissionId)
+                .OrderBy(r => r.GridId)
+                .ThenBy(r => r.RowIndex)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_GRID_ROWS>> GetByGridIdAsync(int gridId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Where(r => r.GridId == gridId)
-                    .OrderBy(r => r.SubmissionId)
-                    .ThenBy(r => r.RowIndex)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .Where(r => r.GridId == gridId)
+                .OrderBy(r => r.SubmissionId)
+                .ThenBy(r => r.RowIndex)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_GRID_ROWS>> GetBySubmissionAndGridAsync(int submissionId, int gridId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Where(r => r.SubmissionId == submissionId && r.GridId == gridId)
-                    .OrderBy(r => r.RowIndex)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .Where(r => r.SubmissionId == submissionId && r.GridId == gridId)
+                .OrderBy(r => r.RowIndex)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_GRID_ROWS>> GetActiveRowsAsync(int submissionId, int gridId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Where(r => r.SubmissionId == submissionId &&
-                                r.GridId == gridId &&
-                                r.IsActive)
-                    .OrderBy(r => r.RowIndex)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .Where(r => r.SubmissionId == submissionId &&
+                            r.GridId == gridId &&
+                            r.IsActive)
+                .OrderBy(r => r.RowIndex)
+                .ToListAsync();
         }
 
         public async Task<int> GetNextRowIndexAsync(int submissionId, int gridId)
         {
-            try
-            {
-                var maxIndex = await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Where(r => r.SubmissionId == submissionId && r.GridId == gridId)
-                    .MaxAsync(r => (int?)r.RowIndex) ?? -1;
+            var maxIndex = await _context.FORM_SUBMISSION_GRID_ROWS
+                .AsNoTracking()
+                .Where(r => r.SubmissionId == submissionId && r.GridId == gridId)
+                .MaxAsync(r => (int?)r.RowIndex) ?? -1;
 
-                return maxIndex + 1;
-            }
-            catch
-            {
-                throw;
-            }
+            return maxIndex + 1;
         }
 
         public async Task<bool> RowExistsAsync(int submissionId, int gridId, int rowIndex)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .AnyAsync(r => r.SubmissionId == submissionId &&
-                                   r.GridId == gridId &&
-                                   r.RowIndex == rowIndex);
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .AsNoTracking()
+                .AnyAsync(r => r.SubmissionId == submissionId &&
+                               r.GridId == gridId &&
+                               r.RowIndex == rowIndex);
         }
 
         public async Task<int> GetRowCountBySubmissionAsync(int submissionId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .CountAsync(r => r.SubmissionId == submissionId && r.IsActive);
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .AsNoTracking()
+                .CountAsync(r => r.SubmissionId == submissionId && r.IsActive);
         }
 
         public async Task<int> GetRowCountByGridAsync(int gridId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .CountAsync(r => r.GridId == gridId && r.IsActive);
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .AsNoTracking()
+                .CountAsync(r => r.GridId == gridId && r.IsActive);
         }
 
         public async Task<IEnumerable<FORM_SUBMISSION_GRID_ROWS>> GetByFormBuilderIdAsync(int formBuilderId)
         {
-            try
-            {
-                return await _context.FORM_SUBMISSION_GRID_ROWS
-                    .Include(r => r.FORM_SUBMISSIONS)
-                    .Include(r => r.FORM_GRIDS)
-                        .ThenInclude(g => g.FORM_BUILDER)
-                    .Where(r => r.FORM_GRIDS != null &&
-                                r.FORM_GRIDS.FORM_BUILDER != null &&
-                                r.FORM_GRIDS.FORM_BUILDER.Id == formBuilderId)
-                    .OrderBy(r => r.SubmissionId)
-                    .ThenBy(r => r.GridId)
-                    .ThenBy(r => r.RowIndex)
-                    .ToListAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            return await _context.FORM_SUBMISSION_GRID_ROWS
+                .Include(r => r.FORM_SUBMISSIONS)
+                .Include(r => r.FORM_GRIDS)
+                    .ThenInclude(g => g.FORM_BUILDER)
+                .AsNoTracking()
+                .Where(r => r.FORM_GRIDS != null &&
+                            r.FORM_GRIDS.FORM_BUILDER != null &&
+                            r.FORM_GRIDS.FORM_BUILDER.Id == formBuilderId)
+                .OrderBy(r => r.SubmissionId)
+                .ThenBy(r => r.GridId)
+                .ThenBy(r => r.RowIndex)
+                .ToListAsync();
         }
     }
 }

@@ -34,13 +34,14 @@ namespace FormBuilder.core
         #endregion
 
         #region GetAll Methods
-        public IQueryable<T> GetAll() => _entity;
+        public IQueryable<T> GetAll() => _entity.AsNoTracking();
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes)
         {
             var query = _entity.AsQueryable();
             if (filter != null) query = query.Where(filter);
-            return ApplyIncludes(query, includes);
+            query = ApplyIncludes(query, includes);
+            return query.AsNoTracking();
         }
 
         public virtual async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params Expression<Func<T, object>>[] includes)
@@ -48,6 +49,7 @@ namespace FormBuilder.core
             var query = _entity.AsQueryable();
             if (filter != null) query = query.Where(filter);
             query = ApplyIncludes(query, includes);
+            query = query.AsNoTracking(); // Use AsNoTracking by default for read operations
             return await query.ToListAsync();
         }
         #endregion
@@ -55,15 +57,14 @@ namespace FormBuilder.core
         #region Count Methods
         public async Task<int> CountAsync(Expression<Func<T, bool>>? filter = null)
         {
-            var query = _entity.AsQueryable();
+            var query = _entity.AsNoTracking();
             if (filter != null) query = query.Where(filter);
             return await query.CountAsync();
         }
         #endregion
 
         #region Single or Default
-        // Remove the nullable return type
-        public async Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, bool asNoTracking = false, params Expression<Func<T, object>>[] includes)
+        public async Task<T?> SingleOrDefaultAsync(Expression<Func<T, bool>> filter, bool asNoTracking = false, params Expression<Func<T, object>>[] includes)
         {
             var query = _entity.AsQueryable();
             if (filter != null) query = query.Where(filter);

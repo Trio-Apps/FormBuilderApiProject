@@ -1,4 +1,4 @@
-﻿using FormBuilder.Application.DTOs.Formula;
+using FormBuilder.Application.DTOs.Formula;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -158,5 +158,17 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int FormBuilderId { get; set; }
         public Dictionary<string, object> FieldValues { get; set; } = new Dictionary<string, object>();
         public List<int>? FormulaIds { get; set; }
+    }
+
+    public class CalculateExpressionDto
+    {
+        public string ExpressionText { get; set; } = string.Empty;
+        public Dictionary<string, object> FieldValues { get; set; } = new Dictionary<string, object>();
+    }
+
+    public class CalculateAdvancedDto
+    {
+        public string ExpressionText { get; set; } = string.Empty;
+        public Dictionary<string, object> FieldValues { get; set; } = new Dictionary<string, object>();
     }
 }

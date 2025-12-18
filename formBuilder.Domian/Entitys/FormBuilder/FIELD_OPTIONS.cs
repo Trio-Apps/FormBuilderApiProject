@@ -1,4 +1,4 @@
-﻿using formBuilder.Domian.Entitys;
+using formBuilder.Domian.Entitys;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +26,7 @@ namespace FormBuilder.Domian.Entitys.froms
 
         public int OptionOrder { get; set; }
         public bool IsDefault { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 
 

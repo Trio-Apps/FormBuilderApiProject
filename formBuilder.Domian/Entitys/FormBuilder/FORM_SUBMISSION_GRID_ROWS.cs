@@ -24,7 +24,7 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         public virtual FORM_GRIDS FORM_GRIDS { get; set; }
 
         public int RowIndex { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
 
         public virtual ICollection<FORM_SUBMISSION_GRID_CELLS> FORM_SUBMISSION_GRID_CELLS { get; set; }
     }

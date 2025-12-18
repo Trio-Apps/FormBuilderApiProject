@@ -3866,7 +3866,7 @@
     "net9.0": [
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
-      "FluentValidation >= 11.3.1",
+      "FluentValidation >= 11.4.0",
       "FormBuilder.Core >= 1.0.0",
       "FormBuilder.Domian >= 1.0.0",
       "Microsoft.AspNetCore.Identity >= 2.3.1",
@@ -3941,7 +3941,7 @@
           },
           "FluentValidation": {
             "target": "Package",
-            "version": "[11.3.1, )"
+            "version": "[11.4.0, )"
           },
           "Microsoft.AspNetCore.Identity": {
             "target": "Package",
@@ -3975,17 +3975,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "FormBuilder.Services depends on FluentValidation (>= 11.3.1) but FluentValidation 11.3.1 was not found. FluentValidation 11.4.0 was resolved instead.",
-      "libraryId": "FluentValidation",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  }
 }

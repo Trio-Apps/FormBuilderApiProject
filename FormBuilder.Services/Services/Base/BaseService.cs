@@ -57,7 +57,7 @@ namespace FormBuilder.Services.Services.Base
             return ServiceResult<PagedResult<TDto>>.Ok(paged);
         }
 
-        public virtual async Task<ServiceResult<TDto>> GetByIdAsync(int id, bool asNoTracking = false)
+        public virtual async Task<ServiceResult<TDto>> GetByIdAsync(int id, bool asNoTracking = true)
         {
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking);
             if (entity == null) return ServiceResult<TDto>.NotFound();
@@ -86,7 +86,7 @@ namespace FormBuilder.Services.Services.Base
         {
             if (dto == null) return ServiceResult<TDto>.BadRequest("Payload is required");
 
-            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
             if (entity == null) return ServiceResult<TDto>.NotFound();
 
             var validation = await ValidateUpdateAsync(id, dto, entity);
@@ -103,7 +103,7 @@ namespace FormBuilder.Services.Services.Base
 
         public virtual async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
-            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
             if (entity == null) return ServiceResult<bool>.NotFound();
 
             Repository.Delete(entity);
@@ -116,6 +116,49 @@ namespace FormBuilder.Services.Services.Base
 
         protected virtual Task<ValidationResult> ValidateUpdateAsync(int id, TUpdateDto dto, TEntity entity) =>
             Task.FromResult(ValidationResult.Success());
+
+        // Helper method for code validation (can be overridden in derived classes)
+        protected virtual Task<bool> CodeExistsAsync(string code, int? excludeId = null)
+        {
+            // Default implementation - should be overridden in derived classes if needed
+            return Task.FromResult(false);
+        }
+
+        // Helper method for soft delete
+        public virtual async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
+        {
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
+            if (entity == null) return ServiceResult<bool>.NotFound();
+
+            entity.IsActive = false;
+            entity.UpdatedDate = DateTime.UtcNow;
+            Repository.Update(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            return ServiceResult<bool>.Ok(true);
+        }
+
+        // Helper method for toggle active
+        public virtual async Task<ServiceResult<TDto>> ToggleActiveAsync(int id, bool isActive)
+        {
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
+            if (entity == null) return ServiceResult<TDto>.NotFound();
+
+            entity.IsActive = isActive;
+            entity.UpdatedDate = DateTime.UtcNow;
+            Repository.Update(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            return ServiceResult<TDto>.Ok(_mapper.Map<TDto>(entity));
+        }
+
+        // Helper method for GetActive
+        public virtual async Task<ServiceResult<IEnumerable<TDto>>> GetActiveAsync()
+        {
+            var data = await Repository.GetAllAsync(e => e.IsActive);
+            var mapped = _mapper.Map<IEnumerable<TDto>>(data);
+            return ServiceResult<IEnumerable<TDto>>.Ok(mapped);
+        }
     }
 }
 

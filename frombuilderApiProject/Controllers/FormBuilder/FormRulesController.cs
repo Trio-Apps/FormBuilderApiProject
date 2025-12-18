@@ -1,4 +1,4 @@
-﻿using FormBuilder.Core.DTOS.FormRules;
+using FormBuilder.Core.DTOS.FormRules;
 using FormBuilder.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,15 +29,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllRules()
         {
-            try
-            {
-                var rules = await _formRulesService.GetAllRulesAsync();
-                return Ok(rules);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            var rules = await _formRulesService.GetAllRulesAsync();
+            return Ok(rules);
         }
 
         [HttpGet("{id}")]
@@ -46,29 +39,22 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetRuleById(int id)
         {
-            try
+            var rule = await _formRulesService.GetRuleByIdAsync(id);
+            if (rule == null)
             {
-                var rule = await _formRulesService.GetRuleByIdAsync(id);
-                if (rule == null)
-                {
-                    return NotFound($"Rule with ID {id} not found.");
-                }
-
-                var ruleDto = new FormRuleDto
-                {
-                    Id = rule.Id,
-                    FormBuilderId = rule.FormBuilderId,
-                    RuleName = rule.RuleName,
-                    RuleJson = rule.RuleJson,
-                    IsActive = rule.IsActive
-                };
-
-                return Ok(ruleDto);
+                return NotFound($"Rule with ID {id} not found.");
             }
-            catch (Exception ex)
+
+            var ruleDto = new FormRuleDto
             {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+                Id = rule.Id,
+                FormBuilderId = rule.FormBuilderId,
+                RuleName = rule.RuleName,
+                RuleJson = rule.RuleJson,
+                IsActive = rule.IsActive
+            };
+
+            return Ok(ruleDto);
         }
 
         // ----------------------------------------------------------------------
@@ -84,29 +70,18 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            try
-            {
-                var createdRule = await _formRulesService.CreateRuleAsync(createDto);
+            var createdRule = await _formRulesService.CreateRuleAsync(createDto);
 
-                var createdRuleDto = new FormRuleDto
-                {
-                    Id = createdRule.Id,
-                    FormBuilderId = createdRule.FormBuilderId,
-                    RuleName = createdRule.RuleName,
-                    RuleJson = createdRule.RuleJson,
-                    IsActive = createdRule.IsActive
-                };
+            var createdRuleDto = new FormRuleDto
+            {
+                Id = createdRule.Id,
+                FormBuilderId = createdRule.FormBuilderId,
+                RuleName = createdRule.RuleName,
+                RuleJson = createdRule.RuleJson,
+                IsActive = createdRule.IsActive
+            };
 
-                return CreatedAtAction(nameof(GetRuleById), new { id = createdRuleDto.Id }, createdRuleDto);
-            }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("does not exist") || ex.Message.Contains("already in use") || ex.Message.Contains("not valid"))
-            {
-                return Conflict(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error creating rule: {ex.Message}");
-            }
+            return CreatedAtAction(nameof(GetRuleById), new { id = createdRuleDto.Id }, createdRuleDto);
         }
 
         // ----------------------------------------------------------------------
@@ -125,31 +100,20 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
           
 
-            try
+            var ruleExists = await _formRulesService.RuleExistsAsync(id);
+            if (!ruleExists)
             {
-                var ruleExists = await _formRulesService.RuleExistsAsync(id);
-                if (!ruleExists)
-                {
-                    return NotFound($"Rule with ID {id} not found.");
-                }
-
-                var isUpdated = await _formRulesService.UpdateRuleAsync(updateDto,id);
-
-                if (!isUpdated)
-                {
-                    return BadRequest("Failed to update the rule.");
-                }
-
-                return NoContent();
+                return NotFound($"Rule with ID {id} not found.");
             }
-            catch (InvalidOperationException ex) when (ex.Message.Contains("already in use") || ex.Message.Contains("not valid"))
+
+            var isUpdated = await _formRulesService.UpdateRuleAsync(updateDto, id);
+
+            if (!isUpdated)
             {
-                return Conflict(ex.Message);
+                return BadRequest("Failed to update the rule.");
             }
-            catch (Exception ex)
-            {
-                return BadRequest($"Error updating rule: {ex.Message}");
-            }
+
+            return NoContent();
         }
 
         // ----------------------------------------------------------------------
@@ -161,21 +125,14 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteRule(int id)
         {
-            try
-            {
-                var isDeleted = await _formRulesService.DeleteRuleAsync(id);
+            var isDeleted = await _formRulesService.DeleteRuleAsync(id);
 
-                if (!isDeleted)
-                {
-                    return NotFound($"Rule with ID {id} not found.");
-                }
-
-                return NoContent();
-            }
-            catch (Exception ex)
+            if (!isDeleted)
             {
-                return BadRequest($"Error deleting rule: {ex.Message}");
+                return NotFound($"Rule with ID {id} not found.");
             }
+
+            return NoContent();
         }
 
         // ----------------------------------------------------------------------
@@ -187,21 +144,14 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> CheckRuleNameUnique(int formBuilderId, string ruleName, [FromQuery] int? ignoreId = null)
         {
-            try
+            var isUnique = await _formRulesService.IsRuleNameUniqueAsync(formBuilderId, ruleName, ignoreId);
+            return Ok(new
             {
-                var isUnique = await _formRulesService.IsRuleNameUniqueAsync(formBuilderId, ruleName, ignoreId);
-                return Ok(new
-                {
-                    formBuilderId,
-                    ruleName,
-                    isUnique,
-                    message = isUnique ? "Rule name is available" : "Rule name is already in use"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+                formBuilderId,
+                ruleName,
+                isUnique,
+                message = isUnique ? "Rule name is available" : "Rule name is already in use"
+            });
         }
 
         [HttpGet("{id}/exists")]
@@ -209,20 +159,13 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> RuleExists(int id)
         {
-            try
+            var exists = await _formRulesService.RuleExistsAsync(id);
+            return Ok(new
             {
-                var exists = await _formRulesService.RuleExistsAsync(id);
-                return Ok(new
-                {
-                    id,
-                    exists,
-                    message = exists ? "Rule exists" : "Rule does not exist"
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+                id,
+                exists,
+                message = exists ? "Rule exists" : "Rule does not exist"
+            });
         }
 
         // ----------------------------------------------------------------------
@@ -238,57 +181,50 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            try
+            var results = new List<object>();
+            var createdRules = new List<FormRuleDto>();
+
+            foreach (var createDto in createDtos)
             {
-                var results = new List<object>();
-                var createdRules = new List<FormRuleDto>();
-
-                foreach (var createDto in createDtos)
+                try
                 {
-                    try
+                    var createdRule = await _formRulesService.CreateRuleAsync(createDto);
+                    var ruleDto = new FormRuleDto
                     {
-                        var createdRule = await _formRulesService.CreateRuleAsync(createDto);
-                        var ruleDto = new FormRuleDto
-                        {
-                            Id = createdRule.Id,
-                            FormBuilderId = createdRule.FormBuilderId,
-                            RuleName = createdRule.RuleName,
-                            RuleJson = createdRule.RuleJson,
-                            IsActive = createdRule.IsActive
-                        };
-                        createdRules.Add(ruleDto);
+                        Id = createdRule.Id,
+                        FormBuilderId = createdRule.FormBuilderId,
+                        RuleName = createdRule.RuleName,
+                        RuleJson = createdRule.RuleJson,
+                        IsActive = createdRule.IsActive
+                    };
+                    createdRules.Add(ruleDto);
 
-                        results.Add(new
-                        {
-                            success = true,
-                            ruleName = createDto.RuleName,
-                            message = "Created successfully"
-                        });
-                    }
-                    catch (InvalidOperationException ex)
+                    results.Add(new
                     {
-                        results.Add(new
-                        {
-                            success = false,
-                            ruleName = createDto.RuleName,
-                            message = ex.Message
-                        });
-                    }
+                        success = true,
+                        ruleName = createDto.RuleName,
+                        message = "Created successfully"
+                    });
                 }
-
-                return Ok(new
+                catch (InvalidOperationException ex)
                 {
-                    total = createDtos.Count,
-                    successful = createdRules.Count,
-                    failed = createDtos.Count - createdRules.Count,
-                    results,
-                    createdRules
-                });
+                    results.Add(new
+                    {
+                        success = false,
+                        ruleName = createDto.RuleName,
+                        message = ex.Message
+                    });
+                }
             }
-            catch (Exception ex)
+
+            return Ok(new
             {
-                return StatusCode(500, $"Error in bulk operation: {ex.Message}");
-            }
+                total = createDtos.Count,
+                successful = createdRules.Count,
+                failed = createDtos.Count - createdRules.Count,
+                results,
+                createdRules
+            });
         }
 
         // ----------------------------------------------------------------------
@@ -300,17 +236,10 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetRulesByFormId(int formBuilderId)
         {
-            try
-            {
-                var allRules = await _formRulesService.GetAllRulesAsync();
-                var formRules = allRules.Where(r => r.FormBuilderId == formBuilderId).ToList();
+            var allRules = await _formRulesService.GetAllRulesAsync();
+            var formRules = allRules.Where(r => r.FormBuilderId == formBuilderId).ToList();
 
-                return Ok(formRules);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return Ok(formRules);
         }
 
         [HttpGet("form/{formBuilderId}/active")]
@@ -318,17 +247,10 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetActiveRulesByFormId(int formBuilderId)
         {
-            try
-            {
-                var allRules = await _formRulesService.GetAllRulesAsync();
-                var activeRules = allRules.Where(r => r.FormBuilderId == formBuilderId && r.IsActive).ToList();
+            var allRules = await _formRulesService.GetAllRulesAsync();
+            var activeRules = allRules.Where(r => r.FormBuilderId == formBuilderId && r.IsActive).ToList();
 
-                return Ok(activeRules);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+            return Ok(activeRules);
         }
 
         [HttpGet("stats")]
@@ -336,31 +258,24 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetRulesStats()
         {
-            try
-            {
-                var allRules = await _formRulesService.GetAllRulesAsync();
-                var totalRules = allRules.Count();
-                var activeRules = allRules.Count(r => r.IsActive);
-                var inactiveRules = totalRules - activeRules;
+            var allRules = await _formRulesService.GetAllRulesAsync();
+            var totalRules = allRules.Count();
+            var activeRules = allRules.Count(r => r.IsActive);
+            var inactiveRules = totalRules - activeRules;
 
-                return Ok(new
-                {
-                    totalRules,
-                    activeRules,
-                    inactiveRules,
-                    rulesByForm = allRules.GroupBy(r => r.FormBuilderId)
-                        .Select(g => new
-                        {
-                            formBuilderId = g.Key,
-                            count = g.Count(),
-                            activeCount = g.Count(r => r.IsActive)
-                        })
-                });
-            }
-            catch (Exception ex)
+            return Ok(new
             {
-                return StatusCode(500, $"Error getting rules statistics: {ex.Message}");
-            }
+                totalRules,
+                activeRules,
+                inactiveRules,
+                rulesByForm = allRules.GroupBy(r => r.FormBuilderId)
+                    .Select(g => new
+                    {
+                        formBuilderId = g.Key,
+                        count = g.Count(),
+                        activeCount = g.Count(r => r.IsActive)
+                    })
+            });
         }
     }
 }

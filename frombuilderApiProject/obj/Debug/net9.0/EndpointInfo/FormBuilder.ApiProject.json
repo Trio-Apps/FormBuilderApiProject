@@ -99,6 +99,72 @@
         }
       }
     },
+    "/api/Account/revoke-all-tokens/{userId}": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Account/current-user": {
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Account/change-password": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.ChangePasswordRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.ChangePasswordRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.ChangePasswordRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/ApprovalStage/workflow/{workflowId}": {
       "get": {
         "tags": [
@@ -8565,17 +8631,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BatchUpdateFormulaStatusDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BatchUpdateFormulaStatusDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BatchUpdateFormulaStatusDto"
               }
             }
           }
@@ -8683,17 +8749,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto"
               }
             }
           }
@@ -8714,17 +8780,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateAdvancedDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateAdvancedDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateAdvancedDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateAdvancedDto"
               }
             }
           }
@@ -8745,17 +8811,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/FormBuilder.API.Controllers.CalculateExpressionDto"
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto"
               }
             }
           }
@@ -9269,6 +9335,138 @@
           }
         }
       }
+    },
+    "/api/UserPermission/user/{userId}": {
+      "get": {
+        "tags": [
+          "UserPermission"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserPermission/current-user": {
+      "get": {
+        "tags": [
+          "UserPermission"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserPermission/check": {
+      "post": {
+        "tags": [
+          "UserPermission"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.CheckPermissionRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.CheckPermissionRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.CheckPermissionRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserPermission/check-multiple": {
+      "post": {
+        "tags": [
+          "UserPermission"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.CheckPermissionsRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.CheckPermissionsRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Application.Dtos.Auth.CheckPermissionsRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserPermission/role/{roleId}": {
+      "get": {
+        "tags": [
+          "UserPermission"
+        ],
+        "parameters": [
+          {
+            "name": "roleId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/UserPermission/matrix": {
+      "get": {
+        "tags": [
+          "UserPermission"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -9372,53 +9570,6 @@
           },
           "isActive": {
             "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.API.Controllers.BatchUpdateFormulaStatusDto": {
-        "type": "object",
-        "properties": {
-          "formulaIds": {
-            "type": "array",
-            "items": {
-              "type": "integer",
-              "format": "int32"
-            },
-            "nullable": true
-          },
-          "isActive": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.API.Controllers.CalculateAdvancedDto": {
-        "type": "object",
-        "properties": {
-          "expressionText": {
-            "type": "string",
-            "nullable": true
-          },
-          "fieldValues": {
-            "type": "object",
-            "additionalProperties": { },
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FormBuilder.API.Controllers.CalculateExpressionDto": {
-        "type": "object",
-        "properties": {
-          "expressionText": {
-            "type": "string",
-            "nullable": true
-          },
-          "fieldValues": {
-            "type": "object",
-            "additionalProperties": { },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -10434,6 +10585,52 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Application.Dtos.Auth.ChangePasswordRequestDto": {
+        "required": [
+          "confirmPassword",
+          "currentPassword",
+          "newPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "newPassword": {
+            "minLength": 6,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Application.Dtos.Auth.CheckPermissionRequestDto": {
+        "type": "object",
+        "properties": {
+          "permissionName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Application.Dtos.Auth.CheckPermissionsRequestDto": {
+        "type": "object",
+        "properties": {
+          "permissionNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Application.Dtos.Auth.LoginRequestDto": {
         "required": [
           "password",
@@ -10465,6 +10662,23 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.BatchUpdateFormulaStatusDto": {
+        "type": "object",
+        "properties": {
+          "formulaIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.BulkFormSubmissionValuesDto": {
         "required": [
           "submissionId"
@@ -10480,6 +10694,36 @@
             "items": {
               "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionValueDto"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.CalculateAdvancedDto": {
+        "type": "object",
+        "properties": {
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldValues": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.CalculateExpressionDto": {
+        "type": "object",
+        "properties": {
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldValues": {
+            "type": "object",
+            "additionalProperties": { },
             "nullable": true
           }
         },

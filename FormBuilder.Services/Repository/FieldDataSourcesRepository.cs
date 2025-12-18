@@ -54,7 +54,10 @@ namespace FormBuilder.Infrastructure.Repositories
         }
         public async Task<FIELD_DATA_SOURCES> GetByIdAsync(int id)
         {
-            return await _context.FIELD_DATA_SOURCES.FindAsync(id);
+            return await _context.FIELD_DATA_SOURCES
+                .Include(fds => fds.FORM_FIELDS)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(fds => fds.Id == id);
         }
     }
 }

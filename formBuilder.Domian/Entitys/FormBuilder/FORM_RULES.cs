@@ -23,6 +23,6 @@ namespace FormBuilder.Domian.Entitys.froms
         public string RuleName { get; set; }
 
         public string RuleJson { get; set; }
-        public bool IsActive { get; set; }
+        public new bool IsActive { get; set; }
     }
 }

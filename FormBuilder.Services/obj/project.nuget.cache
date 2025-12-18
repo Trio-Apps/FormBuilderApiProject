@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Tm4BFGD9+M4=",
+  "dgSpecHash": "QBpXW0bsvvg=",
   "success": true,
   "projectFilePath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
   "expectedPackageFiles": [
@@ -92,18 +92,5 @@
     "C:\\Users\\Trio Apps 3\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\Trio Apps 3\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "message": "FormBuilder.Services depends on FluentValidation (>= 11.3.1) but FluentValidation 11.3.1 was not found. FluentValidation 11.4.0 was resolved instead.",
-      "projectPath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
-      "libraryId": "FluentValidation",
-      "targetGraphs": [
-        "net9.0"
-      ]
-    }
-  ]
+  "logs": []
 }

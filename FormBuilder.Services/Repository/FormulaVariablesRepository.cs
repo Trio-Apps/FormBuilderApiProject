@@ -21,7 +21,7 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Override BaseRepository methods to include relationships
-        public new async Task<FORMULA_VARIABLES?> GetByIdAsync(int id)
+        public async Task<FORMULA_VARIABLES?> GetByIdAsync(int id)
         {
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
@@ -30,7 +30,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .FirstOrDefaultAsync(fv => fv.Id == id && fv.IsActive);
         }
 
-        public new async Task<IEnumerable<FORMULA_VARIABLES>> GetAllAsync()
+        public async Task<IEnumerable<FORMULA_VARIABLES>> GetAllAsync()
         {
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
@@ -42,7 +42,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public new async Task<IEnumerable<FORMULA_VARIABLES>> GetAllAsync(
+        public async Task<IEnumerable<FORMULA_VARIABLES>> GetAllAsync(
             Expression<Func<FORMULA_VARIABLES, bool>>? filter = null,
             params Expression<Func<FORMULA_VARIABLES, object>>[] includes)
         {

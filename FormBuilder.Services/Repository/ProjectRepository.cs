@@ -22,18 +22,21 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<PROJECTS> GetByIdAsync(int id)
         {
             return await _context.PROJECTS
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<PROJECTS> GetByCodeAsync(string code)
         {
             return await _context.PROJECTS
+                .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Code == code && p.IsActive);
         }
 
         public async Task<IEnumerable<PROJECTS>> GetActiveAsync()
         {
             return await _context.PROJECTS
+                .AsNoTracking()
                 .Where(p => p.IsActive)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
@@ -41,7 +44,9 @@ namespace FormBuilder.Infrastructure.Repositories
 
         public async Task<bool> CodeExistsAsync(string code, int? excludeId = null)
         {
-            var query = _context.PROJECTS.Where(p => p.Code == code);
+            var query = _context.PROJECTS
+                .AsNoTracking()
+                .Where(p => p.Code == code);
 
             if (excludeId.HasValue)
             {
@@ -54,6 +59,7 @@ namespace FormBuilder.Infrastructure.Repositories
         public async Task<bool> IsActiveAsync(int id)
         {
             return await _context.PROJECTS
+                .AsNoTracking()
                 .AnyAsync(p => p.Id == id && p.IsActive);
         }
     }
