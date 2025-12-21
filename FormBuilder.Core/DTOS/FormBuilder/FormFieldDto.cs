@@ -1,5 +1,6 @@
 using FormBuilder.Core.DTOS.FormFields;
 using FormBuilder.Core.DTOS.FormTabs;
+using FormBuilder.API.DTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -73,6 +74,10 @@ namespace FormBuilder.API.Models
         public FormTabDto? Tab { get; set; }
         public FieldTypeDto? FieldType { get; set; }
         public List<FieldOptionDto> FieldOptions { get; set; } = new List<FieldOptionDto>();
+        
+        // Grid support
+        public int? GridId { get; set; }
+        public FormGridDto? Grid { get; set; }
     }
 
     public class CreateFormFieldDto
@@ -112,6 +117,9 @@ namespace FormBuilder.API.Models
         public string? ForeignValidationMessage { get; set; }
 
         public string? CreatedByUserId { get; set; }
+        
+        // Grid support
+        public int? GridId { get; set; }
     }
 
     public class UpdateFormFieldDto
@@ -150,5 +158,8 @@ namespace FormBuilder.API.Models
         public string? RegexPattern { get; set; }
         public string? ValidationMessage { get; set; }
         public string? ForeignValidationMessage { get; set; }
+        
+        // Grid support
+        public int? GridId { get; set; }
     }
 }

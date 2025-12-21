@@ -43,6 +43,13 @@ namespace FormBuilder.API.Middleware
                 return;
             }
 
+            // تخطي OPTIONS requests (CORS preflight requests)
+            if (context.Request.Method.Equals("OPTIONS", StringComparison.OrdinalIgnoreCase))
+            {
+                await _next(context);
+                return;
+            }
+
             var path = context.Request.Path.Value ?? "";
             var pathLower = path.ToLower();
 

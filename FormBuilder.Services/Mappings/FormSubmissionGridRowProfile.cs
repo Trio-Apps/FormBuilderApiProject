@@ -24,8 +24,8 @@ namespace FormBuilder.Services.Mappings
 
             CreateMap<UpdateFormSubmissionGridRowDto, FORM_SUBMISSION_GRID_ROWS>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.SubmissionId, opt => opt.Ignore())
-                .ForMember(dest => dest.GridId, opt => opt.Ignore())
+                .ForMember(dest => dest.SubmissionId, opt => opt.UseDestinationValue()) // Never update SubmissionId
+                .ForMember(dest => dest.GridId, opt => opt.UseDestinationValue()) // Never update GridId
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())

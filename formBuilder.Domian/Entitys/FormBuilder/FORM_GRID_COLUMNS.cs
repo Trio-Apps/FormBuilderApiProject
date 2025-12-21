@@ -24,17 +24,17 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         public virtual FIELD_TYPES FIELD_TYPES { get; set; }
 
         [Required, StringLength(200)]
-        public string ColumnName { get; set; }
+        public string ColumnName { get; set; } = string.Empty;
 
         [Required, StringLength(100)]
-        public string ColumnCode { get; set; }
+        public string ColumnCode { get; set; } = string.Empty;
 
         public int ColumnOrder { get; set; }
         public bool IsMandatory { get; set; }
-        public string DataType { get; set; }
+        public string DataType { get; set; } = string.Empty;
         public int? MaxLength { get; set; }
-        public string DefaultValueJson { get; set; }
-        public string ValidationRuleJson { get; set; }
+        public string? DefaultValueJson { get; set; }
+        public string? ValidationRuleJson { get; set; }
         public new bool IsActive { get; set; }
 
         public virtual ICollection<FORM_SUBMISSION_GRID_CELLS> FORM_SUBMISSION_GRID_CELLS { get; set; }

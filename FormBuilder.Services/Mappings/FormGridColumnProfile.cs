@@ -19,6 +19,9 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
                 .ForMember(dest => dest.ColumnOrder, opt => opt.MapFrom(src => src.ColumnOrder ?? 0))
+                .ForMember(dest => dest.ColumnName, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.ColumnName) ? string.Empty : src.ColumnName))
+                .ForMember(dest => dest.ColumnCode, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.ColumnCode) ? string.Empty : src.ColumnCode))
+                .ForMember(dest => dest.DataType, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.DataType) ? string.Empty : src.DataType))
                 .ForMember(dest => dest.FORM_GRIDS, opt => opt.Ignore())
                 .ForMember(dest => dest.FIELD_TYPES, opt => opt.Ignore())
                 .ForMember(dest => dest.FORM_SUBMISSION_GRID_CELLS, opt => opt.Ignore());
@@ -28,6 +31,7 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
+                .ForMember(dest => dest.GridId, opt => opt.UseDestinationValue()) // Always use existing GridId value, never update it
                 .ForMember(dest => dest.FORM_GRIDS, opt => opt.Ignore())
                 .ForMember(dest => dest.FIELD_TYPES, opt => opt.Ignore())
                 .ForMember(dest => dest.FORM_SUBMISSION_GRID_CELLS, opt => opt.Ignore())

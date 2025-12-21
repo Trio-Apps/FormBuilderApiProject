@@ -6,21 +6,29 @@ using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Services.Services.Base;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Core.DTOS.Common;
+using FormBuilder.Core.DTOS.FormBuilder;
+using FormBuilder.Core.IServices;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FormSubmissionGridCellDto = FormBuilder.API.DTOs.FormSubmissionGridCellDto;
 
 namespace FormBuilder.Services
 {
     public class FormSubmissionGridRowService : BaseService<FORM_SUBMISSION_GRID_ROWS, FormSubmissionGridRowDto, CreateFormSubmissionGridRowDto, UpdateFormSubmissionGridRowDto>, IFormSubmissionGridRowService
     {
         private readonly IunitOfwork _unitOfWork;
+        private readonly IFormSubmissionGridCellService _formSubmissionGridCellService;
 
-        public FormSubmissionGridRowService(IunitOfwork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public FormSubmissionGridRowService(
+            IunitOfwork unitOfWork, 
+            IMapper mapper,
+            IFormSubmissionGridCellService formSubmissionGridCellService) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _formSubmissionGridCellService = formSubmissionGridCellService ?? throw new ArgumentNullException(nameof(formSubmissionGridCellService));
         }
 
         protected override IBaseRepository<FORM_SUBMISSION_GRID_ROWS> Repository => _unitOfWork.FormSubmissionGridRowRepository;
@@ -135,6 +143,29 @@ namespace FormBuilder.Services
             if (entity == null)
                 return new ApiResponse(404, "Grid row not found");
 
+            // Prevent changing SubmissionId and GridId - remove them from DTO if present
+            if (updateDto.SubmissionId.HasValue)
+            {
+                updateDto.SubmissionId = null; // Prevent SubmissionId changes
+            }
+            if (updateDto.GridId.HasValue)
+            {
+                updateDto.GridId = null; // Prevent GridId changes
+            }
+
+            // Validate that the existing SubmissionId and GridId still exist
+            var submissionExists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == entity.SubmissionId);
+            if (!submissionExists)
+            {
+                return new ApiResponse(400, $"The submission (Id: {entity.SubmissionId}) associated with this row no longer exists.");
+            }
+
+            var gridExists = await _unitOfWork.FormGridRepository.AnyAsync(g => g.Id == entity.GridId);
+            if (!gridExists)
+            {
+                return new ApiResponse(400, $"The grid (Id: {entity.GridId}) associated with this row no longer exists.");
+            }
+
             // Update row index if provided and different
             if (updateDto.RowIndex.HasValue && updateDto.RowIndex.Value != entity.RowIndex)
             {
@@ -245,6 +276,252 @@ namespace FormBuilder.Services
             await _unitOfWork.CompleteAsyn();
 
             return new ApiResponse(200, "Rows reordered successfully");
+        }
+
+        public async Task<ApiResponse> SaveBulkGridDataAsync(BulkSaveGridDataDto bulkDto)
+        {
+            if (bulkDto == null)
+                return new ApiResponse(400, "DTO is required");
+
+            // التحقق من Submission
+            var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(bulkDto.SubmissionId);
+            if (submission == null)
+                return new ApiResponse(404, "Submission not found");
+
+            // التحقق من Grid
+            var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(bulkDto.GridId);
+            if (grid == null)
+                return new ApiResponse(404, "Grid not found");
+
+            // حذف البيانات القديمة
+            await DeleteBySubmissionAndGridAsync(bulkDto.SubmissionId, bulkDto.GridId);
+
+            // حفظ البيانات الجديدة
+            var savedRows = new List<FormSubmissionGridRowDto>();
+
+            foreach (var rowDto in bulkDto.Rows)
+            {
+                // إنشاء Row
+                var createRowDto = new CreateFormSubmissionGridRowDto
+                {
+                    SubmissionId = bulkDto.SubmissionId,
+                    GridId = bulkDto.GridId,
+                    RowIndex = rowDto.RowIndex,
+                    IsActive = true
+                };
+
+                var rowResult = await CreateAsync(createRowDto);
+                if (rowResult.StatusCode != 201 && rowResult.StatusCode != 200)
+                    return rowResult;
+
+                var rowData = rowResult.Data as FormSubmissionGridRowDto;
+                if (rowData == null) continue;
+
+                // حفظ Cells
+                if (rowDto.Cells != null && rowDto.Cells.Any())
+                {
+                    foreach (var cellDto in rowDto.Cells)
+                    {
+                        var createCellDto = new CreateFormSubmissionGridCellDto
+                        {
+                            RowId = rowData.Id,
+                            ColumnId = cellDto.ColumnId,
+                            ValueString = cellDto.ValueString,
+                            ValueNumber = cellDto.ValueNumber,
+                            ValueDate = cellDto.ValueDate,
+                            ValueBool = cellDto.ValueBool,
+                            ValueJson = cellDto.ValueJson
+                        };
+
+                        await _formSubmissionGridCellService.CreateAsync(createCellDto);
+                    }
+                }
+
+                savedRows.Add(rowData);
+            }
+
+            return new ApiResponse(200, "Grid data saved successfully", savedRows);
+        }
+
+        public async Task<ApiResponse> GetCompleteGridDataAsync(int submissionId, int gridId)
+        {
+            var rows = await _unitOfWork.FormSubmissionGridRowRepository
+                .GetBySubmissionAndGridAsync(submissionId, gridId);
+
+            var rowsWithCells = new List<FormSubmissionGridRowWithCellsDto>();
+
+            foreach (var row in rows.Where(r => r.IsActive))
+            {
+                var rowDto = _mapper.Map<FormSubmissionGridRowDto>(row);
+                var cells = await _unitOfWork.FormSubmissionGridCellRepository.GetByRowIdAsync(row.Id);
+                var cellDtos = _mapper.Map<List<FormSubmissionGridCellDto>>(cells);
+
+                rowsWithCells.Add(new FormSubmissionGridRowWithCellsDto
+                {
+                    Id = rowDto.Id,
+                    SubmissionId = rowDto.SubmissionId,
+                    GridId = rowDto.GridId,
+                    RowIndex = rowDto.RowIndex,
+                    IsActive = rowDto.IsActive,
+                    CreatedDate = rowDto.CreatedDate,
+                    UpdatedDate = rowDto.UpdatedDate,
+                    SubmissionNumber = rowDto.SubmissionNumber,
+                    GridName = rowDto.GridName,
+                    Cells = cellDtos
+                });
+            }
+
+            return new ApiResponse(200, "Complete grid data retrieved successfully", rowsWithCells);
+        }
+
+        public async Task<ApiResponse> ValidateGridDataAsync(BulkSaveGridDataDto bulkDto)
+        {
+            if (bulkDto == null)
+                return new ApiResponse(400, "DTO is required");
+
+            var errors = new List<GridValidationErrorDto>();
+            var warnings = new List<GridValidationWarningDto>();
+
+            // التحقق من Grid
+            var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(bulkDto.GridId);
+            if (grid == null)
+            {
+                errors.Add(new GridValidationErrorDto
+                {
+                    Field = "GridId",
+                    Message = "Grid not found"
+                });
+                return new ApiResponse(400, "Validation failed", new GridValidationResultDto
+                {
+                    IsValid = false,
+                    Errors = errors,
+                    Warnings = warnings
+                });
+            }
+
+            // جلب Columns
+            var columns = await _unitOfWork.FormGridColumnRepository.GetByGridIdAsync(bulkDto.GridId);
+            var requiredColumns = columns.Where(c => c.IsMandatory && c.IsActive).ToList();
+
+            // التحقق من كل Row
+            for (int rowIndex = 0; rowIndex < bulkDto.Rows.Count; rowIndex++)
+            {
+                var row = bulkDto.Rows[rowIndex];
+
+                // التحقق من Required Columns
+                foreach (var column in requiredColumns)
+                {
+                    var cell = row.Cells?.FirstOrDefault(c => c.ColumnId == column.Id);
+                    if (cell == null || IsCellEmpty(cell, column))
+                    {
+                        errors.Add(new GridValidationErrorDto
+                        {
+                            Field = column.ColumnName,
+                            Message = $"{column.ColumnName} is required",
+                            RowIndex = rowIndex,
+                            ColumnId = column.Id
+                        });
+                    }
+                }
+
+                // التحقق من نوع البيانات
+                if (row.Cells != null)
+                {
+                    foreach (var cell in row.Cells)
+                    {
+                        var column = columns.FirstOrDefault(c => c.Id == cell.ColumnId);
+                        if (column != null)
+                        {
+                            var validationResult = ValidateCellValue(cell, column);
+                            if (!validationResult.IsValid)
+                            {
+                                errors.AddRange(validationResult.Errors.Select(e => new GridValidationErrorDto
+                                {
+                                    Field = column.ColumnName,
+                                    Message = e,
+                                    RowIndex = rowIndex,
+                                    ColumnId = column.Id
+                                }));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return new ApiResponse(200, "Validation completed", new GridValidationResultDto
+            {
+                IsValid = errors.Count == 0,
+                Errors = errors,
+                Warnings = warnings
+            });
+        }
+
+        private bool IsCellEmpty(SaveFormSubmissionGridCellDto cell, FORM_GRID_COLUMNS column)
+        {
+            if (column.FieldTypeId == null) return true;
+
+            var fieldType = column.FIELD_TYPES;
+            if (fieldType == null) return true;
+
+            var dataType = fieldType.TypeName?.ToLower() ?? column.DataType?.ToLower() ?? "";
+
+            // التحقق حسب نوع البيانات
+            if (dataType.Contains("string") || dataType.Contains("text"))
+                return string.IsNullOrWhiteSpace(cell.ValueString);
+
+            if (dataType.Contains("number") || dataType.Contains("decimal") || dataType.Contains("int"))
+                return !cell.ValueNumber.HasValue;
+
+            if (dataType.Contains("date") || dataType.Contains("datetime"))
+                return !cell.ValueDate.HasValue;
+
+            if (dataType.Contains("boolean") || dataType.Contains("bool"))
+                return !cell.ValueBool.HasValue;
+
+            return true;
+        }
+
+        private (bool IsValid, List<string> Errors) ValidateCellValue(SaveFormSubmissionGridCellDto cell, FORM_GRID_COLUMNS column)
+        {
+            var errors = new List<string>();
+            var fieldType = column.FIELD_TYPES;
+            if (fieldType == null) return (true, errors);
+
+            var dataType = fieldType.TypeName?.ToLower() ?? column.DataType?.ToLower() ?? "";
+
+            // التحقق من نوع البيانات
+            if (dataType.Contains("number") || dataType.Contains("decimal") || dataType.Contains("int"))
+            {
+                if (!cell.ValueNumber.HasValue && !string.IsNullOrWhiteSpace(cell.ValueString))
+                {
+                    if (!decimal.TryParse(cell.ValueString, out _))
+                    {
+                        errors.Add("Value must be a valid number");
+                    }
+                }
+            }
+            else if (dataType.Contains("date") || dataType.Contains("datetime"))
+            {
+                if (!cell.ValueDate.HasValue && !string.IsNullOrWhiteSpace(cell.ValueString))
+                {
+                    if (!DateTime.TryParse(cell.ValueString, out _))
+                    {
+                        errors.Add("Value must be a valid date");
+                    }
+                }
+            }
+            else if (dataType.Contains("boolean") || dataType.Contains("bool"))
+            {
+                if (!cell.ValueBool.HasValue && !string.IsNullOrWhiteSpace(cell.ValueString))
+                {
+                    if (!bool.TryParse(cell.ValueString, out _))
+                    {
+                        errors.Add("Value must be a valid boolean");
+                    }
+                }
+            }
+
+            return (errors.Count == 0, errors);
         }
 
         // ================================

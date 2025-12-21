@@ -127,5 +127,18 @@ namespace FormBuilder.API.Controllers
             var result = await _formSubmissionsService.ExistsAsync(id);
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost("save-data")]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> SaveFormSubmissionData([FromBody] SaveFormSubmissionDataDto saveDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            var result = await _formSubmissionsService.SaveFormSubmissionDataAsync(saveDto);
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

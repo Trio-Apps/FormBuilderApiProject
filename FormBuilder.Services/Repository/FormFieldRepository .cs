@@ -99,6 +99,18 @@ namespace FormBuilder.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<FORM_FIELDS>> GetFieldsByGridIdAsync(int gridId)
+        {
+            return await _context.FORM_FIELDS
+                .Include(f => f.FORM_TABS)
+                .Include(f => f.FIELD_TYPES)
+                .Include(f => f.Grid)
+                .Include(f => f.FIELD_OPTIONS)
+                .Where(f => f.GridId == gridId && f.IsActive)
+                .OrderBy(f => f.FieldOrder)
+                .ToListAsync();
+        }
+
         // Get by ID with included entities
         public async Task<FORM_FIELDS?> GetByIdAsync(int id, params Expression<Func<FIELD_TYPES, object>>[] includes)
         {

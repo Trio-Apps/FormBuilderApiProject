@@ -2,6 +2,7 @@ using FormBuilder.API.DTOs;
 using FormBuilder.API.Models;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
+using FormBuilder.Core.DTOS.FormBuilder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -151,6 +152,60 @@ namespace FormBuilder.API.Controllers
         public async Task<ActionResult<ApiResponse>> ReorderRows(int submissionId, int gridId)
         {
             var result = await _formSubmissionGridRowService.ReorderRowsAsync(submissionId, gridId);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost("submission/{submissionId}/grid/{gridId}/bulk")]
+        [ProducesResponseType(typeof(ApiResponse<List<FormSubmissionGridRowDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> SaveBulkGridData(
+            int submissionId, 
+            int gridId, 
+            [FromBody] List<SaveFormSubmissionGridDto> rows)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            var bulkDto = new BulkSaveGridDataDto
+            {
+                SubmissionId = submissionId,
+                GridId = gridId,
+                Rows = rows
+            };
+            
+            var result = await _formSubmissionGridRowService.SaveBulkGridDataAsync(bulkDto);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("submission/{submissionId}/grid/{gridId}/complete")]
+        [ProducesResponseType(typeof(ApiResponse<List<FormSubmissionGridRowWithCellsDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetCompleteGridData(int submissionId, int gridId)
+        {
+            var result = await _formSubmissionGridRowService.GetCompleteGridDataAsync(submissionId, gridId);
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost("submission/{submissionId}/grid/{gridId}/validate")]
+        [ProducesResponseType(typeof(ApiResponse<GridValidationResultDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> ValidateGridData(
+            int submissionId, 
+            int gridId, 
+            [FromBody] List<SaveFormSubmissionGridDto> rows)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            var bulkDto = new BulkSaveGridDataDto
+            {
+                SubmissionId = submissionId,
+                GridId = gridId,
+                Rows = rows
+            };
+            
+            var result = await _formSubmissionGridRowService.ValidateGridDataAsync(bulkDto);
             return StatusCode(result.StatusCode, result);
         }
     }

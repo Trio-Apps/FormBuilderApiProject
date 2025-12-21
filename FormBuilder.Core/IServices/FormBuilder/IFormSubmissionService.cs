@@ -21,5 +21,6 @@ namespace FormBuilder.Domain.Interfaces.Services
         Task<ApiResponse> SubmitAsync(SubmitFormDto submitDto);
         Task<ApiResponse> UpdateStatusAsync(int id, string status);
         Task<ApiResponse> ExistsAsync(int id);
+        Task<ApiResponse> SaveFormSubmissionDataAsync(SaveFormSubmissionDataDto saveDto);
     }
 }

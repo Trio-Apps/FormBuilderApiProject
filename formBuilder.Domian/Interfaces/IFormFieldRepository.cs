@@ -15,6 +15,7 @@ namespace FormBuilder.Domain.Interfaces
         Task<IEnumerable<FORM_FIELDS>> GetFieldsByFormIdAsync(int formBuilderId);
         Task<IEnumerable<FORM_FIELDS>> GetMandatoryFieldsAsync(int tabId);
         Task<IEnumerable<FORM_FIELDS>> GetVisibleFieldsAsync(int tabId);
+        Task<IEnumerable<FORM_FIELDS>> GetFieldsByGridIdAsync(int gridId);
         Task<FORM_FIELDS?> GetByIdAsync(int id, params System.Linq.Expressions.Expression<System.Func<FIELD_TYPES, object>>[] includes);
         // Note: Base GetByIdAsync and ExistsAsync are inherited from IBaseRepository<FORM_FIELDS>
 

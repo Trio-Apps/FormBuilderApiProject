@@ -102,10 +102,38 @@ public static class DataSeeder
                     HasOptions = false,
                     AllowMultiple = false,
                     IsActive = true
+                },
+                new FIELD_TYPES
+                {
+                    TypeName = "File",
+                    ForeignTypeName = "ملف",
+                    DataType = "file",
+                    MaxLength = null,
+                    HasOptions = false,
+                    AllowMultiple = true,
+                    IsActive = true
                 }
             };
 
             await context.FIELD_TYPES.AddRangeAsync(fieldTypes);
+            await context.SaveChangesAsync();
+        }
+
+        // Ensure "File" type exists (in case it was added after initial seeding)
+        if (!await context.FIELD_TYPES.AnyAsync(ft => ft.TypeName == "File"))
+        {
+            var fileType = new FIELD_TYPES
+            {
+                TypeName = "File",
+                ForeignTypeName = "ملف",
+                DataType = "file",
+                MaxLength = null,
+                HasOptions = false,
+                AllowMultiple = true,
+                IsActive = true
+            };
+
+            await context.FIELD_TYPES.AddAsync(fileType);
             await context.SaveChangesAsync();
         }
 

@@ -73,6 +73,9 @@ namespace FormBuilder.Core.DTOS.FormFields
 
         // خيارات الحقل (لـ Dropdown, Radio, Checkbox)
         public List<FieldOptionDto> FieldOptions { get; set; } = new List<FieldOptionDto>();
+
+        // Grid support (for Grid field type)
+        public int? GridId { get; set; }
     }
 
     public class FieldOptionDto

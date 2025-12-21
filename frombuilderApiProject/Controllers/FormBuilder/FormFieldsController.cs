@@ -82,6 +82,16 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         }
 
         // ================================
+        // GET FORM FIELDS BY GRID ID
+        // ================================
+        [HttpGet("grid/{gridId}")]
+        public async Task<IActionResult> GetFormFieldsByGridId(int gridId)
+        {
+            var result = await _formFieldService.GetFieldsByGridIdAsync(gridId);
+            return result.ToActionResult();
+        }
+
+        // ================================
         // GET MANDATORY FIELDS BY TAB ID
         // ================================
         [HttpGet("tab/{tabId}/mandatory")]

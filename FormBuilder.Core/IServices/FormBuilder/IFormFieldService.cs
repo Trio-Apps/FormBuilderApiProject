@@ -1,13 +1,15 @@
-using FormBuilder.Application.DTOS;
-using FormBuilder.API.Models;
+using FormBuilder.Core.DTOS;
+using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Core.DTOS.FormFields;
 using FormBuilder.Domian.Entitys.FormBuilder;
+using FormBuilder.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
 using UpdateFormFieldDto = FormBuilder.API.Models.UpdateFormFieldDto;
+using FormBuilder.Application.DTOS;
 
 namespace FormBuilder.Core.IServices.FormBuilder
 {
@@ -28,6 +30,7 @@ namespace FormBuilder.Core.IServices.FormBuilder
         Task<ServiceResult<IEnumerable<FormFieldDto>>> GetVisibleFieldsAsync(int tabId);
         Task<ServiceResult<FormFieldDto>> GetByFieldCodeAsync(string fieldCode);
         Task<ServiceResult<IEnumerable<FormFieldDto>>> GetEditableFieldsAsync(int tabId);
+        Task<ServiceResult<IEnumerable<FormFieldDto>>> GetFieldsByGridIdAsync(int gridId);
         Task<ServiceResult<bool>> SoftDeleteAsync(int id);
 
         // Validation

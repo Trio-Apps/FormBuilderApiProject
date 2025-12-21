@@ -1,6 +1,6 @@
 using FormBuilder.API.Models;
-using FormBuilder.API.Models;
 using FormBuilder.API.DTOs;
+using FormBuilder.Core.DTOS.FormBuilder;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,5 +28,8 @@ namespace FormBuilder.Domain.Interfaces.Services
         Task<ApiResponse> GetRowCountByGridAsync(int gridId);
         Task<ApiResponse> GetByFormBuilderIdAsync(int formBuilderId);
         Task<ApiResponse> ReorderRowsAsync(int submissionId, int gridId);
+        Task<ApiResponse> SaveBulkGridDataAsync(BulkSaveGridDataDto bulkDto);
+        Task<ApiResponse> GetCompleteGridDataAsync(int submissionId, int gridId);
+        Task<ApiResponse> ValidateGridDataAsync(BulkSaveGridDataDto bulkDto);
     }
 }

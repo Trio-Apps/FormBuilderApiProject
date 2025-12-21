@@ -208,6 +208,9 @@ namespace FormBuilder.Core.Migrations
                     b.Property<string>("ForeignValidationMessage")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("GridId")
+                        .HasColumnType("int");
+
                     b.Property<string>("HintText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -250,6 +253,8 @@ namespace FormBuilder.Core.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("FieldTypeId");
+
+                    b.HasIndex("GridId");
 
                     b.HasIndex("TabId");
 
@@ -716,7 +721,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DefaultValueJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FieldTypeId")
@@ -738,7 +742,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ValidationRuleJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1917,6 +1920,10 @@ namespace FormBuilder.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FORM_GRIDS", "Grid")
+                        .WithMany()
+                        .HasForeignKey("GridId");
+
                     b.HasOne("FormBuilder.Domian.Entitys.FormBuilder.FORM_TABS", "FORM_TABS")
                         .WithMany("FORM_FIELDS")
                         .HasForeignKey("TabId")
@@ -1926,6 +1933,8 @@ namespace FormBuilder.Core.Migrations
                     b.Navigation("FIELD_TYPES");
 
                     b.Navigation("FORM_TABS");
+
+                    b.Navigation("Grid");
                 });
 
             modelBuilder.Entity("FORM_GRIDS", b =>

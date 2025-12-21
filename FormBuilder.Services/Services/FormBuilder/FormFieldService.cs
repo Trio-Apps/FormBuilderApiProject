@@ -95,6 +95,13 @@ namespace FormBuilder.Services.Services
             return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
         }
 
+        public async Task<ServiceResult<IEnumerable<FormFieldDto>>> GetFieldsByGridIdAsync(int gridId)
+        {
+            var entities = await _unitOfWork.FormFieldRepository.GetFieldsByGridIdAsync(gridId);
+            var dtos = _mapper.Map<IEnumerable<FormFieldDto>>(entities);
+            return ServiceResult<IEnumerable<FormFieldDto>>.Ok(dtos);
+        }
+
         public async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
         {
             var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
@@ -231,6 +238,34 @@ namespace FormBuilder.Services.Services
                 return ValidationResult.Failure(message);
             }
 
+            // Validate GridId if provided (for Grid field type)
+            if (dto.GridId.HasValue)
+            {
+                var fieldType = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
+                if (fieldType?.TypeName?.ToLower() == "grid")
+                {
+                    // التحقق من وجود Grid
+                    var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(dto.GridId.Value);
+                    if (grid == null)
+                    {
+                        var message = _localizer?["FormField_GridNotFound"] ?? "Grid not found";
+                        return ValidationResult.Failure(message);
+                    }
+                    
+                    // التحقق من أن Grid ينتمي لنفس Tab
+                    if (grid.TabId.HasValue && grid.TabId != dto.TabId)
+                    {
+                        var message = _localizer?["FormField_GridNotInTab"] ?? "Grid does not belong to this tab";
+                        return ValidationResult.Failure(message);
+                    }
+                }
+                else
+                {
+                    var message = _localizer?["FormField_GridIdNotAllowed"] ?? "GridId can only be set for Grid field type";
+                    return ValidationResult.Failure(message);
+                }
+            }
+
             // FieldOptions are optional - no validation needed
             // If provided, they will be created after the field is created
 
@@ -251,6 +286,34 @@ namespace FormBuilder.Services.Services
             {
                 var message = _localizer?["FormField_FieldNameExists", dto.FieldName] ?? $"Field name '{dto.FieldName}' already exists in this tab";
                 return ValidationResult.Failure(message);
+            }
+
+            // Validate GridId if provided (for Grid field type)
+            if (dto.GridId.HasValue)
+            {
+                var fieldType = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
+                if (fieldType?.TypeName?.ToLower() == "grid")
+                {
+                    // التحقق من وجود Grid
+                    var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(dto.GridId.Value);
+                    if (grid == null)
+                    {
+                        var message = _localizer?["FormField_GridNotFound"] ?? "Grid not found";
+                        return ValidationResult.Failure(message);
+                    }
+                    
+                    // التحقق من أن Grid ينتمي لنفس Tab
+                    if (grid.TabId.HasValue && grid.TabId != dto.TabId)
+                    {
+                        var message = _localizer?["FormField_GridNotInTab"] ?? "Grid does not belong to this tab";
+                        return ValidationResult.Failure(message);
+                    }
+                }
+                else
+                {
+                    var message = _localizer?["FormField_GridIdNotAllowed"] ?? "GridId can only be set for Grid field type";
+                    return ValidationResult.Failure(message);
+                }
             }
 
             return ValidationResult.Success();

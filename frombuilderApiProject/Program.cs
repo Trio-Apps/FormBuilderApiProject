@@ -8,10 +8,12 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using FormBuilder.API.Middleware;
@@ -53,7 +55,33 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     // Use fully qualified type names for schema IDs to avoid conflicts
-    c.CustomSchemaIds(type => type.FullName);
+    c.CustomSchemaIds(type => 
+    {
+        if (type == null) return null;
+        
+        // Handle generic types
+        if (type.IsGenericType)
+        {
+            var genericTypeName = type.GetGenericTypeDefinition().Name;
+            var genericArgs = string.Join("_", type.GetGenericArguments().Select(t => t.Name));
+            return $"{genericTypeName}_{genericArgs}";
+        }
+        
+        var name = type.FullName ?? type.Name;
+        return name?.Replace("+", ".");
+    });
+
+    // Ignore IActionResult and File results for Swagger schema generation
+    c.MapType<IActionResult>(() => new OpenApiSchema { Type = "object" });
+    c.MapType<FileResult>(() => new OpenApiSchema { Type = "string", Format = "binary" });
+    c.MapType<FileStreamResult>(() => new OpenApiSchema { Type = "string", Format = "binary" });
+    
+    // Ignore obsolete items to avoid schema generation issues
+    c.IgnoreObsoleteActions();
+    c.IgnoreObsoleteProperties();
+    
+    // Suppress schema generation errors
+    c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
     // Add JWT Authentication to Swagger
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

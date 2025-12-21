@@ -90,6 +90,20 @@ namespace FormBuilder.Services
 
         protected override async Task<ValidationResult> ValidateCreateAsync(CreateFormGridColumnDto dto)
         {
+            // Validate FieldTypeId exists
+            if (dto.FieldTypeId <= 0)
+                return ValidationResult.Failure("FieldTypeId must be greater than 0");
+
+            var fieldTypeExists = await _unitOfWork.FieldTypesRepository.AnyAsync(ft => ft.Id == dto.FieldTypeId && ft.IsActive);
+            if (!fieldTypeExists)
+                return ValidationResult.Failure("FieldTypeId does not exist or is not active");
+
+            // Validate GridId exists
+            var gridExists = await _unitOfWork.FormGridRepository.AnyAsync(g => g.Id == dto.GridId && g.IsActive);
+            if (!gridExists)
+                return ValidationResult.Failure("GridId does not exist or is not active");
+
+            // Validate column code uniqueness
             var codeExists = await _unitOfWork.FormGridColumnRepository.ColumnCodeExistsAsync(dto.ColumnCode, dto.GridId);
             if (codeExists)
                 return ValidationResult.Failure("Grid column code already exists for this grid");
@@ -99,12 +113,43 @@ namespace FormBuilder.Services
 
         public async Task<ApiResponse> UpdateAsync(int id, UpdateFormGridColumnDto updateDto)
         {
+            // Ensure GridId is not changed - remove it from DTO if present
+            if (updateDto != null && updateDto.GridId.HasValue)
+            {
+                updateDto.GridId = null; // Prevent GridId changes
+            }
+
             var result = await base.UpdateAsync(id, updateDto);
             return ConvertToApiResponse(result);
         }
 
         protected override async Task<ValidationResult> ValidateUpdateAsync(int id, UpdateFormGridColumnDto dto, FORM_GRID_COLUMNS entity)
         {
+            // Prevent changing GridId - it's a fundamental relationship
+            // GridId changes are not allowed as it would break data integrity
+            if (dto.GridId.HasValue && dto.GridId.Value != entity.GridId)
+            {
+                return ValidationResult.Failure("GridId cannot be changed. Grid columns are permanently associated with their grid.");
+            }
+
+            // Validate that the existing GridId still exists (in case grid was deleted)
+            var gridExists = await _unitOfWork.FormGridRepository.AnyAsync(g => g.Id == entity.GridId);
+            if (!gridExists)
+            {
+                return ValidationResult.Failure($"The grid (Id: {entity.GridId}) associated with this column no longer exists. Please contact support.");
+            }
+
+            // Validate FieldTypeId if provided
+            if (dto.FieldTypeId.HasValue)
+            {
+                if (dto.FieldTypeId.Value <= 0)
+                    return ValidationResult.Failure("FieldTypeId must be greater than 0");
+
+                var fieldTypeExists = await _unitOfWork.FieldTypesRepository.AnyAsync(ft => ft.Id == dto.FieldTypeId.Value && ft.IsActive);
+                if (!fieldTypeExists)
+                    return ValidationResult.Failure("FieldTypeId does not exist or is not active");
+            }
+
             // Check if column code already exists (excluding current record)
             if (!string.IsNullOrEmpty(dto.ColumnCode) && dto.ColumnCode != entity.ColumnCode)
             {

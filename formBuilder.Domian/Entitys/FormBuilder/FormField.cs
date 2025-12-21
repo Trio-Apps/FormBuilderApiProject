@@ -18,6 +18,10 @@ public class FORM_FIELDS :BaseEntity
     public int FieldTypeId { get; set; }
     public virtual FIELD_TYPES FIELD_TYPES { get; set; } = null!;
 
+    [ForeignKey("FORM_GRIDS")]
+    public int? GridId { get; set; }
+    public virtual FORM_GRIDS? Grid { get; set; }
+
     [Required, StringLength(200)]
     public string FieldName { get; set; } = string.Empty;
 

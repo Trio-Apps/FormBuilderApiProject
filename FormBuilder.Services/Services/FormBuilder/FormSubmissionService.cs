@@ -6,6 +6,7 @@ using FormBuilder.Services.Services.Base;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Core.DTOS.Common;
 using FormBuilder.API.Models;
+using FormBuilder.API.DTOs;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,18 @@ namespace FormBuilder.Services
     public class FormSubmissionsService : BaseService<FORM_SUBMISSIONS, FormSubmissionDto, CreateFormSubmissionDto, UpdateFormSubmissionDto>, IFormSubmissionsService
     {
         private readonly IunitOfwork _unitOfWork;
+        private readonly IFormSubmissionGridRowService _formSubmissionGridRowService;
+        private readonly IFormSubmissionValuesService _formSubmissionValuesService;
 
-        public FormSubmissionsService(IunitOfwork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
+        public FormSubmissionsService(
+            IunitOfwork unitOfWork, 
+            IMapper mapper,
+            IFormSubmissionGridRowService formSubmissionGridRowService,
+            IFormSubmissionValuesService formSubmissionValuesService) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _formSubmissionGridRowService = formSubmissionGridRowService ?? throw new ArgumentNullException(nameof(formSubmissionGridRowService));
+            _formSubmissionValuesService = formSubmissionValuesService ?? throw new ArgumentNullException(nameof(formSubmissionValuesService));
         }
 
         protected override IBaseRepository<FORM_SUBMISSIONS> Repository => _unitOfWork.FormSubmissionsRepository;
@@ -72,8 +81,20 @@ namespace FormBuilder.Services
                         GridCode = row.FORM_GRIDS?.GridCode ?? string.Empty,
                         RowIndex = row.RowIndex,
                         Cells = row.FORM_SUBMISSION_GRID_CELLS != null
-                            ? _mapper.Map<List<FormSubmissionGridCellDto>>(row.FORM_SUBMISSION_GRID_CELLS)
-                            : new List<FormSubmissionGridCellDto>()
+                            ? row.FORM_SUBMISSION_GRID_CELLS.Select(c => new FormBuilder.Core.DTOS.FormBuilder.FormSubmissionGridCellDto
+                            {
+                                Id = c.Id,
+                                RowId = c.RowId,
+                                ColumnId = c.ColumnId,
+                                ColumnCode = c.FORM_GRID_COLUMNS?.ColumnCode ?? string.Empty,
+                                ColumnName = c.FORM_GRID_COLUMNS?.ColumnName ?? string.Empty,
+                                ValueString = c.ValueString,
+                                ValueNumber = c.ValueNumber,
+                                ValueDate = c.ValueDate,
+                                ValueBool = c.ValueBool,
+                                ValueJson = c.ValueJson
+                            }).ToList()
+                            : new List<FormBuilder.Core.DTOS.FormBuilder.FormSubmissionGridCellDto>()
                     }).ToList();
             }
 
@@ -225,6 +246,84 @@ namespace FormBuilder.Services
         {
             var exists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == id);
             return new ApiResponse(200, "Form submission existence checked successfully", exists);
+        }
+
+        public async Task<ApiResponse> SaveFormSubmissionDataAsync(SaveFormSubmissionDataDto saveDto)
+        {
+            if (saveDto == null)
+                return new ApiResponse(400, "DTO is required");
+
+            // التحقق من Submission
+            var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(saveDto.SubmissionId);
+            if (submission == null)
+                return new ApiResponse(404, "Submission not found");
+
+            // حفظ Field Values
+            if (saveDto.FieldValues != null && saveDto.FieldValues.Any())
+            {
+                // Convert BulkSaveFieldValuesDto to BulkFormSubmissionValuesDto
+                var bulkFieldValuesDto = new BulkFormSubmissionValuesDto
+                {
+                    SubmissionId = saveDto.SubmissionId,
+                    Values = saveDto.FieldValues.Select(fv => new CreateFormSubmissionValueDto
+                    {
+                        SubmissionId = saveDto.SubmissionId,
+                        FieldId = fv.FieldId,
+                        FieldCode = fv.FieldCode ?? "",
+                        ValueString = fv.ValueString,
+                        ValueNumber = fv.ValueNumber,
+                        ValueDate = fv.ValueDate,
+                        ValueBool = fv.ValueBool,
+                        ValueJson = fv.ValueJson
+                    }).ToList()
+                };
+                var result = await _formSubmissionValuesService.CreateBulkAsync(bulkFieldValuesDto);
+                if (result.StatusCode != 200)
+                    return result;
+            }
+
+            // حفظ Attachments
+            if (saveDto.Attachments != null && saveDto.Attachments.Any())
+            {
+                // Attachment saving logic can be added here if needed
+                // For now, attachments are handled separately
+            }
+
+            // حفظ Grid Data
+            if (saveDto.GridData != null && saveDto.GridData.Any())
+            {
+                // تجميع Grid data حسب GridId
+                var gridDataGroups = saveDto.GridData.GroupBy(g => g.GridId);
+                
+                foreach (var group in gridDataGroups)
+                {
+                    var gridId = group.Key;
+                    var rows = group.ToList();
+                    
+                    var bulkDto = new BulkSaveGridDataDto
+                    {
+                        SubmissionId = saveDto.SubmissionId,
+                        GridId = gridId,
+                        Rows = rows
+                    };
+                    
+                    // التحقق من البيانات أولاً
+                    var validationResult = await _formSubmissionGridRowService.ValidateGridDataAsync(bulkDto);
+                    if (validationResult.StatusCode == 200)
+                    {
+                        var validationData = validationResult.Data as GridValidationResultDto;
+                        if (validationData != null && !validationData.IsValid)
+                        {
+                            return new ApiResponse(400, "Grid validation failed", validationData);
+                        }
+                    }
+                    
+                    // حفظ البيانات
+                    await _formSubmissionGridRowService.SaveBulkGridDataAsync(bulkDto);
+                }
+            }
+
+            return new ApiResponse(200, "Form submission data saved successfully");
         }
 
         // ================================

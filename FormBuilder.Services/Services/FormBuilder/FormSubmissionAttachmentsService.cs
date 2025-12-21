@@ -179,6 +179,15 @@ namespace FormBuilder.Services
             if (file.Length > 10 * 1024 * 1024)
                 return new ApiResponse<FormSubmissionAttachmentDto>(400, "File size exceeds maximum allowed size (10MB)");
 
+            // Validate file type (PDF, Images, Excel, Word)
+            var allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png", ".xls", ".xlsx", ".doc", ".docx" };
+            var fileExtension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
+            if (string.IsNullOrEmpty(fileExtension) || !allowedExtensions.Contains(fileExtension))
+            {
+                return new ApiResponse<FormSubmissionAttachmentDto>(400, 
+                    $"File type not allowed. Allowed types: PDF, Images (JPG, PNG), Excel (XLS, XLSX), Word (DOC, DOCX)");
+            }
+
             // Save file to storage
             string filePath;
             try
@@ -212,6 +221,25 @@ namespace FormBuilder.Services
         {
             if (files == null || !files.Any())
                 return new ApiResponse<List<AttachmentUploadResultDto>>(400, "No files provided");
+
+            // Validate file types for all files
+            var allowedExtensions = new[] { ".pdf", ".jpg", ".jpeg", ".png", ".xls", ".xlsx", ".doc", ".docx" };
+            foreach (var file in files)
+            {
+                var fileExtension = Path.GetExtension(file.FileName)?.ToLowerInvariant();
+                if (string.IsNullOrEmpty(fileExtension) || !allowedExtensions.Contains(fileExtension))
+                {
+                    return new ApiResponse<List<AttachmentUploadResultDto>>(400,
+                        $"File '{file.FileName}' type not allowed. Allowed types: PDF, Images (JPG, PNG), Excel (XLS, XLSX), Word (DOC, DOCX)");
+                }
+
+                // Validate file size
+                if (file.Length > 10 * 1024 * 1024)
+                {
+                    return new ApiResponse<List<AttachmentUploadResultDto>>(400,
+                        $"File '{file.FileName}' size exceeds maximum allowed size (10MB)");
+                }
+            }
 
             var results = new List<AttachmentUploadResultDto>();
 
