@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using FormBuilder.API.Middleware;
+using FormBuilder.API.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,16 +60,33 @@ builder.Services.AddSwaggerGen(c =>
     {
         if (type == null) return null;
         
-        // Handle generic types
-        if (type.IsGenericType)
+        // Build a unique schema ID that includes full namespace and generic arguments
+        string BuildSchemaId(Type t)
         {
-            var genericTypeName = type.GetGenericTypeDefinition().Name;
-            var genericArgs = string.Join("_", type.GetGenericArguments().Select(t => t.Name));
-            return $"{genericTypeName}_{genericArgs}";
+            if (!t.IsGenericType)
+            {
+                return (t.FullName ?? t.Name)?.Replace("+", ".") ?? t.Name;
+            }
+            
+            var genericType = t.GetGenericTypeDefinition();
+            var genericTypeName = (genericType.FullName ?? genericType.Name)?.Split('`')[0] ?? genericType.Name;
+            
+            // Recursively process generic arguments to handle nested generics
+            var args = t.GetGenericArguments()
+                .Select(BuildSchemaId)
+                .ToArray();
+            
+            // Use full namespace to ensure uniqueness
+            var namespacePart = genericType.Namespace?.Replace(".", "_") ?? "";
+            var typeNamePart = genericTypeName.Replace("+", ".");
+            var argsPart = string.Join("_", args);
+            
+            return $"{namespacePart}_{typeNamePart}_{argsPart}";
         }
         
-        var name = type.FullName ?? type.Name;
-        return name?.Replace("+", ".");
+        var schemaId = BuildSchemaId(type);
+        // Clean up special characters
+        return schemaId.Replace("+", ".").Replace("`", "_").Replace("[", "").Replace("]", "").Replace(",", "");
     });
 
     // Ignore IActionResult and File results for Swagger schema generation
@@ -108,6 +126,9 @@ builder.Services.AddSwaggerGen(c =>
             new string[] {}
         }
     });
+
+    // Add operation filter to handle file uploads
+    c.OperationFilter<FileUploadOperationFilter>();
 });
 
 // -----------------------------
@@ -158,6 +179,11 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
 // Caching
 // -----------------------------
 builder.Services.AddMemoryCache();
+
+// -----------------------------
+// HttpClient for External API Calls
+// -----------------------------
+builder.Services.AddHttpClient();
 
 // -----------------------------
 // Health Checks

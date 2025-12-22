@@ -1,6 +1,7 @@
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.API.Models;
+using FormBuilder.Core.DTOS.FormBuilder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -264,6 +265,91 @@ namespace FormBuilder.API.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new ApiResponse(500, $"Error retrieving data sources count: {ex.Message}"));
+            }
+        }
+
+        // ================================
+        // GET FIELD OPTIONS (For Frontend)
+        // ================================
+        [HttpGet("field-options")]
+        [AllowAnonymous] // Allow anonymous for public forms
+        public async Task<ActionResult<ApiResponse>> GetFieldOptions(
+            [FromQuery] int fieldId,
+            [FromQuery] string? context = null)
+        {
+            try
+            {
+                Dictionary<string, object>? contextDict = null;
+                if (!string.IsNullOrEmpty(context))
+                {
+                    contextDict = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, object>>(context);
+                }
+
+                var result = await _fieldDataSourcesService.GetFieldOptionsAsync(fieldId, contextDict);
+                return StatusCode(result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse(500, $"Error retrieving field options: {ex.Message}"));
+            }
+        }
+
+        [HttpPost("field-options")]
+        [AllowAnonymous] // Allow anonymous for public forms
+        public async Task<ActionResult<ApiResponse>> GetFieldOptionsPost(
+            [FromBody] FormBuilder.Core.DTOS.FormBuilder.GetFieldOptionsRequestDto request)
+        {
+            try
+            {
+                var result = await _fieldDataSourcesService.GetFieldOptionsAsync(
+                    request.FieldId, 
+                    request.Context, 
+                    request.RequestBodyJson);
+                return StatusCode(result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse(500, $"Error retrieving field options: {ex.Message}"));
+            }
+        }
+
+        // ================================
+        // PREVIEW DATA SOURCE (For Admin)
+        // ================================
+        [HttpPost("preview")]
+        public async Task<ActionResult<ApiResponse>> PreviewDataSource(
+            [FromBody] FormBuilder.Core.DTOS.FormBuilder.PreviewDataSourceRequestDto request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new ApiResponse(400, "Invalid request data", ModelState));
+                }
+
+                var result = await _fieldDataSourcesService.PreviewDataSourceAsync(request);
+                return StatusCode(result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse(500, $"Error previewing data source: {ex.Message}"));
+            }
+        }
+
+        // ================================
+        // GET AVAILABLE LOOKUP TABLES
+        // ================================
+        [HttpGet("lookup-tables")]
+        public async Task<ActionResult<ApiResponse>> GetAvailableLookupTables()
+        {
+            try
+            {
+                var result = await _fieldDataSourcesService.GetAvailableLookupTablesAsync();
+                return StatusCode(result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse(500, $"Error retrieving available lookup tables: {ex.Message}"));
             }
         }
     }

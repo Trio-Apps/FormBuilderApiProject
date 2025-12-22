@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace FormBuilder.Core.DTOS.FormBuilder
 {
@@ -89,5 +91,39 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public long TotalSize { get; set; }
         public string TotalSizeFormatted { get; set; } = string.Empty;
         public Dictionary<string, int> AttachmentsByType { get; set; } = new();
+    }
+
+    // ================================
+    // FILE UPLOAD REQUEST DTOs
+    // ================================
+
+    public class UploadAttachmentRequest
+    {
+        [Required]
+        public IFormFile File { get; set; } = null!;
+
+        [Required]
+        public int SubmissionId { get; set; }
+
+        [Required]
+        public int FieldId { get; set; }
+
+        [Required]
+        public string FieldCode { get; set; } = string.Empty;
+    }
+
+    public class UploadMultipleAttachmentsRequest
+    {
+        [Required]
+        public List<IFormFile> Files { get; set; } = new();
+
+        [Required]
+        public int SubmissionId { get; set; }
+
+        [Required]
+        public int FieldId { get; set; }
+
+        [Required]
+        public string FieldCode { get; set; } = string.Empty;
     }
 }

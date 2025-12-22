@@ -23,14 +23,22 @@ namespace FormBuilder.Domian.Entitys.froms
         public string SourceType { get; set; }
 
         [StringLength(500)]
-        public string ApiUrl { get; set; }
+        public string? ApiUrl { get; set; }
 
         [StringLength(10)]
-        public string HttpMethod { get; set; }
+        public string? HttpMethod { get; set; }
 
-        public string RequestBodyJson { get; set; }
-        public string ValuePath { get; set; }
-        public string TextPath { get; set; }
+        public string? RequestBodyJson { get; set; }
+        public string? ValuePath { get; set; }
+        public string? TextPath { get; set; }
+        
+        /// <summary>
+        /// JSON configuration for data source
+        /// For LookupTable: {"table": "CUSTOMERS", "valueColumn": "Id", "textColumn": "Name"}
+        /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
+        /// </summary>
+        public string? ConfigurationJson { get; set; }
+        
         public new bool IsActive { get; set; }
     }
 }

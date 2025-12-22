@@ -1761,6 +1761,175 @@
         }
       }
     },
+    "/api/FieldDataSources/field-options": {
+      "get": {
+        "tags": [
+          "FieldDataSources"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FieldDataSources"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.GetFieldOptionsRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.GetFieldOptionsRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.GetFieldOptionsRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FieldDataSources/preview": {
+      "post": {
+        "tags": [
+          "FieldDataSources"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewDataSourceRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewDataSourceRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.PreviewDataSourceRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FieldDataSources/lookup-tables": {
+      "get": {
+        "tags": [
+          "FieldDataSources"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FieldOptions": {
       "get": {
         "tags": [
@@ -3070,6 +3239,29 @@
         "parameters": [
           {
             "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormFields/grid/{gridId}": {
+      "get": {
+        "tags": [
+          "FormFields"
+        ],
+        "parameters": [
+          {
+            "name": "gridId",
             "in": "path",
             "required": true,
             "schema": {
@@ -5074,6 +5266,962 @@
         }
       }
     },
+    "/api/FormSubmissionAttachments": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/submission/{submissionId}/field/{fieldId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/submission/{submissionId}/stats": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.AttachmentStatsDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.AttachmentStatsDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.AttachmentStatsDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/submission/{submissionId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/field/{fieldId}": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "fieldId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/{id}/exists": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/{id}/download": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/{id}": {
+      "get": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionAttachmentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionAttachmentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionAttachmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/bulk": {
+      "post": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkAttachmentsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkAttachmentsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.BulkAttachmentsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/upload": {
+      "post": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "FieldCode",
+                  "FieldId",
+                  "File",
+                  "SubmissionId"
+                ],
+                "type": "object",
+                "properties": {
+                  "File": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "SubmissionId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "FieldId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "FieldCode": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "File": {
+                  "style": "form"
+                },
+                "SubmissionId": {
+                  "style": "form"
+                },
+                "FieldId": {
+                  "style": "form"
+                },
+                "FieldCode": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionAttachments/upload-multiple": {
+      "post": {
+        "tags": [
+          "FormSubmissionAttachments"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "FieldCode",
+                  "FieldId",
+                  "Files",
+                  "SubmissionId"
+                ],
+                "type": "object",
+                "properties": {
+                  "Files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "SubmissionId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "FieldId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "FieldCode": {
+                    "type": "string"
+                  }
+                }
+              },
+              "encoding": {
+                "Files": {
+                  "style": "form"
+                },
+                "SubmissionId": {
+                  "style": "form"
+                },
+                "FieldId": {
+                  "style": "form"
+                },
+                "FieldCode": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.AttachmentUploadResultDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.AttachmentUploadResultDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.AttachmentUploadResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
     "/api/FormSubmissionGridCells": {
       "get": {
         "tags": [
@@ -6278,6 +7426,289 @@
         }
       }
     },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/bulk": {
+      "post": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/complete": {
+      "get": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowWithCellsDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowWithCellsDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowWithCellsDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormSubmissionGridRows/submission/{submissionId}/grid/{gridId}/validate": {
+      "post": {
+        "tags": [
+          "FormSubmissionGridRows"
+        ],
+        "parameters": [
+          {
+            "name": "submissionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "gridId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.API.DTOs.GridValidationResultDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.API.DTOs.GridValidationResultDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.API.DTOs.GridValidationResultDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FormSubmissions": {
       "get": {
         "tags": [
@@ -6630,6 +8061,94 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/FormSubmissions/save-data": {
+      "post": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionDataDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionDataDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionDataDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
           }
         }
       }
@@ -9320,23 +10839,36 @@
         "additionalProperties": false
       },
       "FormBuilder.API.DTOs.CreateFormGridColumnDto": {
+        "required": [
+          "columnCode",
+          "columnName",
+          "dataType",
+          "fieldTypeId",
+          "gridId"
+        ],
         "type": "object",
         "properties": {
           "gridId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
           "fieldTypeId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
           "columnName": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
           },
           "columnCode": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           },
           "columnOrder": {
             "type": "integer",
@@ -9347,8 +10879,8 @@
             "type": "boolean"
           },
           "dataType": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "maxLength": {
             "type": "integer",
@@ -9448,10 +10980,14 @@
         "type": "object",
         "properties": {
           "submissionId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
           "gridId": {
+            "maximum": 2147483647,
+            "minimum": 1,
             "type": "integer",
             "format": "int32"
           },
@@ -9464,6 +11000,284 @@
           },
           "isActive": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.FormGridDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "formBuilderName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "tabId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tabName": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.FormSubmissionGridCellDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rowId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "columnId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "columnCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "columnName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "fieldTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.FormSubmissionGridRowDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gridName": {
+            "type": "string",
+            "nullable": true
+          },
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.FormSubmissionGridRowWithCellsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "gridName": {
+            "type": "string",
+            "nullable": true
+          },
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "cells": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.API.DTOs.FormSubmissionGridCellDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.GridValidationErrorDto": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "columnId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.GridValidationResultDto": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.API.DTOs.GridValidationErrorDto"
+            },
+            "nullable": true
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.API.DTOs.GridValidationWarningDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.DTOs.GridValidationWarningDto": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -9581,7 +11395,19 @@
       "FormBuilder.API.DTOs.UpdateFormSubmissionGridRowDto": {
         "type": "object",
         "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "rowIndex": {
+            "maximum": 2147483647,
+            "minimum": 0,
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -9651,6 +11477,10 @@
           "textPath": {
             "maxLength": 200,
             "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "configurationJson": {
             "type": "string",
             "nullable": true
           },
@@ -10046,6 +11876,14 @@
               "$ref": "#/components/schemas/FormBuilder.API.Models.FieldOptionDto"
             },
             "nullable": true
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "grid": {
+            "$ref": "#/components/schemas/FormBuilder.API.DTOs.FormGridDto"
           }
         },
         "additionalProperties": false
@@ -10086,6 +11924,10 @@
           "textPath": {
             "maxLength": 200,
             "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "configurationJson": {
             "type": "string",
             "nullable": true
           },
@@ -10227,6 +12069,11 @@
           },
           "foreignValidationMessage": {
             "type": "string",
+            "nullable": true
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -10455,6 +12302,73 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.AttachmentStatsDto": {
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalAttachments": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "totalSizeFormatted": {
+            "type": "string",
+            "nullable": true
+          },
+          "attachmentsByType": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.AttachmentUploadResultDto": {
+        "type": "object",
+        "properties": {
+          "attachmentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "uploadedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.BatchUpdateFormulaStatusDto": {
         "type": "object",
         "properties": {
@@ -10468,6 +12382,26 @@
           },
           "isActive": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.BulkAttachmentsDto": {
+        "required": [
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -10621,6 +12555,54 @@
           "createdByUserId": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.CreateFormSubmissionAttachmentDto": {
+        "required": [
+          "contentType",
+          "fieldCode",
+          "fieldId",
+          "fileName",
+          "filePath",
+          "fileSize",
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "fileName": {
+            "maxLength": 260,
+            "minLength": 0,
+            "type": "string"
+          },
+          "filePath": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string"
+          },
+          "fileSize": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int64"
+          },
+          "contentType": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
           }
         },
         "additionalProperties": false
@@ -10826,6 +12808,83 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "submissionDocumentNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldName": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileName": {
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contentType": {
+            "type": "string",
+            "nullable": true
+          },
+          "uploadedDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fileSizeFormatted": {
+            "type": "string",
+            "nullable": true
+          },
+          "downloadUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.GetFieldOptionsRequestDto": {
+        "type": "object",
+        "properties": {
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": { },
+            "nullable": true
+          },
+          "requestBodyJson": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto": {
         "type": "object",
         "properties": {
@@ -10840,6 +12899,218 @@
           "fieldValues": {
             "type": "object",
             "additionalProperties": { },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.PreviewDataSourceRequestDto": {
+        "type": "object",
+        "properties": {
+          "fieldId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "sourceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "apiUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "httpMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestBodyJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "valuePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "textPath": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionAttachmentDto": {
+        "required": [
+          "contentType",
+          "fieldCode",
+          "fieldId",
+          "fileName",
+          "filePath",
+          "fileSize"
+        ],
+        "type": "object",
+        "properties": {
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fileName": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "filePath": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "fileSize": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "contentType": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionDataDto": {
+        "required": [
+          "submissionId"
+        ],
+        "type": "object",
+        "properties": {
+          "submissionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionValueDto"
+            },
+            "nullable": true
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionAttachmentDto"
+            },
+            "nullable": true
+          },
+          "gridData": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridCellDto": {
+        "required": [
+          "columnCode",
+          "columnId"
+        ],
+        "type": "object",
+        "properties": {
+          "columnId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "columnCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridDto": {
+        "required": [
+          "gridId",
+          "rowIndex"
+        ],
+        "type": "object",
+        "properties": {
+          "gridId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rowIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cells": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionGridCellDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveFormSubmissionValueDto": {
+        "required": [
+          "fieldCode",
+          "fieldId"
+        ],
+        "type": "object",
+        "properties": {
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "valueString": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueNumber": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "valueDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "valueBool": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "valueJson": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -10971,6 +13242,36 @@
           },
           "isActive": {
             "type": "boolean",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.UpdateFormSubmissionAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "maxLength": 260,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "filePath": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "fileSize": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "contentType": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
             "nullable": true
           }
         },
@@ -11203,6 +13504,11 @@
             "items": {
               "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormFields.FieldOptionDto"
             },
+            "nullable": true
+          },
+          "gridId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -11481,6 +13787,158 @@
           },
           "isActive": {
             "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.API.DTOs.GridValidationResultDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/FormBuilder.API.DTOs.GridValidationResultDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.AttachmentStatsDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.AttachmentStatsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System.Boolean": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.API.DTOs.FormSubmissionGridRowDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.API.DTOs.FormSubmissionGridRowWithCellsDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.API.DTOs.FormSubmissionGridRowWithCellsDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.AttachmentUploadResultDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.AttachmentUploadResultDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder_API_Models_FormBuilder.API.Models.ApiResponse_System_Collections_Generic_System.Collections.Generic.List_FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.FormSubmissionAttachmentDto"
+            },
+            "nullable": true
           }
         },
         "additionalProperties": false

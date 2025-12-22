@@ -12,6 +12,12 @@ namespace FormBuilder.API.Models
         public string? RequestBodyJson { get; set; }
         public string? ValuePath { get; set; }
         public string? TextPath { get; set; }
+        /// <summary>
+        /// JSON configuration for data source
+        /// For LookupTable: {"table": "CUSTOMERS", "valueColumn": "Id", "textColumn": "Name"}
+        /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
+        /// </summary>
+        public string? ConfigurationJson { get; set; }
         public bool IsActive { get; set; }
     }
 
@@ -37,6 +43,13 @@ namespace FormBuilder.API.Models
         [StringLength(200)]
         public string? TextPath { get; set; }
 
+        /// <summary>
+        /// JSON configuration for data source
+        /// For LookupTable: {"table": "CUSTOMERS", "valueColumn": "Id", "textColumn": "Name"}
+        /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
+        /// </summary>
+        public string? ConfigurationJson { get; set; }
+
         public bool IsActive { get; set; } = true;
     }
 
@@ -58,6 +71,13 @@ namespace FormBuilder.API.Models
 
         [StringLength(200)]
         public string? TextPath { get; set; }
+
+        /// <summary>
+        /// JSON configuration for data source
+        /// For LookupTable: {"table": "CUSTOMERS", "valueColumn": "Id", "textColumn": "Name"}
+        /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
+        /// </summary>
+        public string? ConfigurationJson { get; set; }
 
         public bool IsActive { get; set; }
     }

@@ -144,23 +144,22 @@ namespace FormBuilder.API.Controllers
         [ProducesResponseType(typeof(ApiResponse<FormSubmissionAttachmentDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UploadFile(
-            [FromForm] IFormFile file,
-            [FromForm] int submissionId,
-            [FromForm] int fieldId,
-            [FromForm] string fieldCode)
+        public async Task<IActionResult> UploadFile([FromForm] UploadAttachmentRequest request)
         {
-            if (file == null || file.Length == 0)
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            if (request.File == null || request.File.Length == 0)
                 return BadRequest(new ApiResponse(400, "No file provided"));
 
             var uploadDto = new UploadAttachmentDto
             {
-                SubmissionId = submissionId,
-                FieldId = fieldId,
-                FieldCode = fieldCode
+                SubmissionId = request.SubmissionId,
+                FieldId = request.FieldId,
+                FieldCode = request.FieldCode
             };
 
-            var result = await _formSubmissionAttachmentsService.UploadAttachmentAsync(file, uploadDto);
+            var result = await _formSubmissionAttachmentsService.UploadAttachmentAsync(request.File, uploadDto);
             return StatusCode(result.StatusCode, result);
         }
 
@@ -169,23 +168,22 @@ namespace FormBuilder.API.Controllers
         [ProducesResponseType(typeof(ApiResponse<List<AttachmentUploadResultDto>>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UploadMultipleFiles(
-            [FromForm] List<IFormFile> files,
-            [FromForm] int submissionId,
-            [FromForm] int fieldId,
-            [FromForm] string fieldCode)
+        public async Task<IActionResult> UploadMultipleFiles([FromForm] UploadMultipleAttachmentsRequest request)
         {
-            if (files == null || !files.Any())
+            if (!ModelState.IsValid)
+                return BadRequest(new ApiResponse(400, "Invalid data", ModelState));
+
+            if (request.Files == null || !request.Files.Any())
                 return BadRequest(new ApiResponse(400, "No files provided"));
 
             var uploadDto = new UploadAttachmentDto
             {
-                SubmissionId = submissionId,
-                FieldId = fieldId,
-                FieldCode = fieldCode
+                SubmissionId = request.SubmissionId,
+                FieldId = request.FieldId,
+                FieldCode = request.FieldCode
             };
 
-            var result = await _formSubmissionAttachmentsService.UploadMultipleAttachmentsAsync(files, uploadDto);
+            var result = await _formSubmissionAttachmentsService.UploadMultipleAttachmentsAsync(request.Files, uploadDto);
             return StatusCode(result.StatusCode, result);
         }
 

@@ -1613,9 +1613,11 @@ namespace FormBuilder.Core.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApiUrl")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ConfigurationJson")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(450)
@@ -1628,7 +1630,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("HttpMethod")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -1636,7 +1637,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RequestBodyJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SourceType")
@@ -1645,14 +1645,12 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TextPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ValuePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

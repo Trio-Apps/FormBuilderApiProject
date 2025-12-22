@@ -978,6 +978,63 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
+    "Method": "GetFieldOptions",
+    "RelativePath": "api/FieldDataSources/field-options",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fieldId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "context",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
+    "Method": "GetFieldOptionsPost",
+    "RelativePath": "api/FieldDataSources/field-options",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.GetFieldOptionsRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
     "Method": "GetByFieldId",
     "RelativePath": "api/FieldDataSources/field/{fieldId}",
     "HttpMethod": "GET",
@@ -1070,6 +1127,52 @@
       {
         "Name": "sourceType",
         "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
+    "Method": "GetAvailableLookupTables",
+    "RelativePath": "api/FieldDataSources/lookup-tables",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
+    "Method": "PreviewDataSource",
+    "RelativePath": "api/FieldDataSources/preview",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.PreviewDataSourceRequestDto",
         "IsRequired": true
       }
     ],
@@ -3809,47 +3912,22 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "ContentType",
-        "Type": "System.String",
+        "Name": "File",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
         "IsRequired": false
       },
       {
-        "Name": "ContentDisposition",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Headers",
-        "Type": "Microsoft.AspNetCore.Http.IHeaderDictionary",
-        "IsRequired": false
-      },
-      {
-        "Name": "Length",
-        "Type": "System.Int64",
-        "IsRequired": false
-      },
-      {
-        "Name": "Name",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "FileName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "submissionId",
+        "Name": "SubmissionId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "fieldId",
+        "Name": "FieldId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "fieldCode",
+        "Name": "FieldCode",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -3889,22 +3967,22 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "files",
+        "Name": "Files",
         "Type": "System.Collections.Generic.List\u00601[[Microsoft.AspNetCore.Http.IFormFile, Microsoft.AspNetCore.Http.Features, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60]]",
         "IsRequired": false
       },
       {
-        "Name": "submissionId",
+        "Name": "SubmissionId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "fieldId",
+        "Name": "FieldId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "fieldCode",
+        "Name": "FieldCode",
         "Type": "System.String",
         "IsRequired": false
       }

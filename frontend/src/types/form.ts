@@ -117,6 +117,23 @@ export interface ServiceResult<T> {
   statusCode?: number;
 }
 
+export interface FieldDataSource {
+  id?: number;
+  fieldId: number;
+  sourceType: string; // 'Static' | 'Api' | 'LookupTable' | 'Custom'
+  apiUrl?: string | null;
+  httpMethod?: string | null;
+  requestBodyJson?: string | null;
+  valuePath?: string | null;
+  textPath?: string | null;
+  isActive: boolean;
+}
+
+export interface FieldOptionResponse {
+  value: string | number;
+  text: string;
+}
+
 
 
 
