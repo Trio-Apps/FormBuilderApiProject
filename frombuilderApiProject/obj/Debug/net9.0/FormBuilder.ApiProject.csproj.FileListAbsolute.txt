@@ -762,3 +762,5 @@ D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiP
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.genruntimeconfig.cache
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\ref\FormBuilder.ApiProject.dll
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\ar\FormBuilder.ApiProject.resources.cs
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\en\FormBuilder.ApiProject.resources.cs

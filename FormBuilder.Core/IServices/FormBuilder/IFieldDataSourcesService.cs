@@ -30,5 +30,6 @@ namespace FormBuilder.Core.IServices.FormBuilder
         Task<ApiResponse> PreviewDataSourceAsync(PreviewDataSourceRequestDto request);
         Task<ApiResponse> InspectApiAsync(InspectApiRequestDto request);
         Task<ApiResponse> GetAvailableLookupTablesAsync();
+        Task<ApiResponse> GetLookupTableColumnsAsync(string tableName);
     }
 }

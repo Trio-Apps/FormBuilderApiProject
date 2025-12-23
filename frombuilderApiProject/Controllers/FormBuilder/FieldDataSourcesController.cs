@@ -375,5 +375,33 @@ namespace FormBuilder.API.Controllers
                 return StatusCode(500, new ApiResponse(500, $"Error retrieving available lookup tables: {ex.Message}"));
             }
         }
+
+        // ================================
+        // GET LOOKUP TABLE COLUMNS
+        // ================================
+        [HttpGet("lookup-tables/{tableName}/columns")]
+        public async Task<ActionResult<ApiResponse>> GetLookupTableColumns(string tableName)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(tableName))
+                {
+                    return BadRequest(new ApiResponse(400, "Table name is required"));
+                }
+
+                var result = await _fieldDataSourcesService.GetLookupTableColumnsAsync(tableName);
+                
+                if (result.StatusCode == 404)
+                {
+                    return NotFound(result);
+                }
+
+                return StatusCode(result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse(500, $"Error retrieving table columns: {ex.Message}"));
+            }
+        }
     }
 }

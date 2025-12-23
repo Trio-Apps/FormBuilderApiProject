@@ -1767,16 +1767,96 @@ namespace FormBuilder.Services.Services
                     }
                 }
 
-                var result = suitableTables
-                    .OrderBy(t => ((dynamic)t).Name)
+                // Return array of table names (strings) for frontend compatibility
+                var tableNames = suitableTables
+                    .Select(t => ((dynamic)t).Name.ToString())
+                    .OrderBy(name => name)
                     .ToList();
 
-                return new ApiResponse(200, "Available lookup tables retrieved successfully", result);
+                return new ApiResponse(200, "Available lookup tables retrieved successfully", tableNames);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving available lookup tables");
                 return new ApiResponse(500, $"Error retrieving available lookup tables: {ex.Message}");
+            }
+        }
+
+        // ================================
+        // GET LOOKUP TABLE COLUMNS
+        // ================================
+        public async Task<ApiResponse> GetLookupTableColumnsAsync(string tableName)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(tableName))
+                {
+                    return new ApiResponse(400, "Table name is required");
+                }
+
+                // Validate table name to prevent SQL injection
+                if (!IsValidIdentifier(tableName))
+                {
+                    return new ApiResponse(400, $"Invalid table name: {tableName}");
+                }
+
+                // Check if table exists using reflection
+                var contextType = typeof(AkhmanageItContext);
+                var dbSetProperty = contextType.GetProperty(tableName, System.Reflection.BindingFlags.IgnoreCase | 
+                                                                        System.Reflection.BindingFlags.Public | 
+                                                                        System.Reflection.BindingFlags.Instance);
+
+                if (dbSetProperty == null)
+                {
+                    // Try case-insensitive search
+                    var allProperties = contextType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+                    var matchingProperty = allProperties.FirstOrDefault(p => 
+                        string.Equals(p.Name, tableName, StringComparison.OrdinalIgnoreCase) &&
+                        p.PropertyType.IsGenericType && 
+                        p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>));
+                    
+                    if (matchingProperty == null)
+                    {
+                        var availableTables = string.Join(", ", allProperties
+                            .Where(p => p.PropertyType.IsGenericType && 
+                                       p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
+                            .Select(p => p.Name));
+                        
+                        _logger.LogWarning("Table '{TableName}' not found. Available tables: {AvailableTables}", 
+                            tableName, availableTables);
+                        return new ApiResponse(404, $"Table '{tableName}' not found. Available tables: {availableTables}");
+                    }
+                    
+                    dbSetProperty = matchingProperty;
+                }
+
+                // Get the entity type
+                var dbSetType = dbSetProperty.PropertyType;
+                if (!dbSetType.IsGenericType || dbSetType.GetGenericTypeDefinition() != typeof(DbSet<>))
+                {
+                    return new ApiResponse(400, $"Property '{tableName}' is not a DbSet");
+                }
+
+                var entityType = dbSetType.GetGenericArguments()[0];
+
+                // Get all properties (columns) from the entity type
+                var columns = entityType.GetProperties(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance)
+                    .Where(p => !p.Name.StartsWith("_")) // Skip private fields
+                    .Select(p => p.Name)
+                    .OrderBy(name => name)
+                    .ToList();
+
+                if (columns.Count == 0)
+                {
+                    return new ApiResponse(404, $"No columns found for table '{tableName}'");
+                }
+
+                return new ApiResponse(200, $"Columns retrieved successfully for table '{tableName}'", columns);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving columns for table '{TableName}'", tableName);
+                return new ApiResponse(500, $"Error retrieving columns: {SanitizeForJson(ex.Message)}");
             }
         }
 
