@@ -43,6 +43,9 @@ namespace FormBuilder.Services.Repository
                 .Include(f => f.FORM_TABS.Where(t => t.IsActive))
                     .ThenInclude(t => t.FORM_FIELDS.Where(ff => ff.IsActive))
                         .ThenInclude(ff => ff.FIELD_OPTIONS)
+                .Include(f => f.FORM_TABS.Where(t => t.IsActive))
+                    .ThenInclude(t => t.FORM_FIELDS.Where(ff => ff.IsActive))
+                        .ThenInclude(ff => ff.FIELD_DATA_SOURCES.Where(fds => fds.IsActive))
                 .FirstOrDefaultAsync(f => f.FormCode == normalizedCode && f.IsActive && f.IsPublished);
         }
     }

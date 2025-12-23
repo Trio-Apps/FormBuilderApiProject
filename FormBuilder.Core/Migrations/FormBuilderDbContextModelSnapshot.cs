@@ -1612,6 +1612,10 @@ namespace FormBuilder.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApiPath")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("ApiUrl")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");

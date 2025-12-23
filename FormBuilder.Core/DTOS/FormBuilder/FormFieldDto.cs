@@ -75,6 +75,9 @@ namespace FormBuilder.API.Models
         public FieldTypeDto? FieldType { get; set; }
         public List<FieldOptionDto> FieldOptions { get; set; } = new List<FieldOptionDto>();
         
+        // Field Data Source - tells frontend where to load options from
+        public FieldDataSourceDto? FieldDataSource { get; set; }
+        
         // Grid support
         public int? GridId { get; set; }
         public FormGridDto? Grid { get; set; }

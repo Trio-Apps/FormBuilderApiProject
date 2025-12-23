@@ -55,6 +55,7 @@ export interface FormField {
   isActive: boolean;
   fieldType?: FieldType;
   fieldOptions: FieldOption[];
+  fieldDataSource?: FieldDataSource; // Tells frontend where to load options from (API/LookupTable)
   // Computed properties for task requirements
   label_en?: string;
   label_ar?: string;
@@ -121,7 +122,8 @@ export interface FieldDataSource {
   id?: number;
   fieldId: number;
   sourceType: string; // 'Static' | 'Api' | 'LookupTable' | 'Custom'
-  apiUrl?: string | null;
+  apiUrl?: string | null; // Base URL (e.g., "https://dummyjson.com/")
+  apiPath?: string | null; // Endpoint Path (e.g., "products", "users", "?results")
   httpMethod?: string | null;
   requestBodyJson?: string | null;
   valuePath?: string | null;

@@ -182,8 +182,13 @@ builder.Services.AddMemoryCache();
 
 // -----------------------------
 // HttpClient for External API Calls
+// Configure named HttpClient with automatic decompression
 // -----------------------------
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("ExternalApi")
+    .ConfigurePrimaryHttpMessageHandler(sp => new HttpClientHandler
+    {
+        AutomaticDecompression = System.Net.DecompressionMethods.All // Enable automatic decompression for GZip, Deflate, and Brotli
+    });
 
 // -----------------------------
 // Health Checks

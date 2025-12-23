@@ -25,6 +25,14 @@ namespace FormBuilder.Domian.Entitys.froms
         [StringLength(500)]
         public string? ApiUrl { get; set; }
 
+        /// <summary>
+        /// API Endpoint Path (e.g., "products", "users", "results")
+        /// Combined with ApiUrl (Base URL) to form full URL: ApiUrl + ApiPath
+        /// Example: ApiUrl = "https://dummyjson.com/", ApiPath = "products" -> Full URL = "https://dummyjson.com/products"
+        /// </summary>
+        [StringLength(200)]
+        public string? ApiPath { get; set; }
+
         [StringLength(10)]
         public string? HttpMethod { get; set; }
 

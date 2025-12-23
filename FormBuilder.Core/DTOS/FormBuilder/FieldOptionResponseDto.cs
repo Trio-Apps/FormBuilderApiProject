@@ -27,10 +27,21 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         public int? FieldId { get; set; }
         public string SourceType { get; set; } = string.Empty;
         public string? ApiUrl { get; set; }
+        /// <summary>
+        /// API Endpoint Path (e.g., "products", "users", "results")
+        /// Combined with ApiUrl (Base URL) to form full URL: ApiUrl + ApiPath
+        /// </summary>
+        public string? ApiPath { get; set; }
         public string? HttpMethod { get; set; }
         public string? RequestBodyJson { get; set; }
         public string? ValuePath { get; set; }
         public string? TextPath { get; set; }
+        /// <summary>
+        /// Custom array property names to search for in API response (comma-separated)
+        /// Example: "data,results,items,users" or ["data", "results", "items"]
+        /// If not provided, uses default common names
+        /// </summary>
+        public List<string>? ArrayPropertyNames { get; set; }
     }
 }
 

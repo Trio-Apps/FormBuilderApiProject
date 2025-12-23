@@ -1901,6 +1901,54 @@
         }
       }
     },
+    "/api/FieldDataSources/inspect-api": {
+      "post": {
+        "tags": [
+          "FieldDataSources"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.InspectApiRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.InspectApiRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.InspectApiRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FieldDataSources/lookup-tables": {
       "get": {
         "tags": [
@@ -11458,6 +11506,12 @@
             "type": "string",
             "nullable": true
           },
+          "apiPath": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "httpMethod": {
             "maxLength": 10,
             "minLength": 0,
@@ -11482,6 +11536,13 @@
           },
           "configurationJson": {
             "type": "string",
+            "nullable": true
+          },
+          "arrayPropertyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "isActive": {
@@ -11677,6 +11738,62 @@
           "isActive": {
             "type": "boolean",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.API.Models.FieldDataSourceDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fieldId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sourceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "apiUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "apiPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "httpMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestBodyJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "valuePath": {
+            "type": "string",
+            "nullable": true
+          },
+          "textPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "configurationJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrayPropertyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -11877,6 +11994,9 @@
             },
             "nullable": true
           },
+          "fieldDataSource": {
+            "$ref": "#/components/schemas/FormBuilder.API.Models.FieldDataSourceDto"
+          },
           "gridId": {
             "type": "integer",
             "format": "int32",
@@ -11905,6 +12025,12 @@
             "type": "string",
             "nullable": true
           },
+          "apiPath": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
           "httpMethod": {
             "maxLength": 10,
             "minLength": 0,
@@ -11929,6 +12055,13 @@
           },
           "configurationJson": {
             "type": "string",
+            "nullable": true
+          },
+          "arrayPropertyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           },
           "isActive": {
@@ -12885,6 +13018,35 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.InspectApiRequestDto": {
+        "type": "object",
+        "properties": {
+          "apiUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "apiPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "httpMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "requestBodyJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "arrayPropertyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.PreviewCalculationDto": {
         "type": "object",
         "properties": {
@@ -12920,6 +13082,10 @@
             "type": "string",
             "nullable": true
           },
+          "apiPath": {
+            "type": "string",
+            "nullable": true
+          },
           "httpMethod": {
             "type": "string",
             "nullable": true
@@ -12934,6 +13100,13 @@
           },
           "textPath": {
             "type": "string",
+            "nullable": true
+          },
+          "arrayPropertyNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
             "nullable": true
           }
         },

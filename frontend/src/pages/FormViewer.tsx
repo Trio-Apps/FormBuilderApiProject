@@ -28,6 +28,31 @@ const FormViewer = () => {
         setLoading(true)
         setError(null)
         const formData = await ApiService.getFormByCode(formPublicId)
+        
+        // Load field options for fields with data sources (API/LookupTable)
+        if (formData.tabs) {
+          for (const tab of formData.tabs) {
+            if (tab.fields) {
+              for (const field of tab.fields) {
+                // If field has a data source (API or LookupTable), load options
+                if (field.fieldDataSource && 
+                    (field.fieldDataSource.sourceType === 'Api' || 
+                     field.fieldDataSource.sourceType === 'LookupTable')) {
+                  try {
+                    const options = await ApiService.getFieldOptions(field.id)
+                    // Backend returns FieldOption[] directly, so we can use it as-is
+                    field.fieldOptions = options || []
+                  } catch (err) {
+                    console.error(`Failed to load options for field ${field.id}:`, err)
+                    // Keep empty array if loading fails
+                    field.fieldOptions = []
+                  }
+                }
+              }
+            }
+          }
+        }
+        
         setForm(formData)
       } catch (err) {
         setError(err instanceof Error ? err.message : t('errors.failedToFetchForm'))

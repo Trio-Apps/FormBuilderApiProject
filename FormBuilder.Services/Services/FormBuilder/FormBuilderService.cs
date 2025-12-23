@@ -114,7 +114,24 @@ namespace FormBuilder.Services.Services
                                     OptionValue = fo.OptionValue,
                                     OptionOrder = fo.OptionOrder,
                                     IsActive = fo.IsActive
-                                }).ToList() ?? new System.Collections.Generic.List<FieldOptionDto>()
+                                }).ToList() ?? new System.Collections.Generic.List<FieldOptionDto>(),
+                            // Map Field Data Source - tells frontend where to load options from
+                            FieldDataSource = f.FIELD_DATA_SOURCES?
+                                .Where(fds => fds.IsActive)
+                                .Select(fds => new FieldDataSourceDto
+                                {
+                                    Id = fds.Id,
+                                    FieldId = fds.FieldId,
+                                    SourceType = fds.SourceType,
+                                    ApiUrl = fds.ApiUrl,
+                                    ApiPath = fds.ApiPath,
+                                    HttpMethod = fds.HttpMethod,
+                                    RequestBodyJson = fds.RequestBodyJson,
+                                    ValuePath = fds.ValuePath,
+                                    TextPath = fds.TextPath,
+                                    ConfigurationJson = fds.ConfigurationJson,
+                                    IsActive = fds.IsActive
+                                }).FirstOrDefault()
                         }).ToList()
                 })
                 .ToList();

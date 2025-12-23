@@ -337,6 +337,29 @@ namespace FormBuilder.API.Controllers
         }
 
         // ================================
+        // INSPECT API STRUCTURE (Get Available Fields)
+        // ================================
+        [HttpPost("inspect-api")]
+        public async Task<ActionResult<ApiResponse>> InspectApi(
+            [FromBody] FormBuilder.Core.DTOS.FormBuilder.InspectApiRequestDto request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(new ApiResponse(400, "Invalid request data", ModelState));
+                }
+
+                var result = await _fieldDataSourcesService.InspectApiAsync(request);
+                return StatusCode(result.StatusCode, result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse(500, $"Error inspecting API: {ex.Message}"));
+            }
+        }
+
+        // ================================
         // GET AVAILABLE LOOKUP TABLES
         // ================================
         [HttpGet("lookup-tables")]

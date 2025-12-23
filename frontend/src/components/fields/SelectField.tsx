@@ -23,6 +23,26 @@ const SelectField = ({ field }: SelectFieldProps) => {
     return option.optionText
   }
 
+  // Show error message if no options available
+  if (sortedOptions.length === 0) {
+    return (
+      <BaseField field={field}>
+        <div className="field-error-message" style={{
+          backgroundColor: '#fee',
+          borderLeft: '4px solid #f00',
+          padding: '8px 12px',
+          borderRadius: '4px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px'
+        }}>
+          <span style={{ color: '#f00' }}>⚠</span>
+          <span style={{ color: '#f00' }}>No options available</span>
+        </div>
+      </BaseField>
+    )
+  }
+
   return (
     <BaseField field={field}>
       <select 

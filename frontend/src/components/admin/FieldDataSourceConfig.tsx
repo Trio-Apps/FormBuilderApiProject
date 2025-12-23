@@ -19,6 +19,7 @@ const FieldDataSourceConfig = ({
 }: FieldDataSourceConfigProps) => {
   const [sourceType, setSourceType] = useState(initialDataSource?.sourceType || 'Static')
   const [apiUrl, setApiUrl] = useState(initialDataSource?.apiUrl || '')
+  const [apiPath, setApiPath] = useState(initialDataSource?.apiPath || '')
   const [httpMethod, setHttpMethod] = useState(initialDataSource?.httpMethod || 'GET')
   const [requestBodyJson, setRequestBodyJson] = useState(initialDataSource?.requestBodyJson || '')
   const [valuePath, setValuePath] = useState(initialDataSource?.valuePath || '')
@@ -27,6 +28,43 @@ const FieldDataSourceConfig = ({
   const [loading, setLoading] = useState(false)
   const [previewData, setPreviewData] = useState<any[]>([])
   const [previewError, setPreviewError] = useState<string | null>(null)
+  const [inspecting, setInspecting] = useState(false)
+  const [inspectionResult, setInspectionResult] = useState<any>(null)
+
+  const handleInspectApi = async () => {
+    if (!apiUrl) {
+      setPreviewError('API URL is required')
+      return
+    }
+
+    setInspecting(true)
+    setPreviewError(null)
+    setInspectionResult(null)
+
+    try {
+      const { ApiService } = await import('../../services/api')
+      const result = await ApiService.inspectApi({
+        apiUrl,
+        apiPath: apiPath || undefined,
+        httpMethod,
+        requestBodyJson: requestBodyJson || undefined
+      })
+
+      setInspectionResult(result)
+
+      // Auto-fill valuePath and textPath if empty
+      if (!valuePath && result.suggestedValuePaths.length > 0) {
+        setValuePath(result.suggestedValuePaths[0])
+      }
+      if (!textPath && result.suggestedTextPaths.length > 0) {
+        setTextPath(result.suggestedTextPaths[0])
+      }
+    } catch (error) {
+      setPreviewError(error instanceof Error ? error.message : 'Failed to inspect API')
+    } finally {
+      setInspecting(false)
+    }
+  }
 
   const handlePreview = async () => {
     if (sourceType === 'Static') {
@@ -43,27 +81,20 @@ const FieldDataSourceConfig = ({
     setPreviewError(null)
 
     try {
-      // Call backend preview endpoint
-      const response = await fetch(`/api/FieldDataSources/preview`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fieldId,
-          sourceType,
-          apiUrl,
-          httpMethod,
-          requestBodyJson: requestBodyJson || undefined,
-          valuePath,
-          textPath
-        })
+      const { ApiService } = await import('../../services/api')
+      // valuePath and textPath are OPTIONAL - backend will auto-detect if not provided
+      const data = await ApiService.previewDataSource({
+        fieldId,
+        sourceType,
+        apiUrl,
+        apiPath: apiPath || undefined,
+        httpMethod,
+        requestBodyJson: requestBodyJson || undefined,
+        valuePath: valuePath || undefined,
+        textPath: textPath || undefined
       })
 
-      if (!response.ok) {
-        throw new Error('Failed to preview data source')
-      }
-
-      const data = await response.json()
-      setPreviewData(data.options || [])
+      setPreviewData(data || [])
     } catch (error) {
       setPreviewError(error instanceof Error ? error.message : 'Preview failed')
     } finally {
@@ -97,12 +128,8 @@ const FieldDataSourceConfig = ({
       }
     }
 
-    if (sourceType === 'Api') {
-      if (!valuePath || !textPath) {
-        alert('Value Path and Text Path are required for API sources')
-        return
-      }
-    }
+    // valuePath and textPath are OPTIONAL for API sources - backend will auto-detect if not provided
+    // But we'll still allow saving without them
 
     setLoading(true)
     try {
@@ -111,8 +138,9 @@ const FieldDataSourceConfig = ({
         fieldId,
         sourceType,
         // For LookupTable: apiUrl stores table name, valuePath/textPath store column names
-        // For Api: apiUrl stores API URL, valuePath/textPath store JSON paths
+        // For Api: apiUrl stores Base URL, apiPath stores endpoint path, valuePath/textPath store JSON paths
         apiUrl: sourceType !== 'Static' ? apiUrl : null,
+        apiPath: sourceType === 'Api' ? (apiPath || null) : null,
         httpMethod: sourceType === 'Api' ? httpMethod : null,
         requestBodyJson: sourceType === 'Api' && requestBodyJson ? requestBodyJson : null,
         valuePath: (sourceType === 'Api' || sourceType === 'LookupTable') ? valuePath : null,
@@ -180,15 +208,36 @@ const FieldDataSourceConfig = ({
       {sourceType === 'Api' && (
         <>
           <div className="config-section">
-            <label>External API URL *</label>
+            <label>API URL *</label>
             <input
               type="url"
               value={apiUrl}
               onChange={(e) => setApiUrl(e.target.value)}
-              placeholder="https://api.example.com/customers"
+              placeholder="https://dummyjson.com/products"
               className="full-width"
             />
-            <small>Full URL of the external API endpoint</small>
+            <small>Full API URL or Base URL. You can enter any URL directly (e.g., "https://dummyjson.com/products")</small>
+          </div>
+
+          <div className="config-section">
+            <label>Endpoint Path (Optional - Only if using Base URL above)</label>
+            <input
+              type="text"
+              value={apiPath}
+              onChange={(e) => setApiPath(e.target.value)}
+              placeholder="products"
+              className="full-width"
+            />
+            <small>Optional: Endpoint path to append to Base URL. Leave empty if you entered full URL above.</small>
+            <div className="example-box">
+              <strong>Examples:</strong>
+              <ul>
+                <li><strong>Full URL:</strong> <code>https://dummyjson.com/products</code> (leave Path empty)</li>
+                <li><strong>Base URL:</strong> <code>https://dummyjson.com/</code>, <strong>Path:</strong> <code>products</code></li>
+                <li><strong>Full URL:</strong> <code>https://randomuser.me/api/?results</code> (leave Path empty)</li>
+                <li><strong>Base URL:</strong> <code>https://randomuser.me/api/</code>, <strong>Path:</strong> <code>?results</code></li>
+              </ul>
+            </div>
           </div>
 
           <div className="config-section">
@@ -217,42 +266,100 @@ const FieldDataSourceConfig = ({
           )}
 
           <div className="config-section">
-            <label>Value Path (ID) *</label>
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '10px' }}>
+              <button
+                type="button"
+                onClick={handleInspectApi}
+                disabled={inspecting || !apiUrl}
+                className="btn-secondary"
+                style={{ fontSize: '14px', padding: '8px 16px' }}
+              >
+                {inspecting ? 'Inspecting...' : '🔍 Inspect API'}
+              </button>
+              <small style={{ color: '#666' }}>
+                Click to auto-detect available fields (Optional)
+              </small>
+            </div>
+
+            {inspectionResult && (
+              <div className="inspection-results" style={{ 
+                background: '#f5f5f5', 
+                padding: '15px', 
+                borderRadius: '5px', 
+                marginBottom: '15px',
+                border: '1px solid #ddd'
+              }}>
+                <h4 style={{ marginTop: 0, marginBottom: '10px' }}>📋 Available Fields:</h4>
+                {inspectionResult.success ? (
+                  <>
+                    <div style={{ marginBottom: '10px' }}>
+                      <strong>Items Found:</strong> {inspectionResult.itemsCount || 0}
+                    </div>
+                    {inspectionResult.availableFields.length > 0 && (
+                      <div style={{ marginBottom: '10px' }}>
+                        <strong>Fields:</strong> {inspectionResult.availableFields.join(', ')}
+                      </div>
+                    )}
+                    {inspectionResult.nestedFields.length > 0 && (
+                      <div style={{ marginBottom: '10px' }}>
+                        <strong>Nested Fields:</strong> {inspectionResult.nestedFields.join(', ')}
+                      </div>
+                    )}
+                    {inspectionResult.suggestedValuePaths.length > 0 && (
+                      <div style={{ marginBottom: '10px', color: '#0066cc' }}>
+                        <strong>💡 Suggested Value Path:</strong> {inspectionResult.suggestedValuePaths.join(', ')}
+                      </div>
+                    )}
+                    {inspectionResult.suggestedTextPaths.length > 0 && (
+                      <div style={{ color: '#0066cc' }}>
+                        <strong>💡 Suggested Text Path:</strong> {inspectionResult.suggestedTextPaths.join(', ')}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div style={{ color: '#d32f2f' }}>
+                    <strong>Error:</strong> {inspectionResult.errorMessage || 'Failed to inspect API'}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <label>Value Path (ID) <span style={{ color: '#999', fontWeight: 'normal' }}>(Optional - Auto-detected if empty)</span></label>
             <input
               type="text"
               value={valuePath}
               onChange={(e) => setValuePath(e.target.value)}
-              placeholder="id"
+              placeholder="id (will be auto-detected)"
               className="full-width"
             />
-            <small>JSON path to extract the value from API response (e.g., "id" or "data.id")</small>
+            <small>JSON path to extract the value from API response (e.g., "id" or "login.uuid"). Leave empty for auto-detect.</small>
             <div className="example-box">
               <strong>Example Response:</strong>
               <pre>{`[
   { "id": 1, "name": "ABC Corp" },
   { "id": 2, "name": "XYZ Ltd" }
 ]`}</pre>
-              <p>Value Path: <code>id</code></p>
+              <p>Value Path: <code>id</code> (or leave empty for auto-detect)</p>
             </div>
           </div>
 
           <div className="config-section">
-            <label>Text Path (Display Name) *</label>
+            <label>Text Path (Display Name) <span style={{ color: '#999', fontWeight: 'normal' }}>(Optional - Auto-detected if empty)</span></label>
             <input
               type="text"
               value={textPath}
               onChange={(e) => setTextPath(e.target.value)}
-              placeholder="name"
+              placeholder="name (will be auto-detected)"
               className="full-width"
             />
-            <small>JSON path to extract the display text from API response (e.g., "name" or "data.name")</small>
+            <small>JSON path to extract the display text from API response (e.g., "name" or "name.first"). Leave empty for auto-detect.</small>
             <div className="example-box">
               <strong>Example Response:</strong>
               <pre>{`[
   { "id": 1, "name": "ABC Corp" },
   { "id": 2, "name": "XYZ Ltd" }
 ]`}</pre>
-              <p>Text Path: <code>name</code></p>
+              <p>Text Path: <code>name</code> (or leave empty for auto-detect)</p>
             </div>
           </div>
         </>

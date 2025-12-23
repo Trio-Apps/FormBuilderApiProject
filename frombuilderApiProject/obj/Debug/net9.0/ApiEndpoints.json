@@ -1144,6 +1144,32 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
+    "Method": "InspectApi",
+    "RelativePath": "api/FieldDataSources/inspect-api",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.InspectApiRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
     "Method": "GetAvailableLookupTables",
     "RelativePath": "api/FieldDataSources/lookup-tables",
     "HttpMethod": "GET",

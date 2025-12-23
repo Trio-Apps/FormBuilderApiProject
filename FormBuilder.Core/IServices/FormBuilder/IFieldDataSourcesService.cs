@@ -28,6 +28,7 @@ namespace FormBuilder.Core.IServices.FormBuilder
         // New methods for field options
         Task<ApiResponse> GetFieldOptionsAsync(int fieldId, Dictionary<string, object>? context = null, string? requestBodyJson = null);
         Task<ApiResponse> PreviewDataSourceAsync(PreviewDataSourceRequestDto request);
+        Task<ApiResponse> InspectApiAsync(InspectApiRequestDto request);
         Task<ApiResponse> GetAvailableLookupTablesAsync();
     }
 }

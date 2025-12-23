@@ -1,4 +1,4 @@
-import { FormBuilder, ServiceResult, FieldDataSource, FieldOptionResponse } from '../types/form'
+import { FormBuilder, ServiceResult, FieldDataSource, FieldOptionResponse, FieldOption } from '../types/form'
 
 const API_BASE_URL = '/api'
 
@@ -75,7 +75,7 @@ export class ApiService {
   static async getFieldOptions(
     fieldId: number,
     context?: Record<string, any>
-  ): Promise<FieldOptionResponse[]> {
+  ): Promise<FieldOption[]> {
     const contextParam = context
       ? `&context=${encodeURIComponent(JSON.stringify(context))}`
       : ''
@@ -93,6 +93,10 @@ export class ApiService {
     }
 
     const data = await response.json()
+    // Handle ApiResponse wrapper
+    if (data.statusCode !== undefined) {
+      return data.data || []
+    }
     // Handle ServiceResult wrapper
     if (data.success !== undefined) {
       return data.data || []
@@ -108,7 +112,7 @@ export class ApiService {
     fieldId: number,
     context?: Record<string, any>,
     requestBodyJson?: string
-  ): Promise<FieldOptionResponse[]> {
+  ): Promise<FieldOption[]> {
     const response = await fetch(
       `${API_BASE_URL}/FieldDataSources/field-options`,
       {
@@ -139,18 +143,64 @@ export class ApiService {
   // ================================
 
   /**
+   * Inspect API structure - Get available fields (Admin)
+   * POST /api/FieldDataSources/inspect-api
+   */
+  static async inspectApi(request: {
+    apiUrl: string
+    apiPath?: string
+    httpMethod?: string
+    requestBodyJson?: string
+    arrayPropertyNames?: string[]
+  }): Promise<{
+    fullUrl: string
+    success: boolean
+    errorMessage?: string
+    itemsCount?: number
+    availableFields: string[]
+    nestedFields: string[]
+    sampleItem?: any
+    rawResponse?: string
+    suggestedValuePaths: string[]
+    suggestedTextPaths: string[]
+  }> {
+    const response = await fetch(
+      `${API_BASE_URL}/FieldDataSources/inspect-api`,
+      {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(request)
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to inspect API: ${response.statusText}`)
+    }
+
+    const result = await response.json()
+    // Handle ApiResponse wrapper
+    if (result.data) {
+      return result.data
+    }
+    return result
+  }
+
+  /**
    * Preview data source (Admin)
    * POST /api/FieldDataSources/preview
+   * valuePath and textPath are OPTIONAL - will be auto-detected if not provided
    */
   static async previewDataSource(
     request: {
-      fieldId: number
+      fieldId?: number
       sourceType: string
       apiUrl?: string
+      apiPath?: string
       httpMethod?: string
       requestBodyJson?: string
       valuePath?: string
       textPath?: string
+      arrayPropertyNames?: string[]
     }
   ): Promise<FieldOptionResponse[]> {
     const response = await fetch(
@@ -163,15 +213,16 @@ export class ApiService {
     )
 
     if (!response.ok) {
-      throw new Error(`Failed to preview data source: ${response.statusText}`)
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Failed to preview data source: ${response.statusText}`)
     }
 
     const data = await response.json()
-    // Handle ServiceResult wrapper
-    if (data.success !== undefined) {
-      return data.data || []
+    // Handle ApiResponse wrapper
+    if (data.data) {
+      return Array.isArray(data.data) ? data.data : []
     }
-    return data || []
+    return Array.isArray(data) ? data : []
   }
 
   /**

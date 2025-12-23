@@ -8,6 +8,11 @@ namespace FormBuilder.API.Models
         public int FieldId { get; set; }
         public string SourceType { get; set; } = string.Empty;
         public string? ApiUrl { get; set; }
+        /// <summary>
+        /// API Endpoint Path (e.g., "products", "users", "results")
+        /// Combined with ApiUrl (Base URL) to form full URL: ApiUrl + ApiPath
+        /// </summary>
+        public string? ApiPath { get; set; }
         public string? HttpMethod { get; set; }
         public string? RequestBodyJson { get; set; }
         public string? ValuePath { get; set; }
@@ -18,6 +23,12 @@ namespace FormBuilder.API.Models
         /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
         /// </summary>
         public string? ConfigurationJson { get; set; }
+        /// <summary>
+        /// Custom array property names to search for in API response (comma-separated or JSON array)
+        /// Example: "data,results,items" or ["data", "results", "items"]
+        /// If not provided, uses default common names
+        /// </summary>
+        public List<string>? ArrayPropertyNames { get; set; }
         public bool IsActive { get; set; }
     }
 
@@ -32,6 +43,13 @@ namespace FormBuilder.API.Models
         [StringLength(500)]
         public string? ApiUrl { get; set; }
 
+        /// <summary>
+        /// API Endpoint Path (e.g., "products", "users", "results")
+        /// Combined with ApiUrl (Base URL) to form full URL: ApiUrl + ApiPath
+        /// </summary>
+        [StringLength(200)]
+        public string? ApiPath { get; set; }
+
         [StringLength(10)]
         public string? HttpMethod { get; set; }
 
@@ -49,6 +67,12 @@ namespace FormBuilder.API.Models
         /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
         /// </summary>
         public string? ConfigurationJson { get; set; }
+        /// <summary>
+        /// Custom array property names to search for in API response (comma-separated or JSON array)
+        /// Example: "data,results,items" or ["data", "results", "items"]
+        /// If not provided, uses default common names
+        /// </summary>
+        public List<string>? ArrayPropertyNames { get; set; }
 
         public bool IsActive { get; set; } = true;
     }
@@ -61,6 +85,13 @@ namespace FormBuilder.API.Models
         [StringLength(500)]
         public string? ApiUrl { get; set; }
 
+        /// <summary>
+        /// API Endpoint Path (e.g., "products", "users", "results")
+        /// Combined with ApiUrl (Base URL) to form full URL: ApiUrl + ApiPath
+        /// </summary>
+        [StringLength(200)]
+        public string? ApiPath { get; set; }
+
         [StringLength(10)]
         public string? HttpMethod { get; set; }
 
@@ -78,6 +109,12 @@ namespace FormBuilder.API.Models
         /// For API: {"url": "...", "httpMethod": "GET", "valuePath": "...", "textPath": "...", "requestBodyJson": "..."}
         /// </summary>
         public string? ConfigurationJson { get; set; }
+        /// <summary>
+        /// Custom array property names to search for in API response (comma-separated or JSON array)
+        /// Example: "data,results,items" or ["data", "results", "items"]
+        /// If not provided, uses default common names
+        /// </summary>
+        public List<string>? ArrayPropertyNames { get; set; }
 
         public bool IsActive { get; set; }
     }
