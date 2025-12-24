@@ -30,12 +30,43 @@ namespace FormBuilder.Services.Services
 
         protected override IBaseRepository<FIELD_OPTIONS> Repository => _unitOfWork.FieldOptionsRepository;
 
+        /// <summary>
+        /// Checks if field has Api or LookupTable DataSource (options should not be saved in database)
+        /// </summary>
+        private async Task<bool> HasExternalDataSourceAsync(int fieldId)
+        {
+            try
+            {
+                var dataSources = await _unitOfWork.FieldDataSourcesRepository.GetActiveByFieldIdAsync(fieldId);
+                foreach (var dataSource in dataSources)
+                {
+                    if (string.Equals(dataSource.SourceType, "Api", StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(dataSource.SourceType, "LookupTable", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                // If we can't check, assume it's safe to proceed
+            }
+
+            return false;
+        }
+
         // ================================
         // CUSTOM OPERATIONS
         // ================================
 
         public async Task<ServiceResult<IEnumerable<FieldOptionDto>>> GetByFieldIdAsync(int fieldId)
         {
+            // If field has Api or LookupTable DataSource, return empty list (options are not stored in database)
+            if (await HasExternalDataSourceAsync(fieldId))
+            {
+                return ServiceResult<IEnumerable<FieldOptionDto>>.Ok(new List<FieldOptionDto>());
+            }
+
             var options = await _unitOfWork.FieldOptionsRepository.GetByFieldIdAsync(fieldId);
             var dtos = _mapper.Map<IEnumerable<FieldOptionDto>>(options);
             return ServiceResult<IEnumerable<FieldOptionDto>>.Ok(dtos);
@@ -43,6 +74,12 @@ namespace FormBuilder.Services.Services
 
         public async Task<ServiceResult<IEnumerable<FieldOptionDto>>> GetActiveByFieldIdAsync(int fieldId)
         {
+            // If field has Api or LookupTable DataSource, return empty list (options are not stored in database)
+            if (await HasExternalDataSourceAsync(fieldId))
+            {
+                return ServiceResult<IEnumerable<FieldOptionDto>>.Ok(new List<FieldOptionDto>());
+            }
+
             var options = await _unitOfWork.FieldOptionsRepository.GetActiveByFieldIdAsync(fieldId);
             var dtos = _mapper.Map<IEnumerable<FieldOptionDto>>(options);
             return ServiceResult<IEnumerable<FieldOptionDto>>.Ok(dtos);
@@ -66,6 +103,14 @@ namespace FormBuilder.Services.Services
                     var message = _localizer?["FieldOptions_InvalidFieldId", fieldId] ?? $"Invalid field ID: {fieldId}";
                     return ServiceResult<IEnumerable<FieldOptionDto>>.BadRequest(message);
                 }
+
+                // Check if field has Api or LookupTable DataSource - options should not be saved for these
+                if (await HasExternalDataSourceAsync(fieldId))
+                {
+                    var message = _localizer?["FieldOptions_CannotSaveForExternalDataSource"] ?? 
+                        "Cannot save options for Api/LookupTable DataSource. Options are loaded from external source.";
+                    return ServiceResult<IEnumerable<FieldOptionDto>>.BadRequest(message);
+                }
             }
 
             var entities = _mapper.Map<List<FIELD_OPTIONS>>(createDtos);
@@ -82,11 +127,45 @@ namespace FormBuilder.Services.Services
             return ServiceResult<IEnumerable<FieldOptionDto>>.Ok(dtos);
         }
 
-        public async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
+        public override async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
-            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id);
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
             if (entity == null)
-                return ServiceResult<bool>.NotFound();
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<bool>.NotFound(message);
+            }
+
+            // Check if field has Api or LookupTable DataSource - options should not be deleted for these
+            if (await HasExternalDataSourceAsync(entity.FieldId))
+            {
+                var message = _localizer?["FieldOptions_CannotDeleteForExternalDataSource"] ?? 
+                    "Cannot delete options for Api/LookupTable DataSource. Options are loaded from external source.";
+                return ServiceResult<bool>.BadRequest(message);
+            }
+
+            Repository.Delete(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            return ServiceResult<bool>.Ok(true);
+        }
+
+        public override async Task<ServiceResult<bool>> SoftDeleteAsync(int id)
+        {
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<bool>.NotFound(message);
+            }
+
+            // Check if field has Api or LookupTable DataSource - options should not be deleted for these
+            if (await HasExternalDataSourceAsync(entity.FieldId))
+            {
+                var message = _localizer?["FieldOptions_CannotDeleteForExternalDataSource"] ?? 
+                    "Cannot delete options for Api/LookupTable DataSource. Options are loaded from external source.";
+                return ServiceResult<bool>.BadRequest(message);
+            }
 
             entity.IsActive = false;
             entity.UpdatedDate = DateTime.UtcNow;
@@ -134,12 +213,27 @@ namespace FormBuilder.Services.Services
                 return ValidationResult.Failure(message);
             }
 
+            // Check if field has Api or LookupTable DataSource - options should not be saved for these
+            if (await HasExternalDataSourceAsync(dto.FieldId))
+            {
+                var message = _localizer?["FieldOptions_CannotSaveForExternalDataSource"] ?? 
+                    "Cannot save options for Api/LookupTable DataSource. Options are loaded from external source.";
+                return ValidationResult.Failure(message);
+            }
+
             return ValidationResult.Success();
         }
 
         protected override async Task<ValidationResult> ValidateUpdateAsync(int id, UpdateFieldOptionDto dto, FIELD_OPTIONS entity)
         {
-            // Additional validation can be added here if needed
+            // Check if field has Api or LookupTable DataSource - options should not be updated for these
+            if (await HasExternalDataSourceAsync(entity.FieldId))
+            {
+                var message = _localizer?["FieldOptions_CannotUpdateForExternalDataSource"] ?? 
+                    "Cannot update options for Api/LookupTable DataSource. Options are loaded from external source.";
+                return ValidationResult.Failure(message);
+            }
+
             return ValidationResult.Success();
         }
     }

@@ -71,6 +71,10 @@ export class ApiService {
   /**
    * Get field options (Public - No auth required)
    * GET /api/FieldDataSources/field-options?fieldId={id}&context={json}
+   * 
+   * Backend returns FieldOptionResponse[] (with 'text' and 'value') for Api/LookupTable,
+   * or FieldOptionDto[] (with 'optionText' and 'optionValue') for Static.
+   * This method converts FieldOptionResponse[] to FieldOption[] format for consistency.
    */
   static async getFieldOptions(
     fieldId: number,
@@ -93,20 +97,46 @@ export class ApiService {
     }
 
     const data = await response.json()
+    let options: any[] = []
+    
     // Handle ApiResponse wrapper
     if (data.statusCode !== undefined) {
-      return data.data || []
+      options = data.data || []
     }
     // Handle ServiceResult wrapper
-    if (data.success !== undefined) {
-      return data.data || []
+    else if (data.success !== undefined) {
+      options = data.data || []
     }
-    return data || []
+    else {
+      options = data || []
+    }
+
+    // Convert FieldOptionResponse[] (with 'text' and 'value') to FieldOption[] format
+    // If options have 'text' and 'value' properties, convert them
+    if (options.length > 0 && options[0].text !== undefined && options[0].value !== undefined) {
+      return options.map((opt: FieldOptionResponse, index: number) => ({
+        id: opt.value as number || index + 1, // Use value as id if it's a number, otherwise use index
+        fieldId: fieldId,
+        optionText: opt.text,
+        foreignOptionText: undefined, // Api/LookupTable options don't have foreign text
+        optionValue: String(opt.value),
+        optionOrder: index + 1,
+        isDefault: false,
+        isActive: true
+      }))
+    }
+
+    // If options already have FieldOption format (optionText, optionValue), return as-is
+    return options as FieldOption[]
   }
 
   /**
    * Get field options with POST (Public - No auth required)
    * POST /api/FieldDataSources/field-options
+   * 
+   * Backend returns FieldOptionResponse[] (with 'text' and 'value') for Api/LookupTable,
+   * or FieldOptionDto[] (with 'optionText' and 'optionValue') for Static.
+   * This method converts FieldOptionResponse[] to FieldOption[] format for consistency.
    */
   static async getFieldOptionsPost(
     fieldId: number,
@@ -131,11 +161,37 @@ export class ApiService {
     }
 
     const data = await response.json()
+    let options: any[] = []
+    
     // Handle ServiceResult wrapper
     if (data.success !== undefined) {
-      return data.data || []
+      options = data.data || []
     }
-    return data || []
+    // Handle ApiResponse wrapper
+    else if (data.statusCode !== undefined) {
+      options = data.data || []
+    }
+    else {
+      options = data || []
+    }
+
+    // Convert FieldOptionResponse[] (with 'text' and 'value') to FieldOption[] format
+    // If options have 'text' and 'value' properties, convert them
+    if (options.length > 0 && options[0].text !== undefined && options[0].value !== undefined) {
+      return options.map((opt: FieldOptionResponse, index: number) => ({
+        id: typeof opt.value === 'number' ? opt.value : index + 1, // Use value as id if it's a number, otherwise use index
+        fieldId: fieldId,
+        optionText: opt.text,
+        foreignOptionText: undefined, // Api/LookupTable options don't have foreign text
+        optionValue: String(opt.value),
+        optionOrder: index + 1,
+        isDefault: false,
+        isActive: true
+      }))
+    }
+
+    // If options already have FieldOption format (optionText, optionValue), return as-is
+    return options as FieldOption[]
   }
 
   // ================================

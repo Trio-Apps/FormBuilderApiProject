@@ -85,6 +85,14 @@ namespace FormBuilder.Services.Services
             }
 
             var result = await base.CreateAsync(createDto);
+            
+            // If DataSource is Api or LookupTable, delete all existing options for this field
+            if (result.Success && (string.Equals(createDto.SourceType, "Api", StringComparison.OrdinalIgnoreCase) ||
+                                  string.Equals(createDto.SourceType, "LookupTable", StringComparison.OrdinalIgnoreCase)))
+            {
+                await DeleteAllOptionsForFieldAsync(createDto.FieldId);
+            }
+            
             return ConvertToApiResponse(result);
         }
 
@@ -197,6 +205,10 @@ namespace FormBuilder.Services.Services
 
         public async Task<ApiResponse> UpdateAsync(int id, UpdateFieldDataSourceDto updateDto)
         {
+            // Get existing DataSource to check if sourceType changed
+            var existingDataSource = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: true);
+            string? oldSourceType = existingDataSource?.SourceType;
+            
             // If ConfigurationJson is provided, use it; otherwise, build it from individual fields
             if (string.IsNullOrEmpty(updateDto.ConfigurationJson))
             {
@@ -215,6 +227,26 @@ namespace FormBuilder.Services.Services
             }
 
             var result = await base.UpdateAsync(id, updateDto);
+            
+            // If sourceType changed from Static to Api/LookupTable, delete all options
+            if (result.Success && existingDataSource != null)
+            {
+                bool wasStatic = string.Equals(oldSourceType, "Static", StringComparison.OrdinalIgnoreCase);
+                bool isNowApiOrLookup = string.Equals(updateDto.SourceType, "Api", StringComparison.OrdinalIgnoreCase) ||
+                                        string.Equals(updateDto.SourceType, "LookupTable", StringComparison.OrdinalIgnoreCase);
+                
+                if (wasStatic && isNowApiOrLookup)
+                {
+                    await DeleteAllOptionsForFieldAsync(existingDataSource.FieldId);
+                }
+                // Also delete if directly setting to Api/LookupTable (even if old was null)
+                else if (isNowApiOrLookup && (oldSourceType == null || !string.Equals(oldSourceType, "Api", StringComparison.OrdinalIgnoreCase) && 
+                                               !string.Equals(oldSourceType, "LookupTable", StringComparison.OrdinalIgnoreCase)))
+                {
+                    await DeleteAllOptionsForFieldAsync(existingDataSource.FieldId);
+                }
+            }
+            
             return ConvertToApiResponse(result);
         }
 
@@ -274,15 +306,12 @@ namespace FormBuilder.Services.Services
                         break;
 
                     case "LOOKUPTABLE":
-                        // Check if options are cached in FIELD_OPTIONS, otherwise fetch and save
-                        var lookupOptions = await GetLookupTableOptionsAsync(activeDataSource, context);
-                        await SaveOptionsToDatabaseAsync(fieldId, lookupOptions, activeDataSource.Id);
-                        // Read saved options from database to return proper structure
-                        responseOptions = await GetStaticOptionsAsync(fieldId);
+                        // For LookupTable, fetch options from database table (do NOT save to FIELD_OPTIONS)
+                        responseOptions = await GetLookupTableOptionsAsync(activeDataSource, context);
                         break;
 
                     case "API":
-                        // Check if options are cached in FIELD_OPTIONS, otherwise fetch and save
+                        // For Api, fetch options from external API (do NOT save to FIELD_OPTIONS)
                         // Get custom array property names from ConfigurationJson or DTO
                         List<string>? customArrayNames = null;
                         if (!string.IsNullOrEmpty(activeDataSource.ConfigurationJson))
@@ -301,22 +330,15 @@ namespace FormBuilder.Services.Services
                             }
                             catch { }
                         }
-                        var apiOptions = await GetApiOptionsAsync(activeDataSource, requestBodyJson, context, customArrayNames);
-                        await SaveOptionsToDatabaseAsync(fieldId, apiOptions, activeDataSource.Id);
-                        // Read saved options from database to return proper structure
-                        responseOptions = await GetStaticOptionsAsync(fieldId);
+                        responseOptions = await GetApiOptionsAsync(activeDataSource, requestBodyJson, context, customArrayNames);
                         break;
 
                     default:
                         return new ApiResponse(400, $"Unsupported source type: {activeDataSource.SourceType}");
                 }
 
-                // Convert FieldOptionResponseDto to FieldOptionDto for Angular compatibility
-                // Read saved options from database as FieldOptionDto
-                var savedOptions = await _unitOfWork.FieldOptionsRepository.GetActiveByFieldIdAsync(fieldId);
-                var fieldOptionDtos = _mapper.Map<IEnumerable<FieldOptionDto>>(savedOptions);
-                
-                return new ApiResponse(200, "Field options retrieved successfully", fieldOptionDtos);
+                // Return FieldOptionResponseDto (with 'text' and 'value' properties) for frontend compatibility
+                return new ApiResponse(200, "Field options retrieved successfully", responseOptions);
             }
             catch (Exception ex)
             {
@@ -1880,7 +1902,29 @@ namespace FormBuilder.Services.Services
         }
 
         // ================================
-        // SAVE OPTIONS TO DATABASE
+        // DELETE ALL OPTIONS FOR FIELD
+        // ================================
+        private async Task DeleteAllOptionsForFieldAsync(int fieldId)
+        {
+            try
+            {
+                var existingOptions = await _unitOfWork.FieldOptionsRepository.GetByFieldIdAsync(fieldId);
+                foreach (var option in existingOptions)
+                {
+                    _unitOfWork.FieldOptionsRepository.Delete(option);
+                }
+                await _unitOfWork.CompleteAsyn();
+                _logger.LogInformation("Deleted all options for field {FieldId} after setting Api/LookupTable DataSource", fieldId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting options for field {FieldId}", fieldId);
+                // Don't throw - we still want to continue with DataSource creation/update
+            }
+        }
+
+        // ================================
+        // SAVE OPTIONS TO DATABASE (DEPRECATED - Only used for Static DataSource caching, not for Api/LookupTable)
         // ================================
         private async Task SaveOptionsToDatabaseAsync(int fieldId, List<FieldOptionResponseDto> options, int dataSourceId)
         {
