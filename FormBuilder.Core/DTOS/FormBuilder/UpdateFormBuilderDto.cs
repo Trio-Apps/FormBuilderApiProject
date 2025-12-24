@@ -15,8 +15,10 @@ namespace FormBuilder.Core.DTOS.FormBuilder
         [StringLength(100)]
         public string FormCode { get; set; }
 
-        public string Description { get; set; }
+        // Description is optional when editing
+        public string ? Description { get; set; }
 
+        // ForeignDescription is optional when editing
         public string? ForeignDescription { get; set; }
 
         public bool? IsPublished { get; set; }

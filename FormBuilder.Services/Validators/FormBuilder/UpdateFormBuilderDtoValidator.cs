@@ -21,10 +21,12 @@ namespace FormBuilder.Services.Validators.FormBuilder
                 .Matches("^[A-Za-z0-9_]+$")
                 .WithMessage("Form code must be alphanumeric (underscores allowed).");
 
+            // Description is optional - only validate length if provided
             RuleFor(x => x.Description)
                 .MaximumLength(1000)
                 .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
+            // ForeignDescription is optional - only validate length if provided
             RuleFor(x => x.ForeignDescription)
                 .MaximumLength(1000)
                 .When(x => !string.IsNullOrWhiteSpace(x.ForeignDescription));
