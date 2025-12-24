@@ -1190,6 +1190,32 @@
   },
   {
     "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
+    "Method": "GetLookupTableColumns",
+    "RelativePath": "api/FieldDataSources/lookup-tables/{tableName}/columns",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "tableName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.API.Models.ApiResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FieldDataSourcesController",
     "Method": "PreviewDataSource",
     "RelativePath": "api/FieldDataSources/preview",
     "HttpMethod": "POST",

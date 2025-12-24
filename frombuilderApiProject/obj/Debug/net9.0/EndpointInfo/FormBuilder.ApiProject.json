@@ -1978,6 +1978,45 @@
         }
       }
     },
+    "/api/FieldDataSources/lookup-tables/{tableName}/columns": {
+      "get": {
+        "tags": [
+          "FieldDataSources"
+        ],
+        "parameters": [
+          {
+            "name": "tableName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FieldOptions": {
       "get": {
         "tags": [
