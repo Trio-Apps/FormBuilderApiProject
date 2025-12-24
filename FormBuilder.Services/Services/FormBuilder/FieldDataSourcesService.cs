@@ -1952,7 +1952,7 @@ namespace FormBuilder.Services.Services
                 int order = 1;
                 foreach (var option in options)
                 {
-                    var fieldOption = new FormBuilder.Domian.Entitys.froms.FIELD_OPTIONS
+                    var fieldOption = new FIELD_OPTIONS
                     {
                         FieldId = fieldId,
                         OptionValue = option.Value?.ToString() ?? "",

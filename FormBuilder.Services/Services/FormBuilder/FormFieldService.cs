@@ -15,6 +15,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CreateFormFieldDto = FormBuilder.Core.DTOS.FormFields.CreateFormFieldDto;
 using UpdateFormFieldDto = FormBuilder.API.Models.UpdateFormFieldDto;
+using FormBuilder.Domian.Entitys.froms;
 
 namespace FormBuilder.Services.Services
 {
@@ -196,7 +197,7 @@ namespace FormBuilder.Services.Services
             // Create field options if provided (optional)
             if (dto.FieldOptions != null && dto.FieldOptions.Any())
             {
-                var fieldOptions = dto.FieldOptions.Select((option, index) => new FormBuilder.Domian.Entitys.froms.FIELD_OPTIONS
+                var fieldOptions = dto.FieldOptions.Select((option, index) => new FIELD_OPTIONS
                 {
                     FieldId = entity.Id,
                     OptionText = option.OptionText,

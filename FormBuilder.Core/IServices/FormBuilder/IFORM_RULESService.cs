@@ -19,5 +19,8 @@ namespace FormBuilder.Services.Services
 
         // Utility
         Task<bool> RuleExistsAsync(int id);
+
+        // Get active rules by form ID
+        Task<IEnumerable<FormRuleDto>> GetActiveRulesByFormIdAsync(int formBuilderId);
     }
 }

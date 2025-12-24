@@ -16,6 +16,7 @@ using FormBuilder.Services;
 using FormBuilder.Services.Mappings;
 using FormBuilder.Services.Repository;
 using FormBuilder.Services.Services;
+using FormBuilder.Services.Services.FormBuilder;
 using FormBuilder.Services.Services.FileStorage;
 using FormBuilder.Services.Validators.FormBuilder;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,6 +53,7 @@ namespace FormBuilder.API.Extensions
             // Rules
             services.AddScoped<IFORM_RULESService, FORM_RULESService>();
             services.AddScoped<IFORM_RULESRepository, FORM_RULESRepository>();
+            services.AddScoped<IFormRuleEvaluationService, FormRuleEvaluationService>();
 
             // Options
             services.AddScoped<IFieldOptionsService, FieldOptionsService>();

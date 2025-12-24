@@ -2,6 +2,7 @@ using FormBuilder.Core.IServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.IO;
+using FileInfo = FormBuilder.Core.IServices.FileInfo;
 
 namespace FormBuilder.Services.Services.FileStorage
 {
@@ -125,7 +126,7 @@ namespace FormBuilder.Services.Services.FileStorage
             }
         }
 
-        public async Task<FormBuilder.Core.IServices.FileInfo?> GetFileInfoAsync(string filePath, CancellationToken cancellationToken = default)
+        public async Task<FileInfo?> GetFileInfoAsync(string filePath, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -139,7 +140,7 @@ namespace FormBuilder.Services.Services.FileStorage
                 var fileInfo = new System.IO.FileInfo(fullPath);
                 var contentType = GetContentType(filePath);
 
-                return await Task.FromResult(new FormBuilder.Core.IServices.FileInfo
+                return await Task.FromResult(new FileInfo
                 {
                     FilePath = filePath,
                     Size = fileInfo.Length,

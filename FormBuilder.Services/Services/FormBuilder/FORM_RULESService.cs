@@ -1,6 +1,7 @@
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.DTOS.FormRules;
+using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Domian.Entitys.froms;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace FormBuilder.Services.Services
     public class FORM_RULESService : IFORM_RULESService
     {
         private readonly IunitOfwork _unitOfWork;
+        private readonly IFormRuleEvaluationService? _ruleEvaluationService;
 
-        public FORM_RULESService(IunitOfwork unitOfWork)
+        public FORM_RULESService(IunitOfwork unitOfWork, IFormRuleEvaluationService? ruleEvaluationService = null)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _ruleEvaluationService = ruleEvaluationService;
         }
 
         public async Task<FORM_RULES> CreateRuleAsync(CreateFormRuleDto ruleDto)
@@ -43,7 +46,8 @@ namespace FormBuilder.Services.Services
                 FormBuilderId = ruleDto.FormBuilderId,
                 RuleName = ruleDto.RuleName,
                 RuleJson = ruleDto.RuleJson,
-                IsActive = ruleDto.IsActive
+                IsActive = ruleDto.IsActive,
+                ExecutionOrder = ruleDto.ExecutionOrder ?? 1
             };
 
             _unitOfWork.Repositary<FORM_RULES>().Add(ruleEntity);
@@ -75,6 +79,7 @@ namespace FormBuilder.Services.Services
                 RuleName = rule.RuleName,
                 RuleJson = rule.RuleJson,
                 IsActive = rule.IsActive,
+                ExecutionOrder = rule.ExecutionOrder ?? 1,
 
                 // Map the new fields from the included FORM_BUILDERS entity
                 FormName = rule.FORM_BUILDER.FormName,
@@ -105,6 +110,7 @@ namespace FormBuilder.Services.Services
             existingRule.RuleName = ruleDto.RuleName;
             existingRule.RuleJson = ruleDto.RuleJson;
             existingRule.IsActive = ruleDto.IsActive;
+            existingRule.ExecutionOrder = ruleDto.ExecutionOrder ?? existingRule.ExecutionOrder ?? 1;
 
             _unitOfWork.Repositary<FORM_RULES>().Update(existingRule);
             var result = await _unitOfWork.CompleteAsyn();
@@ -143,7 +149,32 @@ namespace FormBuilder.Services.Services
                 .AnyAsync(r => r.Id == id);
         }
 
-        // Private helper method
+        public async Task<IEnumerable<FormRuleDto>> GetActiveRulesByFormIdAsync(int formBuilderId)
+        {
+            // Use filter directly instead of Where after GetAllAsync
+            var activeRules = await _unitOfWork.Repositary<FORM_RULES>()
+                .GetAllAsync(
+                    filter: r => r.FormBuilderId == formBuilderId && r.IsActive,
+                    includes: rule => rule.FORM_BUILDER
+                );
+
+            return activeRules
+                .OrderBy(r => r.ExecutionOrder ?? 1)
+                .Select(rule => new FormRuleDto
+                {
+                    Id = rule.Id,
+                    FormBuilderId = rule.FormBuilderId,
+                    RuleName = rule.RuleName,
+                    RuleJson = rule.RuleJson,
+                    IsActive = rule.IsActive,
+                    ExecutionOrder = rule.ExecutionOrder ?? 1,
+                    FormName = rule.FORM_BUILDER?.FormName,
+                    FormCode = rule.FORM_BUILDER?.FormCode
+                })
+                .ToList();
+        }
+
+        // Private helper method - Enhanced validation for RuleJson structure
         private bool IsValidJson(string jsonString)
         {
             if (string.IsNullOrWhiteSpace(jsonString))
@@ -151,10 +182,68 @@ namespace FormBuilder.Services.Services
 
             try
             {
-                JsonSerializer.Deserialize<object>(jsonString);
+                // First, check if it's valid JSON
+                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
+                    jsonString,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (ruleData == null)
+                    return false;
+
+                // Validate Condition exists and has required fields
+                if (ruleData.Condition == null || string.IsNullOrEmpty(ruleData.Condition.Field))
+                    return false;
+
+                // Validate Operator is valid
+                var validOperators = new[] { "==", "!=", ">", "<", ">=", "<=", "contains", "isEmpty", "isNotEmpty" };
+                if (!validOperators.Contains(ruleData.Condition.Operator))
+                    return false;
+
+                // Validate ValueType
+                if (ruleData.Condition.ValueType != "constant" && ruleData.Condition.ValueType != "field")
+                    return false;
+
+                // Validate Actions exist and are valid
+                if (ruleData.Actions == null || !ruleData.Actions.Any())
+                    return false;
+
+                var validActionTypes = new[] { "SetVisible", "SetReadOnly", "SetMandatory", "SetDefault", "ClearValue", "Compute" };
+                foreach (var action in ruleData.Actions)
+                {
+                    if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                        return false;
+
+                    if (!validActionTypes.Contains(action.Type))
+                        return false;
+
+                    // For Compute action, Expression is required
+                    if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                        return false;
+                }
+
+                // Validate ElseActions if present (optional)
+                if (ruleData.ElseActions != null)
+                {
+                    foreach (var action in ruleData.ElseActions)
+                    {
+                        if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                            return false;
+
+                        if (!validActionTypes.Contains(action.Type))
+                            return false;
+
+                        if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                            return false;
+                    }
+                }
+
                 return true;
             }
             catch (JsonException)
+            {
+                return false;
+            }
+            catch (Exception)
             {
                 return false;
             }

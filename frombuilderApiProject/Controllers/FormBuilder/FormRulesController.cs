@@ -1,9 +1,12 @@
 using FormBuilder.Core.DTOS.FormRules;
+using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FormBuilder.ApiProject.Controllers.FormBuilder
@@ -14,10 +17,17 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
     public class FormRulesController : ControllerBase
     {
         private readonly IFORM_RULESService _formRulesService;
+        private readonly IFormRuleEvaluationService _ruleEvaluationService;
+        private readonly ILogger<FormRulesController>? _logger;
 
-        public FormRulesController(IFORM_RULESService formRulesService)
+        public FormRulesController(
+            IFORM_RULESService formRulesService,
+            IFormRuleEvaluationService ruleEvaluationService,
+            ILogger<FormRulesController>? logger = null)
         {
             _formRulesService = formRulesService ?? throw new ArgumentNullException(nameof(formRulesService));
+            _ruleEvaluationService = ruleEvaluationService ?? throw new ArgumentNullException(nameof(ruleEvaluationService));
+            _logger = logger;
         }
 
         // ----------------------------------------------------------------------
@@ -51,7 +61,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 FormBuilderId = rule.FormBuilderId,
                 RuleName = rule.RuleName,
                 RuleJson = rule.RuleJson,
-                IsActive = rule.IsActive
+                IsActive = rule.IsActive,
+                ExecutionOrder = rule.ExecutionOrder ?? 1
             };
 
             return Ok(ruleDto);
@@ -78,7 +89,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 FormBuilderId = createdRule.FormBuilderId,
                 RuleName = createdRule.RuleName,
                 RuleJson = createdRule.RuleJson,
-                IsActive = createdRule.IsActive
+                IsActive = createdRule.IsActive,
+                ExecutionOrder = createdRule.ExecutionOrder ?? 1
             };
 
             return CreatedAtAction(nameof(GetRuleById), new { id = createdRuleDto.Id }, createdRuleDto);
@@ -195,7 +207,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                         FormBuilderId = createdRule.FormBuilderId,
                         RuleName = createdRule.RuleName,
                         RuleJson = createdRule.RuleJson,
-                        IsActive = createdRule.IsActive
+                        IsActive = createdRule.IsActive,
+                        ExecutionOrder = createdRule.ExecutionOrder ?? 1
                     };
                     createdRules.Add(ruleDto);
 
@@ -247,9 +260,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetActiveRulesByFormId(int formBuilderId)
         {
-            var allRules = await _formRulesService.GetAllRulesAsync();
-            var activeRules = allRules.Where(r => r.FormBuilderId == formBuilderId && r.IsActive).ToList();
-
+            var activeRules = await _formRulesService.GetActiveRulesByFormIdAsync(formBuilderId);
             return Ok(activeRules);
         }
 
@@ -276,6 +287,252 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                         activeCount = g.Count(r => r.IsActive)
                     })
             });
+        }
+
+        // ----------------------------------------------------------------------
+        // --- 8. Validation Endpoint ---
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// Validates form rules against field values (used when submitting form)
+        /// POST /api/FormRules/validate
+        /// </summary>
+        [HttpPost("validate")]
+        [AllowAnonymous] // Allow anonymous for public form submissions
+        [ProducesResponseType(typeof(object), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> ValidateFormRules([FromBody] ValidateFormRulesRequestDto request)
+        {
+            if (request == null || request.FormBuilderId <= 0)
+            {
+                return BadRequest(new { message = "Invalid request. FormBuilderId is required." });
+            }
+
+            if (request.FieldValues == null)
+            {
+                request.FieldValues = new Dictionary<string, object>();
+            }
+
+            try
+            {
+                // Get active rules for the form
+                var allRules = await _formRulesService.GetAllRulesAsync();
+                var activeRules = allRules
+                    .Where(r => r.FormBuilderId == request.FormBuilderId && r.IsActive)
+                    .OrderBy(r => r.ExecutionOrder ?? 1)
+                    .ToList();
+
+                var validationErrors = new List<string>();
+
+                foreach (var rule in activeRules)
+                {
+                    try
+                    {
+                        // Parse RuleJson
+                        var ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+
+                        if (ruleData == null || ruleData.Condition == null)
+                        {
+                            _logger?.LogWarning("Invalid rule JSON for rule {RuleId}: {RuleName}", rule.Id, rule.RuleName);
+                            continue;
+                        }
+
+                        // Evaluate condition
+                        bool conditionMet = _ruleEvaluationService.EvaluateCondition(
+                            ruleData.Condition,
+                            request.FieldValues);
+
+                        if (conditionMet)
+                        {
+                            // Validate actions (check if mandatory fields are filled)
+                            if (ruleData.Actions != null && ruleData.Actions.Any())
+                            {
+                                var actionErrors = _ruleEvaluationService.ValidateActions(
+                                    ruleData.Actions,
+                                    request.FieldValues,
+                                    rule.RuleName);
+                                validationErrors.AddRange(actionErrors);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger?.LogError(ex, "Error evaluating rule {RuleId}: {RuleName}", rule.Id, rule.RuleName);
+                        // Continue with other rules - don't fail entire validation
+                    }
+                }
+
+                if (validationErrors.Any())
+                {
+                    return BadRequest(new
+                    {
+                        valid = false,
+                        errors = validationErrors,
+                        message = "Form validation failed based on rules"
+                    });
+                }
+
+                return Ok(new
+                {
+                    valid = true,
+                    message = "Form validation passed"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error validating form rules");
+                return StatusCode(500, new { message = "Internal server error during validation", error = ex.Message });
+            }
+        }
+
+        // ----------------------------------------------------------------------
+        // --- 9. Evaluate Single Rule Endpoint ---
+        // ----------------------------------------------------------------------
+
+        /// <summary>
+        /// Evaluates a single rule with provided field values (for testing/debugging)
+        /// POST /api/FormRules/evaluate
+        /// </summary>
+        [HttpPost("evaluate")]
+        [ProducesResponseType(typeof(object), 200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
+        public async Task<IActionResult> EvaluateRule([FromBody] EvaluateRuleRequestDto request)
+        {
+            if (request == null || request.RuleId <= 0)
+            {
+                return BadRequest(new { message = "Invalid request. RuleId is required." });
+            }
+
+            if (request.FieldValues == null)
+            {
+                request.FieldValues = new Dictionary<string, object>();
+            }
+
+            try
+            {
+                // Get the rule
+                var rule = await _formRulesService.GetRuleByIdAsync(request.RuleId);
+                if (rule == null)
+                {
+                    return NotFound(new { message = $"Rule with ID {request.RuleId} not found." });
+                }
+
+                // Parse RuleJson
+                var ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+                if (ruleData == null || ruleData.Condition == null)
+                {
+                    return BadRequest(new { message = "Invalid rule JSON structure." });
+                }
+
+                // Evaluate condition
+                bool conditionMet = _ruleEvaluationService.EvaluateCondition(
+                    ruleData.Condition,
+                    request.FieldValues);
+
+                // Get actions that would be applied
+                var appliedActions = new List<object>();
+                var elseActions = new List<object>();
+
+                if (conditionMet)
+                {
+                    if (ruleData.Actions != null && ruleData.Actions.Any())
+                    {
+                        foreach (var action in ruleData.Actions)
+                        {
+                            appliedActions.Add(new
+                            {
+                                type = action.Type,
+                                fieldCode = action.FieldCode,
+                                value = action.Value,
+                                expression = action.Expression
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    if (ruleData.ElseActions != null && ruleData.ElseActions.Any())
+                    {
+                        foreach (var action in ruleData.ElseActions)
+                        {
+                            elseActions.Add(new
+                            {
+                                type = action.Type,
+                                fieldCode = action.FieldCode,
+                                value = action.Value,
+                                expression = action.Expression
+                            });
+                        }
+                    }
+                }
+
+                // Simulate field state after applying actions
+                var simulatedFieldStates = new Dictionary<string, object>(request.FieldValues);
+                
+                if (conditionMet && ruleData.Actions != null)
+                {
+                    foreach (var action in ruleData.Actions)
+                    {
+                        switch (action.Type)
+                        {
+                            case "SetDefault":
+                                if (!simulatedFieldStates.ContainsKey(action.FieldCode))
+                                {
+                                    simulatedFieldStates[action.FieldCode] = action.Value ?? "";
+                                }
+                                break;
+                            case "ClearValue":
+                                if (simulatedFieldStates.ContainsKey(action.FieldCode))
+                                {
+                                    simulatedFieldStates[action.FieldCode] = "";
+                                }
+                                break;
+                            case "Compute":
+                                if (!string.IsNullOrEmpty(action.Expression))
+                                {
+                                    try
+                                    {
+                                        var computedValue = _ruleEvaluationService.EvaluateExpression(
+                                            action.Expression,
+                                            request.FieldValues);
+                                        simulatedFieldStates[action.FieldCode] = computedValue;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        _logger?.LogWarning(ex, "Error computing expression for field {FieldCode}", action.FieldCode);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                return Ok(new
+                {
+                    ruleId = rule.Id,
+                    ruleName = rule.RuleName,
+                    conditionMet,
+                    condition = new
+                    {
+                        field = ruleData.Condition.Field,
+                        @operator = ruleData.Condition.Operator,
+                        value = ruleData.Condition.Value,
+                        valueType = ruleData.Condition.ValueType
+                    },
+                    appliedActions,
+                    elseActions,
+                    simulatedFieldStates,
+                    message = conditionMet ? "Condition is met - THEN actions would be applied" : "Condition is not met - ELSE actions would be applied (if any)"
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error evaluating rule {RuleId}", request.RuleId);
+                return StatusCode(500, new { message = "Internal server error during rule evaluation", error = ex.Message });
+            }
         }
     }
 }

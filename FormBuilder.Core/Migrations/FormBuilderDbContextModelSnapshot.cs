@@ -1771,6 +1771,9 @@ namespace FormBuilder.Core.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ExecutionOrder")
+                        .HasColumnType("int");
+
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
 

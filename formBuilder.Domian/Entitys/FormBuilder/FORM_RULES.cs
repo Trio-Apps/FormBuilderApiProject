@@ -24,5 +24,10 @@ namespace FormBuilder.Domian.Entitys.froms
 
         public string RuleJson { get; set; }
         public new bool IsActive { get; set; }
+
+        /// <summary>
+        /// Execution order - lower numbers execute first
+        /// </summary>
+        public int? ExecutionOrder { get; set; } = 1;
     }
 }

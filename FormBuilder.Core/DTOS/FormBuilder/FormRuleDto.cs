@@ -15,6 +15,11 @@ namespace FormBuilder.Core.DTOS.FormRules
         public string RuleJson { get; set; }
 
         public bool IsActive { get; set; } = true;
+
+        /// <summary>
+        /// Execution order - lower numbers execute first
+        /// </summary>
+        public int? ExecutionOrder { get; set; } = 1;
     }
 
     public class UpdateFormRuleDto
@@ -31,6 +36,11 @@ namespace FormBuilder.Core.DTOS.FormRules
         public string RuleJson { get; set; }
 
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Execution order - lower numbers execute first
+        /// </summary>
+        public int? ExecutionOrder { get; set; }
     }
 
     public class FormRuleDto
@@ -40,6 +50,7 @@ namespace FormBuilder.Core.DTOS.FormRules
         public string RuleName { get; set; }
         public string RuleJson { get; set; }
         public bool IsActive { get; set; }
+        public int? ExecutionOrder { get; set; }
         public string FormName { get; set; }
         public string FormCode { get; set; }
     }
