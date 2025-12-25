@@ -87,6 +87,24 @@ namespace FormBuilder.API.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        /// <summary>
+        /// Create a new draft submission automatically determining Document Type and Series from FormBuilderId
+        /// This endpoint implements the runtime flow: automatically loads Document Type and selects default Series
+        /// </summary>
+        [HttpPost("draft")]
+        public async Task<IActionResult> CreateDraft([FromQuery] int formBuilderId, [FromQuery] int projectId, [FromQuery] string submittedByUserId)
+        {
+            if (formBuilderId <= 0)
+                return BadRequest(new ApiResponse(400, "FormBuilderId is required"));
+            if (projectId <= 0)
+                return BadRequest(new ApiResponse(400, "ProjectId is required"));
+            if (string.IsNullOrWhiteSpace(submittedByUserId))
+                return BadRequest(new ApiResponse(400, "SubmittedByUserId is required"));
+
+            var result = await _formSubmissionsService.CreateDraftAsync(formBuilderId, projectId, submittedByUserId);
+            return StatusCode(result.StatusCode, result);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateFormSubmissionDto updateDto)
         {

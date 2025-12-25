@@ -25,6 +25,7 @@ namespace FormBuilder.Infrastructure.Data
         public DbSet<FIELD_OPTIONS> FIELD_OPTIONS { get; set; }
         public DbSet<FIELD_DATA_SOURCES> FIELD_DATA_SOURCES { get; set; }
         public DbSet<FORM_RULES> FORM_RULES { get; set; }
+        public DbSet<FORM_RULE_ACTIONS> FORM_RULE_ACTIONS { get; set; }
         public DbSet<FORMULAS> FORMULAS { get; set; }
         public DbSet<FORMULA_VARIABLES> FORMULA_VARIABLES { get; set; }
         public DbSet<FORM_VALIDATION_RULES> FORM_VALIDATION_RULES { get; set; }
@@ -195,6 +196,15 @@ namespace FormBuilder.Infrastructure.Data
                 .WithOne(fs => fs.DOCUMENT_TYPES)
                 .HasForeignKey(fs => fs.DocumentTypeId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // ----------------------
+            // FORM_RULES & FORM_RULE_ACTIONS
+            // ----------------------
+            modelBuilder.Entity<FORM_RULES>()
+                .HasMany(r => r.FORM_RULE_ACTIONS)
+                .WithOne(a => a.FORM_RULES)
+                .HasForeignKey(a => a.RuleId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // ----------------------
             // APPROVAL WORKFLOWS & STAGES

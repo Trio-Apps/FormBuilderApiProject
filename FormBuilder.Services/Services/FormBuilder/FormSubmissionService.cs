@@ -170,6 +170,77 @@ namespace FormBuilder.Services
             return new ApiResponse(200, "Form submission created successfully", submissionDto);
         }
 
+        /// <summary>
+        /// Create a new draft submission automatically determining Document Type and Series from FormBuilderId
+        /// This method implements the runtime flow as specified in the requirements:
+        /// 1. Loads the form (FormBuilderId)
+        /// 2. Loads the linked Document Type from DOCUMENT_TYPES
+        /// 3. Selects the correct Document Series from DOCUMENT_SERIES (default series for the project)
+        /// 4. Generates Document Number (Prefix + NextNumber)
+        /// 5. Creates a record in FORM_SUBMISSIONS with Status = Draft
+        /// </summary>
+        public async Task<ApiResponse> CreateDraftAsync(int formBuilderId, int projectId, string submittedByUserId)
+        {
+            // 1. Verify FormBuilder exists
+            var formBuilder = await _unitOfWork.FormBuilderRepository.SingleOrDefaultAsync(fb => fb.Id == formBuilderId);
+            if (formBuilder == null)
+                return new ApiResponse(404, "Form Builder not found");
+
+            // 2. Load the linked Document Type from DOCUMENT_TYPES
+            var documentTypes = await _unitOfWork.DocumentTypeRepository.GetByFormBuilderIdAsync(formBuilderId);
+            var documentType = documentTypes.FirstOrDefault();
+            if (documentType == null)
+                return new ApiResponse(404, "No Document Type configured for this form. Please configure Document Settings in Form Builder.");
+
+            if (!documentType.IsActive)
+                return new ApiResponse(400, "Document Type is not active");
+
+            // 3. Select the correct Document Series from DOCUMENT_SERIES (default series for the project)
+            var series = await _unitOfWork.DocumentSeriesRepository.GetDefaultSeriesAsync(documentType.Id, projectId);
+            if (series == null)
+            {
+                // If no default series, try to get any active series for this document type and project
+                var allSeries = await _unitOfWork.DocumentSeriesRepository.GetByDocumentTypeIdAsync(documentType.Id);
+                series = allSeries.FirstOrDefault(s => s.ProjectId == projectId && s.IsActive);
+                
+                if (series == null)
+                    return new ApiResponse(404, $"No active Document Series found for Document Type '{documentType.Name}' and Project ID {projectId}. Please configure Document Series in Form Builder Document Settings.");
+            }
+
+            if (!series.IsActive)
+                return new ApiResponse(400, "Document Series is not active");
+
+            // 4. Generate Document Number (Prefix + NextNumber)
+            // Use database transaction/locking when incrementing NextNumber
+            var nextNumber = await _unitOfWork.DocumentSeriesRepository.GetNextNumberAsync(series.Id);
+            var documentNumber = $"{series.SeriesCode}-{nextNumber:D6}";
+
+            // 5. Get next version
+            var version = await _unitOfWork.FormSubmissionsRepository.GetNextVersionAsync(formBuilderId);
+
+            // 6. Create a record in FORM_SUBMISSIONS with Status = Draft
+            var entity = new FORM_SUBMISSIONS
+            {
+                FormBuilderId = formBuilderId,
+                Version = version,
+                DocumentTypeId = documentType.Id,
+                SeriesId = series.Id,
+                DocumentNumber = documentNumber,
+                SubmittedByUserId = submittedByUserId,
+                SubmittedDate = DateTime.UtcNow,
+                Status = "Draft",
+                CreatedDate = DateTime.UtcNow,
+                UpdatedDate = DateTime.UtcNow
+            };
+
+            _unitOfWork.FormSubmissionsRepository.Add(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            var createdEntity = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(entity.Id);
+            var submissionDto = _mapper.Map<FormSubmissionDto>(createdEntity);
+            return new ApiResponse(200, "Draft form submission created successfully", submissionDto);
+        }
+
         public async Task<ApiResponse> UpdateAsync(int id, UpdateFormSubmissionDto updateDto)
         {
             if (updateDto == null)

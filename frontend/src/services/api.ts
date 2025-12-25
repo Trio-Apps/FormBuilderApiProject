@@ -1,4 +1,5 @@
 import { FormBuilder, ServiceResult, FieldDataSource, FieldOptionResponse, FieldOption } from '../types/form'
+import { FormRuleDto, CreateFormRuleDto, UpdateFormRuleDto, FormRule, Condition, Action } from '../types/formRules'
 
 const API_BASE_URL = '/api'
 
@@ -586,6 +587,97 @@ export class ApiService {
     }
   }
 
+  // ================================
+  // DOCUMENT SETTINGS - Admin Endpoints
+  // ================================
+
+  /**
+   * Get Document Settings for a Form Builder (Admin)
+   * GET /api/FormBuilderDocumentSettings/form/{formBuilderId}
+   */
+  static async getDocumentSettings(formBuilderId: number): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/FormBuilderDocumentSettings/form/${formBuilderId}`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return null // No settings exist yet
+      }
+      throw new Error(`Failed to fetch document settings: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Save Document Settings for a Form Builder (Admin)
+   * POST /api/FormBuilderDocumentSettings
+   */
+  static async saveDocumentSettings(settings: any): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/FormBuilderDocumentSettings`,
+      {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(settings)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.errorMessage || errorData.message || 'Failed to save document settings')
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Delete Document Settings for a Form Builder (Admin)
+   * DELETE /api/FormBuilderDocumentSettings/form/{formBuilderId}
+   */
+  static async deleteDocumentSettings(formBuilderId: number): Promise<void> {
+    const response = await fetch(
+      `${API_BASE_URL}/FormBuilderDocumentSettings/form/${formBuilderId}`,
+      {
+        method: 'DELETE',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete document settings: ${response.statusText}`)
+    }
+  }
+
+  /**
+   * Get active projects (Admin)
+   * GET /api/Projects/active
+   */
+  static async getActiveProjects(): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/Projects/active`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch projects: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    const projects = data.success !== undefined ? data.data : data
+    return Array.isArray(projects) ? projects : []
+  }
+
   /**
    * Soft delete field data source (Admin)
    * DELETE /api/FieldDataSources/soft-delete/{id}
@@ -604,6 +696,156 @@ export class ApiService {
         throw new Error('Data source not found')
       }
       throw new Error(`Failed to soft delete data source: ${response.statusText}`)
+    }
+  }
+
+  // ================================ 
+  // FORM RULES - Admin Endpoints
+  // ================================
+
+  /**
+   * Get all form rules
+   * GET /api/FormRules
+   */
+  static async getAllFormRules(): Promise<ServiceResult<FormRuleDto[]>> {
+    const response = await fetch(`${API_BASE_URL}/FormRules`, {
+      method: 'GET',
+      headers: this.getAuthHeaders(),
+    })
+    return response.json()
+  }
+
+  /**
+   * Get form rule by ID
+   * GET /api/FormRules/{id}
+   */
+  static async getFormRuleById(id: number): Promise<ServiceResult<FormRuleDto>> {
+    const response = await fetch(`${API_BASE_URL}/FormRules/${id}`, {
+      method: 'GET',
+      headers: this.getAuthHeaders(),
+    })
+    return response.json()
+  }
+
+  /**
+   * Get active rules by form builder ID
+   * GET /api/FormRules/form/{formBuilderId}
+   */
+  static async getActiveRulesByFormId(formBuilderId: number): Promise<ServiceResult<FormRuleDto[]>> {
+    const response = await fetch(`${API_BASE_URL}/FormRules/form/${formBuilderId}`, {
+      method: 'GET',
+      headers: this.getAuthHeaders(),
+    })
+    return response.json()
+  }
+
+  /**
+   * Create form rule
+   * POST /api/FormRules
+   */
+  static async createFormRule(rule: CreateFormRuleDto): Promise<ServiceResult<FormRuleDto>> {
+    const response = await fetch(`${API_BASE_URL}/FormRules`, {
+      method: 'POST',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(rule),
+    })
+    return response.json()
+  }
+
+  /**
+   * Update form rule
+   * PUT /api/FormRules/{id}
+   */
+  static async updateFormRule(id: number, rule: UpdateFormRuleDto): Promise<ServiceResult<boolean>> {
+    const response = await fetch(`${API_BASE_URL}/FormRules/${id}`, {
+      method: 'PUT',
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(rule),
+    })
+    return response.json()
+  }
+
+  /**
+   * Delete form rule
+   * DELETE /api/FormRules/{id}
+   */
+  static async deleteFormRule(id: number): Promise<ServiceResult<boolean>> {
+    const response = await fetch(`${API_BASE_URL}/FormRules/${id}`, {
+      method: 'DELETE',
+      headers: this.getAuthHeaders(),
+    })
+    return response.json()
+  }
+
+  /**
+   * Helper: Convert FormRule (UI) to CreateFormRuleDto
+   */
+  static convertFormRuleToDto(formRule: FormRule, formBuilderId: number): CreateFormRuleDto {
+    return {
+      formBuilderId,
+      ruleName: formRule.ruleName,
+      ruleJson: JSON.stringify({
+        condition: formRule.condition,
+        actions: formRule.actions,
+        elseActions: formRule.elseActions
+      }),
+      isActive: formRule.isActive,
+      executionOrder: formRule.executionOrder
+    }
+  }
+
+  /**
+   * Helper: Convert FormRuleDto to FormRule (UI)
+   */
+  static convertDtoToFormRule(dto: FormRuleDto): FormRule {
+    let condition: Condition = {
+      field: dto.conditionField || '',
+      operator: dto.conditionOperator || '==',
+      value: dto.conditionValue || '',
+      valueType: (dto.conditionValueType as 'constant' | 'field') || 'constant'
+    }
+
+    let actions: Action[] = []
+    let elseActions: Action[] = []
+
+    // Parse ActionsJson if available
+    if (dto.actionsJson) {
+      try {
+        actions = JSON.parse(dto.actionsJson)
+      } catch (e) {
+        console.error('Error parsing ActionsJson:', e)
+      }
+    }
+
+    // Parse ElseActionsJson if available
+    if (dto.elseActionsJson) {
+      try {
+        elseActions = JSON.parse(dto.elseActionsJson)
+      } catch (e) {
+        console.error('Error parsing ElseActionsJson:', e)
+      }
+    }
+
+    // Fallback to RuleJson if ActionsJson/ElseActionsJson are not available
+    if (actions.length === 0 && elseActions.length === 0 && dto.ruleJson) {
+      try {
+        const ruleData = JSON.parse(dto.ruleJson)
+        condition = ruleData.condition || condition
+        actions = ruleData.actions || []
+        elseActions = ruleData.elseActions || []
+      } catch (e) {
+        console.error('Error parsing RuleJson:', e)
+      }
+    }
+
+    return {
+      id: dto.id,
+      ruleName: dto.ruleName,
+      condition,
+      actions,
+      elseActions,
+      isActive: dto.isActive,
+      executionOrder: dto.executionOrder || 1
     }
   }
 }

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FormBuilder.Services.Services
 {
@@ -37,15 +38,99 @@ namespace FormBuilder.Services.Services
             if (!await IsRuleNameUniqueAsync(ruleDto.FormBuilderId, ruleDto.RuleName))
                 throw new InvalidOperationException($"Rule name '{ruleDto.RuleName}' is already in use for this form.");
 
-            // Validate JSON structure
-            if (!IsValidJson(ruleDto.RuleJson))
-                throw new InvalidOperationException("Rule JSON is not valid.");
+            // If RuleJson is provided, parse it and extract fields
+            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
+            {
+                // Validate and parse RuleJson
+                if (!IsValidJson(ruleDto.RuleJson))
+                    throw new InvalidOperationException("Rule JSON is not valid.");
+
+                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
+                    ruleDto.RuleJson,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (ruleData?.Condition == null)
+                    throw new InvalidOperationException("Rule JSON must contain a valid condition.");
+
+                // Extract condition fields from RuleJson
+                ruleDto.ConditionField = ruleData.Condition.Field;
+                ruleDto.ConditionOperator = ruleData.Condition.Operator;
+                ruleDto.ConditionValue = ruleData.Condition.Value?.ToString();
+                ruleDto.ConditionValueType = ruleData.Condition.ValueType ?? "constant";
+
+            }
+
+            // Validate condition fields (required after parsing or direct input)
+            if (string.IsNullOrWhiteSpace(ruleDto.ConditionField))
+                throw new InvalidOperationException("Condition Field is required.");
+
+            if (string.IsNullOrWhiteSpace(ruleDto.ConditionOperator))
+                throw new InvalidOperationException("Condition Operator is required.");
+
+            // Get actions from RuleJson if provided, otherwise use ActionsJson/ElseActionsJson from DTO
+            List<ActionDataDto>? actions = null;
+            List<ActionDataDto>? elseActions = null;
+
+            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
+            {
+                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
+                    ruleDto.RuleJson,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                actions = ruleData?.Actions;
+                elseActions = ruleData?.ElseActions;
+            }
+            else
+            {
+                // Parse from ActionsJson and ElseActionsJson if provided
+                if (!string.IsNullOrWhiteSpace(ruleDto.ActionsJson))
+                {
+                    actions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ActionsJson);
+                }
+                if (!string.IsNullOrWhiteSpace(ruleDto.ElseActionsJson))
+                {
+                    elseActions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ElseActionsJson);
+                }
+            }
+
+            // Validate actions
+            if (actions != null && actions.Any())
+            {
+                var validActionTypes = new[] { "SetVisible", "SetReadOnly", "SetMandatory", "SetDefault", "ClearValue", "Compute" };
+                foreach (var action in actions)
+                {
+                    if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                        throw new InvalidOperationException("Action Type and FieldCode are required.");
+                    if (!validActionTypes.Contains(action.Type))
+                        throw new InvalidOperationException($"Invalid action type: {action.Type}");
+                    if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                        throw new InvalidOperationException("Expression is required for Compute action.");
+                }
+            }
+
+            // Validate else actions
+            if (elseActions != null && elseActions.Any())
+            {
+                var validActionTypes = new[] { "SetVisible", "SetReadOnly", "SetMandatory", "SetDefault", "ClearValue", "Compute" };
+                foreach (var action in elseActions)
+                {
+                    if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                        throw new InvalidOperationException("Else Action Type and FieldCode are required.");
+                    if (!validActionTypes.Contains(action.Type))
+                        throw new InvalidOperationException($"Invalid else action type: {action.Type}");
+                    if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                        throw new InvalidOperationException("Expression is required for Compute action.");
+                }
+            }
 
             var ruleEntity = new FORM_RULES
             {
                 FormBuilderId = ruleDto.FormBuilderId,
                 RuleName = ruleDto.RuleName,
-                RuleJson = ruleDto.RuleJson,
+                ConditionField = ruleDto.ConditionField,
+                ConditionOperator = ruleDto.ConditionOperator,
+                ConditionValue = ruleDto.ConditionValue,
+                ConditionValueType = ruleDto.ConditionValueType ?? "constant",
+                RuleJson = ruleDto.RuleJson, // Keep original JSON for reference
                 IsActive = ruleDto.IsActive,
                 ExecutionOrder = ruleDto.ExecutionOrder ?? 1
             };
@@ -53,13 +138,63 @@ namespace FormBuilder.Services.Services
             _unitOfWork.Repositary<FORM_RULES>().Add(ruleEntity);
             await _unitOfWork.CompleteAsyn();
 
+            // Save Actions to separate table
+            if (actions != null && actions.Any())
+            {
+                int actionOrder = 1;
+                foreach (var action in actions)
+                {
+                    var ruleAction = new FORM_RULE_ACTIONS
+                    {
+                        RuleId = ruleEntity.Id,
+                        ActionType = action.Type,
+                        FieldCode = action.FieldCode,
+                        Value = action.Value?.ToString(),
+                        Expression = action.Expression,
+                        IsElseAction = false,
+                        ActionOrder = actionOrder++,
+                        IsActive = true,
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    _unitOfWork.Repositary<FORM_RULE_ACTIONS>().Add(ruleAction);
+                }
+            }
+
+            // Save Else Actions to separate table
+            if (elseActions != null && elseActions.Any())
+            {
+                int actionOrder = 1;
+                foreach (var action in elseActions)
+                {
+                    var ruleAction = new FORM_RULE_ACTIONS
+                    {
+                        RuleId = ruleEntity.Id,
+                        ActionType = action.Type,
+                        FieldCode = action.FieldCode,
+                        Value = action.Value?.ToString(),
+                        Expression = action.Expression,
+                        IsElseAction = true,
+                        ActionOrder = actionOrder++,
+                        IsActive = true,
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    _unitOfWork.Repositary<FORM_RULE_ACTIONS>().Add(ruleAction);
+                }
+            }
+
+            await _unitOfWork.CompleteAsyn();
+
             return ruleEntity;
         }
 
         public async Task<FORM_RULES> GetRuleByIdAsync(int id)
         {
-            return await _unitOfWork.Repositary<FORM_RULES>()
-                .SingleOrDefaultAsync(r => r.Id == id);
+            var rules = await _unitOfWork.Repositary<FORM_RULES>()
+                .GetAllAsync(
+                    filter: r => r.Id == id,
+                    r => r.FORM_RULE_ACTIONS, r => r.FORM_BUILDER
+                );
+            return rules.FirstOrDefault();
         }
 
         public async Task<IEnumerable<FormRuleDto>> GetAllRulesAsync()
@@ -68,23 +203,58 @@ namespace FormBuilder.Services.Services
             var rules = await _unitOfWork.Repositary<FORM_RULES>()
                 .GetAllAsync(
                     filter: null, // No filter needed for getting all records
-                    includes: rule => rule.FORM_BUILDER // Assuming navigation property is named FORM_BUILDERS
+                    rule => rule.FORM_BUILDER, rule => rule.FORM_RULE_ACTIONS
                 );
 
             // 2. Update the Select to map the new fields from the included entity.
-            return rules.Select(rule => new FormRuleDto
+            return rules.Select(rule => 
             {
-                Id = rule.Id,
-                FormBuilderId = rule.FormBuilderId,
-                RuleName = rule.RuleName,
-                RuleJson = rule.RuleJson,
-                IsActive = rule.IsActive,
-                ExecutionOrder = rule.ExecutionOrder ?? 1,
+                // Load actions from separate table
+                var actions = rule.FORM_RULE_ACTIONS?
+                    .Where(a => !a.IsElseAction && a.IsActive)
+                    .OrderBy(a => a.ActionOrder)
+                    .Select(a => new ActionDataDto
+                    {
+                        Type = a.ActionType,
+                        FieldCode = a.FieldCode,
+                        Value = a.Value,
+                        Expression = a.Expression
+                    })
+                    .ToList() ?? new List<ActionDataDto>();
 
-                // Map the new fields from the included FORM_BUILDERS entity
-                FormName = rule.FORM_BUILDER.FormName,
-                FormCode = rule.FORM_BUILDER.FormCode
+                var elseActions = rule.FORM_RULE_ACTIONS?
+                    .Where(a => a.IsElseAction && a.IsActive)
+                    .OrderBy(a => a.ActionOrder)
+                    .Select(a => new ActionDataDto
+                    {
+                        Type = a.ActionType,
+                        FieldCode = a.FieldCode,
+                        Value = a.Value,
+                        Expression = a.Expression
+                    })
+                    .ToList() ?? new List<ActionDataDto>();
 
+                // Build ActionsJson and ElseActionsJson from loaded actions (for backward compatibility)
+                var actionsJson = actions.Any() ? JsonSerializer.Serialize(actions) : null;
+                var elseActionsJson = elseActions.Any() ? JsonSerializer.Serialize(elseActions) : null;
+
+                return new FormRuleDto
+                {
+                    Id = rule.Id,
+                    FormBuilderId = rule.FormBuilderId,
+                    RuleName = rule.RuleName,
+                    ConditionField = rule.ConditionField,
+                    ConditionOperator = rule.ConditionOperator,
+                    ConditionValue = rule.ConditionValue,
+                    ConditionValueType = rule.ConditionValueType,
+                    ActionsJson = actionsJson, // Generated from separate table
+                    ElseActionsJson = elseActionsJson, // Generated from separate table
+                    RuleJson = rule.RuleJson, // Keep for backward compatibility
+                    IsActive = rule.IsActive,
+                    ExecutionOrder = rule.ExecutionOrder ?? 1,
+                    FormName = rule.FORM_BUILDER?.FormName ?? string.Empty,
+                    FormCode = rule.FORM_BUILDER?.FormCode ?? string.Empty
+                };
             }).ToList();
         }
 
@@ -101,18 +271,174 @@ namespace FormBuilder.Services.Services
             if (!await IsRuleNameUniqueAsync(ruleDto.FormBuilderId, ruleDto.RuleName, id))
                 throw new InvalidOperationException($"Rule name '{ruleDto.RuleName}' is already in use for this form.");
 
-            // Validate JSON structure
-            if (!IsValidJson(ruleDto.RuleJson))
-                throw new InvalidOperationException("Rule JSON is not valid.");
+            // If RuleJson is provided, parse it and extract fields
+            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
+            {
+                // Validate and parse RuleJson
+                if (!IsValidJson(ruleDto.RuleJson))
+                    throw new InvalidOperationException("Rule JSON is not valid.");
+
+                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
+                    ruleDto.RuleJson,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (ruleData?.Condition == null)
+                    throw new InvalidOperationException("Rule JSON must contain a valid condition.");
+
+                // Extract condition fields from RuleJson
+                ruleDto.ConditionField = ruleData.Condition.Field;
+                ruleDto.ConditionOperator = ruleData.Condition.Operator;
+                ruleDto.ConditionValue = ruleData.Condition.Value?.ToString();
+                ruleDto.ConditionValueType = ruleData.Condition.ValueType ?? "constant";
+
+                // Extract Actions as JSON string
+                if (ruleData.Actions != null && ruleData.Actions.Any())
+                {
+                    ruleDto.ActionsJson = JsonSerializer.Serialize(ruleData.Actions);
+                }
+
+                // Extract ElseActions as JSON string
+                if (ruleData.ElseActions != null && ruleData.ElseActions.Any())
+                {
+                    ruleDto.ElseActionsJson = JsonSerializer.Serialize(ruleData.ElseActions);
+                }
+            }
+
+            // Validate condition fields (required after parsing or direct input)
+            if (string.IsNullOrWhiteSpace(ruleDto.ConditionField))
+                throw new InvalidOperationException("Condition Field is required.");
+
+            if (string.IsNullOrWhiteSpace(ruleDto.ConditionOperator))
+                throw new InvalidOperationException("Condition Operator is required.");
+
+            // Validate ActionsJson if provided
+            if (!string.IsNullOrWhiteSpace(ruleDto.ActionsJson))
+            {
+                if (!IsValidActionsJson(ruleDto.ActionsJson))
+                    throw new InvalidOperationException("Actions JSON is not valid.");
+            }
+
+            // Get actions from RuleJson if provided, otherwise use ActionsJson/ElseActionsJson from DTO
+            List<ActionDataDto>? actions = null;
+            List<ActionDataDto>? elseActions = null;
+
+            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
+            {
+                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
+                    ruleDto.RuleJson,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                actions = ruleData?.Actions;
+                elseActions = ruleData?.ElseActions;
+            }
+            else
+            {
+                // Parse from ActionsJson and ElseActionsJson if provided
+                if (!string.IsNullOrWhiteSpace(ruleDto.ActionsJson))
+                {
+                    actions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ActionsJson);
+                }
+                if (!string.IsNullOrWhiteSpace(ruleDto.ElseActionsJson))
+                {
+                    elseActions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ElseActionsJson);
+                }
+            }
+
+            // Validate actions
+            if (actions != null && actions.Any())
+            {
+                var validActionTypes = new[] { "SetVisible", "SetReadOnly", "SetMandatory", "SetDefault", "ClearValue", "Compute" };
+                foreach (var action in actions)
+                {
+                    if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                        throw new InvalidOperationException("Action Type and FieldCode are required.");
+                    if (!validActionTypes.Contains(action.Type))
+                        throw new InvalidOperationException($"Invalid action type: {action.Type}");
+                    if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                        throw new InvalidOperationException("Expression is required for Compute action.");
+                }
+            }
+
+            // Validate else actions
+            if (elseActions != null && elseActions.Any())
+            {
+                var validActionTypes = new[] { "SetVisible", "SetReadOnly", "SetMandatory", "SetDefault", "ClearValue", "Compute" };
+                foreach (var action in elseActions)
+                {
+                    if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                        throw new InvalidOperationException("Else Action Type and FieldCode are required.");
+                    if (!validActionTypes.Contains(action.Type))
+                        throw new InvalidOperationException($"Invalid else action type: {action.Type}");
+                    if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                        throw new InvalidOperationException("Expression is required for Compute action.");
+                }
+            }
 
             // Update properties
             existingRule.FormBuilderId = ruleDto.FormBuilderId;
             existingRule.RuleName = ruleDto.RuleName;
-            existingRule.RuleJson = ruleDto.RuleJson;
+            existingRule.ConditionField = ruleDto.ConditionField;
+            existingRule.ConditionOperator = ruleDto.ConditionOperator;
+            existingRule.ConditionValue = ruleDto.ConditionValue;
+            existingRule.ConditionValueType = ruleDto.ConditionValueType ?? existingRule.ConditionValueType ?? "constant";
+            existingRule.RuleJson = ruleDto.RuleJson; // Keep original JSON for reference
             existingRule.IsActive = ruleDto.IsActive;
             existingRule.ExecutionOrder = ruleDto.ExecutionOrder ?? existingRule.ExecutionOrder ?? 1;
 
             _unitOfWork.Repositary<FORM_RULES>().Update(existingRule);
+
+            // Delete existing actions
+            var existingActions = await _unitOfWork.Repositary<FORM_RULE_ACTIONS>()
+                .GetAllAsync(filter: a => a.RuleId == existingRule.Id);
+            
+            foreach (var action in existingActions)
+            {
+                _unitOfWork.Repositary<FORM_RULE_ACTIONS>().Delete(action);
+            }
+
+            // Save new Actions to separate table
+            if (actions != null && actions.Any())
+            {
+                int actionOrder = 1;
+                foreach (var action in actions)
+                {
+                    var ruleAction = new FORM_RULE_ACTIONS
+                    {
+                        RuleId = existingRule.Id,
+                        ActionType = action.Type,
+                        FieldCode = action.FieldCode,
+                        Value = action.Value?.ToString(),
+                        Expression = action.Expression,
+                        IsElseAction = false,
+                        ActionOrder = actionOrder++,
+                        IsActive = true,
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    _unitOfWork.Repositary<FORM_RULE_ACTIONS>().Add(ruleAction);
+                }
+            }
+
+            // Save new Else Actions to separate table
+            if (elseActions != null && elseActions.Any())
+            {
+                int actionOrder = 1;
+                foreach (var action in elseActions)
+                {
+                    var ruleAction = new FORM_RULE_ACTIONS
+                    {
+                        RuleId = existingRule.Id,
+                        ActionType = action.Type,
+                        FieldCode = action.FieldCode,
+                        Value = action.Value?.ToString(),
+                        Expression = action.Expression,
+                        IsElseAction = true,
+                        ActionOrder = actionOrder++,
+                        IsActive = true,
+                        CreatedDate = DateTime.UtcNow
+                    };
+                    _unitOfWork.Repositary<FORM_RULE_ACTIONS>().Add(ruleAction);
+                }
+            }
+
             var result = await _unitOfWork.CompleteAsyn();
 
             return result > 0;
@@ -155,26 +481,105 @@ namespace FormBuilder.Services.Services
             var activeRules = await _unitOfWork.Repositary<FORM_RULES>()
                 .GetAllAsync(
                     filter: r => r.FormBuilderId == formBuilderId && r.IsActive,
-                    includes: rule => rule.FORM_BUILDER
+                    rule => rule.FORM_BUILDER, rule => rule.FORM_RULE_ACTIONS
                 );
 
             return activeRules
                 .OrderBy(r => r.ExecutionOrder ?? 1)
-                .Select(rule => new FormRuleDto
+                .Select(rule => 
                 {
-                    Id = rule.Id,
-                    FormBuilderId = rule.FormBuilderId,
-                    RuleName = rule.RuleName,
-                    RuleJson = rule.RuleJson,
-                    IsActive = rule.IsActive,
-                    ExecutionOrder = rule.ExecutionOrder ?? 1,
-                    FormName = rule.FORM_BUILDER?.FormName,
-                    FormCode = rule.FORM_BUILDER?.FormCode
+                    // Load actions from separate table
+                    var actions = rule.FORM_RULE_ACTIONS?
+                        .Where(a => !a.IsElseAction && a.IsActive)
+                        .OrderBy(a => a.ActionOrder)
+                        .Select(a => new ActionDataDto
+                        {
+                            Type = a.ActionType,
+                            FieldCode = a.FieldCode,
+                            Value = a.Value,
+                            Expression = a.Expression
+                        })
+                        .ToList() ?? new List<ActionDataDto>();
+
+                    var elseActions = rule.FORM_RULE_ACTIONS?
+                        .Where(a => a.IsElseAction && a.IsActive)
+                        .OrderBy(a => a.ActionOrder)
+                        .Select(a => new ActionDataDto
+                        {
+                            Type = a.ActionType,
+                            FieldCode = a.FieldCode,
+                            Value = a.Value,
+                            Expression = a.Expression
+                        })
+                        .ToList() ?? new List<ActionDataDto>();
+
+                    // Build ActionsJson and ElseActionsJson from loaded actions
+                    var actionsJson = actions.Any() ? JsonSerializer.Serialize(actions) : null;
+                    var elseActionsJson = elseActions.Any() ? JsonSerializer.Serialize(elseActions) : null;
+
+                    return new FormRuleDto
+                    {
+                        Id = rule.Id,
+                        FormBuilderId = rule.FormBuilderId,
+                        RuleName = rule.RuleName,
+                        ConditionField = rule.ConditionField,
+                        ConditionOperator = rule.ConditionOperator,
+                        ConditionValue = rule.ConditionValue,
+                        ConditionValueType = rule.ConditionValueType,
+                        ActionsJson = actionsJson,
+                        ElseActionsJson = elseActionsJson,
+                        RuleJson = rule.RuleJson,
+                        IsActive = rule.IsActive,
+                        ExecutionOrder = rule.ExecutionOrder ?? 1,
+                        FormName = rule.FORM_BUILDER?.FormName ?? string.Empty,
+                        FormCode = rule.FORM_BUILDER?.FormCode ?? string.Empty
+                    };
                 })
                 .ToList();
         }
 
-        // Private helper method - Enhanced validation for RuleJson structure
+        // Private helper method - Validate ActionsJson structure
+        private bool IsValidActionsJson(string actionsJson)
+        {
+            if (string.IsNullOrWhiteSpace(actionsJson))
+                return false;
+
+            try
+            {
+                var actions = JsonSerializer.Deserialize<List<ActionDataDto>>(
+                    actionsJson,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                if (actions == null || !actions.Any())
+                    return false;
+
+                var validActionTypes = new[] { "SetVisible", "SetReadOnly", "SetMandatory", "SetDefault", "ClearValue", "Compute" };
+                foreach (var action in actions)
+                {
+                    if (string.IsNullOrEmpty(action.Type) || string.IsNullOrEmpty(action.FieldCode))
+                        return false;
+
+                    if (!validActionTypes.Contains(action.Type))
+                        return false;
+
+                    // For Compute action, Expression is required
+                    if (action.Type == "Compute" && string.IsNullOrEmpty(action.Expression))
+                        return false;
+                }
+
+                return true;
+            }
+            catch (JsonException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        // Private helper method - Enhanced validation for RuleJson structure (for backward compatibility)
         private bool IsValidJson(string jsonString)
         {
             if (string.IsNullOrWhiteSpace(jsonString))

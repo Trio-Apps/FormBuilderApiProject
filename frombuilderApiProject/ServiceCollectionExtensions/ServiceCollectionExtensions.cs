@@ -81,6 +81,9 @@ namespace FormBuilder.API.Extensions
             services.AddScoped<IDocumentSeriesService, DocumentSeriesService>();
             services.AddScoped<IDocumentSeriesRepository, DocumentSeriesRepository>();
 
+            // Form Builder Document Settings
+            services.AddScoped<IFormBuilderDocumentSettingsService, FormBuilderDocumentSettingsService>();
+
             // Projects
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IProjectRepository, ProjectRepository>();

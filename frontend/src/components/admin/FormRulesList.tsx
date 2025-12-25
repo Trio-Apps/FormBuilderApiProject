@@ -1,16 +1,8 @@
 import { useState, useEffect } from 'react'
 import FormRuleBuilder from './FormRuleBuilder'
+import { ApiService } from '../../services/api'
+import { FormRule } from '../../types/formRules'
 import './FormRulesList.css'
-
-interface FormRule {
-  id: number
-  ruleName: string
-  condition: any
-  actions: any[]
-  elseActions?: any[]
-  isActive: boolean
-  executionOrder: number
-}
 
 interface FormRulesListProps {
   formBuilderId: number
@@ -30,13 +22,17 @@ const FormRulesList = ({ formBuilderId, fields }: FormRulesListProps) => {
   const loadRules = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/FormRules/form/${formBuilderId}`)
-      if (!response.ok) throw new Error('Failed to load rules')
-      const data = await response.json()
-      setRules(data)
-    } catch (error) {
+      const result = await ApiService.getActiveRulesByFormId(formBuilderId)
+      if (result.success && result.data) {
+        // Convert DTOs to FormRule objects
+        const formRules = result.data.map(dto => ApiService.convertDtoToFormRule(dto))
+        setRules(formRules)
+      } else {
+        throw new Error(result.message || 'Failed to load rules')
+      }
+    } catch (error: any) {
       console.error('Error loading rules:', error)
-      alert('Failed to load rules')
+      alert(error.message || 'Failed to load rules')
     } finally {
       setLoading(false)
     }
@@ -44,16 +40,9 @@ const FormRulesList = ({ formBuilderId, fields }: FormRulesListProps) => {
 
   const handleSaveRule = async (rule: FormRule) => {
     try {
-      const url = rule.id 
-        ? `/api/FormRules/${rule.id}` 
-        : '/api/FormRules'
-      
-      const method = rule.id ? 'PUT' : 'POST'
-
-      const response = await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      if (rule.id) {
+        // Update existing rule
+        const updateDto = {
           formBuilderId,
           ruleName: rule.ruleName,
           ruleJson: JSON.stringify({
@@ -63,17 +52,26 @@ const FormRulesList = ({ formBuilderId, fields }: FormRulesListProps) => {
           }),
           isActive: rule.isActive,
           executionOrder: rule.executionOrder
-        })
-      })
-
-      if (!response.ok) throw new Error('Failed to save rule')
+        }
+        const result = await ApiService.updateFormRule(rule.id, updateDto)
+        if (!result.success) {
+          throw new Error(result.message || 'Failed to update rule')
+        }
+      } else {
+        // Create new rule
+        const createDto = ApiService.convertFormRuleToDto(rule, formBuilderId)
+        const result = await ApiService.createFormRule(createDto)
+        if (!result.success) {
+          throw new Error(result.message || 'Failed to create rule')
+        }
+      }
 
       await loadRules()
       setShowBuilder(false)
       setEditingRule(null)
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving rule:', error)
-      alert('Failed to save rule')
+      alert(error.message || 'Failed to save rule')
     }
   }
 
@@ -81,43 +79,38 @@ const FormRulesList = ({ formBuilderId, fields }: FormRulesListProps) => {
     if (!confirm('Are you sure you want to delete this rule?')) return
 
     try {
-      const response = await fetch(`/api/FormRules/${id}`, {
-        method: 'DELETE'
-      })
-
-      if (!response.ok) throw new Error('Failed to delete rule')
-
+      const result = await ApiService.deleteFormRule(id)
+      if (!result.success) {
+        throw new Error(result.message || 'Failed to delete rule')
+      }
       await loadRules()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error deleting rule:', error)
-      alert('Failed to delete rule')
+      alert(error.message || 'Failed to delete rule')
     }
   }
 
   const handleToggleActive = async (rule: FormRule) => {
     try {
-      const response = await fetch(`/api/FormRules/${rule.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          formBuilderId: rule.id,
-          ruleName: rule.ruleName,
-          ruleJson: JSON.stringify({
-            condition: rule.condition,
-            actions: rule.actions,
-            elseActions: rule.elseActions
-          }),
-          isActive: !rule.isActive,
-          executionOrder: rule.executionOrder
-        })
-      })
-
-      if (!response.ok) throw new Error('Failed to update rule')
-
+      const updateDto = {
+        formBuilderId,
+        ruleName: rule.ruleName,
+        ruleJson: JSON.stringify({
+          condition: rule.condition,
+          actions: rule.actions,
+          elseActions: rule.elseActions
+        }),
+        isActive: !rule.isActive,
+        executionOrder: rule.executionOrder
+      }
+      const result = await ApiService.updateFormRule(rule.id, updateDto)
+      if (!result.success) {
+        throw new Error(result.message || 'Failed to update rule')
+      }
       await loadRules()
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating rule:', error)
-      alert('Failed to update rule')
+      alert(error.message || 'Failed to update rule')
     }
   }
 

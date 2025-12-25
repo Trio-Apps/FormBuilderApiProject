@@ -32,9 +32,20 @@ namespace FormBuilder.Core.IServices.FormBuilder
             string ruleName);
 
         /// <summary>
-        /// Parses RuleJson string into FormRuleDataDto
+        /// Parses RuleJson string into FormRuleDataDto (for backward compatibility)
         /// </summary>
         FormRuleDataDto? ParseRuleJson(string ruleJson);
+
+        /// <summary>
+        /// Builds FormRuleDataDto from separate fields (new approach)
+        /// </summary>
+        FormRuleDataDto? BuildRuleDataFromFields(
+            string? conditionField,
+            string? conditionOperator,
+            string? conditionValue,
+            string? conditionValueType,
+            string? actionsJson,
+            string? elseActionsJson);
     }
 }
 

@@ -16,6 +16,7 @@ namespace FormBuilder.Domain.Interfaces.Services
         Task<ApiResponse> GetByUserIdAsync(string userId);
         Task<ApiResponse> GetByStatusAsync(string status);
         Task<ApiResponse> CreateAsync(CreateFormSubmissionDto createDto);
+        Task<ApiResponse> CreateDraftAsync(int formBuilderId, int projectId, string submittedByUserId);
         Task<ApiResponse> UpdateAsync(int id, UpdateFormSubmissionDto updateDto);
         Task<ApiResponse> DeleteAsync(int id);
         Task<ApiResponse> SubmitAsync(SubmitFormDto submitDto);

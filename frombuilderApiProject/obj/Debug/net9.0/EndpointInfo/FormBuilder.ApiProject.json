@@ -3136,6 +3136,125 @@
         }
       }
     },
+    "/api/FormBuilderDocumentSettings/form/{formBuilderId}": {
+      "get": {
+        "tags": [
+          "FormBuilderDocumentSettings"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DocumentSettingsDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "FormBuilderDocumentSettings"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/FormBuilderDocumentSettings": {
+      "post": {
+        "tags": [
+          "FormBuilderDocumentSettings"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSettingsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSettingsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSettingsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DocumentSettingsDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Microsoft.AspNetCore.Mvc.ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/FormFields": {
       "get": {
         "tags": [
@@ -8206,6 +8325,43 @@
         }
       }
     },
+    "/api/FormSubmissions/draft": {
+      "post": {
+        "tags": [
+          "FormSubmissions"
+        ],
+        "parameters": [
+          {
+            "name": "formBuilderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "submittedByUserId",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/FormSubmissions/submit": {
       "post": {
         "tags": [
@@ -13045,6 +13201,96 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormBuilder.DocumentSeriesDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentTypeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "projectName": {
+            "type": "string",
+            "nullable": true
+          },
+          "seriesCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "nextNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.DocumentSettingsDto": {
+        "type": "object",
+        "properties": {
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "formBuilderName": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "documentName": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuCaption": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentMenuId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "documentSeries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.DocumentSeriesDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormBuilder.DuplicateFormulaDto": {
         "required": [
           "newCode",
@@ -13295,6 +13541,90 @@
             "type": "array",
             "items": {
               "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSeriesDto": {
+        "required": [
+          "projectId",
+          "seriesCode"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "projectId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "seriesCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "nextNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isDefault": {
+            "type": "boolean"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSettingsDto": {
+        "required": [
+          "documentCode",
+          "documentName",
+          "formBuilderId",
+          "menuCaption"
+        ],
+        "type": "object",
+        "properties": {
+          "formBuilderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "documentName": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          },
+          "documentCode": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "menuCaption": {
+            "maxLength": 200,
+            "minLength": 0,
+            "type": "string"
+          },
+          "menuOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentMenuId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "documentSeries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSeriesDto"
             },
             "nullable": true
           }
@@ -13927,7 +14257,6 @@
       "FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto": {
         "required": [
           "formBuilderId",
-          "ruleJson",
           "ruleName"
         ],
         "type": "object",
@@ -13941,9 +14270,41 @@
             "minLength": 0,
             "type": "string"
           },
+          "conditionField": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "conditionOperator": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "conditionValue": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "conditionValueType": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "actionsJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "elseActionsJson": {
+            "type": "string",
+            "nullable": true
+          },
           "ruleJson": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "isActive": {
             "type": "boolean"
@@ -13989,6 +14350,30 @@
             "type": "string",
             "nullable": true
           },
+          "conditionField": {
+            "type": "string",
+            "nullable": true
+          },
+          "conditionOperator": {
+            "type": "string",
+            "nullable": true
+          },
+          "conditionValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "conditionValueType": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionsJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "elseActionsJson": {
+            "type": "string",
+            "nullable": true
+          },
           "ruleJson": {
             "type": "string",
             "nullable": true
@@ -14015,7 +14400,6 @@
       "FormBuilder.Core.DTOS.FormRules.UpdateFormRuleDto": {
         "required": [
           "formBuilderId",
-          "ruleJson",
           "ruleName"
         ],
         "type": "object",
@@ -14029,9 +14413,41 @@
             "minLength": 0,
             "type": "string"
           },
+          "conditionField": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "conditionOperator": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "conditionValue": {
+            "maxLength": 500,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "conditionValueType": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "actionsJson": {
+            "type": "string",
+            "nullable": true
+          },
+          "elseActionsJson": {
+            "type": "string",
+            "nullable": true
+          },
           "ruleJson": {
-            "minLength": 1,
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "isActive": {
             "type": "boolean"

@@ -43,25 +43,25 @@ namespace FormBuilder.Services
             return ConvertToApiResponse(result);
         }
 
-        public async Task<ApiResponse> CreateAsync(ApprovalStageCreateDto dto)
+        public new async Task<ApiResponse> CreateAsync(ApprovalStageCreateDto dto)
         {
             var result = await base.CreateAsync(dto);
             return ConvertToApiResponse(result);
         }
 
-        public async Task<ApiResponse> UpdateAsync(int id, ApprovalStageUpdateDto dto)
+        public new async Task<ApiResponse> UpdateAsync(int id, ApprovalStageUpdateDto dto)
         {
             var result = await base.UpdateAsync(id, dto);
             return ConvertToApiResponse(result);
         }
 
-        public async Task<ApiResponse> DeleteAsync(int id)
+        public new async Task<ApiResponse> DeleteAsync(int id)
         {
             var result = await base.DeleteAsync(id);
             return ConvertToApiResponse(result);
         }
 
-        public async Task<ApiResponse> ToggleActiveAsync(int id, bool isActive)
+        public new async Task<ApiResponse> ToggleActiveAsync(int id, bool isActive)
         {
             var result = await base.ToggleActiveAsync(id, isActive);
             return ConvertToApiResponse(result);

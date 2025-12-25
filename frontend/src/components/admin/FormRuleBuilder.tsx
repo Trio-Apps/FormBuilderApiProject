@@ -1,29 +1,6 @@
 import { useState } from 'react'
+import { Condition, Action, FormRule } from '../../types/formRules'
 import './FormRuleBuilder.css'
-
-interface Condition {
-  field: string
-  operator: string
-  value: any
-  valueType: 'constant' | 'field'
-}
-
-interface Action {
-  type: string
-  fieldCode: string
-  value?: any
-  expression?: string
-}
-
-interface FormRule {
-  id?: number
-  ruleName: string
-  condition: Condition
-  actions: Action[]
-  elseActions?: Action[]
-  isActive: boolean
-  executionOrder: number
-}
 
 interface FormRuleBuilderProps {
   formBuilderId: number

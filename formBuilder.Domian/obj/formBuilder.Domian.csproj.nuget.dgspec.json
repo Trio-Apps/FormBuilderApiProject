@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {}
+    "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {}
   },
   "projects": {
-    "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
+    "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+        "projectUniqueName": "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
         "projectName": "FormBuilder.Domian",
-        "projectPath": "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
-        "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
-        "outputPath": "D:\\FormBuilderApiProject\\formBuilder.Domian\\obj\\",
+        "projectPath": "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj",
+        "packagesPath": "C:\\Users\\master\\.nuget\\packages\\",
+        "outputPath": "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Trio Apps 3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\master\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -75,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

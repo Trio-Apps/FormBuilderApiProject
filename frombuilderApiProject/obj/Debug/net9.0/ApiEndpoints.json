@@ -2036,6 +2036,97 @@
     ]
   },
   {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderDocumentSettingsController",
+    "Method": "SaveDocumentSettings",
+    "RelativePath": "api/FormBuilderDocumentSettings",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.SaveDocumentSettingsDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.DocumentSettingsDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 400
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderDocumentSettingsController",
+    "Method": "GetDocumentSettings",
+    "RelativePath": "api/FormBuilderDocumentSettings/form/{formBuilderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "FormBuilder.Core.DTOS.FormBuilder.DocumentSettingsDto",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormBuilderDocumentSettingsController",
+    "Method": "DeleteDocumentSettings",
+    "RelativePath": "api/FormBuilderDocumentSettings/form/{formBuilderId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 204
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
     "ContainingType": "FormBuilder.ApiProject.Controllers.FormBuilder.FormFieldsController",
     "Method": "GetAllFormFields",
     "RelativePath": "api/FormFields",
@@ -5198,6 +5289,32 @@
         "Name": "documentNumber",
         "Type": "System.String",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.FormSubmissionsController",
+    "Method": "CreateDraft",
+    "RelativePath": "api/FormSubmissions/draft",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "formBuilderId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "projectId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "submittedByUserId",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

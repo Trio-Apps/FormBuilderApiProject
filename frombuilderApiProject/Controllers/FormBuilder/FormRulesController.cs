@@ -55,12 +55,49 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 return NotFound($"Rule with ID {id} not found.");
             }
 
+            // Load actions from separate table
+            var actions = rule.FORM_RULE_ACTIONS?
+                .Where(a => !a.IsElseAction && a.IsActive)
+                .OrderBy(a => a.ActionOrder)
+                .Select(a => new
+                {
+                    type = a.ActionType,
+                    fieldCode = a.FieldCode,
+                    value = a.Value,
+                    expression = a.Expression
+                })
+                .Cast<object>()
+                .ToList() ?? new List<object>();
+
+            var elseActions = rule.FORM_RULE_ACTIONS?
+                .Where(a => a.IsElseAction && a.IsActive)
+                .OrderBy(a => a.ActionOrder)
+                .Select(a => new
+                {
+                    type = a.ActionType,
+                    fieldCode = a.FieldCode,
+                    value = a.Value,
+                    expression = a.Expression
+                })
+                .Cast<object>()
+                .ToList() ?? new List<object>();
+
+            // Build ActionsJson and ElseActionsJson from loaded actions
+            var actionsJson = actions.Any() ? System.Text.Json.JsonSerializer.Serialize(actions) : null;
+            var elseActionsJson = elseActions.Any() ? System.Text.Json.JsonSerializer.Serialize(elseActions) : null;
+
             var ruleDto = new FormRuleDto
             {
                 Id = rule.Id,
                 FormBuilderId = rule.FormBuilderId,
                 RuleName = rule.RuleName,
-                RuleJson = rule.RuleJson,
+                ConditionField = rule.ConditionField,
+                ConditionOperator = rule.ConditionOperator,
+                ConditionValue = rule.ConditionValue,
+                ConditionValueType = rule.ConditionValueType,
+                ActionsJson = actionsJson, // Generated from FORM_RULE_ACTIONS table
+                ElseActionsJson = elseActionsJson, // Generated from FORM_RULE_ACTIONS table
+                RuleJson = rule.RuleJson, // Keep for backward compatibility
                 IsActive = rule.IsActive,
                 ExecutionOrder = rule.ExecutionOrder ?? 1
             };
@@ -83,12 +120,52 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 
             var createdRule = await _formRulesService.CreateRuleAsync(createDto);
 
+            // Reload rule with actions to get the complete data
+            var ruleWithActions = await _formRulesService.GetRuleByIdAsync(createdRule.Id);
+
+            // Load actions from separate table
+            var actions = ruleWithActions?.FORM_RULE_ACTIONS?
+                .Where(a => !a.IsElseAction && a.IsActive)
+                .OrderBy(a => a.ActionOrder)
+                .Select(a => new
+                {
+                    type = a.ActionType,
+                    fieldCode = a.FieldCode,
+                    value = a.Value,
+                    expression = a.Expression
+                })
+                .Cast<object>()
+                .ToList() ?? new List<object>();
+
+            var elseActions = ruleWithActions?.FORM_RULE_ACTIONS?
+                .Where(a => a.IsElseAction && a.IsActive)
+                .OrderBy(a => a.ActionOrder)
+                .Select(a => new
+                {
+                    type = a.ActionType,
+                    fieldCode = a.FieldCode,
+                    value = a.Value,
+                    expression = a.Expression
+                })
+                .Cast<object>()
+                .ToList() ?? new List<object>();
+
+            // Build ActionsJson and ElseActionsJson from loaded actions
+            var actionsJson = actions.Any() ? System.Text.Json.JsonSerializer.Serialize(actions) : null;
+            var elseActionsJson = elseActions.Any() ? System.Text.Json.JsonSerializer.Serialize(elseActions) : null;
+
             var createdRuleDto = new FormRuleDto
             {
                 Id = createdRule.Id,
                 FormBuilderId = createdRule.FormBuilderId,
                 RuleName = createdRule.RuleName,
-                RuleJson = createdRule.RuleJson,
+                ConditionField = createdRule.ConditionField,
+                ConditionOperator = createdRule.ConditionOperator,
+                ConditionValue = createdRule.ConditionValue,
+                ConditionValueType = createdRule.ConditionValueType,
+                ActionsJson = actionsJson, // Generated from FORM_RULE_ACTIONS table
+                ElseActionsJson = elseActionsJson, // Generated from FORM_RULE_ACTIONS table
+                RuleJson = createdRule.RuleJson, // Keep for backward compatibility
                 IsActive = createdRule.IsActive,
                 ExecutionOrder = createdRule.ExecutionOrder ?? 1
             };
@@ -329,12 +406,30 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 {
                     try
                     {
-                        // Parse RuleJson
-                        var ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+                        // Build rule data from fields (new approach) or parse RuleJson (backward compatibility)
+                        FormRuleDataDto? ruleData = null;
+                        
+                        if (!string.IsNullOrWhiteSpace(rule.ConditionField) && !string.IsNullOrWhiteSpace(rule.ConditionOperator))
+                        {
+                            // Use new approach with separate fields
+                            // ActionsJson and ElseActionsJson are now generated from FORM_RULE_ACTIONS table
+                            ruleData = _ruleEvaluationService.BuildRuleDataFromFields(
+                                rule.ConditionField,
+                                rule.ConditionOperator,
+                                rule.ConditionValue,
+                                rule.ConditionValueType,
+                                rule.ActionsJson, // This is generated from FORM_RULE_ACTIONS in Service
+                                rule.ElseActionsJson); // This is generated from FORM_RULE_ACTIONS in Service
+                        }
+                        else if (!string.IsNullOrWhiteSpace(rule.RuleJson))
+                        {
+                            // Fallback to old RuleJson approach for backward compatibility
+                            ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+                        }
 
                         if (ruleData == null || ruleData.Condition == null)
                         {
-                            _logger?.LogWarning("Invalid rule JSON for rule {RuleId}: {RuleName}", rule.Id, rule.RuleName);
+                            _logger?.LogWarning("Invalid rule structure for rule {RuleId}: {RuleName}", rule.Id, rule.RuleName);
                             continue;
                         }
 
@@ -420,11 +515,66 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                     return NotFound(new { message = $"Rule with ID {request.RuleId} not found." });
                 }
 
-                // Parse RuleJson
-                var ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+                // Build rule data from fields (new approach) or parse RuleJson (backward compatibility)
+                FormRuleDataDto? ruleData = null;
+                
+                if (!string.IsNullOrWhiteSpace(rule.ConditionField) && !string.IsNullOrWhiteSpace(rule.ConditionOperator))
+                {
+                    // Build ActionsJson and ElseActionsJson from FORM_RULE_ACTIONS
+                    string? actionsJson = null;
+                    string? elseActionsJson = null;
+
+                    if (rule.FORM_RULE_ACTIONS != null && rule.FORM_RULE_ACTIONS.Any())
+                    {
+                        var actions = rule.FORM_RULE_ACTIONS
+                            .Where(a => !a.IsElseAction && a.IsActive)
+                            .OrderBy(a => a.ActionOrder)
+                            .Select(a => new
+                            {
+                                Type = a.ActionType,
+                                FieldCode = a.FieldCode,
+                                Value = a.Value,
+                                Expression = a.Expression
+                            })
+                            .ToList();
+
+                        var elseActionsList = rule.FORM_RULE_ACTIONS
+                            .Where(a => a.IsElseAction && a.IsActive)
+                            .OrderBy(a => a.ActionOrder)
+                            .Select(a => new
+                            {
+                                Type = a.ActionType,
+                                FieldCode = a.FieldCode,
+                                Value = a.Value,
+                                Expression = a.Expression
+                            })
+                            .ToList();
+
+                        if (actions.Any())
+                            actionsJson = System.Text.Json.JsonSerializer.Serialize(actions);
+                        
+                        if (elseActionsList.Any())
+                            elseActionsJson = System.Text.Json.JsonSerializer.Serialize(elseActionsList);
+                    }
+
+                    // Use new approach with separate fields
+                    ruleData = _ruleEvaluationService.BuildRuleDataFromFields(
+                        rule.ConditionField,
+                        rule.ConditionOperator,
+                        rule.ConditionValue,
+                        rule.ConditionValueType,
+                        actionsJson,
+                        elseActionsJson);
+                }
+                else if (!string.IsNullOrWhiteSpace(rule.RuleJson))
+                {
+                    // Fallback to old RuleJson approach for backward compatibility
+                    ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+                }
+
                 if (ruleData == null || ruleData.Condition == null)
                 {
-                    return BadRequest(new { message = "Invalid rule JSON structure." });
+                    return BadRequest(new { message = "Invalid rule structure. Condition fields are required." });
                 }
 
                 // Evaluate condition

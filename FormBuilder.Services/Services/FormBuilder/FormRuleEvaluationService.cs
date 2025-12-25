@@ -290,6 +290,9 @@ namespace FormBuilder.Services.Services.FormBuilder
         /// <summary>
         /// Parses RuleJson string into FormRuleDataDto
         /// </summary>
+        /// <summary>
+        /// Parse RuleJson (for backward compatibility)
+        /// </summary>
         public FormRuleDataDto? ParseRuleJson(string ruleJson)
         {
             if (string.IsNullOrWhiteSpace(ruleJson))
@@ -318,6 +321,62 @@ namespace FormBuilder.Services.Services.FormBuilder
             catch (JsonException ex)
             {
                 _logger?.LogError(ex, "Error parsing RuleJson: {RuleJson}", ruleJson);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Build FormRuleDataDto from separate fields (new approach)
+        /// </summary>
+        public FormRuleDataDto? BuildRuleDataFromFields(
+            string? conditionField,
+            string? conditionOperator,
+            string? conditionValue,
+            string? conditionValueType,
+            string? actionsJson,
+            string? elseActionsJson)
+        {
+            if (string.IsNullOrWhiteSpace(conditionField) || string.IsNullOrWhiteSpace(conditionOperator))
+            {
+                _logger?.LogWarning("Condition Field or Operator is empty");
+                return null;
+            }
+
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var ruleData = new FormRuleDataDto
+                {
+                    Condition = new ConditionDataDto
+                    {
+                        Field = conditionField,
+                        Operator = conditionOperator,
+                        Value = conditionValue,
+                        ValueType = conditionValueType ?? "constant"
+                    }
+                };
+
+                // Parse Actions
+                if (!string.IsNullOrWhiteSpace(actionsJson))
+                {
+                    ruleData.Actions = JsonSerializer.Deserialize<List<ActionDataDto>>(actionsJson, options);
+                }
+
+                // Parse ElseActions
+                if (!string.IsNullOrWhiteSpace(elseActionsJson))
+                {
+                    ruleData.ElseActions = JsonSerializer.Deserialize<List<ActionDataDto>>(elseActionsJson, options);
+                }
+
+                return ruleData;
+            }
+            catch (JsonException ex)
+            {
+                _logger?.LogError(ex, "Error building rule data from fields");
                 return null;
             }
         }
