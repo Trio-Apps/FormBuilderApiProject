@@ -18,11 +18,8 @@ namespace FormBuilder.Services
 {
     public class ApprovalStageService : BaseService<APPROVAL_STAGES, ApprovalStageDto, ApprovalStageCreateDto, ApprovalStageUpdateDto>, IApprovalStageService
     {
-        private readonly IunitOfwork _unitOfWork;
-
         public ApprovalStageService(IunitOfwork unitOfWork, IMapper mapper) : base(unitOfWork, mapper)
         {
-            _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         }
 
         protected override IBaseRepository<APPROVAL_STAGES> Repository => _unitOfWork.ApprovalStageRepository;

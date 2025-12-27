@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import FormRuleBuilder from './FormRuleBuilder'
 import { ApiService } from '../../services/api'
-import { FormRule } from '../../types/formRules'
+import { FormRule, UpdateFormRuleDto } from '../../types/formRules'
 import './FormRulesList.css'
 
 interface FormRulesListProps {
@@ -41,17 +41,11 @@ const FormRulesList = ({ formBuilderId, fields }: FormRulesListProps) => {
   const handleSaveRule = async (rule: FormRule) => {
     try {
       if (rule.id) {
-        // Update existing rule
-        const updateDto = {
-          formBuilderId,
-          ruleName: rule.ruleName,
-          ruleJson: JSON.stringify({
-            condition: rule.condition,
-            actions: rule.actions,
-            elseActions: rule.elseActions
-          }),
-          isActive: rule.isActive,
-          executionOrder: rule.executionOrder
+        // Update existing rule - use convertFormRuleToDto to get proper DTO structure
+        const createDto = ApiService.convertFormRuleToDto(rule, formBuilderId)
+        const updateDto: UpdateFormRuleDto = {
+          ...createDto,
+          isActive: rule.isActive
         }
         const result = await ApiService.updateFormRule(rule.id, updateDto)
         if (!result.success) {
@@ -92,16 +86,11 @@ const FormRulesList = ({ formBuilderId, fields }: FormRulesListProps) => {
 
   const handleToggleActive = async (rule: FormRule) => {
     try {
-      const updateDto = {
-        formBuilderId,
-        ruleName: rule.ruleName,
-        ruleJson: JSON.stringify({
-          condition: rule.condition,
-          actions: rule.actions,
-          elseActions: rule.elseActions
-        }),
-        isActive: !rule.isActive,
-        executionOrder: rule.executionOrder
+      // Use convertFormRuleToDto to get proper DTO structure
+      const createDto = ApiService.convertFormRuleToDto(rule, formBuilderId)
+      const updateDto: UpdateFormRuleDto = {
+        ...createDto,
+        isActive: !rule.isActive
       }
       const result = await ApiService.updateFormRule(rule.id, updateDto)
       if (!result.success) {

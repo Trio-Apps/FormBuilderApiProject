@@ -20,7 +20,7 @@ namespace FormBuilder.Infrastructure.Repositories
             _context = context;
         }
 
-        public void Add(APPROVAL_WORKFLOWS entity)
+        public new void Add(APPROVAL_WORKFLOWS entity)
         {
             _context.APPROVAL_WORKFLOWS.Add(entity);
         }

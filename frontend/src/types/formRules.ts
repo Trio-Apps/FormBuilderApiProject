@@ -26,9 +26,9 @@ export interface CreateFormRuleDto {
   conditionOperator?: string
   conditionValue?: string
   conditionValueType?: string
-  actionsJson?: string
-  elseActionsJson?: string
-  ruleJson?: string // Send this to let backend parse and split automatically
+  // Actions as List (not JSON) - matches .NET API
+  actions?: Action[]
+  elseActions?: Action[]
   isActive?: boolean
   executionOrder?: number
 }
@@ -40,9 +40,9 @@ export interface UpdateFormRuleDto {
   conditionOperator?: string
   conditionValue?: string
   conditionValueType?: string
-  actionsJson?: string
-  elseActionsJson?: string
-  ruleJson?: string // Send this to let backend parse and split automatically
+  // Actions as List (not JSON) - matches .NET API
+  actions?: Action[]
+  elseActions?: Action[]
   isActive?: boolean
   executionOrder?: number
 }
@@ -55,9 +55,9 @@ export interface FormRuleDto {
   conditionOperator?: string
   conditionValue?: string
   conditionValueType?: string
-  actionsJson?: string // Generated from FORM_RULE_ACTIONS table
-  elseActionsJson?: string // Generated from FORM_RULE_ACTIONS table
-  ruleJson?: string
+  // Actions as List (not JSON) - returned from .NET API
+  actions?: Action[]
+  elseActions?: Action[]
   isActive: boolean
   executionOrder?: number
   formName?: string

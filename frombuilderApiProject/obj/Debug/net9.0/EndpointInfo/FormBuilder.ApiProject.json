@@ -14254,6 +14254,27 @@
         },
         "additionalProperties": false
       },
+      "FormBuilder.Core.DTOS.FormRules.ActionDataDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "fieldCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "nullable": true
+          },
+          "expression": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FormBuilder.Core.DTOS.FormRules.CreateFormRuleDto": {
         "required": [
           "formBuilderId",
@@ -14294,16 +14315,18 @@
             "type": "string",
             "nullable": true
           },
-          "actionsJson": {
-            "type": "string",
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.ActionDataDto"
+            },
             "nullable": true
           },
-          "elseActionsJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "ruleJson": {
-            "type": "string",
+          "elseActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.ActionDataDto"
+            },
             "nullable": true
           },
           "isActive": {
@@ -14366,16 +14389,18 @@
             "type": "string",
             "nullable": true
           },
-          "actionsJson": {
-            "type": "string",
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.ActionDataDto"
+            },
             "nullable": true
           },
-          "elseActionsJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "ruleJson": {
-            "type": "string",
+          "elseActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.ActionDataDto"
+            },
             "nullable": true
           },
           "isActive": {
@@ -14437,16 +14462,18 @@
             "type": "string",
             "nullable": true
           },
-          "actionsJson": {
-            "type": "string",
+          "actions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.ActionDataDto"
+            },
             "nullable": true
           },
-          "elseActionsJson": {
-            "type": "string",
-            "nullable": true
-          },
-          "ruleJson": {
-            "type": "string",
+          "elseActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FormBuilder.Core.DTOS.FormRules.ActionDataDto"
+            },
             "nullable": true
           },
           "isActive": {

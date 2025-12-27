@@ -1,0 +1,154 @@
+{
+  "description": "أمثلة JSON لاختبار endpoint إضافة Rule - POST /api/FormRules",
+  "examples": [
+    {
+      "name": "مثال بسيط - قاعدة بدون شرط",
+      "request": {
+        "formBuilderId": 1,
+        "ruleName": "Test Rule Simple",
+        "isActive": true,
+        "executionOrder": 1
+      }
+    },
+    {
+      "name": "مثال كامل - قاعدة مع شرط وأكشن",
+      "request": {
+        "formBuilderId": 1,
+        "ruleName": "Show Field When Age Greater Than 18",
+        "conditionField": "age",
+        "conditionOperator": ">",
+        "conditionValue": "18",
+        "conditionValueType": "constant",
+        "actions": [
+          {
+            "type": "SetVisible",
+            "fieldCode": "drivingLicense",
+            "value": true
+          },
+          {
+            "type": "SetMandatory",
+            "fieldCode": "drivingLicense",
+            "value": true
+          }
+        ],
+        "elseActions": [
+          {
+            "type": "SetVisible",
+            "fieldCode": "drivingLicense",
+            "value": false
+          }
+        ],
+        "isActive": true,
+        "executionOrder": 1
+      }
+    },
+    {
+      "name": "مثال - قاعدة مع Compute Action",
+      "request": {
+        "formBuilderId": 1,
+        "ruleName": "Calculate Total Price",
+        "conditionField": "quantity",
+        "conditionOperator": ">",
+        "conditionValue": "0",
+        "conditionValueType": "constant",
+        "actions": [
+          {
+            "type": "Compute",
+            "fieldCode": "totalPrice",
+            "expression": "quantity * unitPrice"
+          }
+        ],
+        "isActive": true,
+        "executionOrder": 2
+      }
+    },
+    {
+      "name": "مثال - قاعدة مع SetReadOnly و SetDefault",
+      "request": {
+        "formBuilderId": 1,
+        "ruleName": "Set ReadOnly and Default Value",
+        "conditionField": "userType",
+        "conditionOperator": "==",
+        "conditionValue": "admin",
+        "conditionValueType": "constant",
+        "actions": [
+          {
+            "type": "SetReadOnly",
+            "fieldCode": "email",
+            "value": true
+          },
+          {
+            "type": "SetDefault",
+            "fieldCode": "status",
+            "value": "active"
+          }
+        ],
+        "isActive": true,
+        "executionOrder": 1
+      }
+    },
+    {
+      "name": "مثال - قاعدة مع ClearValue",
+      "request": {
+        "formBuilderId": 1,
+        "ruleName": "Clear Field Value",
+        "conditionField": "resetFields",
+        "conditionOperator": "==",
+        "conditionValue": "true",
+        "conditionValueType": "constant",
+        "actions": [
+          {
+            "type": "ClearValue",
+            "fieldCode": "comments"
+          }
+        ],
+        "isActive": true,
+        "executionOrder": 3
+      }
+    },
+    {
+      "name": "مثال - شرط يعتمد على field آخر (conditionValueType = field)",
+      "request": {
+        "formBuilderId": 1,
+        "ruleName": "Compare Two Fields",
+        "conditionField": "price",
+        "conditionOperator": ">",
+        "conditionValue": "discountedPrice",
+        "conditionValueType": "field",
+        "actions": [
+          {
+            "type": "SetVisible",
+            "fieldCode": "warningMessage",
+            "value": true
+          }
+        ],
+        "isActive": true,
+        "executionOrder": 1
+      }
+    }
+  ],
+  "actionTypes": {
+    "SetVisible": "إظهار/إخفاء الحقل",
+    "SetReadOnly": "تعيين الحقل للقراءة فقط",
+    "SetMandatory": "تعيين الحقل كإجباري",
+    "SetDefault": "تعيين قيمة افتراضية",
+    "ClearValue": "مسح قيمة الحقل",
+    "Compute": "حساب قيمة باستخدام expression"
+  },
+  "operators": [
+    "==",
+    "!=",
+    ">",
+    ">=",
+    "<",
+    "<=",
+    "contains",
+    "startsWith",
+    "endsWith"
+  ],
+  "endpoint": "POST /api/FormRules",
+  "headers": {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer YOUR_TOKEN_HERE"
+  }
+}

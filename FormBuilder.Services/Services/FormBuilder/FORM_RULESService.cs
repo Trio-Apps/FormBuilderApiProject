@@ -38,59 +38,16 @@ namespace FormBuilder.Services.Services
             if (!await IsRuleNameUniqueAsync(ruleDto.FormBuilderId, ruleDto.RuleName))
                 throw new InvalidOperationException($"Rule name '{ruleDto.RuleName}' is already in use for this form.");
 
-            // If RuleJson is provided, parse it and extract fields
-            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
-            {
-                // Validate and parse RuleJson
-                if (!IsValidJson(ruleDto.RuleJson))
-                    throw new InvalidOperationException("Rule JSON is not valid.");
-
-                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
-                    ruleDto.RuleJson,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                if (ruleData?.Condition == null)
-                    throw new InvalidOperationException("Rule JSON must contain a valid condition.");
-
-                // Extract condition fields from RuleJson
-                ruleDto.ConditionField = ruleData.Condition.Field;
-                ruleDto.ConditionOperator = ruleData.Condition.Operator;
-                ruleDto.ConditionValue = ruleData.Condition.Value?.ToString();
-                ruleDto.ConditionValueType = ruleData.Condition.ValueType ?? "constant";
-
-            }
-
-            // Validate condition fields (required after parsing or direct input)
+            // Validate condition fields (required)
             if (string.IsNullOrWhiteSpace(ruleDto.ConditionField))
                 throw new InvalidOperationException("Condition Field is required.");
 
             if (string.IsNullOrWhiteSpace(ruleDto.ConditionOperator))
                 throw new InvalidOperationException("Condition Operator is required.");
 
-            // Get actions from RuleJson if provided, otherwise use ActionsJson/ElseActionsJson from DTO
-            List<ActionDataDto>? actions = null;
-            List<ActionDataDto>? elseActions = null;
-
-            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
-            {
-                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
-                    ruleDto.RuleJson,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                actions = ruleData?.Actions;
-                elseActions = ruleData?.ElseActions;
-            }
-            else
-            {
-                // Parse from ActionsJson and ElseActionsJson if provided
-                if (!string.IsNullOrWhiteSpace(ruleDto.ActionsJson))
-                {
-                    actions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ActionsJson);
-                }
-                if (!string.IsNullOrWhiteSpace(ruleDto.ElseActionsJson))
-                {
-                    elseActions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ElseActionsJson);
-                }
-            }
+            // Get actions directly from DTO (no JSON parsing needed)
+            List<ActionDataDto>? actions = ruleDto.Actions;
+            List<ActionDataDto>? elseActions = ruleDto.ElseActions;
 
             // Validate actions
             if (actions != null && actions.Any())
@@ -130,7 +87,6 @@ namespace FormBuilder.Services.Services
                 ConditionOperator = ruleDto.ConditionOperator,
                 ConditionValue = ruleDto.ConditionValue,
                 ConditionValueType = ruleDto.ConditionValueType ?? "constant",
-                RuleJson = ruleDto.RuleJson, // Keep original JSON for reference
                 IsActive = ruleDto.IsActive,
                 ExecutionOrder = ruleDto.ExecutionOrder ?? 1
             };
@@ -234,10 +190,6 @@ namespace FormBuilder.Services.Services
                     })
                     .ToList() ?? new List<ActionDataDto>();
 
-                // Build ActionsJson and ElseActionsJson from loaded actions (for backward compatibility)
-                var actionsJson = actions.Any() ? JsonSerializer.Serialize(actions) : null;
-                var elseActionsJson = elseActions.Any() ? JsonSerializer.Serialize(elseActions) : null;
-
                 return new FormRuleDto
                 {
                     Id = rule.Id,
@@ -247,9 +199,8 @@ namespace FormBuilder.Services.Services
                     ConditionOperator = rule.ConditionOperator,
                     ConditionValue = rule.ConditionValue,
                     ConditionValueType = rule.ConditionValueType,
-                    ActionsJson = actionsJson, // Generated from separate table
-                    ElseActionsJson = elseActionsJson, // Generated from separate table
-                    RuleJson = rule.RuleJson, // Keep for backward compatibility
+                    Actions = actions.Any() ? actions : null, // Return as List, not JSON
+                    ElseActions = elseActions.Any() ? elseActions : null, // Return as List, not JSON
                     IsActive = rule.IsActive,
                     ExecutionOrder = rule.ExecutionOrder ?? 1,
                     FormName = rule.FORM_BUILDER?.FormName ?? string.Empty,
@@ -271,77 +222,16 @@ namespace FormBuilder.Services.Services
             if (!await IsRuleNameUniqueAsync(ruleDto.FormBuilderId, ruleDto.RuleName, id))
                 throw new InvalidOperationException($"Rule name '{ruleDto.RuleName}' is already in use for this form.");
 
-            // If RuleJson is provided, parse it and extract fields
-            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
-            {
-                // Validate and parse RuleJson
-                if (!IsValidJson(ruleDto.RuleJson))
-                    throw new InvalidOperationException("Rule JSON is not valid.");
-
-                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
-                    ruleDto.RuleJson,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
-                if (ruleData?.Condition == null)
-                    throw new InvalidOperationException("Rule JSON must contain a valid condition.");
-
-                // Extract condition fields from RuleJson
-                ruleDto.ConditionField = ruleData.Condition.Field;
-                ruleDto.ConditionOperator = ruleData.Condition.Operator;
-                ruleDto.ConditionValue = ruleData.Condition.Value?.ToString();
-                ruleDto.ConditionValueType = ruleData.Condition.ValueType ?? "constant";
-
-                // Extract Actions as JSON string
-                if (ruleData.Actions != null && ruleData.Actions.Any())
-                {
-                    ruleDto.ActionsJson = JsonSerializer.Serialize(ruleData.Actions);
-                }
-
-                // Extract ElseActions as JSON string
-                if (ruleData.ElseActions != null && ruleData.ElseActions.Any())
-                {
-                    ruleDto.ElseActionsJson = JsonSerializer.Serialize(ruleData.ElseActions);
-                }
-            }
-
-            // Validate condition fields (required after parsing or direct input)
+            // Validate condition fields (required)
             if (string.IsNullOrWhiteSpace(ruleDto.ConditionField))
                 throw new InvalidOperationException("Condition Field is required.");
 
             if (string.IsNullOrWhiteSpace(ruleDto.ConditionOperator))
                 throw new InvalidOperationException("Condition Operator is required.");
 
-            // Validate ActionsJson if provided
-            if (!string.IsNullOrWhiteSpace(ruleDto.ActionsJson))
-            {
-                if (!IsValidActionsJson(ruleDto.ActionsJson))
-                    throw new InvalidOperationException("Actions JSON is not valid.");
-            }
-
-            // Get actions from RuleJson if provided, otherwise use ActionsJson/ElseActionsJson from DTO
-            List<ActionDataDto>? actions = null;
-            List<ActionDataDto>? elseActions = null;
-
-            if (!string.IsNullOrWhiteSpace(ruleDto.RuleJson))
-            {
-                var ruleData = JsonSerializer.Deserialize<FormRuleDataDto>(
-                    ruleDto.RuleJson,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                actions = ruleData?.Actions;
-                elseActions = ruleData?.ElseActions;
-            }
-            else
-            {
-                // Parse from ActionsJson and ElseActionsJson if provided
-                if (!string.IsNullOrWhiteSpace(ruleDto.ActionsJson))
-                {
-                    actions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ActionsJson);
-                }
-                if (!string.IsNullOrWhiteSpace(ruleDto.ElseActionsJson))
-                {
-                    elseActions = JsonSerializer.Deserialize<List<ActionDataDto>>(ruleDto.ElseActionsJson);
-                }
-            }
+            // Get actions directly from DTO (no JSON parsing needed)
+            List<ActionDataDto>? actions = ruleDto.Actions;
+            List<ActionDataDto>? elseActions = ruleDto.ElseActions;
 
             // Validate actions
             if (actions != null && actions.Any())
@@ -380,7 +270,6 @@ namespace FormBuilder.Services.Services
             existingRule.ConditionOperator = ruleDto.ConditionOperator;
             existingRule.ConditionValue = ruleDto.ConditionValue;
             existingRule.ConditionValueType = ruleDto.ConditionValueType ?? existingRule.ConditionValueType ?? "constant";
-            existingRule.RuleJson = ruleDto.RuleJson; // Keep original JSON for reference
             existingRule.IsActive = ruleDto.IsActive;
             existingRule.ExecutionOrder = ruleDto.ExecutionOrder ?? existingRule.ExecutionOrder ?? 1;
 
@@ -513,10 +402,6 @@ namespace FormBuilder.Services.Services
                         })
                         .ToList() ?? new List<ActionDataDto>();
 
-                    // Build ActionsJson and ElseActionsJson from loaded actions
-                    var actionsJson = actions.Any() ? JsonSerializer.Serialize(actions) : null;
-                    var elseActionsJson = elseActions.Any() ? JsonSerializer.Serialize(elseActions) : null;
-
                     return new FormRuleDto
                     {
                         Id = rule.Id,
@@ -526,9 +411,8 @@ namespace FormBuilder.Services.Services
                         ConditionOperator = rule.ConditionOperator,
                         ConditionValue = rule.ConditionValue,
                         ConditionValueType = rule.ConditionValueType,
-                        ActionsJson = actionsJson,
-                        ElseActionsJson = elseActionsJson,
-                        RuleJson = rule.RuleJson,
+                        Actions = actions.Any() ? actions : null, // Return as List, not JSON
+                        ElseActions = elseActions.Any() ? elseActions : null, // Return as List, not JSON
                         IsActive = rule.IsActive,
                         ExecutionOrder = rule.ExecutionOrder ?? 1,
                         FormName = rule.FORM_BUILDER?.FormName ?? string.Empty,

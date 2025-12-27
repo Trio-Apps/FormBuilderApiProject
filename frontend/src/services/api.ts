@@ -784,11 +784,13 @@ export class ApiService {
     return {
       formBuilderId,
       ruleName: formRule.ruleName,
-      ruleJson: JSON.stringify({
-        condition: formRule.condition,
-        actions: formRule.actions,
-        elseActions: formRule.elseActions
-      }),
+      conditionField: formRule.condition.field,
+      conditionOperator: formRule.condition.operator,
+      conditionValue: formRule.condition.value?.toString(),
+      conditionValueType: formRule.condition.valueType,
+      // Send Actions and ElseActions as arrays (not JSON strings)
+      actions: formRule.actions && formRule.actions.length > 0 ? formRule.actions : undefined,
+      elseActions: formRule.elseActions && formRule.elseActions.length > 0 ? formRule.elseActions : undefined,
       isActive: formRule.isActive,
       executionOrder: formRule.executionOrder
     }
@@ -805,38 +807,9 @@ export class ApiService {
       valueType: (dto.conditionValueType as 'constant' | 'field') || 'constant'
     }
 
-    let actions: Action[] = []
-    let elseActions: Action[] = []
-
-    // Parse ActionsJson if available
-    if (dto.actionsJson) {
-      try {
-        actions = JSON.parse(dto.actionsJson)
-      } catch (e) {
-        console.error('Error parsing ActionsJson:', e)
-      }
-    }
-
-    // Parse ElseActionsJson if available
-    if (dto.elseActionsJson) {
-      try {
-        elseActions = JSON.parse(dto.elseActionsJson)
-      } catch (e) {
-        console.error('Error parsing ElseActionsJson:', e)
-      }
-    }
-
-    // Fallback to RuleJson if ActionsJson/ElseActionsJson are not available
-    if (actions.length === 0 && elseActions.length === 0 && dto.ruleJson) {
-      try {
-        const ruleData = JSON.parse(dto.ruleJson)
-        condition = ruleData.condition || condition
-        actions = ruleData.actions || []
-        elseActions = ruleData.elseActions || []
-      } catch (e) {
-        console.error('Error parsing RuleJson:', e)
-      }
-    }
+    // Actions and ElseActions are now returned as arrays directly from .NET API
+    let actions: Action[] = dto.actions || []
+    let elseActions: Action[] = dto.elseActions || []
 
     return {
       id: dto.id,

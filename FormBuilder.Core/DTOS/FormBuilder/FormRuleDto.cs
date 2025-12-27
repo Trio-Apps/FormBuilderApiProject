@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FormBuilder.Core.DTOS.FormRules
 {
@@ -24,14 +25,11 @@ namespace FormBuilder.Core.DTOS.FormRules
         [StringLength(20)]
         public string? ConditionValueType { get; set; } // "constant" or "field"
 
-        // Actions (JSON string for array of actions)
-        public string? ActionsJson { get; set; }
+        // Actions as List (not JSON)
+        public List<ActionDataDto>? Actions { get; set; }
 
-        // Else Actions (JSON string for array of actions)
-        public string? ElseActionsJson { get; set; }
-
-        // Keep RuleJson for backward compatibility (optional)
-        public string? RuleJson { get; set; }
+        // Else Actions as List (not JSON)
+        public List<ActionDataDto>? ElseActions { get; set; }
 
         public bool IsActive { get; set; } = true;
 
@@ -63,14 +61,11 @@ namespace FormBuilder.Core.DTOS.FormRules
         [StringLength(20)]
         public string? ConditionValueType { get; set; } // "constant" or "field"
 
-        // Actions (JSON string for array of actions)
-        public string? ActionsJson { get; set; }
+        // Actions as List (not JSON)
+        public List<ActionDataDto>? Actions { get; set; }
 
-        // Else Actions (JSON string for array of actions)
-        public string? ElseActionsJson { get; set; }
-
-        // Keep RuleJson for backward compatibility (optional)
-        public string? RuleJson { get; set; }
+        // Else Actions as List (not JSON)
+        public List<ActionDataDto>? ElseActions { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -92,12 +87,11 @@ namespace FormBuilder.Core.DTOS.FormRules
         public string? ConditionValue { get; set; }
         public string? ConditionValueType { get; set; }
 
-        // Actions
-        public string? ActionsJson { get; set; }
-        public string? ElseActionsJson { get; set; }
+        // Actions as List (not JSON)
+        public List<ActionDataDto>? Actions { get; set; }
 
-        // Keep RuleJson for backward compatibility
-        public string? RuleJson { get; set; }
+        // Else Actions as List (not JSON)
+        public List<ActionDataDto>? ElseActions { get; set; }
         
         public bool IsActive { get; set; }
         public int? ExecutionOrder { get; set; }

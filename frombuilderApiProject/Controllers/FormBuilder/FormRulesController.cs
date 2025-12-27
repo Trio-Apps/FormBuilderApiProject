@@ -59,32 +59,26 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
             var actions = rule.FORM_RULE_ACTIONS?
                 .Where(a => !a.IsElseAction && a.IsActive)
                 .OrderBy(a => a.ActionOrder)
-                .Select(a => new
+                .Select(a => new ActionDataDto
                 {
-                    type = a.ActionType,
-                    fieldCode = a.FieldCode,
-                    value = a.Value,
-                    expression = a.Expression
+                    Type = a.ActionType,
+                    FieldCode = a.FieldCode,
+                    Value = a.Value,
+                    Expression = a.Expression
                 })
-                .Cast<object>()
-                .ToList() ?? new List<object>();
+                .ToList() ?? new List<ActionDataDto>();
 
             var elseActions = rule.FORM_RULE_ACTIONS?
                 .Where(a => a.IsElseAction && a.IsActive)
                 .OrderBy(a => a.ActionOrder)
-                .Select(a => new
+                .Select(a => new ActionDataDto
                 {
-                    type = a.ActionType,
-                    fieldCode = a.FieldCode,
-                    value = a.Value,
-                    expression = a.Expression
+                    Type = a.ActionType,
+                    FieldCode = a.FieldCode,
+                    Value = a.Value,
+                    Expression = a.Expression
                 })
-                .Cast<object>()
-                .ToList() ?? new List<object>();
-
-            // Build ActionsJson and ElseActionsJson from loaded actions
-            var actionsJson = actions.Any() ? System.Text.Json.JsonSerializer.Serialize(actions) : null;
-            var elseActionsJson = elseActions.Any() ? System.Text.Json.JsonSerializer.Serialize(elseActions) : null;
+                .ToList() ?? new List<ActionDataDto>();
 
             var ruleDto = new FormRuleDto
             {
@@ -95,9 +89,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 ConditionOperator = rule.ConditionOperator,
                 ConditionValue = rule.ConditionValue,
                 ConditionValueType = rule.ConditionValueType,
-                ActionsJson = actionsJson, // Generated from FORM_RULE_ACTIONS table
-                ElseActionsJson = elseActionsJson, // Generated from FORM_RULE_ACTIONS table
-                RuleJson = rule.RuleJson, // Keep for backward compatibility
+                Actions = actions.Any() ? actions : null, // Return as List, not JSON
+                ElseActions = elseActions.Any() ? elseActions : null, // Return as List, not JSON
                 IsActive = rule.IsActive,
                 ExecutionOrder = rule.ExecutionOrder ?? 1
             };
@@ -127,32 +120,26 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
             var actions = ruleWithActions?.FORM_RULE_ACTIONS?
                 .Where(a => !a.IsElseAction && a.IsActive)
                 .OrderBy(a => a.ActionOrder)
-                .Select(a => new
+                .Select(a => new ActionDataDto
                 {
-                    type = a.ActionType,
-                    fieldCode = a.FieldCode,
-                    value = a.Value,
-                    expression = a.Expression
+                    Type = a.ActionType,
+                    FieldCode = a.FieldCode,
+                    Value = a.Value,
+                    Expression = a.Expression
                 })
-                .Cast<object>()
-                .ToList() ?? new List<object>();
+                .ToList() ?? new List<ActionDataDto>();
 
             var elseActions = ruleWithActions?.FORM_RULE_ACTIONS?
                 .Where(a => a.IsElseAction && a.IsActive)
                 .OrderBy(a => a.ActionOrder)
-                .Select(a => new
+                .Select(a => new ActionDataDto
                 {
-                    type = a.ActionType,
-                    fieldCode = a.FieldCode,
-                    value = a.Value,
-                    expression = a.Expression
+                    Type = a.ActionType,
+                    FieldCode = a.FieldCode,
+                    Value = a.Value,
+                    Expression = a.Expression
                 })
-                .Cast<object>()
-                .ToList() ?? new List<object>();
-
-            // Build ActionsJson and ElseActionsJson from loaded actions
-            var actionsJson = actions.Any() ? System.Text.Json.JsonSerializer.Serialize(actions) : null;
-            var elseActionsJson = elseActions.Any() ? System.Text.Json.JsonSerializer.Serialize(elseActions) : null;
+                .ToList() ?? new List<ActionDataDto>();
 
             var createdRuleDto = new FormRuleDto
             {
@@ -163,9 +150,8 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 ConditionOperator = createdRule.ConditionOperator,
                 ConditionValue = createdRule.ConditionValue,
                 ConditionValueType = createdRule.ConditionValueType,
-                ActionsJson = actionsJson, // Generated from FORM_RULE_ACTIONS table
-                ElseActionsJson = elseActionsJson, // Generated from FORM_RULE_ACTIONS table
-                RuleJson = createdRule.RuleJson, // Keep for backward compatibility
+                Actions = actions.Any() ? actions : null, // Return as List, not JSON
+                ElseActions = elseActions.Any() ? elseActions : null, // Return as List, not JSON
                 IsActive = createdRule.IsActive,
                 ExecutionOrder = createdRule.ExecutionOrder ?? 1
             };
@@ -278,14 +264,43 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                 try
                 {
                     var createdRule = await _formRulesService.CreateRuleAsync(createDto);
+                    // Reload rule to get complete data with actions
+                    var fullRule = await _formRulesService.GetRuleByIdAsync(createdRule.Id);
                     var ruleDto = new FormRuleDto
                     {
-                        Id = createdRule.Id,
-                        FormBuilderId = createdRule.FormBuilderId,
-                        RuleName = createdRule.RuleName,
-                        RuleJson = createdRule.RuleJson,
-                        IsActive = createdRule.IsActive,
-                        ExecutionOrder = createdRule.ExecutionOrder ?? 1
+                        Id = fullRule.Id,
+                        FormBuilderId = fullRule.FormBuilderId,
+                        RuleName = fullRule.RuleName,
+                        ConditionField = fullRule.ConditionField,
+                        ConditionOperator = fullRule.ConditionOperator,
+                        ConditionValue = fullRule.ConditionValue,
+                        ConditionValueType = fullRule.ConditionValueType,
+                        Actions = fullRule.FORM_RULE_ACTIONS?
+                            .Where(a => !a.IsElseAction && a.IsActive)
+                            .OrderBy(a => a.ActionOrder)
+                            .Select(a => new ActionDataDto
+                            {
+                                Type = a.ActionType,
+                                FieldCode = a.FieldCode,
+                                Value = a.Value,
+                                Expression = a.Expression
+                            })
+                            .ToList(),
+                        ElseActions = fullRule.FORM_RULE_ACTIONS?
+                            .Where(a => a.IsElseAction && a.IsActive)
+                            .OrderBy(a => a.ActionOrder)
+                            .Select(a => new ActionDataDto
+                            {
+                                Type = a.ActionType,
+                                FieldCode = a.FieldCode,
+                                Value = a.Value,
+                                Expression = a.Expression
+                            })
+                            .ToList(),
+                        IsActive = fullRule.IsActive,
+                        ExecutionOrder = fullRule.ExecutionOrder ?? 1,
+                        FormName = fullRule.FORM_BUILDER?.FormName ?? string.Empty,
+                        FormCode = fullRule.FORM_BUILDER?.FormCode ?? string.Empty
                     };
                     createdRules.Add(ruleDto);
 
@@ -412,19 +427,27 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
                         if (!string.IsNullOrWhiteSpace(rule.ConditionField) && !string.IsNullOrWhiteSpace(rule.ConditionOperator))
                         {
                             // Use new approach with separate fields
-                            // ActionsJson and ElseActionsJson are now generated from FORM_RULE_ACTIONS table
+                            // Convert Actions and ElseActions Lists to JSON strings
+                            string? actionsJson = null;
+                            string? elseActionsJson = null;
+
+                            if (rule.Actions != null && rule.Actions.Any())
+                            {
+                                actionsJson = System.Text.Json.JsonSerializer.Serialize(rule.Actions);
+                            }
+
+                            if (rule.ElseActions != null && rule.ElseActions.Any())
+                            {
+                                elseActionsJson = System.Text.Json.JsonSerializer.Serialize(rule.ElseActions);
+                            }
+
                             ruleData = _ruleEvaluationService.BuildRuleDataFromFields(
                                 rule.ConditionField,
                                 rule.ConditionOperator,
                                 rule.ConditionValue,
                                 rule.ConditionValueType,
-                                rule.ActionsJson, // This is generated from FORM_RULE_ACTIONS in Service
-                                rule.ElseActionsJson); // This is generated from FORM_RULE_ACTIONS in Service
-                        }
-                        else if (!string.IsNullOrWhiteSpace(rule.RuleJson))
-                        {
-                            // Fallback to old RuleJson approach for backward compatibility
-                            ruleData = _ruleEvaluationService.ParseRuleJson(rule.RuleJson);
+                                actionsJson,
+                                elseActionsJson);
                         }
 
                         if (ruleData == null || ruleData.Condition == null)

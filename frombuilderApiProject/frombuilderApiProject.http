@@ -1,6 +1,87 @@
 @frombuilderApiProject_HostAddress = http://localhost:5203
+@token = YOUR_TOKEN_HERE
 
 GET {{frombuilderApiProject_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+####################################################
+# FormRules API - إضافة Rule جديد
+####################################################
+
+### إضافة Rule بسيط
+POST {{frombuilderApiProject_HostAddress}}/api/FormRules
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "formBuilderId": 1,
+  "ruleName": "Test Rule Simple",
+  "isActive": true,
+  "executionOrder": 1
+}
+
+###
+
+### إضافة Rule كامل مع شرط وأكشن
+POST {{frombuilderApiProject_HostAddress}}/api/FormRules
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "formBuilderId": 1,
+  "ruleName": "Show Field When Age Greater Than 18",
+  "conditionField": "age",
+  "conditionOperator": ">",
+  "conditionValue": "18",
+  "conditionValueType": "constant",
+  "actions": [
+    {
+      "type": "SetVisible",
+      "fieldCode": "drivingLicense",
+      "value": true
+    },
+    {
+      "type": "SetMandatory",
+      "fieldCode": "drivingLicense",
+      "value": true
+    }
+  ],
+  "elseActions": [
+    {
+      "type": "SetVisible",
+      "fieldCode": "drivingLicense",
+      "value": false
+    }
+  ],
+  "isActive": true,
+  "executionOrder": 1
+}
+
+###
+
+### إضافة Rule مع Compute Action
+POST {{frombuilderApiProject_HostAddress}}/api/FormRules
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "formBuilderId": 1,
+  "ruleName": "Calculate Total Price",
+  "conditionField": "quantity",
+  "conditionOperator": ">",
+  "conditionValue": "0",
+  "conditionValueType": "constant",
+  "actions": [
+    {
+      "type": "Compute",
+      "fieldCode": "totalPrice",
+      "expression": "quantity * unitPrice"
+    }
+  ],
+  "isActive": true,
+  "executionOrder": 2
+}
 
 ###
