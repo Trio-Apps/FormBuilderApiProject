@@ -340,7 +340,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
@@ -353,8 +353,19 @@
               "ViewState": "AgIAAC4AAAAAAAAAAAAkwDsAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-27T08:36:23.932Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
@@ -366,8 +377,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\FORM_RULESRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:02:24.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:02:24.561Z"
             },
             {
               "$type": "Document",
@@ -379,8 +389,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\DocumentSeriesProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:30.721Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:30.721Z"
             },
             {
               "$type": "Document",
@@ -392,8 +401,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\DocumentSeriesRepository.cs",
               "ViewState": "AgIAAGsAAAAAAAAAAAAAAHoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:14:10.377Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:14:10.377Z"
             },
             {
               "$type": "Document",
@@ -405,8 +413,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Services\\FormBuilder\\DocumentSeriesService.cs",
               "ViewState": "AgIAAKcAAAAAAAAAAAAAAN0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T14:25:59.23Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T14:25:59.23Z"
             },
             {
               "$type": "Document",
@@ -422,6 +429,10 @@
               "EditorCaption": ""
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "AttachmentTypeProfile.cs",
@@ -431,8 +442,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\AttachmentTypeProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:29.7Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:29.7Z"
             },
             {
               "$type": "Document",
@@ -444,8 +454,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\ApprovalWorkflowProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:28.317Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:28.317Z"
             },
             {
               "$type": "Document",
@@ -457,8 +466,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Repository\\DocumentTypeRepository.cs",
               "ViewState": "AgIAAE4AAAAAAAAAAAAAABoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T12:02:23.153Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-27T12:02:23.153Z"
             },
             {
               "$type": "Document",
@@ -470,8 +478,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\FormulaProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:25.94Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:25.94Z"
             },
             {
               "$type": "Document",
@@ -483,8 +490,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\FormulaVariableProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:24.668Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:24.668Z"
             },
             {
               "$type": "Document",
@@ -496,8 +502,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\ProjectProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:23.565Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:23.565Z"
             },
             {
               "$type": "Document",
@@ -509,8 +514,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Mappings\\FormSubmissionAttachmentsProfile.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T07:00:17.301Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-27T07:00:17.301Z"
             },
             {
               "$type": "Document",
@@ -522,24 +526,7 @@
               "RelativeToolTip": "FormBuilder.Services\\Extensions\\RepositoryExtensions.cs",
               "ViewState": "AgIAABUAAAAAAAAAAAAAAAoAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-27T06:59:45.228Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{fbcae063-e2c0-4ab1-a516-996ea3dafb72}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+              "WhenOpened": "2025-12-27T06:59:45.228Z"
             },
             {
               "$type": "Document",
@@ -1307,7 +1294,8 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormAttachmentTypesController.cs",
               "ViewState": "AgIAAHUAAAAAAAAAAIA5wIQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-27T11:20:07.27Z"
+              "WhenOpened": "2025-11-27T11:20:07.27Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
