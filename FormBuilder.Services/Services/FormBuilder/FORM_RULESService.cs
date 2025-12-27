@@ -3,6 +3,7 @@ using FormBuilder.Domian.Entitys.FormBuilder;
 using FormBuilder.Core.DTOS.FormRules;
 using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Domian.Entitys.froms;
+using FormBuilder.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,11 +16,13 @@ namespace FormBuilder.Services.Services
     public class FORM_RULESService : IFORM_RULESService
     {
         private readonly IunitOfwork _unitOfWork;
+        private readonly FormBuilderDbContext _dbContext;
         private readonly IFormRuleEvaluationService? _ruleEvaluationService;
 
-        public FORM_RULESService(IunitOfwork unitOfWork, IFormRuleEvaluationService? ruleEvaluationService = null)
+        public FORM_RULESService(IunitOfwork unitOfWork, FormBuilderDbContext dbContext, IFormRuleEvaluationService? ruleEvaluationService = null)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _ruleEvaluationService = ruleEvaluationService;
         }
 
@@ -275,13 +278,14 @@ namespace FormBuilder.Services.Services
 
             _unitOfWork.Repositary<FORM_RULES>().Update(existingRule);
 
-            // Delete existing actions
-            var existingActions = await _unitOfWork.Repositary<FORM_RULE_ACTIONS>()
-                .GetAllAsync(filter: a => a.RuleId == existingRule.Id);
+            // Delete existing actions using DbContext directly to avoid tracking conflicts
+            var actionsToDelete = await _dbContext.FORM_RULE_ACTIONS
+                .Where(a => a.RuleId == existingRule.Id)
+                .ToListAsync();
             
-            foreach (var action in existingActions)
+            if (actionsToDelete.Any())
             {
-                _unitOfWork.Repositary<FORM_RULE_ACTIONS>().Delete(action);
+                _dbContext.FORM_RULE_ACTIONS.RemoveRange(actionsToDelete);
             }
 
             // Save new Actions to separate table
