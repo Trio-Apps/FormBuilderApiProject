@@ -13,9 +13,11 @@ import './FormFieldRenderer.css'
 
 interface FormFieldRendererProps {
   field: FormField
+  value?: any
+  onChange?: (value: any) => void
 }
 
-const FormFieldRenderer = ({ field }: FormFieldRendererProps) => {
+const FormFieldRenderer = ({ field, value, onChange }: FormFieldRendererProps) => {
   const fieldTypeName = field.fieldTypeName || field.fieldType?.typeName || 'Text'
 
   // Normalize field type name to match our components
@@ -24,31 +26,31 @@ const FormFieldRenderer = ({ field }: FormFieldRendererProps) => {
   const renderField = () => {
     switch (normalizedType) {
       case 'text':
-        return <TextField field={field} />
+        return <TextField field={field} value={value} onChange={onChange} />
       case 'number':
-        return <NumberField field={field} />
+        return <NumberField field={field} value={value} onChange={onChange} />
       case 'email':
-        return <EmailField field={field} />
+        return <EmailField field={field} value={value} onChange={onChange} />
       case 'textarea':
-        return <TextareaField field={field} />
+        return <TextareaField field={field} value={value} onChange={onChange} />
       case 'dropdown':
       case 'select':
-        return <SelectField field={field} />
+        return <SelectField field={field} value={value} onChange={onChange} />
       case 'radio':
-        return <RadioField field={field} />
+        return <RadioField field={field} value={value} onChange={onChange} />
       case 'checkbox':
-        return <CheckboxField field={field} />
+        return <CheckboxField field={field} value={value} onChange={onChange} />
       case 'date':
-        return <DateField field={field} />
+        return <DateField field={field} value={value} onChange={onChange} />
       case 'file':
       case 'file upload':
-        return <FileField field={field} />
+        return <FileField field={field} value={value} onChange={onChange} />
       case 'switch':
       case 'toggle':
-        return <SwitchField field={field} />
+        return <SwitchField field={field} value={value} onChange={onChange} />
       default:
         // Default to text field for unknown types
-        return <TextField field={field} />
+        return <TextField field={field} value={value} onChange={onChange} />
     }
   }
 

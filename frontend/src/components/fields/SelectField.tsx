@@ -6,15 +6,28 @@ import './fields.css'
 
 interface SelectFieldProps {
   field: FormField
+  value?: any
+  onChange?: (value: any) => void
 }
 
-const SelectField = ({ field }: SelectFieldProps) => {
-  const [value, setValue] = useState('')
+const SelectField = ({ field, value: controlledValue, onChange }: SelectFieldProps) => {
+  const [internalValue, setInternalValue] = useState('')
   const { currentLanguage } = useLanguage()
   const { placeholder } = useMultilingualField(field)
   const sortedOptions = [...field.fieldOptions]
     .filter(opt => opt.isActive)
     .sort((a, b) => a.optionOrder - b.optionOrder)
+
+  // Use controlled value if provided, otherwise use internal state
+  const value = controlledValue !== undefined ? controlledValue : internalValue
+
+  const handleChange = (newValue: string) => {
+    if (onChange) {
+      onChange(newValue)
+    } else {
+      setInternalValue(newValue)
+    }
+  }
 
   const getOptionText = (option: { optionText: string; foreignOptionText?: string }) => {
     if (currentLanguage === 'ar' && option.foreignOptionText) {
@@ -47,8 +60,8 @@ const SelectField = ({ field }: SelectFieldProps) => {
     <BaseField field={field}>
       <select 
         className="form-select" 
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={value || ''}
+        onChange={(e) => handleChange(e.target.value)}
         disabled={!field.isEditable}
       >
         <option value="">{placeholder || 'Select an option'}</option>

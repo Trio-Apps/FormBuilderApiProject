@@ -4164,23 +4164,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\master\\.nuget\\packages\\": {},
+    "C:\\Users\\Trio Apps 3\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\project2\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
+      "projectUniqueName": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
       "projectName": "FormBuilder.Services",
-      "projectPath": "D:\\project2\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
-      "packagesPath": "C:\\Users\\master\\.nuget\\packages\\",
-      "outputPath": "D:\\project2\\FormBuilderApiProject\\FormBuilder.Services\\obj\\",
+      "projectPath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\FormBuilder.Services.csproj",
+      "packagesPath": "C:\\Users\\Trio Apps 3\\.nuget\\packages\\",
+      "outputPath": "D:\\FormBuilderApiProject\\FormBuilder.Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\master\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Trio Apps 3\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4189,18 +4189,17 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\project2\\FormBuilderApiProject\\FormBuilder.Core\\FormBuilder.Core.csproj": {
-              "projectPath": "D:\\project2\\FormBuilderApiProject\\FormBuilder.Core\\FormBuilder.Core.csproj"
+            "D:\\FormBuilderApiProject\\FormBuilder.Core\\FormBuilder.Core.csproj": {
+              "projectPath": "D:\\FormBuilderApiProject\\FormBuilder.Core\\FormBuilder.Core.csproj"
             },
-            "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
-              "projectPath": "D:\\project2\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj"
+            "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj": {
+              "projectPath": "D:\\FormBuilderApiProject\\formBuilder.Domian\\FormBuilder.Domian.csproj"
             }
           }
         }
@@ -4215,7 +4214,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -4270,7 +4269,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.307/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

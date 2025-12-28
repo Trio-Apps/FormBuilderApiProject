@@ -348,6 +348,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
         }
 
         [HttpGet("form/{formBuilderId}/active")]
+        [AllowAnonymous] // Allow anonymous access for public form viewing
         [ProducesResponseType(typeof(IEnumerable<FormRuleDto>), 200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> GetActiveRulesByFormId(int formBuilderId)

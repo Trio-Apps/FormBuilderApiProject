@@ -729,12 +729,12 @@ export class ApiService {
 
   /**
    * Get active rules by form builder ID
-   * GET /api/FormRules/form/{formBuilderId}
+   * GET /api/FormRules/form/{formBuilderId}/active
    */
   static async getActiveRulesByFormId(formBuilderId: number): Promise<ServiceResult<FormRuleDto[]>> {
-    const response = await fetch(`${API_BASE_URL}/FormRules/form/${formBuilderId}`, {
+    const response = await fetch(`${API_BASE_URL}/FormRules/form/${formBuilderId}/active`, {
       method: 'GET',
-      headers: this.getAuthHeaders(),
+      headers: this.getHeaders(), // Use getHeaders() instead of getAuthHeaders() for public access
     })
     return response.json()
   }

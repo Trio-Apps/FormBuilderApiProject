@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
-import { FormBuilder } from '../types/form'
+import { FormBuilder, FormField } from '../types/form'
 import { ApiService } from '../services/api'
+import { FormRuleDto } from '../types/formRules'
 import TabNavigation from '../components/TabNavigation'
 import FormFieldRenderer from '../components/FormFieldRenderer'
 import LanguageSwitcher from '../components/LanguageSwitcher'
@@ -15,6 +16,135 @@ const FormViewer = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [activeTabIndex, setActiveTabIndex] = useState(0)
+  const [rules, setRules] = useState<FormRuleDto[]>([])
+  const [fieldValues, setFieldValues] = useState<Record<string, any>>({})
+
+  // Load rules for the form
+  const loadRules = useCallback(async (formBuilderId: number) => {
+    try {
+      console.log(`[FormView] Loading rules from API for form: ${formBuilderId}`)
+      const result = await ApiService.getActiveRulesByFormId(formBuilderId)
+      if (result.success && result.data) {
+        console.log(`[FormView] Loaded rules from API: ${result.data.length}`)
+        setRules(result.data)
+        return result.data
+      } else {
+        console.log(`[FormView] Loaded rules from API: 0`)
+        setRules([])
+        return []
+      }
+    } catch (err) {
+      console.error('[FormView] Error loading rules:', err)
+      setRules([])
+      return []
+    }
+  }, [])
+
+  // Evaluate rules and apply actions
+  const evaluateRules = useCallback((currentValues: Record<string, any>) => {
+    if (rules.length === 0) {
+      console.log('[FormView] No rules to evaluate')
+      return
+    }
+
+    if (!form) return
+
+    console.log(`[FormView] Evaluating ${rules.length} rules`)
+
+    // Sort rules by execution order
+    const sortedRules = [...rules].sort((a, b) => (a.executionOrder || 1) - (b.executionOrder || 1))
+
+    // Create a deep copy of form to update field visibility
+    const updatedForm: FormBuilder = {
+      ...form,
+      tabs: form.tabs.map(tab => ({
+        ...tab,
+        fields: tab.fields.map(field => ({ ...field }))
+      }))
+    }
+    
+    const updatedValues = { ...currentValues }
+    let formChanged = false
+
+    sortedRules.forEach((rule) => {
+      if (!rule.isActive || !rule.conditionField || !rule.conditionOperator) return
+
+      const fieldValue = updatedValues[rule.conditionField]
+      const conditionValue = rule.conditionValue
+      let conditionMet = false
+
+      // Evaluate condition
+      switch (rule.conditionOperator.toLowerCase()) {
+        case 'equals':
+        case '==':
+        case '===':
+          conditionMet = String(fieldValue) === String(conditionValue)
+          break
+        case 'notequals':
+        case '!=':
+        case '!==':
+          conditionMet = String(fieldValue) !== String(conditionValue)
+          break
+        case 'contains':
+          conditionMet = String(fieldValue || '').includes(String(conditionValue))
+          break
+        case 'greaterthan':
+        case '>':
+          conditionMet = Number(fieldValue) > Number(conditionValue)
+          break
+        case 'lessthan':
+        case '<':
+          conditionMet = Number(fieldValue) < Number(conditionValue)
+          break
+        default:
+          conditionMet = String(fieldValue) === String(conditionValue)
+      }
+
+      // Apply actions
+      const actionsToApply = conditionMet ? rule.actions : rule.elseActions
+      if (actionsToApply && actionsToApply.length > 0) {
+        actionsToApply.forEach((action) => {
+          // Find the field by code
+          updatedForm.tabs.forEach((tab) => {
+            tab.fields.forEach((field) => {
+              if (field.fieldCode === action.fieldCode) {
+                switch (action.type) {
+                  case 'SetVisible':
+                    if (field.isVisible !== true) {
+                      field.isVisible = true
+                      formChanged = true
+                    }
+                    break
+                  case 'SetHidden':
+                  case 'Hide':
+                    if (field.isVisible !== false) {
+                      field.isVisible = false
+                      formChanged = true
+                    }
+                    break
+                  case 'SetDefault':
+                    if (action.value !== undefined) {
+                      updatedValues[action.fieldCode] = action.value
+                      formChanged = true
+                    }
+                    break
+                  case 'ClearValue':
+                    updatedValues[action.fieldCode] = ''
+                    formChanged = true
+                    break
+                }
+              }
+            })
+          })
+        })
+      }
+    })
+
+    if (formChanged) {
+      setForm(updatedForm)
+      setFieldValues(updatedValues)
+    }
+  }, [rules, form])
 
   useEffect(() => {
     const fetchForm = async () => {
@@ -54,6 +184,9 @@ const FormViewer = () => {
         }
         
         setForm(formData)
+
+        // Load rules after form is loaded
+        await loadRules(formData.id)
       } catch (err) {
         setError(err instanceof Error ? err.message : t('errors.failedToFetchForm'))
       } finally {
@@ -62,7 +195,14 @@ const FormViewer = () => {
     }
 
     fetchForm()
-  }, [formPublicId, t])
+  }, [formPublicId, t, loadRules])
+
+  // Evaluate rules when rules or fieldValues change
+  useEffect(() => {
+    if (rules.length > 0 && form) {
+      evaluateRules(fieldValues)
+    }
+  }, [rules, fieldValues, form, evaluateRules])
 
   if (loading) {
     return (
@@ -148,7 +288,18 @@ const FormViewer = () => {
                 .filter(field => field.isVisible)
                 .sort((a, b) => a.fieldOrder - b.fieldOrder)
                 .map((field) => (
-                  <FormFieldRenderer key={field.id} field={field} />
+                  <FormFieldRenderer 
+                    key={field.id} 
+                    field={field}
+                    value={fieldValues[field.fieldCode]}
+                    onChange={(value: any) => {
+                      const newValues = { ...fieldValues, [field.fieldCode]: value }
+                      setFieldValues(newValues)
+                      console.log(`[FormView] Value change: ID=${field.id}, Code=${field.fieldCode} -> ${value}`)
+                      // Evaluate rules when field value changes
+                      evaluateRules(newValues)
+                    }}
+                  />
                 ))}
             </div>
             
