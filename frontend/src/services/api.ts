@@ -1237,6 +1237,208 @@ export class ApiService {
       executionOrder: dto.executionOrder || 1
     }
   }
+
+  // ================================
+  // ATTACHMENT TYPES - CRUD Endpoints
+  // ================================
+
+  /**
+   * Get all Attachment Types
+   * GET /api/AttachmentTypes
+   */
+  static async getAllAttachmentTypes(): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch attachment types: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    const attachmentTypes = data.success !== undefined ? data.data : data
+    return Array.isArray(attachmentTypes) ? attachmentTypes : []
+  }
+
+  /**
+   * Get active Attachment Types
+   * GET /api/AttachmentTypes/active
+   */
+  static async getActiveAttachmentTypes(): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes/active`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch active attachment types: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    const attachmentTypes = data.success !== undefined ? data.data : data
+    return Array.isArray(attachmentTypes) ? attachmentTypes : []
+  }
+
+  /**
+   * Get Attachment Type by ID
+   * GET /api/AttachmentTypes/{id}
+   */
+  static async getAttachmentTypeById(id: number): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes/${id}`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch attachment type: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Get Attachment Type by Code
+   * GET /api/AttachmentTypes/code/{code}
+   */
+  static async getAttachmentTypeByCode(code: string): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes/code/${encodeURIComponent(code)}`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch attachment type: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Create Attachment Type
+   * POST /api/AttachmentTypes
+   */
+  static async createAttachmentType(attachmentType: any): Promise<any> {
+    const cleanDto: any = {
+      name: attachmentType.name,
+      code: attachmentType.code,
+      description: attachmentType.description || null,
+      maxSizeMB: attachmentType.maxSizeMB ?? 10,
+      isActive: attachmentType.isActive !== undefined ? attachmentType.isActive : true
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes`,
+      {
+        method: 'POST',
+        headers: {
+          ...this.getAuthHeaders(),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cleanDto)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Failed to create attachment type: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Update Attachment Type
+   * PUT /api/AttachmentTypes/{id}
+   */
+  static async updateAttachmentType(id: number, attachmentType: any): Promise<any> {
+    const cleanDto: any = {}
+    if (attachmentType.name !== undefined) cleanDto.name = attachmentType.name
+    if (attachmentType.code !== undefined) cleanDto.code = attachmentType.code
+    if (attachmentType.description !== undefined) cleanDto.description = attachmentType.description
+    if (attachmentType.maxSizeMB !== undefined) cleanDto.maxSizeMB = attachmentType.maxSizeMB
+    if (attachmentType.isActive !== undefined) cleanDto.isActive = attachmentType.isActive
+
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          ...this.getAuthHeaders(),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cleanDto)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Failed to update attachment type: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Delete Attachment Type
+   * DELETE /api/AttachmentTypes/{id}
+   */
+  static async deleteAttachmentType(id: number): Promise<void> {
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes/${id}`,
+      {
+        method: 'DELETE',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Failed to delete attachment type: ${response.statusText}`)
+    }
+  }
+
+  /**
+   * Toggle Attachment Type Active Status
+   * PATCH /api/AttachmentTypes/{id}/toggle-active
+   */
+  static async toggleAttachmentTypeActive(id: number, isActive: boolean): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/AttachmentTypes/${id}/toggle-active`,
+      {
+        method: 'PATCH',
+        headers: {
+          ...this.getAuthHeaders(),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ isActive })
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || `Failed to toggle attachment type status: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
 }
 
 

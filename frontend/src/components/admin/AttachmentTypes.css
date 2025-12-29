@@ -1,4 +1,4 @@
-.document-types {
+.attachment-types {
   background: white;
   border-radius: 8px;
   padding: 24px;
@@ -7,13 +7,13 @@
   margin: 0 auto;
 }
 
-.document-types-loading {
+.attachment-types-loading {
   text-align: center;
   padding: 40px;
   color: #666;
 }
 
-.document-types-header {
+.attachment-types-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,7 +22,7 @@
   border-bottom: 2px solid #e0e0e0;
 }
 
-.document-types-header h2 {
+.attachment-types-header h2 {
   margin: 0;
   color: #333;
   font-size: 24px;
@@ -43,7 +43,7 @@
   background: #45a049;
 }
 
-.document-types-error {
+.attachment-types-error {
   background: #fee;
   border: 1px solid #fcc;
   color: #c33;
@@ -52,7 +52,7 @@
   margin-bottom: 16px;
 }
 
-.document-types-success {
+.attachment-types-success {
   background: #efe;
   border: 1px solid #cfc;
   color: #3c3;
@@ -71,21 +71,21 @@
   font-size: 16px;
 }
 
-.document-types-table {
+.attachment-types-table {
   overflow-x: auto;
 }
 
-.document-types-table table {
+.attachment-types-table table {
   width: 100%;
   border-collapse: collapse;
   background: white;
 }
 
-.document-types-table thead {
+.attachment-types-table thead {
   background: #f5f5f5;
 }
 
-.document-types-table th {
+.attachment-types-table th {
   padding: 12px;
   text-align: left;
   font-weight: 600;
@@ -94,20 +94,30 @@
   font-size: 14px;
 }
 
-.document-types-table td {
+.attachment-types-table td {
   padding: 12px;
   border-bottom: 1px solid #e0e0e0;
   font-size: 14px;
   color: #666;
 }
 
-.document-types-table tr:hover {
+.attachment-types-table tr:hover {
   background: #f9f9f9;
 }
 
-.document-types-table tr.inactive {
+.attachment-types-table tr.inactive {
   opacity: 0.6;
   background: #fafafa;
+}
+
+.code-badge {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  font-weight: 600;
 }
 
 .status-badge {
@@ -131,6 +141,7 @@
 .action-buttons {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .btn-edit {
@@ -145,6 +156,34 @@
 
 .btn-edit:hover {
   background: #1976D2;
+}
+
+.btn-activate {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-activate:hover {
+  background: #45a049;
+}
+
+.btn-deactivate {
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn-deactivate:hover {
+  background: #f57c00;
 }
 
 .btn-delete {
@@ -220,21 +259,30 @@
 }
 
 .modal-form .form-group input[type="text"],
-.modal-form .form-group input[type="number"] {
+.modal-form .form-group input[type="number"],
+.modal-form .form-group textarea {
   padding: 8px 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  font-family: inherit;
 }
 
 .modal-form .form-group input[type="text"]:focus,
-.modal-form .form-group input[type="number"]:focus {
+.modal-form .form-group input[type="number"]:focus,
+.modal-form .form-group textarea:focus {
   outline: none;
   border-color: #2196F3;
 }
 
 .modal-form .form-group input[type="checkbox"] {
   margin-right: 8px;
+}
+
+.modal-form .form-group small {
+  margin-top: 4px;
+  color: #666;
+  font-size: 12px;
 }
 
 .modal-actions {
@@ -259,11 +307,4 @@
 .btn-secondary:hover {
   background: #e0e0e0;
 }
-
-
-
-
-
-
-
 
