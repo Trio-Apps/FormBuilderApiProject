@@ -146,7 +146,10 @@ builder.Services.AddDbContext<AkhmanageItContext>(options =>
         Console.WriteLine("Using default Auth connection string");
     }
 
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.CommandTimeout(60); // 60 seconds command timeout
+    });
 
     if (builder.Environment.IsDevelopment())
     {
@@ -166,7 +169,10 @@ builder.Services.AddDbContext<FormBuilderDbContext>(options =>
         Console.WriteLine("Using default FormBuilder connection string");
     }
 
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(connectionString, sqlOptions =>
+    {
+        sqlOptions.CommandTimeout(60); // 60 seconds command timeout
+    });
 
     if (builder.Environment.IsDevelopment())
     {

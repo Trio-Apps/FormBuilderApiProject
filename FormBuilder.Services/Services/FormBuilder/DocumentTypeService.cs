@@ -101,17 +101,216 @@ namespace FormBuilder.Services
 
         public override async Task<ServiceResult<DocumentTypeDto>> CreateAsync(CreateDocumentTypeDto createDto)
         {
+            // Normalize ParentMenuId: treat 0 as null (no parent)
+            if (createDto.ParentMenuId.HasValue && createDto.ParentMenuId.Value <= 0)
+            {
+                createDto.ParentMenuId = null;
+            }
             return await base.CreateAsync(createDto);
         }
 
         public override async Task<ServiceResult<DocumentTypeDto>> UpdateAsync(int id, UpdateDocumentTypeDto updateDto)
         {
-            return await base.UpdateAsync(id, updateDto);
+            // Normalize ParentMenuId: treat 0 as null (no parent)
+            if (updateDto.ParentMenuId.HasValue && updateDto.ParentMenuId.Value <= 0)
+            {
+                updateDto.ParentMenuId = null;
+            }
+
+            // Get the current entity to check if ParentMenuId is changing
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<DocumentTypeDto>.NotFound(message);
+            }
+
+            // Check if ParentMenuId is being changed (removed or changed)
+            bool parentMenuIdChanged = updateDto.ParentMenuId.HasValue 
+                ? (entity.ParentMenuId != updateDto.ParentMenuId.Value)
+                : (entity.ParentMenuId.HasValue);
+
+            // Get dbContext once for use throughout the method
+            var dbContext = _unitOfWork.AppDbContext;
+
+            // If removing parent relationship (setting to null) and this entity has children
+            if (parentMenuIdChanged && (!updateDto.ParentMenuId.HasValue) && entity.ParentMenuId.HasValue)
+            {
+                // Use raw SQL to update children directly - this bypasses EF tracking issues
+                // and works even if the constraint is still RESTRICT
+                var childrenCount = await dbContext.Database.ExecuteSqlRawAsync(
+                    "UPDATE DOCUMENT_TYPES SET ParentMenuId = NULL, UpdatedDate = GETUTCDATE() WHERE ParentMenuId = {0}",
+                    id);
+
+                if (childrenCount > 0)
+                {
+                    // Reload the entity to ensure we have the latest state
+                    entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
+                    if (entity == null)
+                    {
+                        var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                        return ServiceResult<DocumentTypeDto>.NotFound(message);
+                    }
+                }
+            }
+
+            // Prevent circular reference: check if trying to set parent to self or descendant
+            if (updateDto.ParentMenuId.HasValue && updateDto.ParentMenuId.Value == id)
+            {
+                var message = _localizer?["DocumentType_CannotBeParentOfItself"] ?? "A document type cannot be its own parent";
+                return ServiceResult<DocumentTypeDto>.BadRequest(message);
+            }
+
+            // Check for circular reference (parent cannot be a descendant)
+            if (updateDto.ParentMenuId.HasValue)
+            {
+                var isDescendant = await IsDescendantAsync(id, updateDto.ParentMenuId.Value);
+                if (isDescendant)
+                {
+                    var message = _localizer?["DocumentType_CircularReference"] ?? "Cannot set parent: would create circular reference";
+                    return ServiceResult<DocumentTypeDto>.BadRequest(message);
+                }
+            }
+
+            // Use raw SQL to update the entity directly - this bypasses EF tracking issues
+            // and prevents conflicts with Foreign Key constraints
+            var sqlParams = new List<object>();
+            var updateFields = new List<string>();
+            int paramIndex = 0;
+
+            if (!string.IsNullOrWhiteSpace(updateDto.Name))
+            {
+                updateFields.Add($"Name = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.Name);
+                paramIndex++;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateDto.Code))
+            {
+                updateFields.Add($"Code = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.Code);
+                paramIndex++;
+            }
+
+            if (updateDto.FormBuilderId.HasValue)
+            {
+                updateFields.Add($"FormBuilderId = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.FormBuilderId.Value);
+                paramIndex++;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateDto.MenuCaption))
+            {
+                updateFields.Add($"MenuCaption = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.MenuCaption);
+                paramIndex++;
+            }
+
+            if (updateDto.MenuOrder.HasValue)
+            {
+                updateFields.Add($"MenuOrder = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.MenuOrder.Value);
+                paramIndex++;
+            }
+
+            // Handle ParentMenuId: use NULL in SQL if value is null
+            if (updateDto.ParentMenuId.HasValue)
+            {
+                updateFields.Add($"ParentMenuId = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.ParentMenuId.Value);
+                paramIndex++;
+            }
+            else
+            {
+                updateFields.Add("ParentMenuId = NULL");
+            }
+
+            if (updateDto.IsActive.HasValue)
+            {
+                updateFields.Add($"IsActive = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.IsActive.Value);
+                paramIndex++;
+            }
+
+            updateFields.Add("UpdatedDate = GETUTCDATE()");
+
+            if (updateFields.Any())
+            {
+                // Add id as the last parameter for WHERE clause
+                sqlParams.Add(id);
+                var sql = $"UPDATE DOCUMENT_TYPES SET {string.Join(", ", updateFields)} WHERE Id = {{{paramIndex}}}";
+                await dbContext.Database.ExecuteSqlRawAsync(sql, sqlParams.ToArray());
+            }
+
+            // Reload the entity to return updated data
+            entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: true);
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<DocumentTypeDto>.NotFound(message);
+            }
+
+            return ServiceResult<DocumentTypeDto>.Ok(_mapper.Map<DocumentTypeDto>(entity));
         }
 
         public override async Task<ServiceResult<bool>> DeleteAsync(int id)
         {
-            return await base.DeleteAsync(id);
+            var entity = await Repository.SingleOrDefaultAsync(e => e.Id == id, asNoTracking: false);
+            if (entity == null)
+            {
+                var message = _localizer?["Common_ResourceNotFound"] ?? "Resource not found";
+                return ServiceResult<bool>.NotFound(message);
+            }
+
+            // Get all children (including inactive ones) that have this as parent
+            // Use raw SQL to update children directly - this bypasses EF tracking issues
+            // and works even if the constraint is still RESTRICT
+            var dbContext = _unitOfWork.AppDbContext;
+            var childrenCount = await dbContext.Database.ExecuteSqlRawAsync(
+                "UPDATE DOCUMENT_TYPES SET ParentMenuId = NULL, UpdatedDate = GETUTCDATE() WHERE ParentMenuId = {0}",
+                id);
+
+            if (childrenCount > 0)
+            {
+                // Verify children were updated
+                var remainingChildren = await Repository.GetAll(dt => dt.ParentMenuId == id)
+                    .CountAsync();
+                
+                if (remainingChildren > 0)
+                {
+                    var message = _localizer?["DocumentType_UnableToRemoveParentFromChildren"] 
+                        ?? $"Unable to remove parent relationship from {remainingChildren} child document type(s). Please manually update them first.";
+                    return ServiceResult<bool>.BadRequest(message);
+                }
+            }
+
+            // Delete the entity
+            Repository.Delete(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            return ServiceResult<bool>.Ok(true);
+        }
+
+        /// <summary>
+        /// Check if targetId is a descendant of sourceId (to prevent circular references)
+        /// </summary>
+        private async Task<bool> IsDescendantAsync(int sourceId, int targetId)
+        {
+            var current = await Repository.SingleOrDefaultAsync(dt => dt.Id == targetId);
+            if (current == null) return false;
+
+            // Traverse up the parent chain
+            while (current.ParentMenuId.HasValue)
+            {
+                if (current.ParentMenuId.Value == sourceId)
+                {
+                    return true; // Found circular reference
+                }
+                current = await Repository.SingleOrDefaultAsync(dt => dt.Id == current.ParentMenuId.Value);
+                if (current == null) break;
+            }
+
+            return false;
         }
 
         public async Task<ServiceResult<bool>> ToggleActiveAsync(int id, bool isActive)
@@ -170,7 +369,7 @@ namespace FormBuilder.Services
                 }
             }
 
-            if (dto.ParentMenuId.HasValue)
+            if (dto.ParentMenuId.HasValue && dto.ParentMenuId.Value > 0)
             {
                 var parentExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.Id == dto.ParentMenuId.Value);
                 if (!parentExists) return ValidationResult.Failure("Invalid parent menu ID");
@@ -195,7 +394,7 @@ namespace FormBuilder.Services
                 if (!formBuilderExists) return ValidationResult.Failure("Invalid form builder ID");
             }
 
-            if (dto.ParentMenuId.HasValue)
+            if (dto.ParentMenuId.HasValue && dto.ParentMenuId.Value > 0)
             {
                 var parentExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(e => e.Id == dto.ParentMenuId.Value);
                 if (!parentExists) return ValidationResult.Failure("Invalid parent menu ID");

@@ -2,6 +2,7 @@
 using FormBuilder.Domain.Interfaces;
 using FormBuilder.Domain.Interfaces.Repositories;
 using FormBuilder.Domian.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,9 @@ namespace formBuilder.Domian.Interfaces
         // Core UoW methods
         Task<int> CompleteAsyn();
         IBaseRepository<T> Repositary<T>() where T : BaseEntity;
+        
+        // DbContext access for raw SQL operations
+        DbContext AppDbContext { get; }
 
         // Specific repositories
         IFormBuilderRepository FormBuilderRepository { get; }

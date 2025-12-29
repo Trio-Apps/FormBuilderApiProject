@@ -10,6 +10,7 @@ using FormBuilder.Infrastructure.Repositories;
 using FormBuilder.Infrastructure.Repository;
 using FormBuilder.Services;
 using FormBuilder.Services.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,7 +36,8 @@ namespace FormBuilder.core.Repository
         private IProjectRepository _projectRepository;
         private IFormSubmissionsRepository _formSubmissionsRepository; // تم التصحيح
         private IFormGridColumnRepository _formGridColumnRepository;
-        public FormBuilderDbContext AppDbContext { get; }
+        private readonly FormBuilderDbContext _appDbContext;
+        public DbContext AppDbContext => _appDbContext;
         private IFormSubmissionGridRowRepository _formSubmissionGridRowRepository;
         private IFormSubmissionGridCellRepository _formSubmissionGridCellRepository;
         private IFormulasRepository _formulasRepository;
@@ -46,7 +48,7 @@ namespace FormBuilder.core.Repository
         public UnitOfWork(FormBuilderDbContext appDbContext)
         {
             _repositories = new Dictionary<Type, object>();
-            AppDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
+            _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
         }
 
         // --- Core UoW Methods ---
@@ -66,7 +68,7 @@ namespace FormBuilder.core.Repository
             var type = typeof(T);
             if (!_repositories.ContainsKey(type))
             {
-                var repo = new BaseRepository<T>(AppDbContext);
+                var repo = new BaseRepository<T>(_appDbContext);
                 _repositories.Add(type, repo);
             }
             return (IBaseRepository<T>)_repositories[type];
@@ -78,7 +80,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formRulesRepository ??= new FORM_RULESRepository(AppDbContext);
+                _formRulesRepository ??= new FORM_RULESRepository(_appDbContext);
                 return _formRulesRepository;
             }
         }
@@ -87,7 +89,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formBuilderRepository ??= new FormBuilderRepository(AppDbContext);
+                _formBuilderRepository ??= new FormBuilderRepository(_appDbContext);
                 return _formBuilderRepository;
             }
         }
@@ -96,7 +98,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formTabRepository ??= new FormTabRepository(AppDbContext);
+                _formTabRepository ??= new FormTabRepository(_appDbContext);
                 return _formTabRepository;
             }
         }
@@ -105,8 +107,8 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formFieldRepository ??= new FormFieldRepository(AppDbContext);
-                return _formFieldRepository;
+                _formFieldRepository ??= new FormFieldRepository(_appDbContext);
+                return _formFieldRepository;    
             }
         }
 
@@ -114,8 +116,8 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _fieldTypesRepository ??= new FieldTypesRepository(AppDbContext);
-                return _fieldTypesRepository;
+                _fieldTypesRepository ??= new FieldTypesRepository(_appDbContext);
+                return _fieldTypesRepository;   
             }
         }
 
@@ -123,7 +125,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _FieldOptionsRepository ??= new FieldOptionsRepository(AppDbContext);
+                _FieldOptionsRepository ??= new FieldOptionsRepository(_appDbContext);
                 return _FieldOptionsRepository;
             }
         }
@@ -132,7 +134,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _fieldDataSourcesRepository ??= new FieldDataSourcesRepository(AppDbContext);
+                _fieldDataSourcesRepository ??= new FieldDataSourcesRepository(_appDbContext);
                 return _fieldDataSourcesRepository;
             }
         }
@@ -141,7 +143,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _attachmentTypeRepository ??= new AttachmentTypeRepository(AppDbContext);
+                _attachmentTypeRepository ??= new AttachmentTypeRepository(_appDbContext);
                 return _attachmentTypeRepository;
             }
         }
@@ -150,7 +152,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formAttachmentTypeRepository ??= new FormAttachmentTypeRepository(AppDbContext);
+                _formAttachmentTypeRepository ??= new FormAttachmentTypeRepository(_appDbContext);
                 return _formAttachmentTypeRepository;
             }
         }
@@ -159,7 +161,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _documentTypeRepository ??= new DocumentTypeRepository(AppDbContext);
+                _documentTypeRepository ??= new DocumentTypeRepository(_appDbContext);
                 return _documentTypeRepository;
             }
         }
@@ -168,7 +170,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _projectRepository ??= new ProjectRepository(AppDbContext);
+                _projectRepository ??= new ProjectRepository(_appDbContext);
                 return _projectRepository;
             }
         }
@@ -177,7 +179,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _documentSeriesRepository ??= new DocumentSeriesRepository(AppDbContext);
+                _documentSeriesRepository ??= new DocumentSeriesRepository(_appDbContext);
                 return _documentSeriesRepository;
             }
         }
@@ -186,16 +188,16 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formSubmissionsRepository ??= new FormSubmissionsRepository(AppDbContext);
+                _formSubmissionsRepository ??= new FormSubmissionsRepository(_appDbContext);
                 return _formSubmissionsRepository;
             }
         }
         private IFormSubmissionValuesRepository _formSubmissionValuesRepository;
         public IFormSubmissionValuesRepository FormSubmissionValuesRepository =>
-            _formSubmissionValuesRepository ??= new FormSubmissionValuesRepository(AppDbContext);
+            _formSubmissionValuesRepository ??= new FormSubmissionValuesRepository(_appDbContext);
         private IFormSubmissionAttachmentsRepository _formSubmissionAttachmentsRepository;
         public IFormSubmissionAttachmentsRepository FormSubmissionAttachmentsRepository =>
-            _formSubmissionAttachmentsRepository ??= new FormSubmissionAttachmentsRepository(AppDbContext);
+            _formSubmissionAttachmentsRepository ??= new FormSubmissionAttachmentsRepository(_appDbContext);
         // Add to UnitOfWork class
         private IFormGridRepository _formGridRepository;
 
@@ -203,7 +205,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formGridRepository ??= new FormGridRepository(AppDbContext);
+                _formGridRepository ??= new FormGridRepository(_appDbContext);
                 return _formGridRepository;
             }
         }
@@ -212,7 +214,7 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formGridColumnRepository ??= new FormGridColumnRepository(AppDbContext);
+                _formGridColumnRepository ??= new FormGridColumnRepository(_appDbContext);
                 return _formGridColumnRepository;
             }
         }
@@ -221,25 +223,25 @@ namespace FormBuilder.core.Repository
         {
             get
             {
-                _formSubmissionGridRowRepository ??= new FormSubmissionGridRowRepository(AppDbContext);
+                _formSubmissionGridRowRepository ??= new FormSubmissionGridRowRepository(_appDbContext);
                 return _formSubmissionGridRowRepository;
             }
         }
         public IFormSubmissionGridCellRepository FormSubmissionGridCellRepository =>
-                _formSubmissionGridCellRepository ??= new FormSubmissionGridCellRepository(AppDbContext);
+                _formSubmissionGridCellRepository ??= new FormSubmissionGridCellRepository(_appDbContext);
         public IFormulasRepository FormulasRepository
         {
             get
             {
-                _formulasRepository ??= new FormulasRepository(AppDbContext);
+                _formulasRepository ??= new FormulasRepository(_appDbContext);
                 return _formulasRepository;
             }
         }
         public IFormulaVariableRepository FormulaVariablesRepository =>
-            _formulaVariablesRepository ??= new FormulaVariablesRepository (AppDbContext);
+            _formulaVariablesRepository ??= new FormulaVariablesRepository (_appDbContext);
 
         public IApprovalStageRepository ApprovalStageRepository
-            => _approvalStageRepository ??= new ApprovalStageRepository(AppDbContext);
+            => _approvalStageRepository ??= new ApprovalStageRepository(_appDbContext);
 
 
         public IApprovalWorkflowRepository ApprovalWorkflowRepository
@@ -248,7 +250,7 @@ namespace FormBuilder.core.Repository
             {
                 if (_approvalWorkflowRepository == null)
                 {
-                    _approvalWorkflowRepository = new ApprovalWorkflowRepository(AppDbContext);
+                    _approvalWorkflowRepository = new ApprovalWorkflowRepository(_appDbContext);
                 }
 
                 return _approvalWorkflowRepository;

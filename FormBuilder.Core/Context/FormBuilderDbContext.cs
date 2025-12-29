@@ -198,6 +198,38 @@ namespace FormBuilder.Infrastructure.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // ----------------------
+            // DOCUMENT_TYPES self-reference (ParentMenuId)
+            // ----------------------
+            // Note: Using NoAction to avoid multiple cascade paths with FORM_BUILDER
+            // Children are handled manually in DocumentTypeService.DeleteAsync
+            modelBuilder.Entity<DOCUMENT_TYPES>()
+                .HasOne(dt => dt.ParentMenu)
+                .WithMany(dt => dt.Children)
+                .HasForeignKey(dt => dt.ParentMenuId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            // ----------------------
+            // DOCUMENT_SERIES relationships
+            // ----------------------
+            modelBuilder.Entity<DOCUMENT_SERIES>()
+                .HasOne(ds => ds.DOCUMENT_TYPES)
+                .WithMany(dt => dt.DOCUMENT_SERIES)
+                .HasForeignKey(ds => ds.DocumentTypeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<DOCUMENT_SERIES>()
+                .HasOne(ds => ds.PROJECTS)
+                .WithMany(p => p.DOCUMENT_SERIES)
+                .HasForeignKey(ds => ds.ProjectId)
+                .OnDelete(DeleteBehavior.Restrict); // Changed from Cascade to Restrict to prevent issues when deleting projects
+
+            modelBuilder.Entity<DOCUMENT_SERIES>()
+                .HasMany(ds => ds.FORM_SUBMISSIONS)
+                .WithOne(fs => fs.DOCUMENT_SERIES)
+                .HasForeignKey(fs => fs.SeriesId)
+                .OnDelete(DeleteBehavior.Restrict); // Changed from Cascade to Restrict - submissions should not be deleted when series is deleted
+
+            // ----------------------
             // FORM_RULES & FORM_RULE_ACTIONS
             // ----------------------
             modelBuilder.Entity<FORM_RULES>()

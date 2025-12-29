@@ -22,6 +22,10 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
+                .ForMember(dest => dest.FORM_BUILDER, opt => opt.Ignore())
+                .ForMember(dest => dest.ParentMenu, opt => opt.Ignore())
+                .ForMember(dest => dest.Children, opt => opt.Ignore())
+                .ForMember(dest => dest.DOCUMENT_SERIES, opt => opt.Ignore())
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }

@@ -2047,7 +2047,7 @@ namespace FormBuilder.Core.Migrations
                     b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_SERIES", "DOCUMENT_SERIES")
                         .WithMany("FORM_SUBMISSIONS")
                         .HasForeignKey("SeriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DOCUMENT_SERIES");
@@ -2246,7 +2246,7 @@ namespace FormBuilder.Core.Migrations
                     b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.PROJECTS", "PROJECTS")
                         .WithMany("DOCUMENT_SERIES")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DOCUMENT_TYPES");
@@ -2264,7 +2264,8 @@ namespace FormBuilder.Core.Migrations
 
                     b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_TYPES", "ParentMenu")
                         .WithMany("Children")
-                        .HasForeignKey("ParentMenuId");
+                        .HasForeignKey("ParentMenuId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FORM_BUILDER");
 

@@ -96,8 +96,11 @@ namespace FormBuilder.Services.Services.FormBuilder
                 }
 
                 // Get or create Document Type
-                var documentTypes = await _unitOfWork.DocumentTypeRepository.GetByFormBuilderIdAsync(dto.FormBuilderId);
-                var documentType = documentTypes.FirstOrDefault();
+                // Load with no tracking to avoid navigation property update conflicts
+                var dbContextForQuery = _unitOfWork.AppDbContext;
+                var documentType = await dbContextForQuery.Set<DOCUMENT_TYPES>()
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(dt => dt.FormBuilderId == dto.FormBuilderId);
 
                 if (documentType == null)
                 {
@@ -118,19 +121,81 @@ namespace FormBuilder.Services.Services.FormBuilder
                 }
                 else
                 {
-                    // Update existing Document Type
-                    documentType.Name = dto.DocumentName;
-                    documentType.Code = dto.DocumentCode;
-                    documentType.MenuCaption = dto.MenuCaption;
-                    documentType.MenuOrder = dto.MenuOrder;
-                    documentType.ParentMenuId = dto.ParentMenuId;
-                    documentType.IsActive = dto.IsActive;
-                    documentType.UpdatedDate = DateTime.UtcNow;
+                    // Check if ParentMenuId is being changed (removed or changed)
+                    bool parentMenuIdChanged = dto.ParentMenuId.HasValue 
+                        ? (documentType.ParentMenuId != dto.ParentMenuId.Value)
+                        : (documentType.ParentMenuId.HasValue);
 
-                    _unitOfWork.DocumentTypeRepository.Update(documentType);
+                    // If removing parent relationship (setting to null) and this entity has children
+                    if (parentMenuIdChanged && (!dto.ParentMenuId.HasValue) && documentType.ParentMenuId.HasValue)
+                    {
+                        // Use raw SQL to update children directly - this bypasses EF tracking issues
+                        // and works even if the constraint is still RESTRICT
+                        var dbContext = _unitOfWork.AppDbContext;
+                        await dbContext.Database.ExecuteSqlRawAsync(
+                            "UPDATE DOCUMENT_TYPES SET ParentMenuId = NULL, UpdatedDate = GETUTCDATE() WHERE ParentMenuId = {0}",
+                            documentType.Id);
+                    }
+
+                    // Use raw SQL to update the entity directly - this bypasses EF tracking issues
+                    // and prevents conflicts with Foreign Key constraints
+                    var dbContextForUpdate = _unitOfWork.AppDbContext;
+                    var sqlParams = new List<object>();
+                    var updateFields = new List<string>();
+                    int paramIndex = 0;
+
+                    updateFields.Add($"Name = {{{paramIndex}}}");
+                    sqlParams.Add(dto.DocumentName);
+                    paramIndex++;
+
+                    updateFields.Add($"Code = {{{paramIndex}}}");
+                    sqlParams.Add(dto.DocumentCode);
+                    paramIndex++;
+
+                    if (dto.MenuCaption != null)
+                    {
+                        updateFields.Add($"MenuCaption = {{{paramIndex}}}");
+                        sqlParams.Add(dto.MenuCaption);
+                        paramIndex++;
+                    }
+
+                    updateFields.Add($"MenuOrder = {{{paramIndex}}}");
+                    sqlParams.Add(dto.MenuOrder);
+                    paramIndex++;
+
+                    // Handle ParentMenuId: use NULL in SQL if value is null
+                    if (dto.ParentMenuId.HasValue)
+                    {
+                        updateFields.Add($"ParentMenuId = {{{paramIndex}}}");
+                        sqlParams.Add(dto.ParentMenuId.Value);
+                        paramIndex++;
+                    }
+                    else
+                    {
+                        updateFields.Add("ParentMenuId = NULL");
+                    }
+
+                    updateFields.Add($"IsActive = {{{paramIndex}}}");
+                    sqlParams.Add(dto.IsActive);
+                    paramIndex++;
+
+                    updateFields.Add("UpdatedDate = GETUTCDATE()");
+
+                    // Add id as the last parameter for WHERE clause
+                    sqlParams.Add(documentType.Id);
+                    var sql = $"UPDATE DOCUMENT_TYPES SET {string.Join(", ", updateFields)} WHERE Id = {{{paramIndex}}}";
+                    await dbContextForUpdate.Database.ExecuteSqlRawAsync(sql, sqlParams.ToArray());
+
+                    // Reload the entity to ensure we have the latest state (with no tracking to avoid conflicts)
+                    documentType = await _unitOfWork.DocumentTypeRepository.GetByIdAsync(documentType.Id);
+                    
+                    // Detach the entity from EF tracking to prevent navigation property updates
+                    var dbContextForDetach = _unitOfWork.AppDbContext;
+                    dbContextForDetach.Entry(documentType).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 }
 
-                await _unitOfWork.CompleteAsyn();
+                // No need to call CompleteAsyn() here since we used raw SQL for DocumentType update
+                // CompleteAsyn() will be called after DocumentSeries updates
 
                 // Handle Document Series
                 if (dto.DocumentSeries != null && dto.DocumentSeries.Any())
@@ -258,7 +323,8 @@ namespace FormBuilder.Services.Services.FormBuilder
             var allSeries = await _unitOfWork.DocumentSeriesRepository.GetByDocumentTypeIdAsync(documentTypeId);
             var otherSeries = allSeries.Where(s => s.ProjectId == projectId && 
                                                    s.IsDefault && 
-                                                   (!excludeSeriesId.HasValue || s.Id != excludeSeriesId.Value));
+                                                   (!excludeSeriesId.HasValue || s.Id != excludeSeriesId.Value))
+                                      .ToList();
 
             foreach (var series in otherSeries)
             {

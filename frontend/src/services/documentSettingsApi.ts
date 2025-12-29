@@ -85,7 +85,18 @@ export class DocumentSettingsApi {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
-      throw new Error(errorData.errorMessage || errorData.message || 'Failed to save document settings')
+      const errorMessage = errorData.errorMessage || errorData.message || errorData.error || 'Failed to save document settings'
+      
+      // Provide more specific error messages
+      if (errorMessage.includes('code already exists') || errorMessage.includes('CodeExists')) {
+        throw new Error('Document code or series code already exists. Please use a different code.')
+      }
+      
+      if (errorMessage.includes('Invalid') || errorMessage.includes('not found')) {
+        throw new Error(errorMessage)
+      }
+      
+      throw new Error(errorMessage)
     }
 
     const data = await response.json()

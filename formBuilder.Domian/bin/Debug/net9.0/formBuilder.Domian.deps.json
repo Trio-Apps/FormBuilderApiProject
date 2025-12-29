@@ -9,6 +9,7 @@
       "FormBuilder.Domian/1.0.0": {
         "dependencies": {
           "DocumentFormat.OpenXml": "3.3.0",
+          "Microsoft.EntityFrameworkCore": "9.0.11",
           "Microsoft.Extensions.Identity.Stores": "9.0.11"
         },
         "runtime": {
@@ -56,12 +57,48 @@
           }
         }
       },
+      "Microsoft.EntityFrameworkCore/9.0.11": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Abstractions": "9.0.11",
+          "Microsoft.Extensions.Caching.Memory": "9.0.11",
+          "Microsoft.Extensions.Logging": "9.0.11"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "9.0.11.0",
+            "fileVersion": "9.0.1125.51902"
+          }
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Abstractions/9.0.11": {
+        "runtime": {
+          "lib/net8.0/Microsoft.EntityFrameworkCore.Abstractions.dll": {
+            "assemblyVersion": "9.0.11.0",
+            "fileVersion": "9.0.1125.51902"
+          }
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/9.0.11": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "9.0.11"
         },
         "runtime": {
           "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.1125.51716"
+          }
+        }
+      },
+      "Microsoft.Extensions.Caching.Memory/9.0.11": {
+        "dependencies": {
+          "Microsoft.Extensions.Caching.Abstractions": "9.0.11",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.11",
+          "Microsoft.Extensions.Options": "9.0.11",
+          "Microsoft.Extensions.Primitives": "9.0.11"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.Extensions.Caching.Memory.dll": {
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.1125.51716"
           }
@@ -200,12 +237,33 @@
       "path": "microsoft.aspnetcore.cryptography.keyderivation/9.0.11",
       "hashPath": "microsoft.aspnetcore.cryptography.keyderivation.9.0.11.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore/9.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lqqV6JEmVv8s0Y/25RnKtYZ6qL+Vz14wEsrBV1ubVUyzDGrOp+10XJ54HNuRLUzdvzVPR2uQ5li/CPrBj0kQHg==",
+      "path": "microsoft.entityframeworkcore/9.0.11",
+      "hashPath": "microsoft.entityframeworkcore.9.0.11.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Abstractions/9.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-MHcdHm7vF71MfqYC68Jx9YfDAjxcuClGBZJk5zcJDRhVO4HgX+QFsOqcAisKWb20aBeF0IN1YkSktnEUf/tmLQ==",
+      "path": "microsoft.entityframeworkcore.abstractions/9.0.11",
+      "hashPath": "microsoft.entityframeworkcore.abstractions.9.0.11.nupkg.sha512"
+    },
     "Microsoft.Extensions.Caching.Abstractions/9.0.11": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-PRv1SPyrgl/ullMF6eKDuEULRkTc10fVcnWvzFhqIMDA3m5f91znKH9ZNsKZBgu4xVc4ulNt7TEXyyt0rdlB3g==",
       "path": "microsoft.extensions.caching.abstractions/9.0.11",
       "hashPath": "microsoft.extensions.caching.abstractions.9.0.11.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Caching.Memory/9.0.11": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-J77oUeVZXdMoiUiCPkL4v13KrNRuMQnSHHw78cTh/2ZidyiMFm8jhu49OUKvNydMUX8ZcuM5g8uohW18YaglMw==",
+      "path": "microsoft.extensions.caching.memory/9.0.11",
+      "hashPath": "microsoft.extensions.caching.memory.9.0.11.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/9.0.11": {
       "type": "package",

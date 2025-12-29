@@ -9,6 +9,7 @@ using FormBuilder.Services.Services.Base;
 using FormBuilder.Application.DTOS;
 using FormBuilder.Core.DTOS.Common;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,12 +99,27 @@ namespace FormBuilder.Services
             if (codeExists)
                 return ValidationResult.Failure("Document series code already exists");
 
+            // Validate DocumentTypeId
+            var documentTypeExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(dt => dt.Id == dto.DocumentTypeId);
+            if (!documentTypeExists)
+                return ValidationResult.Failure("Invalid document type ID");
+
+            // Validate ProjectId
+            var projectExists = await _unitOfWork.ProjectRepository.AnyAsync(p => p.Id == dto.ProjectId);
+            if (!projectExists)
+                return ValidationResult.Failure("Invalid project ID");
+
             return ValidationResult.Success();
         }
 
         public async Task<ApiResponse> UpdateAsync(int id, UpdateDocumentSeriesDto updateDto)
         {
-            var entity = await _unitOfWork.DocumentSeriesRepository.GetByIdAsync(id);
+            // Load entity with no tracking to avoid navigation property update conflicts
+            var dbContext = _unitOfWork.AppDbContext;
+            var entity = await dbContext.Set<DOCUMENT_SERIES>()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(ds => ds.Id == id);
+            
             if (entity == null)
                 return new ApiResponse(404, "Document series not found");
 
@@ -115,8 +131,72 @@ namespace FormBuilder.Services
                 await RemoveDefaultFromOtherSeriesAsync(documentTypeId, projectId, id);
             }
 
-            var result = await base.UpdateAsync(id, updateDto);
-            return ConvertToApiResponse(result);
+            // Use raw SQL to update the entity directly - this bypasses EF tracking issues
+            // and prevents conflicts with Foreign Key constraints
+            var dbContext1 = _unitOfWork.AppDbContext;
+            var sqlParams = new List<object>();
+            var updateFields = new List<string>();
+            int paramIndex = 0;
+
+            if (updateDto.DocumentTypeId.HasValue)
+            {
+                updateFields.Add($"DocumentTypeId = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.DocumentTypeId.Value);
+                paramIndex++;
+            }
+
+            if (updateDto.ProjectId.HasValue)
+            {
+                updateFields.Add($"ProjectId = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.ProjectId.Value);
+                paramIndex++;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateDto.SeriesCode))
+            {
+                updateFields.Add($"SeriesCode = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.SeriesCode);
+                paramIndex++;
+            }
+
+            if (updateDto.NextNumber.HasValue)
+            {
+                updateFields.Add($"NextNumber = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.NextNumber.Value);
+                paramIndex++;
+            }
+
+            if (updateDto.IsDefault.HasValue)
+            {
+                updateFields.Add($"IsDefault = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.IsDefault.Value);
+                paramIndex++;
+            }
+
+            if (updateDto.IsActive.HasValue)
+            {
+                updateFields.Add($"IsActive = {{{paramIndex}}}");
+                sqlParams.Add(updateDto.IsActive.Value);
+                paramIndex++;
+            }
+
+            updateFields.Add("UpdatedDate = GETUTCDATE()");
+
+            if (updateFields.Any())
+            {
+                // Add id as the last parameter for WHERE clause
+                sqlParams.Add(id);
+                var sql = $"UPDATE DOCUMENT_SERIES SET {string.Join(", ", updateFields)} WHERE Id = {{{paramIndex}}}";
+                await dbContext.Database.ExecuteSqlRawAsync(sql, sqlParams.ToArray());
+            }
+
+            // Reload the entity to return updated data
+            entity = await _unitOfWork.DocumentSeriesRepository.GetByIdAsync(id);
+            if (entity == null)
+                return new ApiResponse(404, "Document series not found");
+
+            var dto = _mapper.Map<DocumentSeriesDto>(entity);
+            return new ApiResponse(200, "Document series updated successfully", dto);
         }
 
         protected override async Task<ValidationResult> ValidateUpdateAsync(int id, UpdateDocumentSeriesDto dto, DOCUMENT_SERIES entity)
@@ -129,11 +209,38 @@ namespace FormBuilder.Services
                     return ValidationResult.Failure("Document series code already exists");
             }
 
+            // Validate DocumentTypeId if provided
+            if (dto.DocumentTypeId.HasValue)
+            {
+                var documentTypeExists = await _unitOfWork.DocumentTypeRepository.AnyAsync(dt => dt.Id == dto.DocumentTypeId.Value);
+                if (!documentTypeExists)
+                    return ValidationResult.Failure("Invalid document type ID");
+            }
+
+            // Validate ProjectId if provided
+            if (dto.ProjectId.HasValue)
+            {
+                var projectExists = await _unitOfWork.ProjectRepository.AnyAsync(p => p.Id == dto.ProjectId.Value);
+                if (!projectExists)
+                    return ValidationResult.Failure("Invalid project ID");
+            }
+
             return ValidationResult.Success();
         }
 
         public async Task<ApiResponse> DeleteAsync(int id)
         {
+            var entity = await _unitOfWork.DocumentSeriesRepository.GetByIdAsync(id);
+            if (entity == null)
+                return new ApiResponse(404, "Document series not found");
+
+            // Check if there are any form submissions using this series
+            var hasSubmissions = await _unitOfWork.FormSubmissionsRepository.AnyAsync(fs => fs.SeriesId == id);
+            if (hasSubmissions)
+            {
+                return new ApiResponse(400, "Cannot delete document series: There are form submissions associated with this series. Please delete or reassign the submissions first.");
+            }
+
             var result = await base.DeleteAsync(id);
             return ConvertToApiResponse(result);
         }

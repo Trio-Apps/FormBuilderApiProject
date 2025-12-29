@@ -124,15 +124,33 @@ const DocumentSettingsComponent = ({ formBuilderId }: DocumentSettingsProps) => 
       // Validation
       if (!documentName.trim()) {
         setError('Document Name is required')
+        setSaving(false)
         return
       }
       if (!documentCode.trim()) {
         setError('Document Code is required')
+        setSaving(false)
         return
       }
       if (!menuCaption.trim()) {
         setError('Menu Caption is required')
+        setSaving(false)
         return
+      }
+
+      // Validate document series
+      for (let i = 0; i < seriesList.length; i++) {
+        const series = seriesList[i]
+        if (!series.projectId || series.projectId <= 0) {
+          setError(`Series ${i + 1}: Project is required`)
+          setSaving(false)
+          return
+        }
+        if (!series.seriesCode || !series.seriesCode.trim()) {
+          setError(`Series ${i + 1}: Series Code is required`)
+          setSaving(false)
+          return
+        }
       }
 
       const saveData: SaveDocumentSettings = {
@@ -151,7 +169,9 @@ const DocumentSettingsComponent = ({ formBuilderId }: DocumentSettingsProps) => 
       await loadSettings()
     } catch (err) {
       console.error('Error saving document settings:', err)
-      setError(err instanceof Error ? err.message : 'Failed to save document settings')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to save document settings'
+      setError(errorMessage)
+      setSuccess(null)
     } finally {
       setSaving(false)
     }

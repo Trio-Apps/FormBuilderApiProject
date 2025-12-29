@@ -1707,6 +1707,7 @@
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
           "DocumentFormat.OpenXml": "3.3.0",
+          "Microsoft.EntityFrameworkCore": "9.0.11",
           "Microsoft.Extensions.Identity.Stores": "9.0.11"
         },
         "compile": {

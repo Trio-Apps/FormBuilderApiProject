@@ -678,6 +678,199 @@ export class ApiService {
     return Array.isArray(projects) ? projects : []
   }
 
+  // ================================
+  // DOCUMENT TYPES - CRUD Endpoints
+  // ================================
+
+  /**
+   * Get all Document Types
+   * GET /api/DocumentTypes
+   */
+  static async getAllDocumentTypes(): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentTypes`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch document types: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    const documentTypes = data.success !== undefined ? data.data : data
+    return Array.isArray(documentTypes) ? documentTypes : []
+  }
+
+  /**
+   * Get Document Type by ID
+   * GET /api/DocumentTypes/{id}
+   */
+  static async getDocumentTypeById(id: number): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentTypes/${id}`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Document type not found')
+      }
+      throw new Error(`Failed to fetch document type: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Get active Document Types
+   * GET /api/DocumentTypes/active
+   */
+  static async getActiveDocumentTypes(): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentTypes/active`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch active document types: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    const documentTypes = data.success !== undefined ? data.data : data
+    return Array.isArray(documentTypes) ? documentTypes : []
+  }
+
+  /**
+   * Create Document Type
+   * POST /api/DocumentTypes
+   */
+  static async createDocumentType(documentType: any): Promise<any> {
+    // Clean up the DTO - remove undefined/null values for optional fields
+    const cleanDto: any = {
+      name: documentType.name,
+      code: documentType.code,
+      menuCaption: documentType.menuCaption,
+      menuOrder: documentType.menuOrder ?? 0,
+      isActive: documentType.isActive ?? true
+    }
+
+    // Only include formBuilderId if it has a valid value
+    if (documentType.formBuilderId != null && documentType.formBuilderId > 0) {
+      cleanDto.formBuilderId = documentType.formBuilderId
+    }
+
+    // Include parentMenuId if it's explicitly set (including 0, which will be normalized to null in backend)
+    if (documentType.parentMenuId !== undefined && documentType.parentMenuId !== null) {
+      // Send 0 as-is; backend will normalize it to null
+      cleanDto.parentMenuId = documentType.parentMenuId > 0 ? documentType.parentMenuId : 0
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentTypes`,
+      {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(cleanDto)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error || `Failed to create document type (${response.status})`
+      throw new Error(errorMessage)
+    }
+
+    const data = await response.json()
+    return data.success !== undefined ? data.data : data
+  }
+
+  /**
+   * Update Document Type
+   * PUT /api/DocumentTypes/{id}
+   */
+  static async updateDocumentType(id: number, documentType: any): Promise<void> {
+    // Clean up the DTO - only include fields that are provided
+    const cleanDto: any = {}
+
+    if (documentType.name != null) cleanDto.name = documentType.name
+    if (documentType.code != null) cleanDto.code = documentType.code
+    if (documentType.menuCaption != null) cleanDto.menuCaption = documentType.menuCaption
+    if (documentType.menuOrder != null) cleanDto.menuOrder = documentType.menuOrder
+    if (documentType.isActive != null) cleanDto.isActive = documentType.isActive
+
+    // Only include formBuilderId if it has a valid value or is explicitly null
+    if (documentType.formBuilderId !== undefined) {
+      cleanDto.formBuilderId = documentType.formBuilderId > 0 ? documentType.formBuilderId : null
+    }
+
+    // Include parentMenuId if it's explicitly set (including 0, which will be normalized to null in backend)
+    if (documentType.parentMenuId !== undefined) {
+      // Send 0 as-is; backend will normalize it to null
+      cleanDto.parentMenuId = documentType.parentMenuId > 0 ? documentType.parentMenuId : 0
+    }
+
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentTypes/${id}`,
+      {
+        method: 'PUT',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(cleanDto)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error || `Failed to update document type (${response.status})`
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Delete Document Type
+   * DELETE /api/DocumentTypes/{id}
+   */
+  static async deleteDocumentType(id: number): Promise<void> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentTypes/${id}`,
+      {
+        method: 'DELETE',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      
+      if (response.status === 404) {
+        throw new Error(errorData.message || errorData.errorMessage || 'Document type not found')
+      }
+      
+      // Check for foreign key constraint errors
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error
+      if (errorMessage && (
+        errorMessage.includes('foreign key') || 
+        errorMessage.includes('constraint') ||
+        errorMessage.includes('reference') ||
+        errorMessage.includes('children') ||
+        errorMessage.includes('submissions')
+      )) {
+        throw new Error('Cannot delete document type: It has related records (children or submissions). Please remove or reassign them first.')
+      }
+      
+      throw new Error(errorMessage || `Failed to delete document type (${response.status})`)
+    }
+  }
+
   /**
    * Soft delete field data source (Admin)
    * DELETE /api/FieldDataSources/soft-delete/{id}
@@ -697,6 +890,229 @@ export class ApiService {
       }
       throw new Error(`Failed to soft delete data source: ${response.statusText}`)
     }
+  }
+
+  // ================================
+  // DOCUMENT SERIES - CRUD Endpoints
+  // ================================
+
+  /**
+   * Get all Document Series
+   * GET /api/DocumentSeries
+   */
+  static async getAllDocumentSeries(): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch document series: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.data || []
+  }
+
+  /**
+   * Get Document Series by ID
+   * GET /api/DocumentSeries/{id}
+   */
+  static async getDocumentSeriesById(id: number): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/${id}`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('Document series not found')
+      }
+      throw new Error(`Failed to fetch document series: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.data
+  }
+
+  /**
+   * Get Document Series by Document Type ID
+   * GET /api/DocumentSeries/document-type/{documentTypeId}
+   */
+  static async getDocumentSeriesByDocumentTypeId(documentTypeId: number): Promise<any[]> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/document-type/${documentTypeId}`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch document series: ${response.statusText}`)
+    }
+
+    const data = await response.json()
+    return data.data || []
+  }
+
+  /**
+   * Create Document Series
+   * POST /api/DocumentSeries
+   */
+  static async createDocumentSeries(series: any): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries`,
+      {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(series)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error || `Failed to create document series (${response.status})`
+      throw new Error(errorMessage)
+    }
+
+    const data = await response.json()
+    return data.data || data
+  }
+
+  /**
+   * Update Document Series
+   * PUT /api/DocumentSeries/{id}
+   */
+  static async updateDocumentSeries(id: number, series: any): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/${id}`,
+      {
+        method: 'PUT',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(series)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error || `Failed to update document series (${response.status})`
+      throw new Error(errorMessage)
+    }
+
+    const data = await response.json()
+    return data.data || data
+  }
+
+  /**
+   * Delete Document Series
+   * DELETE /api/DocumentSeries/{id}
+   */
+  static async deleteDocumentSeries(id: number): Promise<void> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/${id}`,
+      {
+        method: 'DELETE',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      
+      if (response.status === 404) {
+        throw new Error(errorData.message || 'Document series not found')
+      }
+      
+      // Check for foreign key constraint errors
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error
+      if (errorMessage && (
+        errorMessage.includes('foreign key') || 
+        errorMessage.includes('constraint') ||
+        errorMessage.includes('reference') ||
+        errorMessage.includes('submissions') ||
+        errorMessage.includes('form submissions')
+      )) {
+        throw new Error('Cannot delete document series: There are form submissions associated with this series. Please delete or reassign the submissions first.')
+      }
+      
+      throw new Error(errorMessage || `Failed to delete document series (${response.status})`)
+    }
+  }
+
+  /**
+   * Toggle Document Series Active Status
+   * PATCH /api/DocumentSeries/{id}/toggle-active
+   */
+  static async toggleDocumentSeriesActive(id: number, isActive: boolean): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/${id}/toggle-active`,
+      {
+        method: 'PATCH',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(isActive)
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error || `Failed to toggle document series status (${response.status})`
+      throw new Error(errorMessage)
+    }
+
+    const data = await response.json()
+    return data.data || data
+  }
+
+  /**
+   * Set Document Series as Default
+   * PATCH /api/DocumentSeries/{id}/set-default
+   */
+  static async setDocumentSeriesAsDefault(id: number): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/${id}/set-default`,
+      {
+        method: 'PATCH',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      const errorMessage = errorData.message || errorData.errorMessage || errorData.error || `Failed to set document series as default (${response.status})`
+      throw new Error(errorMessage)
+    }
+
+    const data = await response.json()
+    return data.data || data
+  }
+
+  /**
+   * Get Next Number for Document Series
+   * GET /api/DocumentSeries/{id}/next-number
+   */
+  static async getDocumentSeriesNextNumber(id: number): Promise<any> {
+    const response = await fetch(
+      `${API_BASE_URL}/DocumentSeries/${id}/next-number`,
+      {
+        method: 'GET',
+        headers: this.getAuthHeaders()
+      }
+    )
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}))
+      throw new Error(errorData.message || errorData.errorMessage || `Failed to get next number (${response.status})`)
+    }
+
+    const data = await response.json()
+    return data.data || data
   }
 
   // ================================ 
