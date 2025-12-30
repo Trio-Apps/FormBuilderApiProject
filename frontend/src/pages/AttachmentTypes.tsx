@@ -11,3 +11,6 @@ const AttachmentTypesPage = () => {
 
 export default AttachmentTypesPage
 
+
+
+

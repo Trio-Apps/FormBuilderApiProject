@@ -90,6 +90,43 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "FormBuilder.API.Controllers.AccountController",
+    "Method": "UpdateProfile",
+    "RelativePath": "api/Account/update-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Application.Dtos.Auth.UpdateUserProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FormBuilder.API.Controllers.AccountController",
+    "Method": "UpdateUserProfile",
+    "RelativePath": "api/Account/update-profile/{userId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "request",
+        "Type": "FormBuilder.Application.Dtos.Auth.UpdateUserProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "FormBuilder.API.Controllers.ApprovalStageController",
     "Method": "Create",
     "RelativePath": "api/ApprovalStage",

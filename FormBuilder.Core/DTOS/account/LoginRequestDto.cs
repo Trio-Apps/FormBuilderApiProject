@@ -53,6 +53,13 @@ namespace FormBuilder.Application.Dtos.Auth
         public bool IsActive { get; set; }
     }
 
+    public class UpdateUserProfileDto
+    {
+        public string? Name { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
+    }
+
     public class ChangePasswordRequestDto
     {
         [Required(ErrorMessage = "Current password is required.")]

@@ -112,5 +112,46 @@ namespace FormBuilder.API.Controllers
 
             return Ok(new { message = _localizer["Auth_ChangePasswordSuccess"] });
         }
+
+        [HttpPut("update-profile")]
+        [Authorize]
+        public async Task<IActionResult> UpdateProfile([FromBody] UpdateUserProfileDto request, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+                return Unauthorized(new { message = _localizer["Auth_InvalidUserToken"] });
+
+            var result = await _accountService.UpdateUserProfileAsync(userId, request, cancellationToken);
+
+            if (!result)
+                return BadRequest(new { message = "Failed to update user profile" });
+
+            // Return updated user info
+            var userInfo = await _accountService.GetCurrentUserAsync(userId, cancellationToken);
+            return Ok(new { message = "Profile updated successfully", user = userInfo });
+        }
+
+        [HttpPut("update-profile/{userId}")]
+        [Authorize(Roles = "Administration")]
+        public async Task<IActionResult> UpdateUserProfile(int userId, [FromBody] UpdateUserProfileDto request, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (userId <= 0)
+                return BadRequest(new { message = "Invalid user ID" });
+
+            var result = await _accountService.UpdateUserProfileAsync(userId, request, cancellationToken);
+
+            if (!result)
+                return BadRequest(new { message = "Failed to update user profile. User may not exist or is inactive." });
+
+            // Return updated user info
+            var userInfo = await _accountService.GetCurrentUserAsync(userId, cancellationToken);
+            return Ok(new { message = "User profile updated successfully", user = userInfo });
+        }
     }
 }

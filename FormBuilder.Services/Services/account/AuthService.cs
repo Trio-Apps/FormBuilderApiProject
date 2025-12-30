@@ -337,6 +337,31 @@ public class accountService : IaccountService
         return true;
     }
 
+    public async Task<bool> UpdateUserProfileAsync(int userId, UpdateUserProfileDto profile, CancellationToken cancellationToken)
+    {
+        var user = await _identityContext.TblUsers
+            .FirstOrDefaultAsync(u => u.Id == userId && u.IsActive, cancellationToken);
+
+        if (user == null)
+            return false;
+
+        // Update only provided fields
+        if (profile.Name != null)
+            user.Name = profile.Name;
+
+        if (profile.Email != null)
+            user.Email = profile.Email;
+
+        if (profile.Phone != null)
+            user.Phone = profile.Phone;
+
+        user.UpdatedDate = DateTime.UtcNow;
+
+        await _identityContext.SaveChangesAsync(cancellationToken);
+
+        return true;
+    }
+
     // تم إزالة GetUserPermissionsForClaimsAsync
     // Permissions لن تُضاف في JWT Token لتقليل الحجم
     // سيتم التحقق من Permissions من UserPermissionService عند الحاجة

@@ -13,7 +13,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
     [Produces("application/json")]
     public class FormBuilderController : ControllerBase
     {

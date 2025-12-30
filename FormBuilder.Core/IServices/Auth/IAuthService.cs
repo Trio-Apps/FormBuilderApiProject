@@ -12,4 +12,5 @@ public interface IaccountService
     Task<bool> RevokeAllUserTokensAsync(int userId, CancellationToken cancellationToken);
     Task<UserInfoDto?> GetCurrentUserAsync(int userId, CancellationToken cancellationToken);
     Task<bool> ChangePasswordAsync(int userId, string currentPassword, string newPassword, CancellationToken cancellationToken);
+    Task<bool> UpdateUserProfileAsync(int userId, UpdateUserProfileDto profile, CancellationToken cancellationToken);
 }

@@ -10,7 +10,7 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
 
     public class FormSubmissionValuesController : ControllerBase
     {
