@@ -9,8 +9,7 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Administration")]
-
+    [Authorize]
     public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;

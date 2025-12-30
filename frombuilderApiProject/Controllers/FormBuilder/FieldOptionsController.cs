@@ -11,7 +11,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
     public class FieldOptionsController : ControllerBase
     {
         private readonly IFieldOptionsService _fieldOptionsService;

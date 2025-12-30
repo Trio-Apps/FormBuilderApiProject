@@ -9,7 +9,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
 
     public class FieldTypesController : ControllerBase
     {
