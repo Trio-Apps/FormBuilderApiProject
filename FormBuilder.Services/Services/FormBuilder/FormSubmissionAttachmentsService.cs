@@ -105,6 +105,11 @@ namespace FormBuilder.Services
 
         protected override async Task<ValidationResult> ValidateCreateAsync(CreateFormSubmissionAttachmentDto dto)
         {
+            // Validate that the submission exists
+            var submissionExists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == dto.SubmissionId);
+            if (!submissionExists)
+                return ValidationResult.Failure($"Submission with ID {dto.SubmissionId} not found");
+
             // Check if file name already exists for this submission
             var fileNameExists = await _unitOfWork.FormSubmissionAttachmentsRepository
                 .FileNameExistsAsync(dto.SubmissionId, dto.FileName);
@@ -119,6 +124,11 @@ namespace FormBuilder.Services
         {
             if (bulkDto == null || !bulkDto.Attachments.Any())
                 return new ApiResponse<List<FormSubmissionAttachmentDto>>(400, "No attachments provided");
+
+            // Validate that the submission exists
+            var submissionExists = await _unitOfWork.FormSubmissionsRepository.AnyAsync(s => s.Id == bulkDto.SubmissionId);
+            if (!submissionExists)
+                return new ApiResponse<List<FormSubmissionAttachmentDto>>(404, $"Submission with ID {bulkDto.SubmissionId} not found");
 
             var entities = bulkDto.Attachments.Select(attachmentDto =>
             {

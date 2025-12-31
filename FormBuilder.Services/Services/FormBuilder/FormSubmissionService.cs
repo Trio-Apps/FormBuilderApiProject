@@ -20,16 +20,19 @@ namespace FormBuilder.Services
         private readonly IunitOfwork _unitOfWork;
         private readonly IFormSubmissionGridRowService _formSubmissionGridRowService;
         private readonly IFormSubmissionValuesService _formSubmissionValuesService;
+        private readonly IFormSubmissionAttachmentsService _formSubmissionAttachmentsService;
 
         public FormSubmissionsService(
             IunitOfwork unitOfWork, 
             IMapper mapper,
             IFormSubmissionGridRowService formSubmissionGridRowService,
-            IFormSubmissionValuesService formSubmissionValuesService) : base(unitOfWork, mapper)
+            IFormSubmissionValuesService formSubmissionValuesService,
+            IFormSubmissionAttachmentsService formSubmissionAttachmentsService) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _formSubmissionGridRowService = formSubmissionGridRowService ?? throw new ArgumentNullException(nameof(formSubmissionGridRowService));
             _formSubmissionValuesService = formSubmissionValuesService ?? throw new ArgumentNullException(nameof(formSubmissionValuesService));
+            _formSubmissionAttachmentsService = formSubmissionAttachmentsService ?? throw new ArgumentNullException(nameof(formSubmissionAttachmentsService));
         }
 
         protected override IBaseRepository<FORM_SUBMISSIONS> Repository => _unitOfWork.FormSubmissionsRepository;
@@ -271,8 +274,25 @@ namespace FormBuilder.Services
 
         public async Task<ApiResponse> DeleteAsync(int id)
         {
-            var result = await base.DeleteAsync(id);
-            return ConvertToApiResponse(result);
+            // Check if submission exists
+            var entity = await _unitOfWork.FormSubmissionsRepository.SingleOrDefaultAsync(s => s.Id == id, asNoTracking: false);
+            if (entity == null)
+                return new ApiResponse(404, "Form submission not found");
+
+            // Delete child records first to avoid foreign key constraint violations
+            // 1. Delete attachments (DeleteBehavior.Restrict)
+            await _formSubmissionAttachmentsService.DeleteBySubmissionIdAsync(id);
+            
+            // 2. Delete submission values (DeleteBehavior.Restrict)
+            await _formSubmissionValuesService.DeleteBySubmissionIdAsync(id);
+            
+            // 3. Grid rows will be deleted automatically due to DeleteBehavior.Cascade
+            
+            // 4. Now delete the submission itself
+            _unitOfWork.FormSubmissionsRepository.Delete(entity);
+            await _unitOfWork.CompleteAsyn();
+
+            return new ApiResponse(200, "Form submission deleted successfully");
         }
 
         public async Task<ApiResponse> SubmitAsync(SubmitFormDto submitDto)
@@ -356,8 +376,24 @@ namespace FormBuilder.Services
             // حفظ Attachments
             if (saveDto.Attachments != null && saveDto.Attachments.Any())
             {
-                // Attachment saving logic can be added here if needed
-                // For now, attachments are handled separately
+                // Convert SaveFormSubmissionAttachmentDto to CreateFormSubmissionAttachmentDto
+                var bulkAttachmentsDto = new BulkAttachmentsDto
+                {
+                    SubmissionId = saveDto.SubmissionId,
+                    Attachments = saveDto.Attachments.Select(att => new CreateFormSubmissionAttachmentDto
+                    {
+                        SubmissionId = saveDto.SubmissionId,
+                        FieldId = att.FieldId,
+                        FieldCode = att.FieldCode ?? "",
+                        FileName = att.FileName,
+                        FilePath = att.FilePath,
+                        FileSize = att.FileSize,
+                        ContentType = att.ContentType
+                    }).ToList()
+                };
+                var attachmentResult = await _formSubmissionAttachmentsService.CreateBulkAsync(bulkAttachmentsDto);
+                if (attachmentResult.StatusCode != 200)
+                    return new ApiResponse(attachmentResult.StatusCode, attachmentResult.Message);
             }
 
             // حفظ Grid Data
