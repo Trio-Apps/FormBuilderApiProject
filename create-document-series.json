@@ -1,0 +1,63 @@
+{
+  "description": "JSON examples for creating Document Series",
+  "note": "You need to know the DocumentTypeId first. Check the error message - it mentioned Document Type 'doc2'. You can find the ID by calling GET /api/DocumentTypes",
+  
+  "step_1_find_document_type_id": {
+    "endpoint": "GET /api/DocumentTypes",
+    "description": "Get all document types to find the ID of 'doc2'",
+    "url": "https://localhost:7276/api/DocumentTypes"
+  },
+
+  "step_2_create_document_series": {
+    "endpoint": "POST /api/DocumentSeries",
+    "description": "Create a new Document Series for Document Type 'doc2' and Project 1",
+    "url": "https://localhost:7276/api/DocumentSeries",
+    "example": {
+      "documentTypeId": 1,
+      "projectId": 1,
+      "seriesCode": "DOC2-001",
+      "nextNumber": 1,
+      "isDefault": true,
+      "isActive": true
+    },
+    "note": "Replace 'documentTypeId' with the actual ID of 'doc2' from step 1"
+  },
+
+  "example_curl": {
+    "create_series": "curl -X POST \"https://localhost:7276/api/DocumentSeries\" -H \"Content-Type: application/json\" -H \"Authorization: Bearer YOUR_TOKEN\" -d '{\"documentTypeId\":1,\"projectId\":1,\"seriesCode\":\"DOC2-001\",\"nextNumber\":1,\"isDefault\":true,\"isActive\":true}'"
+  },
+
+  "postman_example": {
+    "method": "POST",
+    "url": "https://localhost:7276/api/DocumentSeries",
+    "headers": {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer YOUR_TOKEN"
+    },
+    "body": {
+      "documentTypeId": 1,
+      "projectId": 1,
+      "seriesCode": "DOC2-001",
+      "nextNumber": 1,
+      "isDefault": true,
+      "isActive": true
+    }
+  },
+
+  "required_fields": {
+    "documentTypeId": "Required - The ID of the Document Type (find it from GET /api/DocumentTypes)",
+    "projectId": "Required - The Project ID (in your case: 1)",
+    "seriesCode": "Required - Unique code for the series (max 50 characters), e.g., 'DOC2-001'",
+    "nextNumber": "Optional - Starting number (default: 1)",
+    "isDefault": "Optional - Set as default series (default: false)",
+    "isActive": "Optional - Set as active (default: true)"
+  },
+
+  "steps_to_follow": [
+    "1. Get Document Type ID: Call GET /api/DocumentTypes and find the ID of 'doc2'",
+    "2. Create Document Series: Use POST /api/DocumentSeries with the correct documentTypeId",
+    "3. Verify: Call GET /api/DocumentSeries/default?documentTypeId={id}&projectId=1 to verify",
+    "4. Test Form Submission: Try POST /api/FormSubmissions/draft again"
+  ]
+}
+

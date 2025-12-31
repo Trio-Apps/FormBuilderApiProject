@@ -77,6 +77,7 @@ namespace FormBuilder.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous] // Allow anonymous for public form submissions
         public async Task<IActionResult> Create([FromBody] CreateFormSubmissionDto createDto)
         {
             if (!ModelState.IsValid)
@@ -91,16 +92,18 @@ namespace FormBuilder.API.Controllers
         /// This endpoint implements the runtime flow: automatically loads Document Type and selects default Series
         /// </summary>
         [HttpPost("draft")]
-        public async Task<IActionResult> CreateDraft([FromQuery] int formBuilderId, [FromQuery] int projectId, [FromQuery] string submittedByUserId)
+        [AllowAnonymous] // Allow anonymous for public form submissions
+        public async Task<IActionResult> CreateDraft([FromQuery] int formBuilderId, [FromQuery] int projectId, [FromQuery] string? submittedByUserId = null)
         {
             if (formBuilderId <= 0)
                 return BadRequest(new ApiResponse(400, "FormBuilderId is required"));
             if (projectId <= 0)
                 return BadRequest(new ApiResponse(400, "ProjectId is required"));
-            if (string.IsNullOrWhiteSpace(submittedByUserId))
-                return BadRequest(new ApiResponse(400, "SubmittedByUserId is required"));
+            
+            // Use default value if null or empty
+            var userId = string.IsNullOrWhiteSpace(submittedByUserId) ? "public-user" : submittedByUserId;
 
-            var result = await _formSubmissionsService.CreateDraftAsync(formBuilderId, projectId, submittedByUserId);
+            var result = await _formSubmissionsService.CreateDraftAsync(formBuilderId, projectId, userId);
             return StatusCode(result.StatusCode, result);
         }
 
@@ -146,6 +149,7 @@ namespace FormBuilder.API.Controllers
         }
 
         [HttpPost("save-data")]
+        [AllowAnonymous] // Allow anonymous for public form submissions
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
