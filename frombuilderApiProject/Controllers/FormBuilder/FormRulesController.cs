@@ -13,7 +13,7 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administration")]
+    [Authorize]
     public class FormRulesController : ControllerBase
     {
         private readonly IFORM_RULESService _formRulesService;

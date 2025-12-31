@@ -3,16 +3,32 @@
   "WorkspaceRootPath": "D:\\FormBuilderApiProject\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\repository\\unitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\repository\\unitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formsubmissionvaluescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formsubmissionvaluescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formsubmissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formsubmissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formsubmissionattachmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formsubmissionattachmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formrulescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formrulescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\dtos\\formbuilder\\formsubmissionattachmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\dtos\\formbuilder\\formsubmissionattachmentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formattachmenttypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formattachmenttypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\repository\\unitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\repository\\unitofwork .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\fieldtypescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,14 +49,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formfieldscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formfieldscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formsubmissionattachmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formsubmissionattachmentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formsubmissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formsubmissionscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formulavariablescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -71,20 +79,12 @@
       "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formsubmissionvaluescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formsubmissionvaluescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|d:\\formbuilderapiproject\\formbuilder.core\\dtos\\formbuilder\\formsubmissionvaluedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3E12AEE8-6CE1-47CF-8A10-EBCE6D1AE430}|FormBuilder.Core\\FormBuilder.Core.csproj|solutionrelative:formbuilder.core\\dtos\\formbuilder\\formsubmissionvaluedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|d:\\formbuilderapiproject\\formbuilder.services\\services\\formbuilder\\formsubmissionvaluesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{12C96A85-596C-4A20-9E2B-C9A183CE88BE}|FormBuilder.Services\\FormBuilder.Services.csproj|solutionrelative:formbuilder.services\\services\\formbuilder\\formsubmissionvaluesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\formrulescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|solutionrelative:frombuilderapiproject\\controllers\\formbuilder\\formrulescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8A12152-1D0A-457D-9CF9-7E9C9F816419}|frombuilderApiProject\\FormBuilder.ApiProject.csproj|d:\\formbuilderapiproject\\frombuilderapiproject\\controllers\\formbuilder\\approvalworkflowcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -501,76 +501,28 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "FieldTypesController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T10:59:06.602Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "FieldOptionsController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-24T09:55:58.797Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FieldDataSourcesController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-22T09:49:51.535Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "DocumentTypesController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T12:10:51.934Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "unitOfwork .cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Repository\\unitOfwork .cs",
               "RelativeDocumentMoniker": "FormBuilder.Services\\Repository\\unitOfwork .cs",
               "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Repository\\unitOfwork .cs",
               "RelativeToolTip": "FormBuilder.Services\\Repository\\unitOfwork .cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAuwDkAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAA8wDkAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-17T14:31:31.679Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "FormAttachmentTypesController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormAttachmentTypesController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormAttachmentTypesController.cs",
@@ -583,24 +535,120 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "FormSubmissionAttachmentDto.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionAttachmentDto.cs",
               "RelativeDocumentMoniker": "FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionAttachmentDto.cs",
               "ToolTip": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionAttachmentDto.cs",
               "RelativeToolTip": "FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionAttachmentDto.cs",
-              "ViewState": "AgIAAGEAAAAAAAAAAAAQwIEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAA3wIEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-21T14:24:43.184Z",
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FormRulesController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-24T12:51:05.649Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FormSubmissionAttachmentsController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvxAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-21T08:58:21.528Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FormSubmissionsController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAUwAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-17T09:46:37.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormSubmissionValuesController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T09:36:51.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DocumentTypesController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentTypesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-28T12:10:51.934Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FieldDataSourcesController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldDataSourcesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-22T09:49:51.535Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FieldOptionsController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldOptionsController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-24T09:55:58.797Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "FieldTypesController.cs",
+              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
+              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
+              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
+              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FieldTypesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-30T10:59:06.602Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "FormFieldsController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormFieldsController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormFieldsController.cs",
@@ -608,38 +656,11 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormFieldsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T10:55:17.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-30T10:55:17.663Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "FormSubmissionAttachmentsController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionAttachmentsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvxAAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-21T08:58:21.528Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "FormSubmissionsController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionsController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAUwAwAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-17T09:46:37.88Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "FormulaVariablesController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormulaVariablesController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormulaVariablesController.cs",
@@ -647,12 +668,11 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormulaVariablesController.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T07:16:10.531Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T07:16:10.531Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "FormTabsController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormTabsController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormTabsController.cs",
@@ -660,12 +680,11 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormTabsController.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAYwBAAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T10:07:38.826Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T10:07:38.826Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "ProjectsController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\ProjectsController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\ProjectsController.cs",
@@ -673,12 +692,11 @@
               "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\ProjectsController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-28T08:23:45.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-28T08:23:45.024Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "RateLimitingMiddleware.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Middleware\\RateLimitingMiddleware.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Middleware\\RateLimitingMiddleware.cs",
@@ -686,12 +704,11 @@
               "RelativeToolTip": "frombuilderApiProject\\Middleware\\RateLimitingMiddleware.cs",
               "ViewState": "AgIAABAAAAAAAAAAAAAIwC4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T09:41:30.315Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T09:41:30.315Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "FormBuilderController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormBuilderController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormBuilderController.cs",
@@ -739,7 +756,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "DocumentSeriesController.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\DocumentSeriesController.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\DocumentSeriesController.cs",
@@ -751,7 +768,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "FormSubmissionValueDto.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionValueDto.cs",
               "RelativeDocumentMoniker": "FormBuilder.Core\\DTOS\\FormBuilder\\FormSubmissionValueDto.cs",
@@ -763,7 +780,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Program.cs",
               "RelativeDocumentMoniker": "frombuilderApiProject\\Program.cs",
@@ -775,31 +792,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "FormSubmissionValuesController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormSubmissionValuesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-30T09:36:51.184Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 20,
-              "Title": "FormRulesController.cs",
-              "DocumentMoniker": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
-              "RelativeDocumentMoniker": "frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
-              "ToolTip": "D:\\FormBuilderApiProject\\frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
-              "RelativeToolTip": "frombuilderApiProject\\Controllers\\FormBuilder\\FormRulesController.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAwwE4AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-24T12:51:05.649Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
               "Title": "FormSubmissionValuesService.cs",
               "DocumentMoniker": "D:\\FormBuilderApiProject\\FormBuilder.Services\\Services\\FormBuilder\\FormSubmissionValuesService.cs",
               "RelativeDocumentMoniker": "FormBuilder.Services\\Services\\FormBuilder\\FormSubmissionValuesService.cs",

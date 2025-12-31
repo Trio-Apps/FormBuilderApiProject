@@ -14,7 +14,6 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class FormSubmissionAttachmentsController : ControllerBase
     {
         private readonly IFormSubmissionAttachmentsService _formSubmissionAttachmentsService;
