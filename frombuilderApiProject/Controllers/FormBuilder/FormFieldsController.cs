@@ -11,7 +11,6 @@ namespace FormBuilder.ApiProject.Controllers.FormBuilder
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class FormFieldsController : ControllerBase
     {
         private readonly IFormFieldService _formFieldService;

@@ -12,7 +12,6 @@ namespace FormBuilder.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Administration")]
     public class FormulasController : ControllerBase
     {
         private readonly IFormulaService _formulaService;

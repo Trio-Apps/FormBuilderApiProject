@@ -9,6 +9,7 @@ import CheckboxField from './fields/CheckboxField'
 import DateField from './fields/DateField'
 import FileField from './fields/FileField'
 import SwitchField from './fields/SwitchField'
+import CalculatedField from './fields/CalculatedField'
 import './FormFieldRenderer.css'
 
 interface FormFieldRendererProps {
@@ -48,6 +49,8 @@ const FormFieldRenderer = ({ field, value, onChange }: FormFieldRendererProps) =
       case 'switch':
       case 'toggle':
         return <SwitchField field={field} value={value} onChange={onChange} />
+      case 'calculated':
+        return <CalculatedField field={field} value={value} onChange={onChange} />
       default:
         // Default to text field for unknown types
         return <TextField field={field} value={value} onChange={onChange} />

@@ -76,6 +76,19 @@ namespace FormBuilder.Core.DTOS.FormFields
 
         // Grid support (for Grid field type)
         public int? GridId { get; set; }
+
+        // Calculation Fields Properties
+        [StringLength(int.MaxValue, ErrorMessage = "ExpressionText cannot exceed maximum length")]
+        public string? ExpressionText { get; set; }
+
+        [StringLength(50, ErrorMessage = "CalculationMode cannot exceed 50 characters")]
+        public string? CalculationMode { get; set; }
+
+        [StringLength(50, ErrorMessage = "RecalculateOn cannot exceed 50 characters")]
+        public string? RecalculateOn { get; set; }
+
+        [StringLength(50, ErrorMessage = "ResultType cannot exceed 50 characters")]
+        public string? ResultType { get; set; }
     }
 
     public class FieldOptionDto

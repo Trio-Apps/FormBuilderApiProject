@@ -52,6 +52,12 @@ namespace FormBuilder.API.Models
         public string? ValidationMessage { get; set; }
         public string? ForeignValidationMessage { get; set; }
 
+        // Calculation Fields Properties
+        public string? ExpressionText { get; set; }
+        public string? CalculationMode { get; set; }
+        public string? RecalculateOn { get; set; }
+        public string? ResultType { get; set; }
+
         public DateTime CreatedDate { get; set; }
         public string? CreatedByUserId { get; set; }
         public string? CreatedByUserName { get; set; }
@@ -119,6 +125,12 @@ namespace FormBuilder.API.Models
         public string? ValidationMessage { get; set; }
         public string? ForeignValidationMessage { get; set; }
 
+        // Calculation Fields Properties
+        public string? ExpressionText { get; set; }
+        public string? CalculationMode { get; set; }
+        public string? RecalculateOn { get; set; }
+        public string? ResultType { get; set; }
+
         public string? CreatedByUserId { get; set; }
         
         // Grid support
@@ -161,6 +173,12 @@ namespace FormBuilder.API.Models
         public string? RegexPattern { get; set; }
         public string? ValidationMessage { get; set; }
         public string? ForeignValidationMessage { get; set; }
+
+        // Calculation Fields Properties
+        public string? ExpressionText { get; set; }
+        public string? CalculationMode { get; set; }
+        public string? RecalculateOn { get; set; }
+        public string? ResultType { get; set; }
         
         // Grid support
         public int? GridId { get; set; }

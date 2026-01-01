@@ -85,3 +85,609 @@ Authorization: Bearer {{token}}
 }
 
 ###
+
+####################################################
+# FormFields API - Calculated Fields Testing
+####################################################
+
+### Step 1: Get Calculated Field Type ID
+GET {{frombuilderApiProject_HostAddress}}/api/FieldTypes
+Authorization: Bearer {{token}}
+
+###
+
+### Step 2: Create RENT Field (Decimal) - Required for calculation
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 2,
+  "fieldName": "Monthly Rent",
+  "fieldCode": "RENT",
+  "fieldOrder": 1,
+  "placeholder": "Enter monthly rent amount",
+  "isMandatory": true,
+  "isEditable": true,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Step 3: Create MONTHS Field (Integer) - Required for calculation
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 2,
+  "fieldName": "Number of Months",
+  "fieldCode": "MONTHS",
+  "fieldOrder": 2,
+  "placeholder": "Enter number of months",
+  "isMandatory": true,
+  "isEditable": true,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Step 4: Create DISCOUNT Field (Decimal) - Required for calculation
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 2,
+  "fieldName": "Discount Amount",
+  "fieldCode": "DISCOUNT",
+  "fieldOrder": 3,
+  "placeholder": "Enter discount amount",
+  "isMandatory": false,
+  "isEditable": true,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Step 5: Validate Expression Before Creating Calculated Field
+POST {{frombuilderApiProject_HostAddress}}/api/Formulas/validate-expression
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+  "formBuilderId": 1
+}
+
+###
+
+### Step 6: Preview Calculation Result
+POST {{frombuilderApiProject_HostAddress}}/api/Formulas/preview-calculation
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+  "formBuilderId": 1,
+  "fieldValues": {
+    "RENT": 1000,
+    "MONTHS": 12,
+    "DISCOUNT": 500
+  }
+}
+
+###
+
+### Step 7: Create TOTAL_RENT Calculated Field (Rent Calculation Example from Spec)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Total Rent",
+  "foreignFieldName": "إجمالي الإيجار",
+  "fieldCode": "TOTAL_RENT",
+  "fieldOrder": 4,
+  "placeholder": "Calculated automatically",
+  "hintText": "This field is calculated automatically based on rent, months, and discount",
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Step 8: Get Created Calculated Field by ID
+GET {{frombuilderApiProject_HostAddress}}/api/FormFields/10
+Authorization: Bearer {{token}}
+
+###
+
+### Step 9: Get Calculated Field by Code
+GET {{frombuilderApiProject_HostAddress}}/api/FormFields/code/TOTAL_RENT
+Authorization: Bearer {{token}}
+
+###
+
+### Step 10: Calculate Expression (Test Calculation Engine)
+POST {{frombuilderApiProject_HostAddress}}/api/Formulas/calculate-expression
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+  "fieldValues": {
+    "RENT": 1000,
+    "MONTHS": 12,
+    "DISCOUNT": 500
+  }
+}
+
+###
+
+### Step 11: Update Calculated Field Expression
+PUT {{frombuilderApiProject_HostAddress}}/api/FormFields/10
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Total Rent (Updated)",
+  "fieldCode": "TOTAL_RENT",
+  "fieldOrder": 4,
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT] + [TAX]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true
+}
+
+###
+
+### Example 2: Simple Price Calculation
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Total Price",
+  "fieldCode": "TOTAL_PRICE",
+  "fieldOrder": 5,
+  "expressionText": "[QUANTITY] * [UNIT_PRICE]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Example 3: Complex Calculation with Multiple Operations
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Final Amount",
+  "fieldCode": "FINAL_AMOUNT",
+  "fieldOrder": 6,
+  "expressionText": "([PRICE] * [QUANTITY]) - ([DISCOUNT_PERCENT] / 100 * [PRICE] * [QUANTITY]) + [TAX]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Example 4: Integer Result Type
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Total Items",
+  "fieldCode": "TOTAL_ITEMS",
+  "fieldOrder": 7,
+  "expressionText": "[ITEM1] + [ITEM2] + [ITEM3]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnLoad",
+  "resultType": "Integer",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### Example 5: Recalculate On Submit Only
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Submission Total",
+  "fieldCode": "SUBMISSION_TOTAL",
+  "fieldOrder": 8,
+  "expressionText": "[FIELD1] + [FIELD2] + [FIELD3]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnSubmitOnly",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+####################################################
+# Validation Test Cases - Should Fail
+####################################################
+
+### Validation Test 1: Missing Expression (Should Fail)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Test Field",
+  "fieldCode": "TEST_FIELD",
+  "fieldOrder": 10,
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true
+}
+
+###
+
+### Validation Test 2: Editable = true (Should Fail - Auto-corrected to false)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Test Field",
+  "fieldCode": "TEST_FIELD_2",
+  "fieldOrder": 11,
+  "expressionText": "[FIELD1] * [FIELD2]",
+  "isEditable": true,
+  "isMandatory": false,
+  "isVisible": true
+}
+
+###
+
+### Validation Test 3: Invalid Expression (Should Fail)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 11,
+  "fieldName": "Test Field",
+  "fieldCode": "TEST_FIELD_3",
+  "fieldOrder": 12,
+  "expressionText": "[INVALID_FIELD] * [ANOTHER_INVALID]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true
+}
+
+###
+
+### Validation Test 4: Expression on Non-Calculated Field (Should Fail)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 1,
+  "fieldName": "Test Field",
+  "fieldCode": "TEST_FIELD_4",
+  "fieldOrder": 13,
+  "expressionText": "[FIELD1] * [FIELD2]",
+  "isMandatory": false,
+  "isEditable": true,
+  "isVisible": true
+}
+
+###
+
+### Get All Fields by Form ID (to see calculated fields)
+GET {{frombuilderApiProject_HostAddress}}/api/FormFields/form/1
+Authorization: Bearer {{token}}
+
+###
+
+### Get All Fields by Tab ID
+GET {{frombuilderApiProject_HostAddress}}/api/FormFields/tab/1
+Authorization: Bearer {{token}}
+
+###
+
+####################################################
+# Calculated Fields - أمثلة عملية لإنشاء حقول محسوبة
+####################################################
+
+### مثال 1: إنشاء حقل محسوب - حساب العمر (يحتاج حقل BIRTH_YEAR)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Age",
+  "foreignFieldName": "العمر",
+  "fieldCode": "AGE",
+  "fieldOrder": 2,
+  "placeholder": "سيتم الحساب تلقائياً",
+  "hintText": "العمر محسوب بناءً على سنة الميلاد",
+  "expressionText": "2024 - [BIRTH_YEAR]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Integer",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### مثال 2: إنشاء حقل محسوب - إجمالي الإيجار (يحتاج حقول: RENT, MONTHS, DISCOUNT)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Total Rent",
+  "foreignFieldName": "إجمالي الإيجار",
+  "fieldCode": "TOTAL_RENT",
+  "fieldOrder": 4,
+  "placeholder": "Calculated automatically",
+  "hintText": "Total rent is calculated automatically",
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### مثال 3: إنشاء حقل محسوب - حساب الضريبة (يحتاج حقول: PRICE, TAX_RATE)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Tax Amount",
+  "foreignFieldName": "مبلغ الضريبة",
+  "fieldCode": "TAX_AMOUNT",
+  "fieldOrder": 5,
+  "expressionText": "[PRICE] * [TAX_RATE] / 100",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### مثال 4: إنشاء حقل محسوب - الإجمالي النهائي (يحتاج حقول: SUBTOTAL, TAX)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Grand Total",
+  "foreignFieldName": "الإجمالي النهائي",
+  "fieldCode": "GRAND_TOTAL",
+  "fieldOrder": 6,
+  "expressionText": "[SUBTOTAL] + [TAX]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### مثال 5: إنشاء حقل محسوب - المتوسط (يحتاج حقول: SCORE1, SCORE2, SCORE3)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Average Score",
+  "foreignFieldName": "المتوسط",
+  "fieldCode": "AVERAGE_SCORE",
+  "fieldOrder": 7,
+  "expressionText": "([SCORE1] + [SCORE2] + [SCORE3]) / 3",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### مثال 6: إنشاء حقل محسوب - السعر بعد الخصم (يحتاج حقول: PRICE, DISCOUNT)
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Final Price",
+  "foreignFieldName": "السعر النهائي",
+  "fieldCode": "FINAL_PRICE",
+  "fieldOrder": 8,
+  "expressionText": "[PRICE] - [DISCOUNT]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### مثال كامل: إنشاء حقول عادية ثم حقل محسوب
+### الخطوة 1: إنشاء حقل RENT
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 2,
+  "fieldName": "Monthly Rent",
+  "foreignFieldName": "الإيجار الشهري",
+  "fieldCode": "RENT",
+  "fieldOrder": 1,
+  "placeholder": "Enter monthly rent",
+  "isMandatory": true,
+  "isEditable": true,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### الخطوة 2: إنشاء حقل MONTHS
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 2,
+  "fieldName": "Number of Months",
+  "foreignFieldName": "عدد الأشهر",
+  "fieldCode": "MONTHS",
+  "fieldOrder": 2,
+  "placeholder": "Enter number of months",
+  "isMandatory": true,
+  "isEditable": true,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### الخطوة 3: إنشاء حقل DISCOUNT
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 2,
+  "fieldName": "Discount",
+  "foreignFieldName": "الخصم",
+  "fieldCode": "DISCOUNT",
+  "fieldOrder": 3,
+  "placeholder": "Enter discount amount",
+  "isMandatory": false,
+  "isEditable": true,
+  "isVisible": true,
+  "isActive": true
+}
+
+###
+
+### الخطوة 4: إنشاء الحقل المحسوب TOTAL_RENT
+POST {{frombuilderApiProject_HostAddress}}/api/FormFields
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "tabId": 1,
+  "fieldTypeId": 5,
+  "fieldName": "Total Rent",
+  "foreignFieldName": "إجمالي الإيجار",
+  "fieldCode": "TOTAL_RENT",
+  "fieldOrder": 4,
+  "placeholder": "Calculated automatically",
+  "hintText": "This field is calculated automatically",
+  "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+  "calculationMode": "Expression",
+  "recalculateOn": "OnFieldChange",
+  "resultType": "Decimal",
+  "isMandatory": false,
+  "isEditable": false,
+  "isVisible": true,
+  "isActive": true
+}
+
+###

@@ -1,5 +1,6 @@
 using formBuilder.Domian.Interfaces;
 using FormBuilder.Core.DTOS.FormBuilder;
+using FormBuilder.Core.IServices.FormBuilder;
 using FormBuilder.Domain.Interfaces.Services;
 using FormBuilder.Domian.Entitys.froms;
 using FormBuilder.Services.Services.Base;
@@ -21,18 +22,21 @@ namespace FormBuilder.Services
         private readonly IFormSubmissionGridRowService _formSubmissionGridRowService;
         private readonly IFormSubmissionValuesService _formSubmissionValuesService;
         private readonly IFormSubmissionAttachmentsService _formSubmissionAttachmentsService;
+        private readonly IFormulaService _formulaService;
 
         public FormSubmissionsService(
             IunitOfwork unitOfWork, 
             IMapper mapper,
             IFormSubmissionGridRowService formSubmissionGridRowService,
             IFormSubmissionValuesService formSubmissionValuesService,
-            IFormSubmissionAttachmentsService formSubmissionAttachmentsService) : base(unitOfWork, mapper)
+            IFormSubmissionAttachmentsService formSubmissionAttachmentsService,
+            IFormulaService formulaService) : base(unitOfWork, mapper)
         {
             _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
             _formSubmissionGridRowService = formSubmissionGridRowService ?? throw new ArgumentNullException(nameof(formSubmissionGridRowService));
             _formSubmissionValuesService = formSubmissionValuesService ?? throw new ArgumentNullException(nameof(formSubmissionValuesService));
             _formSubmissionAttachmentsService = formSubmissionAttachmentsService ?? throw new ArgumentNullException(nameof(formSubmissionAttachmentsService));
+            _formulaService = formulaService ?? throw new ArgumentNullException(nameof(formulaService));
         }
 
         protected override IBaseRepository<FORM_SUBMISSIONS> Repository => _unitOfWork.FormSubmissionsRepository;
@@ -373,6 +377,9 @@ namespace FormBuilder.Services
                     return result;
             }
 
+            // حساب وحفظ الحقول المحسوبة (Calculated Fields)
+            await CalculateAndSaveCalculatedFieldsAsync(saveDto.SubmissionId);
+
             // حفظ Attachments
             if (saveDto.Attachments != null && saveDto.Attachments.Any())
             {
@@ -431,6 +438,139 @@ namespace FormBuilder.Services
             }
 
             return new ApiResponse(200, "Form submission data saved successfully");
+        }
+
+        /// <summary>
+        /// Calculates and saves calculated field values based on saved field values
+        /// </summary>
+        private async Task CalculateAndSaveCalculatedFieldsAsync(int submissionId)
+        {
+            // Get submission with form builder
+            var submission = await _unitOfWork.FormSubmissionsRepository.GetByIdAsync(submissionId);
+            if (submission == null) return;
+
+            var formBuilderId = submission.FormBuilderId;
+
+            // Get all calculated fields for this form
+            var allFields = await _unitOfWork.FormFieldRepository.GetFieldsByFormIdAsync(formBuilderId);
+            var calculatedFields = allFields.Where(f => 
+                f.FIELD_TYPES != null && 
+                f.FIELD_TYPES.TypeName.Equals("Calculated", StringComparison.OrdinalIgnoreCase) &&
+                !string.IsNullOrWhiteSpace(f.ExpressionText) &&
+                f.IsActive
+            ).ToList();
+
+            if (!calculatedFields.Any())
+                return;
+
+            // Get all saved field values for this submission
+            var savedValues = await _unitOfWork.FormSubmissionValuesRepository.GetBySubmissionIdAsync(submissionId);
+            var fieldValuesDict = new Dictionary<string, object>();
+
+            // Build dictionary of field values by FieldCode
+            foreach (var savedValue in savedValues)
+            {
+                if (string.IsNullOrEmpty(savedValue.FieldCode))
+                    continue;
+
+                object? value = null;
+                if (savedValue.ValueNumber.HasValue)
+                    value = savedValue.ValueNumber.Value;
+                else if (!string.IsNullOrEmpty(savedValue.ValueString))
+                    value = savedValue.ValueString;
+                else if (savedValue.ValueDate.HasValue)
+                    value = savedValue.ValueDate.Value;
+                else if (savedValue.ValueBool.HasValue)
+                    value = savedValue.ValueBool.Value;
+
+                if (value != null)
+                {
+                    fieldValuesDict[savedValue.FieldCode.ToUpper()] = value;
+                }
+            }
+
+            // Calculate and save calculated field values
+            var calculatedValuesToSave = new List<CreateFormSubmissionValueDto>();
+
+            foreach (var calculatedField in calculatedFields)
+            {
+                // Skip if already saved
+                var alreadyExists = savedValues.Any(sv => sv.FieldId == calculatedField.Id);
+                if (alreadyExists)
+                    continue;
+
+                // Check RecalculateOn setting
+                var recalculateOn = calculatedField.RecalculateOn ?? "OnFieldChange";
+                if (recalculateOn == "OnSubmitOnly")
+                {
+                    // Only calculate on submit, but we're saving, so calculate anyway
+                }
+                else if (recalculateOn == "OnLoad")
+                {
+                    // Skip if not on load
+                    continue;
+                }
+
+                // Calculate the value
+                var calculationResult = await _formulaService.SafeCalculateExpressionAsync(
+                    calculatedField.ExpressionText,
+                    fieldValuesDict
+                );
+
+                if (!calculationResult.Success || calculationResult.Data == null)
+                    continue;
+
+                var calculatedValue = calculationResult.Data;
+                var resultType = calculatedField.ResultType?.ToLower() ?? "decimal";
+
+                // Create submission value DTO based on result type
+                var submissionValue = new CreateFormSubmissionValueDto
+                {
+                    SubmissionId = submissionId,
+                    FieldId = calculatedField.Id,
+                    FieldCode = calculatedField.FieldCode
+                };
+
+                // Set value based on result type
+                switch (resultType)
+                {
+                    case "integer":
+                    case "int":
+                    case "decimal":
+                        if (decimal.TryParse(calculatedValue.ToString(), out var decimalValue))
+                        {
+                            submissionValue.ValueNumber = decimalValue;
+                        }
+                        break;
+                    case "text":
+                    case "string":
+                        submissionValue.ValueString = calculatedValue.ToString();
+                        break;
+                    default:
+                        if (decimal.TryParse(calculatedValue.ToString(), out var defaultDecimal))
+                        {
+                            submissionValue.ValueNumber = defaultDecimal;
+                        }
+                        else
+                        {
+                            submissionValue.ValueString = calculatedValue.ToString();
+                        }
+                        break;
+                }
+
+                calculatedValuesToSave.Add(submissionValue);
+            }
+
+            // Save calculated values
+            if (calculatedValuesToSave.Any())
+            {
+                var bulkCalculatedValuesDto = new BulkFormSubmissionValuesDto
+                {
+                    SubmissionId = submissionId,
+                    Values = calculatedValuesToSave
+                };
+                await _formSubmissionValuesService.CreateBulkAsync(bulkCalculatedValuesDto);
+            }
         }
 
         // ================================

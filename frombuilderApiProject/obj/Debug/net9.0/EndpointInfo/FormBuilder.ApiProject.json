@@ -12353,6 +12353,22 @@
             "type": "string",
             "nullable": true
           },
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "calculationMode": {
+            "type": "string",
+            "nullable": true
+          },
+          "recalculateOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "resultType": {
+            "type": "string",
+            "nullable": true
+          },
           "createdDate": {
             "type": "string",
             "format": "date-time"
@@ -12619,6 +12635,22 @@
             "nullable": true
           },
           "foreignValidationMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "expressionText": {
+            "type": "string",
+            "nullable": true
+          },
+          "calculationMode": {
+            "type": "string",
+            "nullable": true
+          },
+          "recalculateOn": {
+            "type": "string",
+            "nullable": true
+          },
+          "resultType": {
             "type": "string",
             "nullable": true
           },
@@ -14292,6 +14324,30 @@
           "gridId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "expressionText": {
+            "maxLength": 2147483647,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "calculationMode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "recalculateOn": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "resultType": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
             "nullable": true
           }
         },

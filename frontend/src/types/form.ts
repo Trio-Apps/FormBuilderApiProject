@@ -56,6 +56,11 @@ export interface FormField {
   fieldType?: FieldType;
   fieldOptions: FieldOption[];
   fieldDataSource?: FieldDataSource; // Tells frontend where to load options from (API/LookupTable)
+  // Calculation Fields Properties
+  expressionText?: string;
+  calculationMode?: string;
+  recalculateOn?: string;
+  resultType?: string;
   // Computed properties for task requirements
   label_en?: string;
   label_ar?: string;

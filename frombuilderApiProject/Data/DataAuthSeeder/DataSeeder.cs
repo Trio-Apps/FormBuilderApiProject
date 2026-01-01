@@ -111,10 +111,38 @@ public static class DataSeeder
                     HasOptions = false,
                     AllowMultiple = true,
                     IsActive = true
+                },
+                new FIELD_TYPES
+                {
+                    TypeName = "Calculated",
+                    ForeignTypeName = "محسوب",
+                    DataType = "decimal",
+                    MaxLength = null,
+                    HasOptions = false,
+                    AllowMultiple = false,
+                    IsActive = true
                 }
             };
 
             await context.FIELD_TYPES.AddRangeAsync(fieldTypes);
+            await context.SaveChangesAsync();
+        }
+
+        // Ensure "Calculated" type exists (in case it was added after initial seeding)
+        if (!await context.FIELD_TYPES.AnyAsync(ft => ft.TypeName == "Calculated"))
+        {
+            var calculatedType = new FIELD_TYPES
+            {
+                TypeName = "Calculated",
+                ForeignTypeName = "محسوب",
+                DataType = "decimal",
+                MaxLength = null,
+                HasOptions = false,
+                AllowMultiple = false,
+                IsActive = true
+            };
+
+            await context.FIELD_TYPES.AddAsync(calculatedType);
             await context.SaveChangesAsync();
         }
 

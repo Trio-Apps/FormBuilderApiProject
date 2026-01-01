@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FormBuilder.Core.Migrations
 {
     [DbContext(typeof(FormBuilderDbContext))]
-    [Migration("20251221122708_AddGridIdToFormFields1s")]
-    partial class AddGridIdToFormFields1s
+    [Migration("20260101111441_update flied")]
+    partial class updateflied
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -172,6 +172,10 @@ namespace FormBuilder.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CalculationMode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
@@ -180,6 +184,10 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DefaultValueJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpressionText")
+                        .HasMaxLength(2147483647)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FieldCode")
@@ -241,8 +249,16 @@ namespace FormBuilder.Core.Migrations
                     b.Property<string>("Placeholder")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RecalculateOn")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("RegexPattern")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultType")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("TabId")
                         .HasColumnType("int");
@@ -1615,10 +1631,16 @@ namespace FormBuilder.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApiPath")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.Property<string>("ApiUrl")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ConfigurationJson")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(450)
@@ -1631,7 +1653,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("HttpMethod")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
@@ -1639,7 +1660,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RequestBodyJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SourceType")
@@ -1648,14 +1668,12 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TextPath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ValuePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -1765,12 +1783,31 @@ namespace FormBuilder.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ConditionField")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ConditionOperator")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("ConditionValue")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("ConditionValueType")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("ExecutionOrder")
+                        .HasColumnType("int");
 
                     b.Property<int>("FormBuilderId")
                         .HasColumnType("int");
@@ -1779,7 +1816,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RuleJson")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RuleName")
@@ -1795,6 +1831,61 @@ namespace FormBuilder.Core.Migrations
                     b.HasIndex("FormBuilderId");
 
                     b.ToTable("FORM_RULES");
+                });
+
+            modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORM_RULE_ACTIONS", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActionOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ActionType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("CreatedByUserId")
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Expression")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("FieldCode")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsElseAction")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RuleId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Value")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RuleId");
+
+                    b.ToTable("FORM_RULE_ACTIONS");
                 });
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORM_SUBMISSION_VALUES", b =>
@@ -1975,7 +2066,7 @@ namespace FormBuilder.Core.Migrations
                     b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_SERIES", "DOCUMENT_SERIES")
                         .WithMany("FORM_SUBMISSIONS")
                         .HasForeignKey("SeriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DOCUMENT_SERIES");
@@ -2174,7 +2265,7 @@ namespace FormBuilder.Core.Migrations
                     b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.PROJECTS", "PROJECTS")
                         .WithMany("DOCUMENT_SERIES")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("DOCUMENT_TYPES");
@@ -2192,7 +2283,8 @@ namespace FormBuilder.Core.Migrations
 
                     b.HasOne("FormBuilder.Domian.Entitys.FromBuilder.DOCUMENT_TYPES", "ParentMenu")
                         .WithMany("Children")
-                        .HasForeignKey("ParentMenuId");
+                        .HasForeignKey("ParentMenuId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("FORM_BUILDER");
 
@@ -2348,6 +2440,17 @@ namespace FormBuilder.Core.Migrations
                         .IsRequired();
 
                     b.Navigation("FORM_BUILDER");
+                });
+
+            modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORM_RULE_ACTIONS", b =>
+                {
+                    b.HasOne("FormBuilder.Domian.Entitys.froms.FORM_RULES", "FORM_RULES")
+                        .WithMany("FORM_RULE_ACTIONS")
+                        .HasForeignKey("RuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FORM_RULES");
                 });
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORM_SUBMISSION_VALUES", b =>
@@ -2508,6 +2611,11 @@ namespace FormBuilder.Core.Migrations
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FromBuilder.SMTP_CONFIGS", b =>
                 {
                     b.Navigation("EMAIL_TEMPLATES");
+                });
+
+            modelBuilder.Entity("FormBuilder.Domian.Entitys.froms.FORM_RULES", b =>
+                {
+                    b.Navigation("FORM_RULE_ACTIONS");
                 });
 #pragma warning restore 612, 618
         }

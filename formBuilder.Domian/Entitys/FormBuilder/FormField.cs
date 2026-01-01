@@ -46,6 +46,18 @@ public class FORM_FIELDS :BaseEntity
     public string ?ValidationMessage { get; set; }
     public string? ForeignValidationMessage { get; set; }
 
+    // Calculation Fields Properties
+    [StringLength(int.MaxValue)]
+    public string? ExpressionText { get; set; }
+
+    [StringLength(50)]
+    public string? CalculationMode { get; set; }
+
+    [StringLength(50)]
+    public string? RecalculateOn { get; set; }
+
+    [StringLength(50)]
+    public string? ResultType { get; set; }
 
     public new bool IsActive { get; set; }
 

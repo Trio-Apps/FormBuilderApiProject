@@ -7,6 +7,7 @@ import TabNavigation from '../components/TabNavigation'
 import FormFieldRenderer from '../components/FormFieldRenderer'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import { useLanguage } from '../contexts/LanguageContext'
+import { evaluateExpression, extractFieldCodes } from '../utils/calculationEngine'
 import './FormViewer.css'
 
 const FormViewer = () => {
@@ -197,12 +198,70 @@ const FormViewer = () => {
     fetchForm()
   }, [formPublicId, t, loadRules])
 
+  // Calculate calculated fields when fieldValues change
+  const calculateFields = useCallback((currentValues: Record<string, any>) => {
+    if (!form) return currentValues
+
+    const updatedValues = { ...currentValues }
+    let hasChanges = false
+
+    // Find all calculated fields across all tabs
+    form.tabs.forEach((tab) => {
+      tab.fields.forEach((field) => {
+        const fieldTypeName = field.fieldTypeName || field.fieldType?.typeName || ''
+        const isCalculated = fieldTypeName.toLowerCase() === 'calculated'
+
+        if (isCalculated && field.expressionText) {
+          // Check if we should recalculate based on RecalculateOn setting
+          const recalculateOn = field.recalculateOn || 'OnFieldChange'
+          
+          // For now, always recalculate on field change (we'll enhance this later)
+          if (recalculateOn === 'OnFieldChange' || recalculateOn === 'OnLoad') {
+            const resultType = field.resultType || 'decimal'
+            
+            // Create a copy of values without the current calculated field to prevent circular reference
+            const valuesForCalculation = { ...currentValues }
+            // Remove the current field's value to prevent self-reference
+            delete valuesForCalculation[field.fieldCode]
+            delete valuesForCalculation[field.fieldCode.toLowerCase()]
+            
+            const calculatedValue = evaluateExpression(
+              field.expressionText,
+              valuesForCalculation,
+              resultType
+            )
+
+            // Only update if value changed or is null/undefined
+            const currentValue = updatedValues[field.fieldCode]
+            if (currentValue !== calculatedValue && calculatedValue !== null && calculatedValue !== undefined) {
+              updatedValues[field.fieldCode] = calculatedValue
+              hasChanges = true
+              console.log(`[FormView] Calculated field ${field.fieldCode}: ${calculatedValue} (Expression: ${field.expressionText})`)
+            }
+          }
+        }
+      })
+    })
+
+    return hasChanges ? updatedValues : currentValues
+  }, [form])
+
   // Evaluate rules when rules or fieldValues change
   useEffect(() => {
     if (rules.length > 0 && form) {
       evaluateRules(fieldValues)
     }
   }, [rules, fieldValues, form, evaluateRules])
+
+  // Calculate calculated fields when fieldValues change
+  useEffect(() => {
+    if (form) {
+      const updatedValues = calculateFields(fieldValues)
+      if (updatedValues !== fieldValues) {
+        setFieldValues(updatedValues)
+      }
+    }
+  }, [form, fieldValues, calculateFields])
 
   if (loading) {
     return (

@@ -169,6 +169,10 @@ namespace FormBuilder.Core.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CalculationMode")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("CreatedByUserId")
                         .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
@@ -177,6 +181,10 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DefaultValueJson")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ExpressionText")
+                        .HasMaxLength(2147483647)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FieldCode")
@@ -238,8 +246,16 @@ namespace FormBuilder.Core.Migrations
                     b.Property<string>("Placeholder")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("RecalculateOn")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("RegexPattern")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResultType")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("TabId")
                         .HasColumnType("int");
