@@ -1,0 +1,494 @@
+{
+  "endpoints": {
+    "baseUrl": "http://localhost:5203/api",
+    "authentication": "Bearer {your_token}",
+    
+    "calculateExpression": {
+      "url": "POST /api/Formulas/calculate-expression",
+      "request": {
+        "expressionText": "[RENT] * [MONTHS]",
+        "fieldValues": {
+          "RENT": 1000,
+          "MONTHS": 12
+        }
+      },
+      "response": {
+        "success": true,
+        "data": 12000,
+        "statusCode": 200
+      }
+    },
+    
+    "calculateRentExample": {
+      "url": "POST /api/Formulas/calculate-expression",
+      "request": {
+        "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+        "fieldValues": {
+          "RENT": 1000,
+          "MONTHS": 12,
+          "DISCOUNT": 500
+        }
+      },
+      "response": {
+        "success": true,
+        "data": 11500,
+        "statusCode": 200
+      }
+    },
+    
+    "calculateSafe": {
+      "url": "POST /api/Formulas/calculate-safe",
+      "request": {
+        "expressionText": "[RENT] + [MONTHS]",
+        "fieldValues": {
+          "RENT": 1000,
+          "MONTHS": 12
+        }
+      },
+      "response": {
+        "success": true,
+        "data": 1012,
+        "statusCode": 200
+      }
+    },
+    
+    "calculateAdvanced": {
+      "url": "POST /api/Formulas/calculate-advanced",
+      "request": {
+        "expressionText": "([price] * [quantity]) - ([discount] / 100 * [price] * [quantity]) + [shipping]",
+        "fieldValues": {
+          "price": 100,
+          "quantity": 10,
+          "discount": 10,
+          "shipping": 50
+        }
+      },
+      "response": {
+        "success": true,
+        "data": 950,
+        "statusCode": 200
+      }
+    },
+    
+    "calculateFormulaById": {
+      "url": "POST /api/Formulas/5/calculate",
+      "request": {
+        "RENT": 1000,
+        "MONTHS": 12,
+        "DISCOUNT": 500
+      },
+      "response": {
+        "success": true,
+        "data": 11500,
+        "statusCode": 200
+      }
+    },
+    
+    "batchCalculate": {
+      "url": "POST /api/Formulas/form-builder/1/batch-calculate",
+      "request": {
+        "RENT": 1000,
+        "MONTHS": 12,
+        "DISCOUNT": 500,
+        "TAX": 100
+      },
+      "response": {
+        "success": true,
+        "data": {
+          "1": 11500,
+          "2": 1200,
+          "3": 500
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "previewCalculation": {
+      "url": "POST /api/Formulas/preview-calculation",
+      "request": {
+        "expressionText": "[RENT] * [MONTHS]",
+        "formBuilderId": 1,
+        "fieldValues": {
+          "RENT": 1000,
+          "MONTHS": 12
+        }
+      },
+      "response": {
+        "success": true,
+        "data": {
+          "result": 12000,
+          "expressionText": "[RENT] * [MONTHS]",
+          "processedExpression": "1000 * 12"
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "validateExpression": {
+      "url": "POST /api/Formulas/validate-expression",
+      "request": {
+        "expressionText": "[RENT] * [MONTHS] - [DISCOUNT]",
+        "formBuilderId": 1
+      },
+      "response": {
+        "success": true,
+        "data": {
+          "isValid": true,
+          "validFieldCodes": ["RENT", "MONTHS", "DISCOUNT"],
+          "invalidFieldCodes": [],
+          "fieldDetails": [
+            {
+              "fieldId": 1,
+              "fieldCode": "RENT",
+              "fieldName": "Monthly Rent",
+              "fieldType": "Decimal",
+              "tabName": "Basic Info",
+              "formBuilderId": 1,
+              "formBuilderName": "Rental Form",
+              "isActive": true
+            }
+          ]
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "validateExpressionInvalid": {
+      "url": "POST /api/Formulas/validate-expression",
+      "request": {
+        "expressionText": "[RENT] * [INVALID_FIELD]",
+        "formBuilderId": 1
+      },
+      "response": {
+        "success": true,
+        "data": {
+          "isValid": false,
+          "validFieldCodes": ["RENT"],
+          "invalidFieldCodes": ["INVALID_FIELD"],
+          "fieldDetails": []
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "createFormula": {
+      "url": "POST /api/Formulas",
+      "request": {
+        "formBuilderId": 1,
+        "name": "Total Rent Calculation",
+        "code": "TOTAL_RENT_CALC",
+        "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+        "resultFieldId": 10,
+        "isActive": true
+      },
+      "response": {
+        "success": true,
+        "data": {
+          "id": 5,
+          "formBuilderId": 1,
+          "name": "Total Rent Calculation",
+          "code": "TOTAL_RENT_CALC",
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "resultFieldId": 10,
+          "isActive": true,
+          "createdDate": "2024-01-15T10:30:00Z"
+        },
+        "statusCode": 201
+      }
+    },
+    
+    "getFormulaById": {
+      "url": "GET /api/Formulas/5",
+      "response": {
+        "success": true,
+        "data": {
+          "id": 5,
+          "formBuilderId": 1,
+          "formBuilderName": "Rental Form",
+          "name": "Total Rent Calculation",
+          "code": "TOTAL_RENT_CALC",
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "resultFieldId": 10,
+          "resultFieldName": "Total Rent",
+          "resultFieldCode": "TOTAL_RENT",
+          "isActive": true,
+          "createdDate": "2024-01-15T10:30:00Z",
+          "updatedDate": null,
+          "variableCount": 3
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "getFormulasByFormBuilder": {
+      "url": "GET /api/Formulas/form-builder/1",
+      "response": {
+        "success": true,
+        "data": [
+          {
+            "id": 5,
+            "formBuilderId": 1,
+            "name": "Total Rent Calculation",
+            "code": "TOTAL_RENT_CALC",
+            "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+            "resultFieldId": 10,
+            "isActive": true
+          }
+        ],
+        "statusCode": 200
+      }
+    },
+    
+    "updateFormula": {
+      "url": "PUT /api/Formulas/5",
+      "request": {
+        "name": "Updated Total Rent Calculation",
+        "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT] + [TAX]",
+        "isActive": true
+      },
+      "response": {
+        "statusCode": 204
+      }
+    },
+    
+    "deleteFormula": {
+      "url": "DELETE /api/Formulas/5",
+      "response": {
+        "statusCode": 204
+      }
+    },
+    
+    "createCalculatedField": {
+      "url": "POST /api/FormFields",
+      "request": {
+        "fieldName": "Total Rent",
+        "fieldCode": "TOTAL_RENT",
+        "fieldTypeId": 15,
+        "tabId": 1,
+        "fieldOrder": 10,
+        "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+        "calculationMode": "Expression",
+        "recalculateOn": "OnFieldChange",
+        "resultType": "Decimal",
+        "isEditable": false,
+        "isMandatory": false,
+        "isVisible": true,
+        "isActive": true
+      },
+      "response": {
+        "success": true,
+        "data": {
+          "id": 10,
+          "fieldName": "Total Rent",
+          "fieldCode": "TOTAL_RENT",
+          "fieldTypeId": 15,
+          "fieldTypeName": "Calculated",
+          "tabId": 1,
+          "fieldOrder": 10,
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "calculationMode": "Expression",
+          "recalculateOn": "OnFieldChange",
+          "resultType": "Decimal",
+          "isEditable": false,
+          "isMandatory": false,
+          "isVisible": true,
+          "isActive": true
+        },
+        "statusCode": 201
+      }
+    },
+    
+    "updateCalculatedField": {
+      "url": "PUT /api/FormFields/10",
+      "request": {
+        "fieldName": "Total Rent (Updated)",
+        "fieldCode": "TOTAL_RENT",
+        "fieldTypeId": 15,
+        "tabId": 1,
+        "fieldOrder": 10,
+        "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT] + [TAX]",
+        "calculationMode": "Expression",
+        "recalculateOn": "OnFieldChange",
+        "resultType": "Decimal",
+        "isEditable": false,
+        "isMandatory": false,
+        "isVisible": true,
+        "isActive": true
+      },
+      "response": {
+        "statusCode": 204
+      }
+    },
+    
+    "getCalculatedFieldById": {
+      "url": "GET /api/FormFields/10",
+      "response": {
+        "success": true,
+        "data": {
+          "id": 10,
+          "fieldName": "Total Rent",
+          "fieldCode": "TOTAL_RENT",
+          "fieldTypeId": 15,
+          "fieldTypeName": "Calculated",
+          "tabId": 1,
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "calculationMode": "Expression",
+          "recalculateOn": "OnFieldChange",
+          "resultType": "Decimal",
+          "isEditable": false,
+          "isMandatory": false,
+          "isVisible": true,
+          "isActive": true
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "getFieldsByFormId": {
+      "url": "GET /api/FormFields/form/1",
+      "response": {
+        "success": true,
+        "data": [
+          {
+            "id": 1,
+            "fieldName": "Monthly Rent",
+            "fieldCode": "RENT",
+            "fieldTypeId": 1,
+            "fieldTypeName": "Decimal"
+          },
+          {
+            "id": 10,
+            "fieldName": "Total Rent",
+            "fieldCode": "TOTAL_RENT",
+            "fieldTypeId": 15,
+            "fieldTypeName": "Calculated",
+            "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]"
+          }
+        ],
+        "statusCode": 200
+      }
+    },
+    
+    "getReferencedFieldCodes": {
+      "url": "GET /api/Formulas/5/referenced-field-codes",
+      "response": {
+        "success": true,
+        "data": ["RENT", "MONTHS", "DISCOUNT"],
+        "statusCode": 200
+      }
+    },
+    
+    "getFieldCodesForForm": {
+      "url": "GET /api/Formulas/form-builder/1/field-codes",
+      "response": {
+        "success": true,
+        "data": ["RENT", "MONTHS", "DISCOUNT", "TAX", "TOTAL_RENT"],
+        "statusCode": 200
+      }
+    },
+    
+    "getFormulaStatistics": {
+      "url": "GET /api/Formulas/form-builder/1/statistics",
+      "response": {
+        "success": true,
+        "data": {
+          "totalFormulas": 5,
+          "activeFormulas": 4,
+          "inactiveFormulas": 1,
+          "formulasWithResultField": 3,
+          "formulasWithoutResultField": 2,
+          "totalVariables": 12,
+          "averageVariablesPerFormula": 2.4
+        },
+        "statusCode": 200
+      }
+    },
+    
+    "errorResponses": {
+      "badRequest": {
+        "success": false,
+        "errorMessage": "Expression text is required",
+        "statusCode": 400
+      },
+      "unauthorized": {
+        "type": "https://tools.ietf.org/html/rfc7235#section-3.1",
+        "title": "Unauthorized",
+        "status": 401
+      },
+      "notFound": {
+        "success": false,
+        "errorMessage": "Formula not found",
+        "statusCode": 404
+      },
+      "internalServerError": {
+        "success": false,
+        "errorMessage": "Error calculating expression: Invalid syntax",
+        "statusCode": 500
+      }
+    }
+  },
+  
+  "testScenarios": {
+    "rentCalculationFlow": [
+      {
+        "step": 1,
+        "description": "Validate expression",
+        "method": "POST",
+        "url": "/api/Formulas/validate-expression",
+        "body": {
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "formBuilderId": 1
+        }
+      },
+      {
+        "step": 2,
+        "description": "Preview calculation",
+        "method": "POST",
+        "url": "/api/Formulas/preview-calculation",
+        "body": {
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "formBuilderId": 1,
+          "fieldValues": {
+            "RENT": 1000,
+            "MONTHS": 12,
+            "DISCOUNT": 500
+          }
+        }
+      },
+      {
+        "step": 3,
+        "description": "Create calculated field",
+        "method": "POST",
+        "url": "/api/FormFields",
+        "body": {
+          "fieldName": "Total Rent",
+          "fieldCode": "TOTAL_RENT",
+          "fieldTypeId": 15,
+          "tabId": 1,
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "calculationMode": "Expression",
+          "recalculateOn": "OnFieldChange",
+          "resultType": "Decimal",
+          "isEditable": false,
+          "isMandatory": false,
+          "isVisible": true
+        }
+      },
+      {
+        "step": 4,
+        "description": "Calculate with values",
+        "method": "POST",
+        "url": "/api/Formulas/calculate-expression",
+        "body": {
+          "expressionText": "([RENT] * [MONTHS]) - [DISCOUNT]",
+          "fieldValues": {
+            "RENT": 1000,
+            "MONTHS": 12,
+            "DISCOUNT": 500
+          }
+        }
+      }
+    ]
+  }
+}
+

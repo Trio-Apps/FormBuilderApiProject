@@ -980,3 +980,5 @@ D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\refint\FormBuild
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.pdb
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\FormBuilder.ApiProject.genruntimeconfig.cache
 D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\ref\FormBuilder.ApiProject.dll
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\ar\FormBuilder.ApiProject.resources.cs
+D:\FormBuilderApiProject\frombuilderApiProject\obj\Debug\net9.0\en\FormBuilder.ApiProject.resources.cs
