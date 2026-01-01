@@ -35,7 +35,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(fs => fs.FORM_BUILDER)
                 .Include(fs => fs.DOCUMENT_TYPES)
                 .Include(fs => fs.DOCUMENT_SERIES)
-                .Include(fs => fs.CreatedByUserId)
                 .Include(fs => fs.FORM_SUBMISSION_VALUES)
                 .Include(fs => fs.FORM_SUBMISSION_ATTACHMENTS)
                 .Include(fs => fs.FORM_SUBMISSION_GRID_ROWS)

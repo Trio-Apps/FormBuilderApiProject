@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FormBuilder.Domian")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e2308a5fc1258335c0cd68dfaea9bef2f11c503")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9a3244bc5e6b5ffe70a1fb44f1886851d11ca8a")]
 [assembly: System.Reflection.AssemblyProductAttribute("FormBuilder.Domian")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FormBuilder.Domian")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

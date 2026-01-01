@@ -15,6 +15,13 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.SubmittedByUserName, opt => opt.Ignore()) // Will be set manually if needed
                 .ForMember(dest => dest.LastUpdatedDate, opt => opt.MapFrom(src => src.UpdatedDate));
 
+            // Mapping for FormSubmissionDetailDto (inherits from FormSubmissionDto)
+            CreateMap<FORM_SUBMISSIONS, FormSubmissionDetailDto>()
+                .IncludeBase<FORM_SUBMISSIONS, FormSubmissionDto>()
+                .ForMember(dest => dest.FieldValues, opt => opt.Ignore()) // Will be mapped manually
+                .ForMember(dest => dest.Attachments, opt => opt.Ignore()) // Will be mapped manually
+                .ForMember(dest => dest.GridData, opt => opt.Ignore()); // Will be mapped manually
+
             CreateMap<CreateFormSubmissionDto, FORM_SUBMISSIONS>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
