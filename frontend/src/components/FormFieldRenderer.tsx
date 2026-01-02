@@ -19,6 +19,18 @@ interface FormFieldRendererProps {
 }
 
 const FormFieldRenderer = ({ field, value, onChange }: FormFieldRendererProps) => {
+  // Check if field is calculated by checking if it has expressionText
+  const isCalculated = !!(field.expressionText && field.expressionText.trim())
+  
+  // If calculated, render as CalculatedField regardless of fieldTypeName
+  if (isCalculated) {
+    return (
+      <div className="form-field-wrapper">
+        <CalculatedField field={field} value={value} onChange={onChange} />
+      </div>
+    )
+  }
+
   const fieldTypeName = field.fieldTypeName || field.fieldType?.typeName || 'Text'
 
   // Normalize field type name to match our components

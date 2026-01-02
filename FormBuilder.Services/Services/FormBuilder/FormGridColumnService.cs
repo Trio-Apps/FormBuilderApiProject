@@ -69,12 +69,6 @@ namespace FormBuilder.Services
             return new ApiResponse(200, "Grid columns by form builder retrieved successfully", columnDtos);
         }
 
-        public async Task<ApiResponse> GetByFieldTypeIdAsync(int fieldTypeId)
-        {
-            var columns = await _unitOfWork.FormGridColumnRepository.GetByFieldTypeIdAsync(fieldTypeId);
-            var columnDtos = _mapper.Map<IEnumerable<FormGridColumnDto>>(columns);
-            return new ApiResponse(200, "Grid columns by field type retrieved successfully", columnDtos);
-        }
 
         public async Task<ApiResponse> CreateAsync(CreateFormGridColumnDto createDto)
         {
@@ -90,14 +84,6 @@ namespace FormBuilder.Services
 
         protected override async Task<ValidationResult> ValidateCreateAsync(CreateFormGridColumnDto dto)
         {
-            // Validate FieldTypeId exists
-            if (dto.FieldTypeId <= 0)
-                return ValidationResult.Failure("FieldTypeId must be greater than 0");
-
-            var fieldTypeExists = await _unitOfWork.FieldTypesRepository.AnyAsync(ft => ft.Id == dto.FieldTypeId && ft.IsActive);
-            if (!fieldTypeExists)
-                return ValidationResult.Failure("FieldTypeId does not exist or is not active");
-
             // Validate GridId exists
             var gridExists = await _unitOfWork.FormGridRepository.AnyAsync(g => g.Id == dto.GridId && g.IsActive);
             if (!gridExists)
@@ -139,16 +125,6 @@ namespace FormBuilder.Services
                 return ValidationResult.Failure($"The grid (Id: {entity.GridId}) associated with this column no longer exists. Please contact support.");
             }
 
-            // Validate FieldTypeId if provided
-            if (dto.FieldTypeId.HasValue)
-            {
-                if (dto.FieldTypeId.Value <= 0)
-                    return ValidationResult.Failure("FieldTypeId must be greater than 0");
-
-                var fieldTypeExists = await _unitOfWork.FieldTypesRepository.AnyAsync(ft => ft.Id == dto.FieldTypeId.Value && ft.IsActive);
-                if (!fieldTypeExists)
-                    return ValidationResult.Failure("FieldTypeId does not exist or is not active");
-            }
 
             // Check if column code already exists (excluding current record)
             if (!string.IsNullOrEmpty(dto.ColumnCode) && dto.ColumnCode != entity.ColumnCode)

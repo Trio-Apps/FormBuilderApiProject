@@ -26,7 +26,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .FirstOrDefaultAsync(fv => fv.Id == id && fv.IsActive);
         }
 
@@ -35,7 +34,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Where(fv => fv.IsActive)
                 .OrderBy(fv => fv.FormulaId)
                 .ThenBy(fv => fv.VariableName)
@@ -62,7 +60,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             // Apply filter if provided
@@ -106,7 +104,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             return await query
@@ -159,7 +157,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             return await query
@@ -187,7 +185,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             return await query
@@ -214,7 +212,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             return await query
@@ -241,7 +239,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             return await query
@@ -268,7 +266,7 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query
                     .Include(fv => fv.FORMULAS)
                     .Include(fv => fv.FORM_FIELDS)
-                        .ThenInclude(ff => ff.FIELD_TYPES);
+;
             }
 
             return await query
@@ -307,7 +305,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(fv => fv.FORMULAS)
                     .ThenInclude(f => f.FORM_BUILDER)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(fv => fv.FORM_FIELDS)
                     .ThenInclude(ff => ff.FORM_TABS)
                 .Where(fv => fv.IsActive);
@@ -329,7 +326,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(fv => fv.FORMULAS)
                     .ThenInclude(f => f.FORM_BUILDER)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(fv => fv.FORM_FIELDS)
                     .ThenInclude(ff => ff.FORM_TABS)
                         .ThenInclude(t => t.FORM_BUILDER)
@@ -421,7 +417,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             var fields = await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(fv => fv.FORM_FIELDS)
                     .ThenInclude(ff => ff.FORM_TABS)
                 .Where(fv => fv.FormulaId == formulaId && fv.IsActive && fv.SourceFieldId > 0)
@@ -438,7 +433,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(fv => fv.FORM_FIELDS)
                     .ThenInclude(ff => ff.FORM_TABS)
                 .Where(fv => fv.FormulaId == formulaId && fv.IsActive)
@@ -483,7 +477,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(fv => fv.FORM_FIELDS)
                     .ThenInclude(ff => ff.FORM_TABS)
                 .Where(fv => fv.FormulaId == formulaId &&
@@ -503,10 +496,8 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Where(fv => fv.FormulaId == formulaId &&
-                            fv.IsActive &&
-                            fv.FORM_FIELDS.FIELD_TYPES.TypeName.ToLower() == fieldType.ToLower())
+                            fv.IsActive)
                 .OrderBy(fv => fv.VariableName)
                 .ToListAsync();
         }
@@ -529,7 +520,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORMULAS)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Where(fv => fv.FormulaId == formulaId && !fv.IsActive)
                 .OrderBy(fv => fv.VariableName)
                 .ToListAsync();
@@ -551,7 +541,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(fv => fv.FORMULAS)
                     .ThenInclude(f => f.FORM_BUILDER)
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(fv => fv.FORM_FIELDS)
                     .ThenInclude(ff => ff.FORM_TABS)
                         .ThenInclude(t => t.FORM_BUILDER)
@@ -582,7 +571,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             var variables = await _context.Set<FORMULA_VARIABLES>()
                 .Include(fv => fv.FORM_FIELDS)
-                    .ThenInclude(ff => ff.FIELD_TYPES)
                 .Where(fv => fv.FormulaId == formulaId && fv.IsActive && fv.SourceFieldId > 0)
                 .ToListAsync();
 

@@ -14,7 +14,6 @@ namespace FormBuilder.Domain.Interfaces.Services
         Task<ApiResponse> GetActiveByGridIdAsync(int gridId);
         Task<ApiResponse> GetByColumnCodeAsync(string columnCode, int gridId);
         Task<ApiResponse> GetByFormBuilderIdAsync(int formBuilderId);
-        Task<ApiResponse> GetByFieldTypeIdAsync(int fieldTypeId);
         Task<ApiResponse> CreateAsync(CreateFormGridColumnDto createDto);
         Task<ApiResponse> UpdateAsync(int id, UpdateFormGridColumnDto updateDto);
         Task<ApiResponse> DeleteAsync(int id);

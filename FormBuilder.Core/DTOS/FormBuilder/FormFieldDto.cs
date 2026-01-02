@@ -15,8 +15,7 @@ namespace FormBuilder.API.Models
         [Required]
         public int TabId { get; set; }
 
-        [Required]
-        public int FieldTypeId { get; set; }
+        public int? FieldTypeId { get; set; }
         public string? FieldTypeName { get; set; }
 
         [Required, StringLength(200)]
@@ -78,7 +77,6 @@ namespace FormBuilder.API.Models
         // Ignored in JSON to prevent circular reference with FormTabDto.Fields (helps Swagger schema generation)
         [JsonIgnore]
         public FormTabDto? Tab { get; set; }
-        public FieldTypeDto? FieldType { get; set; }
         public List<FieldOptionDto> FieldOptions { get; set; } = new List<FieldOptionDto>();
         
         // Field Data Source - tells frontend where to load options from
@@ -94,8 +92,7 @@ namespace FormBuilder.API.Models
         [Required]
         public int TabId { get; set; }
 
-        [Required]
-        public int FieldTypeId { get; set; }
+        public int? FieldTypeId { get; set; }
 
         [Required, StringLength(200)]
         public string FieldName { get; set; } = string.Empty;
@@ -142,8 +139,7 @@ namespace FormBuilder.API.Models
         [Required]
         public int TabId { get; set; }
 
-        [Required]
-        public int FieldTypeId { get; set; }
+        public int? FieldTypeId { get; set; }
 
         [Required, StringLength(200)]
         public string FieldName { get; set; } = string.Empty;

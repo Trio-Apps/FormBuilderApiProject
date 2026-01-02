@@ -39,7 +39,6 @@ namespace FormBuilder.Services.Repository
                 .AsNoTracking()
                 .Include(f => f.FORM_TABS.Where(t => t.IsActive))
                     .ThenInclude(t => t.FORM_FIELDS.Where(ff => ff.IsActive))
-                        .ThenInclude(ff => ff.FIELD_TYPES)
                 .Include(f => f.FORM_TABS.Where(t => t.IsActive))
                     .ThenInclude(t => t.FORM_FIELDS.Where(ff => ff.IsActive))
                         .ThenInclude(ff => ff.FIELD_OPTIONS)

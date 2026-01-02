@@ -2370,248 +2370,6 @@
         }
       }
     },
-    "/api/FieldTypes": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FieldTypeCreateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FieldTypeCreateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FieldTypeCreateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/{id}": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FieldTypeUpdateDto"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FieldTypeUpdateDto"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/FieldTypeUpdateDto"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/{id}/soft-delete": {
-      "patch": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/active": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/by-name/{typeName}": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "parameters": [
-          {
-            "name": "typeName",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/with-options": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/with-multiple": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/dropdown": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/basic": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api/FieldTypes/advanced": {
-      "get": {
-        "tags": [
-          "FieldTypes"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/FormAttachmentTypes": {
       "get": {
         "tags": [
@@ -4063,46 +3821,6 @@
         "parameters": [
           {
             "name": "formBuilderId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FormBuilder.API.Models.ApiResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/FormGridColumns/by-field-type/{fieldTypeId}": {
-      "get": {
-        "tags": [
-          "FormGridColumns"
-        ],
-        "parameters": [
-          {
-            "name": "fieldTypeId",
             "in": "path",
             "required": true,
             "schema": {
@@ -11175,135 +10893,6 @@
   },
   "components": {
     "schemas": {
-      "FieldTypeCreateDto": {
-        "required": [
-          "typeName"
-        ],
-        "type": "object",
-        "properties": {
-          "typeName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "foreignTypeName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "dataType": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "maxLength": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "hasOptions": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "allowMultiple": {
-            "type": "boolean",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FieldTypeDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "typeName": {
-            "type": "string",
-            "nullable": true
-          },
-          "foreignTypeName": {
-            "type": "string",
-            "nullable": true
-          },
-          "dataType": {
-            "type": "string",
-            "nullable": true
-          },
-          "maxLength": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "hasOptions": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "allowMultiple": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "type_name_en": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          },
-          "type_name_ar": {
-            "type": "string",
-            "nullable": true,
-            "readOnly": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "FieldTypeUpdateDto": {
-        "required": [
-          "typeName"
-        ],
-        "type": "object",
-        "properties": {
-          "typeName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "foreignTypeName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "dataType": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "maxLength": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "hasOptions": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "allowMultiple": {
-            "type": "boolean",
-            "nullable": true
-          },
-          "isActive": {
-            "type": "boolean"
-          }
-        },
-        "additionalProperties": false
-      },
       "FormBuilder.API.DTOs.CreateFormGridColumnDto": {
         "required": [
           "columnCode",
@@ -12257,7 +11846,6 @@
           "fieldCode",
           "fieldName",
           "fieldOrder",
-          "fieldTypeId",
           "isActive",
           "isEditable",
           "isMandatory",
@@ -12276,7 +11864,8 @@
           },
           "fieldTypeId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "fieldTypeName": {
             "type": "string",
@@ -12418,9 +12007,6 @@
             "format": "int32",
             "readOnly": true
           },
-          "fieldType": {
-            "$ref": "#/components/schemas/FieldTypeDto"
-          },
           "fieldOptions": {
             "type": "array",
             "items": {
@@ -12546,7 +12132,6 @@
           "fieldCode",
           "fieldName",
           "fieldOrder",
-          "fieldTypeId",
           "tabId"
         ],
         "type": "object",
@@ -12557,7 +12142,8 @@
           },
           "fieldTypeId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "fieldName": {
             "maxLength": 200,
@@ -14192,7 +13778,6 @@
         "required": [
           "fieldCode",
           "fieldName",
-          "fieldTypeId",
           "tabId"
         ],
         "type": "object",
@@ -14203,7 +13788,8 @@
           },
           "fieldTypeId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "fieldName": {
             "maxLength": 200,

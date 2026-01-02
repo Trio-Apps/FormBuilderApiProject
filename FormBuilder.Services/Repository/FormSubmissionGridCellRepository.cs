@@ -28,7 +28,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(c => c.FORM_SUBMISSION_GRID_ROWS)
                     .ThenInclude(r => r.FORM_GRIDS)
                 .Include(c => c.FORM_GRID_COLUMNS)
-                    .ThenInclude(col => col.FIELD_TYPES)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
@@ -41,7 +40,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(c => c.FORM_SUBMISSION_GRID_ROWS)
                     .ThenInclude(r => r.FORM_GRIDS)
                 .Include(c => c.FORM_GRID_COLUMNS)
-                    .ThenInclude(col => col.FIELD_TYPES)
                 .AsNoTracking()
                 .OrderBy(c => c.RowId)
                 .ThenBy(c => c.ColumnId)
@@ -56,7 +54,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(c => c.FORM_SUBMISSION_GRID_ROWS)
                     .ThenInclude(r => r.FORM_GRIDS)
                 .Include(c => c.FORM_GRID_COLUMNS)
-                    .ThenInclude(col => col.FIELD_TYPES)
                 .AsNoTracking()
                 .Where(c => c.RowId == rowId)
                 .OrderBy(c => c.ColumnId)
@@ -71,7 +68,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(c => c.FORM_SUBMISSION_GRID_ROWS)
                     .ThenInclude(r => r.FORM_GRIDS)
                 .Include(c => c.FORM_GRID_COLUMNS)
-                    .ThenInclude(col => col.FIELD_TYPES)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.RowId == rowId && c.ColumnId == columnId);
         }

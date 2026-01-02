@@ -460,10 +460,7 @@ namespace FormBuilder.Services
         {
             if (column.FieldTypeId == null) return true;
 
-            var fieldType = column.FIELD_TYPES;
-            if (fieldType == null) return true;
-
-            var dataType = fieldType.TypeName?.ToLower() ?? column.DataType?.ToLower() ?? "";
+            var dataType = column.DataType?.ToLower() ?? "";
 
             // التحقق حسب نوع البيانات
             if (dataType.Contains("string") || dataType.Contains("text"))
@@ -484,10 +481,7 @@ namespace FormBuilder.Services
         private (bool IsValid, List<string> Errors) ValidateCellValue(SaveFormSubmissionGridCellDto cell, FORM_GRID_COLUMNS column)
         {
             var errors = new List<string>();
-            var fieldType = column.FIELD_TYPES;
-            if (fieldType == null) return (true, errors);
-
-            var dataType = fieldType.TypeName?.ToLower() ?? column.DataType?.ToLower() ?? "";
+            var dataType = column.DataType?.ToLower() ?? "";
 
             // التحقق من نوع البيانات
             if (dataType.Contains("number") || dataType.Contains("decimal") || dataType.Contains("int"))

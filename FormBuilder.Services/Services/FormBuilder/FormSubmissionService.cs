@@ -454,8 +454,6 @@ namespace FormBuilder.Services
             // Get all calculated fields for this form
             var allFields = await _unitOfWork.FormFieldRepository.GetFieldsByFormIdAsync(formBuilderId);
             var calculatedFields = allFields.Where(f => 
-                f.FIELD_TYPES != null && 
-                f.FIELD_TYPES.TypeName.Equals("Calculated", StringComparison.OrdinalIgnoreCase) &&
                 !string.IsNullOrWhiteSpace(f.ExpressionText) &&
                 f.IsActive
             ).ToList();

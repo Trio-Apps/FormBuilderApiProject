@@ -13,7 +13,7 @@ namespace FormBuilder.Services.Mappings
         public FormFieldProfile()
         {
             CreateMap<FORM_FIELDS, FormFieldDto>()
-                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FIELD_TYPES != null ? src.FIELD_TYPES.TypeName : null))
+                .ForMember(dest => dest.FieldTypeName, opt => opt.Ignore())
                 .ForMember(dest => dest.FieldOptions, opt => opt.MapFrom(src => src.FIELD_OPTIONS != null ? src.FIELD_OPTIONS.Where(fo => fo.IsActive) : new List<FormBuilder.Domian.Entitys.froms.FIELD_OPTIONS>()))
                 .ForMember(dest => dest.FieldDataSource, opt => opt.MapFrom(src => src.FIELD_DATA_SOURCES != null ? src.FIELD_DATA_SOURCES.FirstOrDefault(ds => ds.IsActive) : null))
                 .ForMember(dest => dest.Grid, opt => opt.MapFrom(src => src.Grid != null ? src.Grid : null));
@@ -24,7 +24,6 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
                 .ForMember(dest => dest.FORM_TABS, opt => opt.Ignore())
-                .ForMember(dest => dest.FIELD_TYPES, opt => opt.Ignore())
                 .ForMember(dest => dest.FIELD_OPTIONS, opt => opt.Ignore())
                 .ForMember(dest => dest.FIELD_DATA_SOURCES, opt => opt.Ignore())
                 .ForMember(dest => dest.Grid, opt => opt.Ignore())
@@ -37,7 +36,6 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedByUserId, opt => opt.Ignore())
                 .ForMember(dest => dest.FORM_TABS, opt => opt.Ignore())
-                .ForMember(dest => dest.FIELD_TYPES, opt => opt.Ignore())
                 .ForMember(dest => dest.FIELD_OPTIONS, opt => opt.Ignore())
                 .ForMember(dest => dest.FIELD_DATA_SOURCES, opt => opt.Ignore())
                 .ForMember(dest => dest.Grid, opt => opt.Ignore())

@@ -491,7 +491,7 @@ namespace FormBuilder.Services
                         FieldId = f.Id,
                         FieldCode = f.FieldCode,
                         FieldName = f.FieldName,
-                        FieldType = f.FIELD_TYPES?.TypeName ?? string.Empty,
+                        FieldType = string.Empty,
                         TabName = f.FORM_TABS?.TabName ?? string.Empty,
                         FormBuilderId = formBuilderId,
                         FormBuilderName = f.FORM_TABS?.FORM_BUILDER?.FormName ?? string.Empty,
@@ -712,7 +712,7 @@ namespace FormBuilder.Services
                     var fieldCode = variable.FORM_FIELDS?.FieldCode;
                     if (!string.IsNullOrEmpty(fieldCode))
                     {
-                        sampleData[fieldCode] = GetSampleValueForFieldType(variable.FORM_FIELDS?.FIELD_TYPES?.TypeName);
+                        sampleData[fieldCode] = GetSampleValueForFieldType(null);
                     }
                 }
             }

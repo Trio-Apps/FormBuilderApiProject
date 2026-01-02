@@ -69,7 +69,7 @@ namespace FormBuilder.Services.Services
                             Id = f.Id,
                             TabId = f.TabId,
                             FieldTypeId = f.FieldTypeId,
-                            FieldTypeName = f.FIELD_TYPES?.TypeName,
+                            FieldTypeName = null,
                             FieldName = f.FieldName,
                             ForeignFieldName = f.ForeignFieldName,
                             FieldCode = f.FieldCode,
@@ -90,18 +90,7 @@ namespace FormBuilder.Services.Services
                             CreatedDate = f.CreatedDate,
                             CreatedByUserId = f.CreatedByUserId,
                             IsActive = f.IsActive,
-                            // Map FieldType
-                            FieldType = f.FIELD_TYPES != null ? new FieldTypeDto
-                            {
-                                Id = f.FIELD_TYPES.Id,
-                                TypeName = f.FIELD_TYPES.TypeName,
-                                ForeignTypeName = f.FIELD_TYPES.ForeignTypeName,
-                                DataType = f.FIELD_TYPES.DataType,
-                                MaxLength = f.FIELD_TYPES.MaxLength,
-                                HasOptions = f.FIELD_TYPES.HasOptions,
-                                AllowMultiple = f.FIELD_TYPES.AllowMultiple,
-                                IsActive = f.FIELD_TYPES.IsActive
-                            } : null,
+                            // FieldType removed
                             // For public view we only need basic option data
                             FieldOptions = f.FIELD_OPTIONS?
                                 .Where(fo => fo.IsActive)

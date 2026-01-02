@@ -14,9 +14,7 @@ public class FORM_FIELDS :BaseEntity
     public int TabId { get; set; }
     public virtual FORM_TABS FORM_TABS { get; set; } = null!;
 
-    [ForeignKey("FIELD_TYPES")]
-    public int FieldTypeId { get; set; }
-    public virtual FIELD_TYPES FIELD_TYPES { get; set; } = null!;
+    public int? FieldTypeId { get; set; }
 
     [ForeignKey("FORM_GRIDS")]
     public int? GridId { get; set; }

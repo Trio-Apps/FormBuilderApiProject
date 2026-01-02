@@ -20,7 +20,6 @@ namespace FormBuilder.Infrastructure.Data
         // ----------------------
         public DbSet<FORM_BUILDER> FORM_BUILDER { get; set; }
         public DbSet<FORM_TABS> FORM_TABS { get; set; }
-        public DbSet<FIELD_TYPES> FIELD_TYPES { get; set; }
         public DbSet<FORM_FIELDS> FORM_FIELDS { get; set; }
         public DbSet<FIELD_OPTIONS> FIELD_OPTIONS { get; set; }
         public DbSet<FIELD_DATA_SOURCES> FIELD_DATA_SOURCES { get; set; }

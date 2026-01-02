@@ -24,7 +24,6 @@ namespace formBuilder.Domian.Interfaces
         IFormBuilderRepository FormBuilderRepository { get; }
         IFormTabRepository FormTabRepository { get; }
         IFormFieldRepository FormFieldRepository { get; }
-        IFieldTypesRepository FieldTypesRepository { get; }
         IFORM_RULESRepository FORM_RULESRepository { get; }
         IFieldOptionsRepository FieldOptionsRepository { get; }
         IFieldDataSourcesRepository FieldDataSourcesRepository { get; }

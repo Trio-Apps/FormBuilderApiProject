@@ -19,9 +19,7 @@ namespace FormBuilder.Domian.Entitys.FormBuilder
         public int GridId { get; set; }
         public virtual FORM_GRIDS FORM_GRIDS { get; set; }
 
-        [ForeignKey("FIELD_TYPES")]
-        public int FieldTypeId { get; set; }
-        public virtual FIELD_TYPES FIELD_TYPES { get; set; }
+        public int? FieldTypeId { get; set; }
 
         [Required, StringLength(200)]
         public string ColumnName { get; set; } = string.Empty;

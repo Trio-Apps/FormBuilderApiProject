@@ -20,6 +20,5 @@ namespace FormBuilder.Domain.Interfaces.Repositories
         Task<int> GetNextColumnOrderAsync(int gridId);
         Task<bool> IsActiveAsync(int id);
         Task<IEnumerable<FORM_GRID_COLUMNS>> GetByFormBuilderIdAsync(int formBuilderId);
-        Task<IEnumerable<FORM_GRID_COLUMNS>> GetByFieldTypeIdAsync(int fieldTypeId);
     }
 }

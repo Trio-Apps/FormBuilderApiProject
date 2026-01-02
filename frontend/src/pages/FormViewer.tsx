@@ -206,12 +206,13 @@ const FormViewer = () => {
     let hasChanges = false
 
     // Find all calculated fields across all tabs
+    // A field is considered calculated if it has expressionText (regardless of fieldTypeName)
     form.tabs.forEach((tab) => {
       tab.fields.forEach((field) => {
-        const fieldTypeName = field.fieldTypeName || field.fieldType?.typeName || ''
-        const isCalculated = fieldTypeName.toLowerCase() === 'calculated'
+        // Check if field is calculated by checking if it has expressionText
+        const isCalculated = !!(field.expressionText && field.expressionText.trim())
 
-        if (isCalculated && field.expressionText) {
+        if (isCalculated) {
           // Check if we should recalculate based on RecalculateOn setting
           const recalculateOn = field.recalculateOn || 'OnFieldChange'
           
@@ -357,6 +358,13 @@ const FormViewer = () => {
                       console.log(`[FormView] Value change: ID=${field.id}, Code=${field.fieldCode} -> ${value}`)
                       // Evaluate rules when field value changes
                       evaluateRules(newValues)
+                      // Trigger calculation for changed field
+                      console.log(`[FormView] Triggering calculation for changed field: ${field.fieldCode}`)
+                      const calculatedValues = calculateFields(newValues)
+                      if (calculatedValues !== newValues) {
+                        setFieldValues(calculatedValues)
+                        console.log(`[FormView] Calculation completed for field: ${field.fieldCode}`)
+                      }
                     }}
                   />
                 ))}

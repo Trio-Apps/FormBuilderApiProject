@@ -203,9 +203,8 @@ namespace FormBuilder.Services.Services
                 entity.HintText = string.Empty;
             }
 
-            // Handle calculation fields
-            var fieldType = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
-            bool isCalculatedField = fieldType?.TypeName?.Equals("Calculated", StringComparison.OrdinalIgnoreCase) == true;
+            // Handle calculation fields - check if ExpressionText is provided
+            bool isCalculatedField = !string.IsNullOrWhiteSpace(dto.ExpressionText);
 
             if (isCalculatedField)
             {
@@ -374,34 +373,24 @@ namespace FormBuilder.Services.Services
             // Validate GridId if provided (for Grid field type)
             if (dto.GridId.HasValue)
             {
-                var fieldType = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
-                if (fieldType?.TypeName?.ToLower() == "grid")
+                // التحقق من وجود Grid
+                var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(dto.GridId.Value);
+                if (grid == null)
                 {
-                    // التحقق من وجود Grid
-                    var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(dto.GridId.Value);
-                    if (grid == null)
-                    {
-                        var message = _localizer?["FormField_GridNotFound"] ?? "Grid not found";
-                        return ValidationResult.Failure(message);
-                    }
-                    
-                    // التحقق من أن Grid ينتمي لنفس Tab
-                    if (grid.TabId.HasValue && grid.TabId != dto.TabId)
-                    {
-                        var message = _localizer?["FormField_GridNotInTab"] ?? "Grid does not belong to this tab";
-                        return ValidationResult.Failure(message);
-                    }
+                    var message = _localizer?["FormField_GridNotFound"] ?? "Grid not found";
+                    return ValidationResult.Failure(message);
                 }
-                else
+                
+                // التحقق من أن Grid ينتمي لنفس Tab
+                if (grid.TabId.HasValue && grid.TabId != dto.TabId)
                 {
-                    var message = _localizer?["FormField_GridIdNotAllowed"] ?? "GridId can only be set for Grid field type";
+                    var message = _localizer?["FormField_GridNotInTab"] ?? "Grid does not belong to this tab";
                     return ValidationResult.Failure(message);
                 }
             }
 
-            // Validate calculation fields
-            var fieldTypeForCalc = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
-            bool isCalculatedField = fieldTypeForCalc?.TypeName?.Equals("Calculated", StringComparison.OrdinalIgnoreCase) == true;
+            // Validate calculation fields - check if ExpressionText is provided
+            bool isCalculatedField = !string.IsNullOrWhiteSpace(dto.ExpressionText);
 
             if (isCalculatedField)
             {
@@ -488,34 +477,24 @@ namespace FormBuilder.Services.Services
             // Validate GridId if provided (for Grid field type)
             if (dto.GridId.HasValue)
             {
-                var fieldType = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
-                if (fieldType?.TypeName?.ToLower() == "grid")
+                // التحقق من وجود Grid
+                var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(dto.GridId.Value);
+                if (grid == null)
                 {
-                    // التحقق من وجود Grid
-                    var grid = await _unitOfWork.FormGridRepository.GetByIdAsync(dto.GridId.Value);
-                    if (grid == null)
-                    {
-                        var message = _localizer?["FormField_GridNotFound"] ?? "Grid not found";
-                        return ValidationResult.Failure(message);
-                    }
-                    
-                    // التحقق من أن Grid ينتمي لنفس Tab
-                    if (grid.TabId.HasValue && grid.TabId != dto.TabId)
-                    {
-                        var message = _localizer?["FormField_GridNotInTab"] ?? "Grid does not belong to this tab";
-                        return ValidationResult.Failure(message);
-                    }
+                    var message = _localizer?["FormField_GridNotFound"] ?? "Grid not found";
+                    return ValidationResult.Failure(message);
                 }
-                else
+                
+                // التحقق من أن Grid ينتمي لنفس Tab
+                if (grid.TabId.HasValue && grid.TabId != dto.TabId)
                 {
-                    var message = _localizer?["FormField_GridIdNotAllowed"] ?? "GridId can only be set for Grid field type";
+                    var message = _localizer?["FormField_GridNotInTab"] ?? "Grid does not belong to this tab";
                     return ValidationResult.Failure(message);
                 }
             }
 
-            // Validate calculation fields
-            var fieldTypeForCalc = await _unitOfWork.FieldTypesRepository.GetByIdAsync(dto.FieldTypeId);
-            bool isCalculatedField = fieldTypeForCalc?.TypeName?.Equals("Calculated", StringComparison.OrdinalIgnoreCase) == true;
+            // Validate calculation fields - check if ExpressionText is provided
+            bool isCalculatedField = !string.IsNullOrWhiteSpace(dto.ExpressionText);
 
             if (isCalculatedField)
             {

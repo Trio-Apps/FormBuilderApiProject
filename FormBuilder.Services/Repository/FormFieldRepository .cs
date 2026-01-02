@@ -58,7 +58,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
-                .Include(f => f.FIELD_TYPES)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
                 .Where(f => f.TabId == tabId && f.IsActive)
@@ -70,7 +69,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
-                .Include(f => f.FIELD_TYPES)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
                 .Where(f => f.FORM_TABS.FormBuilderId == formBuilderId && f.IsActive)
@@ -83,7 +81,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
-                .Include(f => f.FIELD_TYPES)
                 .Where(f => f.TabId == tabId && (f.IsMandatory ?? false) && f.IsActive)
                 .OrderBy(f => f.FieldOrder)
                 .ToListAsync();
@@ -93,7 +90,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
-                .Include(f => f.FIELD_TYPES)
                 .Where(f => f.TabId == tabId && f.IsVisible && f.IsActive)
                 .OrderBy(f => f.FieldOrder)
                 .ToListAsync();
@@ -103,7 +99,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
-                .Include(f => f.FIELD_TYPES)
                 .Include(f => f.Grid)
                 .Include(f => f.FIELD_OPTIONS)
                 .Where(f => f.GridId == gridId && f.IsActive)
@@ -112,13 +107,12 @@ namespace FormBuilder.Infrastructure.Repositories
         }
 
         // Get by ID with included entities
-        public async Task<FORM_FIELDS?> GetByIdAsync(int id, params Expression<Func<FIELD_TYPES, object>>[] includes)
+        public async Task<FORM_FIELDS?> GetByIdAsync(int id)
         {
             var query = _context.FORM_FIELDS
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
-                .Include(f => f.FIELD_TYPES)
                 .Where(f => f.Id == id && f.IsActive);
 
             return await query.FirstOrDefaultAsync();
@@ -134,7 +128,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 .Include(f => f.FORM_TABS)
                 .Include(f => f.FIELD_OPTIONS)
                 .Include(f => f.FIELD_DATA_SOURCES)
-                .Include(f => f.FIELD_TYPES)
                 .Where(f => f.IsActive)
                 .OrderBy(f => f.FieldOrder)
                 .AsQueryable();
@@ -145,14 +138,6 @@ namespace FormBuilder.Infrastructure.Repositories
                 query = query.Where(filter);
             }
 
-            // Apply additional includes if provided
-            if (includes != null && includes.Length > 0)
-            {
-                foreach (var include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
 
             return await query.ToListAsync();
         }

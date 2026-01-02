@@ -62,55 +62,6 @@ namespace FormBuilder.Core.Migrations
                     b.ToTable("APPROVAL_DELEGATIONS");
                 });
 
-            modelBuilder.Entity("FIELD_TYPES", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("AllowMultiple")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("CreatedByUserId")
-                        .HasMaxLength(450)
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DataType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ForeignTypeName")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool?>("HasOptions")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("MaxLength")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TypeName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FIELD_TYPES");
-                });
-
             modelBuilder.Entity("FORMULAS", b =>
                 {
                     b.Property<int>("Id")
@@ -200,7 +151,7 @@ namespace FormBuilder.Core.Migrations
                     b.Property<int>("FieldOrder")
                         .HasColumnType("int");
 
-                    b.Property<int>("FieldTypeId")
+                    b.Property<int?>("FieldTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("ForeignFieldName")
@@ -267,8 +218,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FieldTypeId");
 
                     b.HasIndex("GridId");
 
@@ -739,7 +688,7 @@ namespace FormBuilder.Core.Migrations
                     b.Property<string>("DefaultValueJson")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FieldTypeId")
+                    b.Property<int?>("FieldTypeId")
                         .HasColumnType("int");
 
                     b.Property<int>("GridId")
@@ -761,8 +710,6 @@ namespace FormBuilder.Core.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FieldTypeId");
 
                     b.HasIndex("GridId");
 
@@ -2005,12 +1952,6 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FORM_FIELDS", b =>
                 {
-                    b.HasOne("FIELD_TYPES", "FIELD_TYPES")
-                        .WithMany("FORM_FIELDS")
-                        .HasForeignKey("FieldTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FORM_GRIDS", "Grid")
                         .WithMany()
                         .HasForeignKey("GridId");
@@ -2020,8 +1961,6 @@ namespace FormBuilder.Core.Migrations
                         .HasForeignKey("TabId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("FIELD_TYPES");
 
                     b.Navigation("FORM_TABS");
 
@@ -2152,19 +2091,11 @@ namespace FormBuilder.Core.Migrations
 
             modelBuilder.Entity("FormBuilder.Domian.Entitys.FormBuilder.FORM_GRID_COLUMNS", b =>
                 {
-                    b.HasOne("FIELD_TYPES", "FIELD_TYPES")
-                        .WithMany("FORM_GRID_COLUMNS")
-                        .HasForeignKey("FieldTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("FORM_GRIDS", "FORM_GRIDS")
                         .WithMany("FORM_GRID_COLUMNS")
                         .HasForeignKey("GridId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("FIELD_TYPES");
 
                     b.Navigation("FORM_GRIDS");
                 });
@@ -2467,13 +2398,6 @@ namespace FormBuilder.Core.Migrations
                     b.Navigation("FORM_FIELDS");
 
                     b.Navigation("FORM_SUBMISSIONS");
-                });
-
-            modelBuilder.Entity("FIELD_TYPES", b =>
-                {
-                    b.Navigation("FORM_FIELDS");
-
-                    b.Navigation("FORM_GRID_COLUMNS");
                 });
 
             modelBuilder.Entity("FORMULAS", b =>

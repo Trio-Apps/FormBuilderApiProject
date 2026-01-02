@@ -46,10 +46,6 @@ namespace FormBuilder.API.Extensions
             services.AddScoped<IFormFieldService, FormFieldService>();
             services.AddScoped<IFormFieldRepository, FormFieldRepository>();
 
-            // Field Types
-            services.AddScoped<IFieldTypesService, FieldTypesService>();
-            services.AddScoped<IFieldTypesRepository, FieldTypesRepository>();
-
             // Rules
             services.AddScoped<IFORM_RULESService, FORM_RULESService>();
             services.AddScoped<IFORM_RULESRepository, FORM_RULESRepository>();

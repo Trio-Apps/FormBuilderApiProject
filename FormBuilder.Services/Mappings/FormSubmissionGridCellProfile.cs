@@ -12,7 +12,7 @@ namespace FormBuilder.Services.Mappings
                 .ForMember(dest => dest.ColumnCode, opt => opt.MapFrom(src => src.FORM_GRID_COLUMNS != null ? src.FORM_GRID_COLUMNS.ColumnCode : null))
                 .ForMember(dest => dest.ColumnName, opt => opt.MapFrom(src => src.FORM_GRID_COLUMNS != null ? src.FORM_GRID_COLUMNS.ColumnName : null))
                 .ForMember(dest => dest.FieldTypeId, opt => opt.MapFrom(src => src.FORM_GRID_COLUMNS != null ? src.FORM_GRID_COLUMNS.FieldTypeId : (int?)null))
-                .ForMember(dest => dest.FieldTypeName, opt => opt.MapFrom(src => src.FORM_GRID_COLUMNS != null && src.FORM_GRID_COLUMNS.FIELD_TYPES != null ? src.FORM_GRID_COLUMNS.FIELD_TYPES.TypeName : null))
+                .ForMember(dest => dest.FieldTypeName, opt => opt.Ignore())
                 .ForMember(dest => dest.DisplayValue, opt => opt.Ignore()); // Will be set manually based on value type
 
             CreateMap<CreateFormSubmissionGridCellDto, FORM_SUBMISSION_GRID_CELLS>()

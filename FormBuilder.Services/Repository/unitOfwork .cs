@@ -26,7 +26,6 @@ namespace FormBuilder.core.Repository
         private IFormBuilderRepository _formBuilderRepository;
         private IFormTabRepository _formTabRepository;
         private IFormFieldRepository _formFieldRepository;
-        private IFieldTypesRepository _fieldTypesRepository;
         private IFieldOptionsRepository _FieldOptionsRepository;
         private IFieldDataSourcesRepository _fieldDataSourcesRepository;
         private IAttachmentTypeRepository _attachmentTypeRepository;
@@ -109,15 +108,6 @@ namespace FormBuilder.core.Repository
             {
                 _formFieldRepository ??= new FormFieldRepository(_appDbContext);
                 return _formFieldRepository;    
-            }
-        }
-
-        public IFieldTypesRepository FieldTypesRepository
-        {
-            get
-            {
-                _fieldTypesRepository ??= new FieldTypesRepository(_appDbContext);
-                return _fieldTypesRepository;   
             }
         }
 

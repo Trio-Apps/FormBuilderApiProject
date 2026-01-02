@@ -88,17 +88,6 @@ namespace FormBuilder.API.Controllers
         }
 
         /// <summary>
-        /// Get grid columns by field type ID
-        /// </summary>
-        /// <param name="fieldTypeId">Field type ID</param>
-        [HttpGet("by-field-type/{fieldTypeId}")]
-        public async Task<ActionResult<ApiResponse>> GetByFieldTypeId(int fieldTypeId)
-        {
-            var response = await _formGridColumnService.GetByFieldTypeIdAsync(fieldTypeId);
-            return StatusCode(response.StatusCode, response);
-        }
-
-        /// <summary>
         /// Create new grid column
         /// </summary>
         /// <param name="createDto">Grid column data</param>

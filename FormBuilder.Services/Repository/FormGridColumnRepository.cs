@@ -23,7 +23,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_GRID_COLUMNS
                 .Include(c => c.FORM_GRIDS)
                     .ThenInclude(g => g.FORM_BUILDER)
-                .Include(c => c.FIELD_TYPES)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
@@ -34,7 +33,6 @@ namespace FormBuilder.Infrastructure.Repositories
             return await _context.FORM_GRID_COLUMNS
                 .Include(c => c.FORM_GRIDS)
                     .ThenInclude(g => g.FORM_BUILDER)
-                .Include(c => c.FIELD_TYPES)
                 .AsNoTracking()
                 .OrderBy(c => c.GridId)
                 .ThenBy(c => c.ColumnOrder)
@@ -48,7 +46,6 @@ namespace FormBuilder.Infrastructure.Repositories
             {
                 return await _context.FORM_GRID_COLUMNS
                     .Include(c => c.FORM_GRIDS)
-                    .Include(c => c.FIELD_TYPES)
                     .Where(c => c.GridId == gridId)
                     .OrderBy(c => c.ColumnOrder)
                     .ThenBy(c => c.ColumnName)
@@ -64,7 +61,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_GRID_COLUMNS
                 .Include(c => c.FORM_GRIDS)
-                .Include(c => c.FIELD_TYPES)
                 .AsNoTracking()
                 .Where(c => c.GridId == gridId && c.IsActive)
                 .OrderBy(c => c.ColumnOrder)
@@ -76,7 +72,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_GRID_COLUMNS
                 .Include(c => c.FORM_GRIDS)
-                .Include(c => c.FIELD_TYPES)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c =>
                     c.ColumnCode == columnCode &&
@@ -128,7 +123,6 @@ namespace FormBuilder.Infrastructure.Repositories
         {
             return await _context.FORM_GRID_COLUMNS
                 .Include(c => c.FORM_GRIDS)
-                .Include(c => c.FIELD_TYPES)
                 .AsNoTracking()
                 .Where(c => c.FORM_GRIDS != null && c.FORM_GRIDS.FormBuilderId == formBuilderId)
                 .OrderBy(c => c.GridId)
@@ -136,22 +130,5 @@ namespace FormBuilder.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<FORM_GRID_COLUMNS>> GetByFieldTypeIdAsync(int fieldTypeId)
-        {
-            try
-            {
-                return await _context.FORM_GRID_COLUMNS
-                    .Include(c => c.FORM_GRIDS)
-                    .Include(c => c.FIELD_TYPES)
-                    .Where(c => c.FieldTypeId == fieldTypeId)
-                    .OrderBy(c => c.GridId)
-                    .ThenBy(c => c.ColumnOrder)
-                    .ToListAsync();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }

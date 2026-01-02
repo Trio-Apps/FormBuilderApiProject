@@ -7,8 +7,7 @@ namespace FormBuilder.Core.DTOS.FormFields
         [Required(ErrorMessage = "TabId is required")]
         public int TabId { get; set; }
 
-        [Required(ErrorMessage = "FieldTypeId is required")]
-        public int FieldTypeId { get; set; }
+        public int? FieldTypeId { get; set; }
 
         [Required(ErrorMessage = "FieldName is required")]
         [StringLength(200, ErrorMessage = "FieldName cannot exceed 200 characters")]
