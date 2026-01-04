@@ -1,0 +1,94 @@
+### Test MAX Function
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "MAX([N1], [N2], [N3])",
+  "fieldValues": {
+    "N1": 1,
+    "N2": 23,
+    "N3": 3
+  }
+}
+
+### Test MIN Function
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "MIN([N1], [N2], [N3])",
+  "fieldValues": {
+    "N1": 1,
+    "N2": 23,
+    "N3": 3
+  }
+}
+
+### Test SUM Function
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "SUM([A], [B], [C])",
+  "fieldValues": {
+    "A": 10,
+    "B": 20,
+    "C": 30
+  }
+}
+
+### Test AVG Function
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "AVG([A], [B], [C])",
+  "fieldValues": {
+    "A": 10,
+    "B": 20,
+    "C": 30
+  }
+}
+
+### Test Complex Expression
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "ROUND(SUM([A], [B], [C]) / 3, 2)",
+  "fieldValues": {
+    "A": 10,
+    "B": 20,
+    "C": 30
+  }
+}
+
+### Test MAX with 4 parameters
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "MAX([N1], [N2], [N3], [N4])",
+  "fieldValues": {
+    "N1": 1,
+    "N2": 23,
+    "N3": 3,
+    "N4": 50
+  }
+}
+
+### Test MIN with 5 parameters
+POST http://localhost:7276/api/Formulas/calculate-safe
+Content-Type: application/json
+
+{
+  "expressionText": "MIN([N1], [N2], [N3], [N4], [N5])",
+  "fieldValues": {
+    "N1": 10,
+    "N2": 5,
+    "N3": 8,
+    "N4": 3,
+    "N5": 15
+  }
+}
+

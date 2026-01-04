@@ -1124,7 +1124,7 @@ namespace FormBuilder.Services
                                             return (double?)null;
                                         return Convert.ToDouble(computed);
                                     }
-                                    catch (Exception ex)
+                                    catch
                                     {
                                         // If computation fails, try parsing as number
                                         if (double.TryParse(p, NumberStyles.Any, CultureInfo.InvariantCulture, out double parseValue))
@@ -1166,7 +1166,7 @@ namespace FormBuilder.Services
                                             return (double?)null;
                                         return Convert.ToDouble(computed);
                                     }
-                                    catch (Exception ex)
+                                    catch
                                     {
                                         // If computation fails, try parsing as number
                                         if (double.TryParse(p, NumberStyles.Any, CultureInfo.InvariantCulture, out double parseValue))

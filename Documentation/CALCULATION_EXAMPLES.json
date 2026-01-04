@@ -1,0 +1,86 @@
+{
+  "operations": {
+    "basic": [
+      {
+        "name": "الجمع",
+        "expression": "[A] + [B]",
+        "fieldValues": { "A": 10, "B": 20 },
+        "result": 30
+      },
+      {
+        "name": "الضرب",
+        "expression": "[QUANTITY] * [PRICE]",
+        "fieldValues": { "QUANTITY": 5, "PRICE": 10 },
+        "result": 50
+      }
+    ],
+    "functions": [
+      {
+        "function": "SUM",
+        "expression": "SUM([A], [B], [C])",
+        "fieldValues": { "A": 10, "B": 20, "C": 30 },
+        "result": 60
+      },
+      {
+        "function": "MAX",
+        "expression": "MAX([N1], [N2], [N3])",
+        "fieldValues": { "N1": 1, "N2": 23, "N3": 3 },
+        "result": 23
+      },
+      {
+        "function": "MIN",
+        "expression": "MIN([N1], [N2], [N3])",
+        "fieldValues": { "N1": 1, "N2": 23, "N3": 3 },
+        "result": 1
+      },
+      {
+        "function": "AVG",
+        "expression": "AVG([A], [B], [C])",
+        "fieldValues": { "A": 10, "B": 20, "C": 30 },
+        "result": 20
+      },
+      {
+        "function": "SQRT",
+        "expression": "SQRT([AREA])",
+        "fieldValues": { "AREA": 16 },
+        "result": 4
+      },
+      {
+        "function": "ABS",
+        "expression": "ABS([DIFFERENCE])",
+        "fieldValues": { "DIFFERENCE": -10 },
+        "result": 10
+      },
+      {
+        "function": "ROUND",
+        "expression": "ROUND([VALUE], 2)",
+        "fieldValues": { "VALUE": 3.456 },
+        "result": 3.46
+      },
+      {
+        "function": "POW",
+        "expression": "POW([BASE], [EXPONENT])",
+        "fieldValues": { "BASE": 2, "EXPONENT": 3 },
+        "result": 8
+      }
+    ],
+    "complex": [
+      {
+        "name": "تعبير معقد",
+        "expression": "ROUND(SUM([A], [B], [C]) / 3, 2)",
+        "fieldValues": { "A": 10, "B": 20, "C": 30 },
+        "result": 20
+      },
+      {
+        "name": "MAX - MIN",
+        "expression": "MAX([A], [B], [C]) - MIN([A], [B], [C])",
+        "fieldValues": { "A": 10, "B": 5, "C": 15 },
+        "result": 10
+      }
+    ]
+  },
+  "api_endpoint": "POST /api/Formulas/calculate-safe",
+  "total_operations": 17,
+  "total_functions": 11
+}
+
