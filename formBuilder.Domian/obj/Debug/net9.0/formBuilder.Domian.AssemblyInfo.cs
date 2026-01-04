@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FormBuilder.Domian")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be95596d4bdf27dc62b06c45bfd8798415d96bda")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c8a6301efab0da319d87c9d248e171ce590ab4af")]
 [assembly: System.Reflection.AssemblyProductAttribute("FormBuilder.Domian")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FormBuilder.Domian")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

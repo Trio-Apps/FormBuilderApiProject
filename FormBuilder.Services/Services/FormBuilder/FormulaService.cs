@@ -16,6 +16,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace FormBuilder.Services
 {
@@ -755,7 +756,44 @@ namespace FormBuilder.Services
                     processedExpression = processedExpression.Replace(match.Value, "0");
                 }
 
-                // Evaluate expression using DataTable (simple approach)
+                // Process advanced mathematical functions before evaluation
+                // Note: This must happen AFTER field code replacement
+                // This will evaluate Math functions and replace them with numeric values
+                processedExpression = ProcessAdvancedFunctions(processedExpression);
+
+                // Double-check: Remove any remaining field codes that might have been introduced
+                remainingFieldCodes = Regex.Matches(processedExpression, @"\[([A-Za-z_][A-Za-z0-9_]*)\]");
+                foreach (Match match in remainingFieldCodes)
+                {
+                    processedExpression = processedExpression.Replace(match.Value, "0");
+                }
+
+                // Final check: Ensure no Math.* functions remain (they should all be replaced by now)
+                // Keep evaluating until all Math functions are replaced
+                int safetyIterations = 0;
+                while (Regex.IsMatch(processedExpression, @"Math\.(Sqrt|Abs|Round|Floor|Ceiling|Pow|Max|Min)\s*\(") && safetyIterations < 10)
+                {
+                    safetyIterations++;
+                    var beforeEvaluation = processedExpression;
+                    processedExpression = EvaluateMathFunctions(processedExpression);
+                    
+                    // If no change occurred, break to avoid infinite loop
+                    if (beforeEvaluation == processedExpression)
+                    {
+                        var mathFunctions = Regex.Matches(processedExpression, @"Math\.(Sqrt|Abs|Round|Floor|Ceiling|Pow|Max|Min)\s*\(");
+                        throw new InvalidOperationException($"Math functions were not fully evaluated after {safetyIterations} iterations. Remaining: {string.Join(", ", mathFunctions.Cast<Match>().Select(m => m.Value))}. Expression: {processedExpression}");
+                    }
+                }
+
+                // Final verification: no Math functions should remain
+                if (Regex.IsMatch(processedExpression, @"Math\.(Sqrt|Abs|Round|Floor|Ceiling|Pow|Max|Min)\s*\("))
+                {
+                    var mathFunctions = Regex.Matches(processedExpression, @"Math\.(Sqrt|Abs|Round|Floor|Ceiling|Pow|Max|Min)\s*\(");
+                    throw new InvalidOperationException($"Math functions still exist after evaluation: {string.Join(", ", mathFunctions.Cast<Match>().Select(m => m.Value))}. Expression: {processedExpression}");
+                }
+
+                // At this point, all Math.* functions should be replaced with numeric values
+                // Now evaluate the final expression using DataTable (supports +, -, *, /, %, and basic operations)
                 var dataTable = new DataTable();
                 var result = dataTable.Compute(processedExpression, null);
 
@@ -768,9 +806,450 @@ namespace FormBuilder.Services
                 return ServiceResult<object>.Error(message, 500);
             }
         }
+
+        /// <summary>
+        /// Processes advanced mathematical functions in the expression
+        /// Supports: SQRT(), ABS(), ROUND(), FLOOR(), CEIL(), MAX(), MIN(), SUM(), AVG(), POW(), MOD()
+        /// </summary>
+        private string ProcessAdvancedFunctions(string expression)
+        {
+            if (string.IsNullOrWhiteSpace(expression))
+                return expression;
+
+            var processed = expression;
+
+            // Handle Power operator: ^ or **
+            // Convert ^ to Math.Pow() and ** to Math.Pow()
+            processed = Regex.Replace(processed, @"(\d+(?:\.\d+)?)\s*\^\s*(\d+(?:\.\d+)?)", 
+                match => $"Math.Pow({match.Groups[1].Value}, {match.Groups[2].Value})");
+            processed = Regex.Replace(processed, @"(\d+(?:\.\d+)?)\s*\*\*\s*(\d+(?:\.\d+)?)", 
+                match => $"Math.Pow({match.Groups[1].Value}, {match.Groups[2].Value})");
+
+            // Handle Modulo operator: %
+            // Convert % to modulo operation (DataTable.Compute supports %)
+            // Keep % as is since DataTable.Compute supports it
+
+            // Handle SQRT(value) - Square Root
+            processed = Regex.Replace(processed, @"SQRT\s*\(\s*([^)]+)\s*\)", 
+                match => $"Math.Sqrt({match.Groups[1].Value})", RegexOptions.IgnoreCase);
+
+            // Handle ABS(value) - Absolute Value
+            processed = Regex.Replace(processed, @"ABS\s*\(\s*([^)]+)\s*\)", 
+                match => $"Math.Abs({match.Groups[1].Value})", RegexOptions.IgnoreCase);
+
+            // Handle ROUND(value) or ROUND(value, decimals)
+            processed = Regex.Replace(processed, @"ROUND\s*\(\s*([^,)]+)(?:,\s*(\d+))?\s*\)", 
+                match => 
+                {
+                    var value = match.Groups[1].Value;
+                    var decimals = match.Groups[2].Success ? int.Parse(match.Groups[2].Value) : 0;
+                    return $"Math.Round({value}, {decimals})";
+                }, RegexOptions.IgnoreCase);
+
+            // Handle FLOOR(value) - Round down
+            processed = Regex.Replace(processed, @"FLOOR\s*\(\s*([^)]+)\s*\)", 
+                match => $"Math.Floor({match.Groups[1].Value})", RegexOptions.IgnoreCase);
+
+            // Handle CEIL(value) or CEILING(value) - Round up
+            processed = Regex.Replace(processed, @"CEIL(?:ING)?\s*\(\s*([^)]+)\s*\)", 
+                match => $"Math.Ceiling({match.Groups[1].Value})", RegexOptions.IgnoreCase);
+
+            // Handle MAX(value1, value2, ...) - Maximum value
+            // Convert to nested Math.Max calls: Math.Max(v1, Math.Max(v2, v3))
+            // Supports any number of parameters (2, 3, 4, 5, ...)
+            processed = Regex.Replace(processed, @"MAX\s*\(\s*([^)]+)\s*\)", 
+                match => 
+                {
+                    var paramText = match.Groups[1].Value;
+                    // Split by comma, but handle nested parentheses correctly
+                    var values = SplitParameters(paramText).Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)).ToList();
+                    
+                    if (values.Count == 0)
+                        return "0";
+                    if (values.Count == 1)
+                        return values[0];
+                    
+                    // Build nested Math.Max calls: Math.Max(v1, Math.Max(v2, Math.Max(v3, v4)))
+                    string result = values[values.Count - 1];
+                    for (int i = values.Count - 2; i >= 0; i--)
+                    {
+                        result = $"Math.Max({values[i]}, {result})";
+                    }
+                    return result;
+                }, RegexOptions.IgnoreCase);
+
+            // Handle MIN(value1, value2, ...) - Minimum value
+            // Convert to nested Math.Min calls: Math.Min(v1, Math.Min(v2, v3))
+            // Supports any number of parameters (2, 3, 4, 5, ...)
+            processed = Regex.Replace(processed, @"MIN\s*\(\s*([^)]+)\s*\)", 
+                match => 
+                {
+                    var paramText = match.Groups[1].Value;
+                    // Split by comma, but handle nested parentheses correctly
+                    var values = SplitParameters(paramText).Select(v => v.Trim()).Where(v => !string.IsNullOrWhiteSpace(v)).ToList();
+                    
+                    if (values.Count == 0)
+                        return "0";
+                    if (values.Count == 1)
+                        return values[0];
+                    
+                    // Build nested Math.Min calls: Math.Min(v1, Math.Min(v2, Math.Min(v3, v4)))
+                    string result = values[values.Count - 1];
+                    for (int i = values.Count - 2; i >= 0; i--)
+                    {
+                        result = $"Math.Min({values[i]}, {result})";
+                    }
+                    return result;
+                }, RegexOptions.IgnoreCase);
+
+            // Handle SUM(value1, value2, ...) - Sum of values
+            processed = Regex.Replace(processed, @"SUM\s*\(\s*([^)]+)\s*\)", 
+                match => 
+                {
+                    var values = match.Groups[1].Value.Split(',').Select(v => v.Trim());
+                    return string.Join(" + ", values);
+                }, RegexOptions.IgnoreCase);
+
+            // Handle AVG(value1, value2, ...) or AVERAGE(value1, value2, ...) - Average of values
+            processed = Regex.Replace(processed, @"AVG(?:ERAGE)?\s*\(\s*([^)]+)\s*\)", 
+                match => 
+                {
+                    var values = match.Groups[1].Value.Split(',').Select(v => v.Trim()).ToList();
+                    var sum = string.Join(" + ", values);
+                    return $"({sum}) / {values.Count}";
+                }, RegexOptions.IgnoreCase);
+
+            // Handle POW(base, exponent) - Power function
+            processed = Regex.Replace(processed, @"POW\s*\(\s*([^,)]+)\s*,\s*([^)]+)\s*\)", 
+                match => $"Math.Pow({match.Groups[1].Value}, {match.Groups[2].Value})", RegexOptions.IgnoreCase);
+
+            // Handle MOD(value1, value2) - Modulo function
+            processed = Regex.Replace(processed, @"MOD\s*\(\s*([^,)]+)\s*,\s*([^)]+)\s*\)", 
+                match => $"({match.Groups[1].Value}) % ({match.Groups[2].Value})", RegexOptions.IgnoreCase);
+
+            // Evaluate Math.* functions by replacing them with actual calculations
+            // This is a simplified approach - in production, you might want to use a proper expression evaluator
+            processed = EvaluateMathFunctions(processed);
+
+            return processed;
+        }
+
+        /// <summary>
+        /// Evaluates Math.* function calls in the expression
+        /// Handles nested Math functions like Math.Min(a, Math.Min(b, c))
+        /// </summary>
+        private string EvaluateMathFunctions(string expression)
+        {
+            var processed = expression;
+            var dataTable = new DataTable();
+            
+            // First, replace any remaining field codes with 0 (safety check)
+            var remainingFieldCodes = Regex.Matches(processed, @"\[([A-Za-z_][A-Za-z0-9_]*)\]");
+            foreach (Match match in remainingFieldCodes)
+            {
+                processed = processed.Replace(match.Value, "0");
+            }
+            
+            // Process from innermost to outermost by repeatedly evaluating Math functions
+            // This handles nested functions like Math.Min(a, Math.Min(b, c))
+            int maxIterations = 50; // Prevent infinite loops
+            int iteration = 0;
+            
+            while (Regex.IsMatch(processed, @"Math\.(Sqrt|Abs|Round|Floor|Ceiling|Pow|Max|Min)\s*\(") && iteration < maxIterations)
+            {
+                iteration++;
+                
+                // Find the innermost Math function by finding the one with no Math.* in its parameters
+                // We'll search for Math.FunctionName and then find its matching closing parenthesis
+                var mathFunctionRegex = new Regex(@"Math\.(Sqrt|Abs|Round|Floor|Ceiling|Pow|Max|Min)\s*\(", RegexOptions.IgnoreCase);
+                MatchCollection matches = mathFunctionRegex.Matches(processed);
+                
+                if (matches.Count == 0)
+                    break;
+                
+                // Find the innermost function by checking which one has no Math.* in its parameters
+                // Start from the end (rightmost) and work backwards
+                Match bestMatch = null;
+                string bestParamText = null;
+                int bestEndPos = -1;
+                
+                for (int matchIdx = matches.Count - 1; matchIdx >= 0; matchIdx--)
+                {
+                    var m = matches[matchIdx];
+                    int startPos = m.Index + m.Length;
+                    int innerParenCount = 0;
+                    int endPos = startPos;
+                    bool foundEnd = false;
+                    
+                    // Find the matching closing parenthesis
+                    for (int i = startPos; i < processed.Length; i++)
+                    {
+                        if (processed[i] == '(')
+                            innerParenCount++;
+                        else if (processed[i] == ')')
+                        {
+                            if (innerParenCount == 0)
+                            {
+                                endPos = i;
+                                foundEnd = true;
+                                break;
+                            }
+                            innerParenCount--;
+                        }
+                    }
+                    
+                    if (!foundEnd || endPos <= startPos)
+                        continue;
+                    
+                    // Check if parameters contain Math.*
+                    var paramText = processed.Substring(startPos, endPos - startPos);
+                    if (!paramText.Contains("Math."))
+                    {
+                        bestMatch = m;
+                        bestParamText = paramText;
+                        bestEndPos = endPos;
+                        break;
+                    }
+                }
+                
+                // If no function without Math.* in params, take the rightmost one anyway and evaluate it
+                if (bestMatch == null && matches.Count > 0)
+                {
+                    bestMatch = matches[matches.Count - 1];
+                    int startPos = bestMatch.Index + bestMatch.Length;
+                    int innerParenCount = 0;
+                    int endPos = startPos;
+                    bool foundEnd = false;
+                    
+                    for (int i = startPos; i < processed.Length; i++)
+                    {
+                        if (processed[i] == '(')
+                            innerParenCount++;
+                        else if (processed[i] == ')')
+                        {
+                            if (innerParenCount == 0)
+                            {
+                                endPos = i;
+                                foundEnd = true;
+                                break;
+                            }
+                            innerParenCount--;
+                        }
+                    }
+                    
+                    if (foundEnd && endPos > startPos)
+                    {
+                        bestParamText = processed.Substring(startPos, endPos - startPos);
+                        bestEndPos = endPos;
+                    }
+                }
+                
+                if (bestMatch == null || bestParamText == null || bestEndPos <= bestMatch.Index + bestMatch.Length)
+                    break;
+                
+                // Extract the full function call using the already found positions
+                int funcStart = bestMatch.Index;
+                int paramStart = funcStart + bestMatch.Length;
+                int paramEnd = bestEndPos;
+                
+                var functionName = bestMatch.Groups[1].Value;
+                var parameters = bestParamText; // Use the already extracted parameter text
+                var fullMatch = processed.Substring(funcStart, paramEnd + 1 - funcStart);
+
+                double result = 0;
+                bool success = false;
+
+                try
+                {
+                    switch (functionName)
+                    {
+                        case "Sqrt":
+                            var sqrtValue = Convert.ToDouble(dataTable.Compute(parameters, null));
+                            result = Math.Sqrt(sqrtValue);
+                            success = true;
+                            break;
+
+                        case "Abs":
+                            var absValue = Convert.ToDouble(dataTable.Compute(parameters, null));
+                            result = Math.Abs(absValue);
+                            success = true;
+                            break;
+
+                        case "Round":
+                            var roundParams = parameters.Split(',');
+                            var roundValue = Convert.ToDouble(dataTable.Compute(roundParams[0].Trim(), null));
+                            var decimals = roundParams.Length > 1 ? int.Parse(roundParams[1].Trim()) : 0;
+                            result = Math.Round(roundValue, decimals);
+                            success = true;
+                            break;
+
+                        case "Floor":
+                            var floorValue = Convert.ToDouble(dataTable.Compute(parameters, null));
+                            result = Math.Floor(floorValue);
+                            success = true;
+                            break;
+
+                        case "Ceiling":
+                            var ceilValue = Convert.ToDouble(dataTable.Compute(parameters, null));
+                            result = Math.Ceiling(ceilValue);
+                            success = true;
+                            break;
+
+                        case "Pow":
+                            var powParams = parameters.Split(',');
+                            var baseValue = Convert.ToDouble(dataTable.Compute(powParams[0].Trim(), null));
+                            var exponent = Convert.ToDouble(dataTable.Compute(powParams[1].Trim(), null));
+                            result = Math.Pow(baseValue, exponent);
+                            success = true;
+                            break;
+
+                        case "Max":
+                            var maxParams = parameters.Split(',');
+                            var maxValues = maxParams
+                                .Select(p => p.Trim())
+                                .Where(p => !string.IsNullOrWhiteSpace(p))
+                                .Select(p =>
+                                {
+                                    try
+                                    {
+                                        // First, check if it's a direct number
+                                        if (double.TryParse(p, NumberStyles.Any, CultureInfo.InvariantCulture, out double directValue))
+                                        {
+                                            return (double?)directValue;
+                                        }
+                                        
+                                        // Try to compute it (might contain field codes that need to be evaluated)
+                                        var computed = dataTable.Compute(p, null);
+                                        if (computed == null || computed == DBNull.Value)
+                                            return (double?)null;
+                                        return Convert.ToDouble(computed);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // If computation fails, try parsing as number
+                                        if (double.TryParse(p, NumberStyles.Any, CultureInfo.InvariantCulture, out double parseValue))
+                                        {
+                                            return (double?)parseValue;
+                                        }
+                                        return (double?)null;
+                                    }
+                                })
+                                .Where(v => v.HasValue)
+                                .Select(v => v.Value)
+                                .ToList();
+                            
+                            if (maxValues.Count == 0)
+                                throw new InvalidOperationException("MAX function requires at least one valid numeric value");
+                            
+                            result = maxValues.Max();
+                            success = true;
+                            break;
+
+                        case "Min":
+                            var minParams = parameters.Split(',');
+                            var minValues = minParams
+                                .Select(p => p.Trim())
+                                .Where(p => !string.IsNullOrWhiteSpace(p))
+                                .Select(p =>
+                                {
+                                    try
+                                    {
+                                        // First, check if it's a direct number
+                                        if (double.TryParse(p, NumberStyles.Any, CultureInfo.InvariantCulture, out double directValue))
+                                        {
+                                            return (double?)directValue;
+                                        }
+                                        
+                                        // Try to compute it (might contain field codes that need to be evaluated)
+                                        var computed = dataTable.Compute(p, null);
+                                        if (computed == null || computed == DBNull.Value)
+                                            return (double?)null;
+                                        return Convert.ToDouble(computed);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // If computation fails, try parsing as number
+                                        if (double.TryParse(p, NumberStyles.Any, CultureInfo.InvariantCulture, out double parseValue))
+                                        {
+                                            return (double?)parseValue;
+                                        }
+                                        return (double?)null;
+                                    }
+                                })
+                                .Where(v => v.HasValue)
+                                .Select(v => v.Value)
+                                .ToList();
+                            
+                            if (minValues.Count == 0)
+                                throw new InvalidOperationException("MIN function requires at least one valid numeric value");
+                            
+                            result = minValues.Min();
+                            success = true;
+                            break;
+                    }
+
+                    if (success)
+                    {
+                        // Replace the function call with the result
+                        // Use the exact match from the string to ensure proper replacement
+                        var resultString = result.ToString(CultureInfo.InvariantCulture);
+                        processed = processed.Substring(0, funcStart) + resultString + processed.Substring(paramEnd + 1);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // If evaluation fails, throw to be caught by outer try-catch
+                    throw new InvalidOperationException($"Error evaluating Math.{functionName} function: {ex.Message}", ex);
+                }
+            }
+
+            return processed;
+        }
         #endregion
 
         #region Private Helper Methods
+        
+        /// <summary>
+        /// Splits function parameters by comma, handling nested parentheses correctly
+        /// Example: "a, b, SUM(c, d)" -> ["a", "b", "SUM(c, d)"]
+        /// </summary>
+        private List<string> SplitParameters(string paramText)
+        {
+            var parameters = new List<string>();
+            if (string.IsNullOrWhiteSpace(paramText))
+                return parameters;
+
+            int start = 0;
+            int parenCount = 0;
+            
+            for (int i = 0; i < paramText.Length; i++)
+            {
+                if (paramText[i] == '(')
+                    parenCount++;
+                else if (paramText[i] == ')')
+                    parenCount--;
+                else if (paramText[i] == ',' && parenCount == 0)
+                {
+                    // Found a comma at the top level, split here
+                    var param = paramText.Substring(start, i - start).Trim();
+                    if (!string.IsNullOrWhiteSpace(param))
+                        parameters.Add(param);
+                    start = i + 1;
+                }
+            }
+            
+            // Add the last parameter
+            var lastParam = paramText.Substring(start).Trim();
+            if (!string.IsNullOrWhiteSpace(lastParam))
+                parameters.Add(lastParam);
+            
+            return parameters;
+        }
+        
         private object GetSampleValueForFieldType(string fieldType)
         {
             return fieldType?.ToLower() switch
